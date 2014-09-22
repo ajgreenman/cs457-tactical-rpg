@@ -16,13 +16,32 @@ namespace JSA_Game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        //Constants
+        const int IMAGE_COUNT = 1;
+        const int TILE_SIZE = 50;
+        int MAP_START_H = 30;
+        int MAP_START_W = 30;
+
+        //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        GameBoard board;
+        Texture2D[] tileImages;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferHeight = 560;
+            graphics.PreferredBackBufferWidth = 560;
+            this.IsMouseVisible = true;
+
+
+            //To print System.Diagnostics.Debug.Print("Text");
+
             Content.RootDirectory = "Content";
+            board = new GameBoard();
+            tileImages = new Texture2D[IMAGE_COUNT];
         }
 
         /// <summary>
@@ -46,6 +65,8 @@ namespace JSA_Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            tileImages[0] = Content.Load<Texture2D>("grass_tile");
 
             // TODO: use this.Content to load your game content here
         }
@@ -84,6 +105,21 @@ namespace JSA_Game
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            
+            int temp = 10;
+            for (int i = 0; i < temp; i++)
+            {
+                for (int j = 0; j<temp; j++)
+                {
+                    spriteBatch.Draw(tileImages[0], new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
+                }
+            }
+            
+            
+
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
