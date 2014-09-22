@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSA_Game", "JSA_Game\JSA_Game\JSA_Game.csproj", "{33219D3C-A0AC-4B26-A7E8-867B75BFD2DA}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "JSA_GameContent", "JSA_Game\JSA_GameContent\JSA_GameContent.contentproj", "{B36BD103-9924-4426-A129-6CF10A852EAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33219D3C-A0AC-4B26-A7E8-867B75BFD2DA}.Debug|x86.ActiveCfg = Debug|x86
+		{33219D3C-A0AC-4B26-A7E8-867B75BFD2DA}.Debug|x86.Build.0 = Debug|x86
+		{33219D3C-A0AC-4B26-A7E8-867B75BFD2DA}.Release|x86.ActiveCfg = Release|x86
+		{33219D3C-A0AC-4B26-A7E8-867B75BFD2DA}.Release|x86.Build.0 = Release|x86
+		{B36BD103-9924-4426-A129-6CF10A852EAE}.Debug|x86.ActiveCfg = Debug|x86
+		{B36BD103-9924-4426-A129-6CF10A852EAE}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
