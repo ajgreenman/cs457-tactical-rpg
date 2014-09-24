@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb</Output>
-      <Time>2014-09-22T16:55:17.8183775-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb</Output>
+      <Time>2014-09-24T16:46:51.211833-04:00</Time>
     </Item>
     <Item>
       <Source>player.jpg</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb</Output>
-      <Time>2014-09-23T12:06:57.9950533-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb</Output>
+      <Time>2014-09-24T16:46:51.228834-04:00</Time>
     </Item>
     <Item>
       <Source>enemy.jpg</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb</Output>
-      <Time>2014-09-23T12:07:47.1638656-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb</Output>
+      <Time>2014-09-24T16:46:51.210833-04:00</Time>
     </Item>
     <Item>
       <Source>cursorAnim.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorAnim.xnb</Output>
-      <Time>2014-09-23T23:36:49.0430731-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorAnim.xnb</Output>
+      <Time>2014-09-24T16:46:51.2098329-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -43,10 +43,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_GameContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_GameContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -75,7 +75,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2014-09-21T22:20:37.1461074-04:00</Value>
+        <Value>2014-09-01T23:20:12.502068-04:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
