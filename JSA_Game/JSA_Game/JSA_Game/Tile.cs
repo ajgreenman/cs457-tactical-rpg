@@ -7,18 +7,25 @@ namespace JSA_Game
 {
     class Tile
     {
-        private const String DEFAULT_LAND = "Plain";
-        private String landType {get; set;}
-        private Boolean occupied;
+        private const String DEFAULT_LAND = "plain";
+        private String landType;
+        private Boolean isOccupied;
+        public Boolean IsOccupied
+        {
+            get { return isOccupied; }
+            set { isOccupied = value; }
+        }
 
         public Tile()
         {
             landType = DEFAULT_LAND;
+            isOccupied = false;
         }
 
         public Tile(String lType)
         {
             landType = lType;
+            isOccupied = false;
         }
     }
 }

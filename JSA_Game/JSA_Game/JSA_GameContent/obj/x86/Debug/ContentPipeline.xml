@@ -10,6 +10,33 @@
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb</Output>
       <Time>2014-09-22T16:55:17.8183775-04:00</Time>
     </Item>
+    <Item>
+      <Source>player.jpg</Source>
+      <Name>player</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb</Output>
+      <Time>2014-09-23T12:06:57.9950533-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemy.jpg</Source>
+      <Name>enemy</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb</Output>
+      <Time>2014-09-23T12:07:47.1638656-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorAnim.png</Source>
+      <Name>cursorAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorAnim.xnb</Output>
+      <Time>2014-09-23T23:36:49.0430731-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

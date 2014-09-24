@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using JSA_Game.CharClasses;
+using JSA_Game.Maps;
+
 namespace JSA_Game
 {
     /// <summary>
@@ -17,7 +20,7 @@ namespace JSA_Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         //Constants
-        const int IMAGE_COUNT = 1;
+        const int TILE_IMAGE_COUNT = 1;
         const int TILE_SIZE = 50;
         int MAP_START_H = 30;
         int MAP_START_W = 30;
@@ -25,23 +28,50 @@ namespace JSA_Game
         //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        GameBoard board;
+        //GameBoard board;
+
+        //Example Level
+        Level testLevel;
+
+        //Timing variables
+        float elapsed;
+        float delay = 500f;
+        float cursorTimeElapsed;
+        float cursorMoveDelay = 100;
+
+        //Cursor Variables
+        Texture2D cursor;
+        int cursorFrames = 0;
+        Boolean selected = false;
+        Vector2 cursorPos;
+        Rectangle cursorSourceRect;
+       
+
+        //Image Data Structures
         Texture2D[] tileImages;
+        Dictionary<String, Texture2D> characterImages;
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferHeight = 560;
+            graphics.PreferredBackBufferHeight = 620;
             graphics.PreferredBackBufferWidth = 560;
             this.IsMouseVisible = true;
 
+            //Initialize Example Level
+            testLevel = new Level(10, 10, 1, 1);
+            testLevel.addUnit(1, new Warrior(), 1, testLevel.BoardHeight/2);
+            testLevel.addUnit(0, new Mage(), testLevel.BoardWidth -2, testLevel.BoardHeight/2);
 
             //To print System.Diagnostics.Debug.Print("Text");
 
             Content.RootDirectory = "Content";
-            board = new GameBoard();
-            tileImages = new Texture2D[IMAGE_COUNT];
+            //board = new GameBoard();
+            tileImages = new Texture2D[TILE_IMAGE_COUNT];
+            characterImages = new Dictionary<String, Texture2D>();
+            cursorPos = new Vector2(0, 0);
         }
 
         /// <summary>
@@ -68,6 +98,27 @@ namespace JSA_Game
 
             tileImages[0] = Content.Load<Texture2D>("grass_tile");
 
+
+            //Example level Content (more efficient loop to come...)
+            foreach( Character c in testLevel.PlayerUnits){
+                System.Diagnostics.Debug.Print("Created a player unit");
+                if (c == null) break;
+                //if (characterImages[c.Texture] == null)
+               // {
+                    characterImages.Add(c.Texture, Content.Load<Texture2D>(c.Texture));
+                //}
+            }
+            foreach (Character c in testLevel.EnemyUnits)
+            {
+                if (c == null) break;
+                //if (characterImages[c.Texture] == null)
+                //{
+                    characterImages.Add(c.Texture, Content.Load<Texture2D>(c.Texture));
+                //}
+            }
+
+            cursor = Content.Load<Texture2D>("cursorAnim");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -93,6 +144,55 @@ namespace JSA_Game
 
             // TODO: Add your update logic here
 
+            //Animate cursor
+            elapsed += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(elapsed >= delay){
+                if(cursorFrames >= 1){
+                    cursorFrames = 0;
+                }
+                else{
+                    cursorFrames++;
+                }
+                elapsed = 0;
+            }
+            cursorSourceRect = new Rectangle(cursor.Width /2 * cursorFrames, 0, cursor.Width / 2, cursor.Height);
+
+
+            //Move cursor
+            cursorTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (!selected && cursorTimeElapsed >= cursorMoveDelay)
+            {
+                if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0 && elapsed < delay)
+                {
+                    cursorPos.X--;
+                }
+                else if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Right) && cursorPos.X != testLevel.BoardWidth - 1 && elapsed < delay)
+                {
+                    cursorPos.X++;
+                }
+                else if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Up) && cursorPos.Y != 0 && elapsed < delay)
+                {
+                    cursorPos.Y--;
+                }
+                else if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Down) && cursorPos.Y != testLevel.BoardHeight - 1 && elapsed < delay)
+                {
+                    cursorPos.Y++;
+                }
+                cursorTimeElapsed = 0;
+            }
+
+            //Select button
+            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Z) && testLevel.Board.Board[(int)cursorPos.X,(int)cursorPos.Y].IsOccupied)
+            {
+                selected = true;
+            }
+
+            //Unselect button
+            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.X))
+            {
+                selected = false;
+            }
+
             base.Update(gameTime);
         }
 
@@ -106,17 +206,38 @@ namespace JSA_Game
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            
-            int temp = 10;
-            for (int i = 0; i < temp; i++)
+
+            //Draw board
+            for (int i = 0; i < testLevel.BoardWidth; i++)
             {
-                for (int j = 0; j<temp; j++)
+                for (int j = 0; j < testLevel.BoardHeight; j++)
                 {
                     spriteBatch.Draw(tileImages[0], new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
-            
-            
+
+
+            //Draw characters
+            foreach (Character c in testLevel.PlayerUnits)
+            {
+               if (c == null) break;
+               //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
+               spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
+               
+            }
+            foreach (Character c in testLevel.EnemyUnits)
+            {
+               
+                if (c == null) break;
+                //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
+                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
+            }
+
+            //Draw Cursor
+            spriteBatch.Draw(cursor, new Rectangle(MAP_START_W + TILE_SIZE * (int)cursorPos.X, MAP_START_H + TILE_SIZE * (int)cursorPos.Y, cursor.Width/2, cursor.Height),
+                                     cursorSourceRect,Color.White);
+
+
 
             spriteBatch.End();
 

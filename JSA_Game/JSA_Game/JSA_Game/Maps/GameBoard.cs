@@ -7,24 +7,34 @@ namespace JSA_Game
 {
     class GameBoard
     {
-        private const int DEFAULT_SIZE = 20;
-        private int height;
+        private const int DEFAULT_SIZE = 10;
 
+        private int height;
         public int Height
         {
             get { return height; }
             set { height = value; }
         }
-        
-        private int width {get; set;}
-        private Tile[,] board {get; set;}
 
+        private int width;
+        public int Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+
+        private Tile[,] board;
+        public Tile[,] Board
+        {
+            get { return board; }
+            set { board = value; }
+        }
 
         public GameBoard()
         {
             height = DEFAULT_SIZE;
             width = DEFAULT_SIZE;
-            board = new Tile[height, width];
+            board = new Tile[width, height];
             instantiate();
         }
 
@@ -32,7 +42,7 @@ namespace JSA_Game
         {
             height = h;
             width = w;
-            board = new Tile[height, width];
+            board = new Tile[width, height];
             instantiate();
         }
 

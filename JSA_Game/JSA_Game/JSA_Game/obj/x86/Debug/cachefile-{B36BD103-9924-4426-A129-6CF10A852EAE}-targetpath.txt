@@ -1,1 +1,4 @@
 Content\grass_tile.xnb
+Content\player.xnb
+Content\enemy.xnb
+Content\cursorAnim.xnb
