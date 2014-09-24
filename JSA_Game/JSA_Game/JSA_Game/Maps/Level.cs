@@ -21,8 +21,9 @@ namespace JSA_Game.Maps
             get { return boardHeight; }
             set { boardHeight = value; }
         }
-        GameBoard board;
-        public GameBoard Board
+
+        private Tile[,] board;
+        public Tile[,] Board
         {
             get { return board; }
             set { board = value; }
@@ -46,7 +47,15 @@ namespace JSA_Game.Maps
         {
             boardWidth = width;
             boardHeight = height;
-            board = new GameBoard(boardWidth, boardHeight);
+            board = new Tile[width, height];
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    board[i, j] = new Tile();
+                }
+            }
 
             playerUnitCount = 0;
             enemyUnitCount = 0;
@@ -65,7 +74,7 @@ namespace JSA_Game.Maps
                 unit.Pos = new Vector2(xPos, yPos);
                 playerUnits[playerUnitCount] = unit;
                 playerUnitCount++;
-                board.Board[xPos, yPos].IsOccupied = true;
+                board[xPos, yPos].IsOccupied = true;
             }
 
             else if (unit.IsEnemy && enemyUnitCount != MaxEnemyUnits)
@@ -73,7 +82,7 @@ namespace JSA_Game.Maps
                 unit.Pos = new Vector2(xPos, yPos);
                 enemyUnits[enemyUnitCount] = unit;
                 enemyUnitCount++;
-                board.Board[xPos, yPos].IsOccupied = true;
+                board[xPos, yPos].IsOccupied = true;
             }
             else
             {

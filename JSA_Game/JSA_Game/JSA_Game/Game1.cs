@@ -182,7 +182,7 @@ namespace JSA_Game
             }
 
             //Select button
-            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Z) && testLevel.Board.Board[(int)cursorPos.X,(int)cursorPos.Y].IsOccupied)
+            if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Z) && testLevel.Board[(int)cursorPos.X,(int)cursorPos.Y].IsOccupied)
             {
                 selected = true;
             }

@@ -111,7 +111,6 @@
     <Compile Include="CharClasses\Warrior.cs" />
     <Compile Include="CharClasses\Character.cs" />
     <Compile Include="Maps\Level.cs" />
-    <Compile Include="Maps\GameBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

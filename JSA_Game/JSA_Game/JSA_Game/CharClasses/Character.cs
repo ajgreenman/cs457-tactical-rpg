@@ -72,10 +72,5 @@ namespace JSA_Game
             pos = new Vector2(0, 0);
         }
 
-        public void move(float x, float y)
-        {
-            pos.X = x;
-            pos.Y = y;
-        }
     }
 }

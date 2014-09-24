@@ -16,6 +16,13 @@ namespace JSA_Game
             set { isOccupied = value; }
         }
 
+        private Character occupant;
+        public Character Occupant
+        {
+            get { return occupant; }
+            set { occupant = value; }
+        }
+
         public Tile()
         {
             landType = DEFAULT_LAND;
