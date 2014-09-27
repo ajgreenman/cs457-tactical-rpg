@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 using JSA_Game.CharClasses;
 using JSA_Game.Maps;
+using JSA_Game.HUD;
 
 namespace JSA_Game
 {
@@ -32,6 +33,9 @@ namespace JSA_Game
 
         //Example Level
         Level testLevel;
+
+        //HUD Object
+        HUD_Controller hud;
 
         //Timing variables
         float elapsed;
@@ -72,25 +76,16 @@ namespace JSA_Game
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
             characterImages = new Dictionary<String, Texture2D>();
             cursorPos = new Vector2(0, 0);
+
+            //Initialize HUD OBJECT
+            hud = new HUD_Controller(0, 0, 0, 0, 0, 0, 0);
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -119,30 +114,20 @@ namespace JSA_Game
 
             cursor = Content.Load<Texture2D>("cursorAnim");
 
-            // TODO: use this.Content to load your game content here
+            //Loading HUD
+            hud.LoadContent(Content);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+           
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
-            // TODO: Add your update logic here
 
             //Animate cursor
             elapsed += (float) gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -196,15 +181,10 @@ namespace JSA_Game
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
 
             //Draw board
@@ -237,7 +217,8 @@ namespace JSA_Game
             spriteBatch.Draw(cursor, new Rectangle(MAP_START_W + TILE_SIZE * (int)cursorPos.X, MAP_START_H + TILE_SIZE * (int)cursorPos.Y, cursor.Width/2, cursor.Height),
                                      cursorSourceRect,Color.White);
 
-
+            //Draw HUD
+            hud.Draw(spriteBatch);
 
             spriteBatch.End();
 
