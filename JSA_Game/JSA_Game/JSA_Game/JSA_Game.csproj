@@ -107,6 +107,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Battle Controller\Action.cs" />
+    <Compile Include="Battle Controller\BattleController.cs" />
     <Compile Include="CharClasses\Mage.cs" />
     <Compile Include="CharClasses\Warrior.cs" />
     <Compile Include="CharClasses\Character.cs" />
