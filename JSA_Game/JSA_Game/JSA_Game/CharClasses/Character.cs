@@ -9,7 +9,7 @@ namespace JSA_Game
 
     class Character
     {
-         //Default Stats
+        //Default Stats
         const int DEFAULT_HP = 15;
         const int DEFAULT_STATS = 5;
 
@@ -23,26 +23,88 @@ namespace JSA_Game
 
         //Character stats
         int maxHP;
-        int maxMP;
-        int currHP;
-        int currMP;
-        int strength;
-        int armor;
-        int accuracy;
-        int dodge;
-        int magic;
-        int resist;
+
+        public int MaxHP
+        {
+            get { return maxHP; }
+            set { maxHP = value; }
+        }
+
+        private int maxMP;
+
+        public int MaxMP
+        {
+            get { return maxMP; }
+            set { maxMP = value; }
+        }
+
+        private int currHp;
+
+        public int CurrHp
+        {
+            get { return currHp; }
+            set { currHp = value; }
+        }
+
+        private int currMp;
+
+        public int CurrMp
+        {
+            get { return currMp; }
+            set { currMp = value; }
+        }
+
+        private int strength;
+
+        public int Strength
+        {
+            get { return strength; }
+            set { strength = value; }
+        }
+
+        private int armor;
+
+        public int Armor
+        {
+            get { return armor; }
+            set { armor = value; }
+        }
+
+        private int accuracy;
+
+        public int Accuracy
+        {
+            get { return accuracy; }
+            set { accuracy = value; }
+        }
+
+        private int dodge;
+
+        public int Dodge
+        {
+            get { return dodge; }
+            set { dodge = value; }
+        }
+
+        private int magic;
+
+        public int Magic
+        {
+            get { return magic; }
+            set { magic = value; }
+        }
+
+        private int resist;
+
+        public int Resist
+        {
+            get { return resist; }
+            set { resist = value; }
+        }
 
         int movement;
         int level;
-
-        //Positioning
-        Vector2 pos;
-        public Vector2 Pos
-        {
-            get { return pos; }
-            set { pos = value; }
-        }
+        int currExp;
 
         //Image
         String texture;
@@ -56,8 +118,8 @@ namespace JSA_Game
         {
             maxHP = DEFAULT_HP;
             maxMP = DEFAULT_STATS;
-            currHP = DEFAULT_STATS;
-            currMP = DEFAULT_STATS;
+            currHp = DEFAULT_STATS;
+            currHp = DEFAULT_STATS;
             strength = DEFAULT_STATS;
             armor = DEFAULT_STATS;
             accuracy = DEFAULT_STATS;
@@ -68,8 +130,6 @@ namespace JSA_Game
             movement = DEFAULT_STATS;
             level = 1;
             isEnemy = false;
-
-            pos = new Vector2(0, 0);
         }
 
     }
