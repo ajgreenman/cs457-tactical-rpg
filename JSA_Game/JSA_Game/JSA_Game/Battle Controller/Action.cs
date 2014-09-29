@@ -3,40 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JSA_Game
+namespace JSA_Game.Battle_Controller
 {
     class Action
     {
-        private String name, statTarget;
-        private Boolean ranged, spell, piercing, friendly;
-        int power, mpCost;
-
-        enum ActionType
-        {
-            Physical,
-            Magical,
-            Ranged
-        }
+        private String name;
+        private StatType[] targetStat, statCost;
+        private ActionType type;
+        private Boolean ignoreEnemyStats, friendly;
+        private int powerMultiplier, cost, range;
 
         /// <summary>
         /// Describes any action that can be taken during a battle.
         /// </summary>
         /// <param name="name">Name of the action.</param>
-        /// <param name="statTarget">The stat the action targets.</param>
-        /// <param name="ranged">Whether or not the attack is ranged.</param>
-        /// <param name="spell">Whether or not the attack is a spell.</param>
-        /// <param name="piercing">Whether or not the attack ignores armor.</param>
-        /// <param name="power">Power of the action.</param>
-        /// <param name="mpCost">Mp cost, if any, of the action.</param>
-        public Action(String name, String statTarget, Boolean ranged, Boolean spell, Boolean piercing, int power, int mpCost)
+        /// <param name="targetStat">Stat the action targets (typically Hp).</param>
+        /// <param name="statCost">Stat that is used to perform this action (typically Mp or nothing).</param>
+        /// <param name="type">Type of action, physical or spell.</param>
+        /// <param name="ignoreEnemyStats">Determines whether or not the action ignores enemy stats.</param>
+        /// <param name="friendly">Determines whether or not the action is friendly.</param>
+        /// <param name="powerMultiplier">Determines how much power the action has.</param>
+        /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
+        public Action(String name, StatType[] targetStat, StatType[] statCost, ActionType type,
+            Boolean ignoreEnemyStats, Boolean friendly, int powerMultiplier, int cost, int range)
         {
             this.name = name;
-            this.statTarget = statTarget;
-            this.ranged = ranged;
-            this.spell = spell;
-            this.piercing = piercing;
-            this.power = power;
-            this.mpCost = mpCost;
+            this.targetStat = targetStat;
+            this.statCost = statCost;
+            this.type = type;
+            this.ignoreEnemyStats = ignoreEnemyStats;
+            this.friendly = friendly;
+            this.powerMultiplier = powerMultiplier;
+            this.cost = cost;
+            this.range = range;
+        }
+
+        /// <summary>
+        /// Sets up the Attack action, which is the default.
+        /// </summary>
+        public Action()
+        {
+            this.name = "Attack";
+            this.targetStat = new StatType[] { StatType.Hp };
+            this.statCost = new StatType[] { StatType.Mp };
+            this.type = ActionType.Physical;
+            this.ignoreEnemyStats = false;
+            this.friendly = false;
+            this.powerMultiplier = 1;
+            this.cost = 0;
+            this.range = 1;
         }
 
         // GETTERS AND SETTERS
@@ -47,28 +62,28 @@ namespace JSA_Game
             set { name = value; }
         }
 
-        public String StatTarget
+        public StatType[] TargetStat
         {
-            get { return statTarget; }
-            set { statTarget = value; }
+            get { return targetStat; }
+            set { targetStat = value; }
         }
 
-        public Boolean Ranged
+        public StatType[] StatCost
         {
-            get { return ranged; }
-            set { ranged = value; }
+            get { return statCost; }
+            set { statCost = value; }
         }
 
-        public Boolean Spell
+        public ActionType TargetStat
         {
-            get { return spell; }
-            set { spell = value; }
+            get { return type; }
+            set { type = value; }
         }
 
-        public Boolean Piercing
+        public Boolean IgnoreEnemyStats
         {
-            get { return piercing; }
-            set { piercing = value; }
+            get { return ignoreEnemyStats; }
+            set { ignoreEnemyStats = value; }
         }
 
         public Boolean Friendly
@@ -77,16 +92,22 @@ namespace JSA_Game
             set { friendly = value; }
         }
 
-        public int Power
+        public int PowerMultiplier
         {
-            get { return power; }
-            set { power = value; }
+            get { return powerMultiplier; }
+            set { powerMultiplier = value; }
         }
 
-        public int MpCost
+        public int Cost
         {
-            get { return mpCost; }
-            set { mpCost = value; }
+            get { return cost; }
+            set { cost = value; }
+        }
+
+        public int Range
+        {
+            get { return range; }
+            set { range = value; }
         }
     }
 }

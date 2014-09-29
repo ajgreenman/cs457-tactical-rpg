@@ -1,0 +1,5 @@
+﻿enum ActionType
+{
+    Physical,
+    Spell
+}
