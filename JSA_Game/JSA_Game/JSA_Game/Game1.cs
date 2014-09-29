@@ -60,8 +60,8 @@ namespace JSA_Game
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferHeight = 620;
-            graphics.PreferredBackBufferWidth = 560;
+            graphics.PreferredBackBufferHeight = 780;
+            graphics.PreferredBackBufferWidth = 900;
             this.IsMouseVisible = true;
 
             //Initialize Example Level

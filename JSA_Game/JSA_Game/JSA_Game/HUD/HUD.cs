@@ -11,10 +11,11 @@ namespace JSA_Game.HUD
 {
     public class HUD_Controller
     {
-        const int GRAPHIC_HEIGHT = 90;
-        const int GRAPHIC_WIDTH = 560;
+        const int GRAPHIC_HEIGHT = 150;
+        const int GRAPHIC_WIDTH = 900;
 
         Texture2D hud;
+        Texture2D gameBorder;
 
         Health_Bar healthBar;
         Mana_Bar manaBar;
@@ -45,6 +46,7 @@ namespace JSA_Game.HUD
 
         public void LoadContent(ContentManager Content)
         {
+            gameBorder = Content.Load<Texture2D>("Border");
             manaBar.LoadContent(Content);
             healthBar.LoadContent(Content);
             statSection.LoadContent(Content);
@@ -58,7 +60,8 @@ namespace JSA_Game.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(hud, new Rectangle(0, 530, GRAPHIC_WIDTH, GRAPHIC_HEIGHT), Color.White);
+            //spriteBatch.Draw(gameBorder, new Rectangle(0, 0, 560, 620), Color.White);
+            spriteBatch.Draw(hud, new Rectangle(0, 500, GRAPHIC_WIDTH, GRAPHIC_HEIGHT), Color.White);
             manaBar.Draw(spriteBatch);
             healthBar.Draw(spriteBatch);
             statSection.Draw(spriteBatch);

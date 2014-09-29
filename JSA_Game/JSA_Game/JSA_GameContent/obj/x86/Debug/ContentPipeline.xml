@@ -64,6 +64,15 @@
       <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
       <Time>2014-09-27T02:33:06.2317332-04:00</Time>
     </Item>
+    <Item>
+      <Source>Border.png</Source>
+      <Name>Border</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Border.xnb</Output>
+      <Time>2014-09-29T09:47:03.2809592-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
