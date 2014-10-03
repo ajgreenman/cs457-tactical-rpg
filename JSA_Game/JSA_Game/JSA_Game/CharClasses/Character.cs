@@ -12,7 +12,15 @@ namespace JSA_Game
         const int DEFAULT_HP = 15;
         const int DEFAULT_STATS = 5;
 
-        //
+
+        protected Battle_Controller.Action[] actions;
+
+        public Battle_Controller.Action[] Actions
+        {
+            get { return actions; }
+            set { actions = value; }
+        }
+
         Boolean isEnemy;
         public Boolean IsEnemy
         {
@@ -20,8 +28,40 @@ namespace JSA_Game
             set { isEnemy = value; }
         }
 
+        int movement;
+        int level;
+        int currExp;
+
+        //Image
+        String texture;
+        public String Texture
+        {
+            get { return texture; }
+            set { texture = value; }
+        }
+
+        public Character()
+        {
+            maxHP = DEFAULT_HP;
+            maxMP = DEFAULT_STATS;
+            currHp = DEFAULT_STATS;
+            currHp = DEFAULT_STATS;
+            strength = DEFAULT_STATS;
+            armor = DEFAULT_STATS;
+            accuracy = DEFAULT_STATS;
+            dodge = DEFAULT_STATS;
+            magic = DEFAULT_STATS;
+            resist = DEFAULT_STATS;
+
+            actions = new Battle_Controller.Action[4]; // Default number of possible actions.
+
+            movement = DEFAULT_STATS;
+            level = 1;
+            isEnemy = false;
+        }
+
         //Character stats
-        int maxHP;
+        private int maxHP;
 
         public int MaxHP
         {
@@ -99,36 +139,6 @@ namespace JSA_Game
         {
             get { return resist; }
             set { resist = value; }
-        }
-
-        int movement;
-        int level;
-        int currExp;
-
-        //Image
-        String texture;
-        public String Texture
-        {
-            get { return texture; }
-            set { texture = value; }
-        }
-
-        public Character()
-        {
-            maxHP = DEFAULT_HP;
-            maxMP = DEFAULT_STATS;
-            currHp = DEFAULT_STATS;
-            currHp = DEFAULT_STATS;
-            strength = DEFAULT_STATS;
-            armor = DEFAULT_STATS;
-            accuracy = DEFAULT_STATS;
-            dodge = DEFAULT_STATS;
-            magic = DEFAULT_STATS;
-            resist = DEFAULT_STATS;
-
-            movement = DEFAULT_STATS;
-            level = 1;
-            isEnemy = false;
         }
     }
 }

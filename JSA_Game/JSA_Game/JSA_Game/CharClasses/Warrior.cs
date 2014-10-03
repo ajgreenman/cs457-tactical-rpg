@@ -11,6 +11,9 @@ namespace JSA_Game.CharClasses
         public Warrior()
         {
             Texture = "player";
+
+            Battle_Controller.Action actionAttack = new Battle_Controller.Action();
+            actions[0] = actionAttack;
         }
 
         
