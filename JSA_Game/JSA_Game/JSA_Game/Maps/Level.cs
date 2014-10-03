@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using JSA_Game.HUD;
 
 namespace JSA_Game.Maps
 {
@@ -55,6 +56,12 @@ namespace JSA_Game.Maps
         Texture2D[] tileImages;
         Texture2D[] highlightImages;
 
+        //HUD
+        HUD_Controller HUD;
+
+        LevelState state;
+        TurnState playerTurn;
+
 
         int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
 
@@ -95,6 +102,9 @@ namespace JSA_Game.Maps
                 }
             }
 
+            state = LevelState.CursorSelection;
+            playerTurn = TurnState.Player;
+
             playerUnitCount = 0;
             enemyUnitCount = 0;
             maxPlayerUnits = numPlayerUnits;
@@ -108,6 +118,8 @@ namespace JSA_Game.Maps
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
             highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
+
+            HUD = new HUD_Controller();
         }
 
 
@@ -285,6 +297,7 @@ namespace JSA_Game.Maps
             }
 
             cursor.loadContent(content);
+            HUD.LoadContent(content);
         }
 
 
@@ -302,82 +315,111 @@ namespace JSA_Game.Maps
             //Listen for input to move cursor
             cursor.moveCursor(gameTime, this, selected);
 
-            //Selecting a unit.  Shows the movement range.
-            if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
+            if (playerTurn == TurnState.Player)
             {
-                if ((playerUnits.ContainsKey(cursor.CursorPos) || enemyUnits.ContainsKey(cursor.CursorPos)) && !selected)
+                if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
                 {
-                    selected = true;
-                    selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
 
-                    if (playerUnits.ContainsKey(cursor.CursorPos))
+                    if (state == LevelState.CursorSelection)
                     {
-                        toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
+                        //Selecting a unit.  Shows the movement range.
+                        if ((playerUnits.ContainsKey(cursor.CursorPos) || enemyUnits.ContainsKey(cursor.CursorPos)) && !selected)
+                        {
+                            state = LevelState.Selected;
+                            selected = true;
+                            //Send HUD character info
+                            Character c;
+                            if (playerUnits.ContainsKey(cursor.CursorPos))
+                                c = playerUnits[cursor.CursorPos];
+                            else
+                                c = enemyUnits[cursor.CursorPos];
+
+                            //Send c to HUD
+                            HUD.characterSelect(c);
+
+                            selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
+
+                            if (playerUnits.ContainsKey(cursor.CursorPos))
+                            {
+                                toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
+                            }
+                        }
+                    }
+                    //If already selected, confirm move and hide movement range.
+                    else if (state == LevelState.Selected)
+                    {
+                        selected = false;
+
+                        if (playerUnits.ContainsKey(selectedPos))
+                        {
+                            toggleMoveRange(false, cursor.CursorPos, playerUnits[selectedPos].Movement);
+                        }
+                        cursor.CursorPos = new Vector2(selectedPos.X, selectedPos.Y);
+                        state = LevelState.CursorSelection;
                     }
                 }
+                
 
-                //If already selected, confirm move and hide movement range.
-                else if (selected)
+                //Unselect button.  Undo's a move if the selected unit moved.
+                if (keyboard.IsKeyDown(Keys.X) && state==LevelState.Selected && !buttonPressed)
                 {
                     selected = false;
-                    toggleMoveRange(false, cursor.CursorPos, playerUnits[selectedPos].Movement);
-                    cursor.CursorPos = new Vector2(selectedPos.X, selectedPos.Y);
+                    state = LevelState.CursorSelection;
+                    if (playerUnits.ContainsKey(selectedPos))
+                    {
+                        undoMove(cursor.CursorPos, selectedPos);
+                        toggleMoveRange(false, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
+                        selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
+                    }
                 }
-            }
-
-            //Unselect button.  Undo's a move if the selected unit moved.
-            if (keyboard.IsKeyDown(Keys.X) && selected && !buttonPressed)
-            {
-                selected = false;
-                if (playerUnits.ContainsKey(selectedPos))
+                HUD.Hidden = state == LevelState.CursorSelection;
+                moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (selected && moveTimeElapsed >= moveDelay)   // A unit is selected
                 {
-                    undoMove(cursor.CursorPos, selectedPos);
-                    toggleMoveRange(false, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
-                    selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
-                }
-            }
+                    //Move player character   selectedPos keeps track of current location, cursorPos keeps track of original location.
+                    //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
+                    if (playerUnits.ContainsKey(selectedPos))
+                    {
 
-            moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (selected && moveTimeElapsed >= moveDelay)   // A unit is selected
-            {
-                //Move player character   selectedPos keeps track of current location, cursorPos keeps track of original location.
-                //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
-                if (playerUnits.ContainsKey(selectedPos))
+                        if (keyboard.IsKeyDown(Keys.Left) && selectedPos.X > 0 && board[(int)(selectedPos.X - 1), (int)selectedPos.Y].IsHighlighted)
+                        {
+                            moveUnit(selectedPos, 'l');
+                            selectedPos.X--;
+                        }
+                        else if (keyboard.IsKeyDown(Keys.Right) && selectedPos.X < boardWidth - 1 && board[(int)(selectedPos.X + 1), (int)selectedPos.Y].IsHighlighted)
+                        {
+                            moveUnit(selectedPos, 'r');
+                            selectedPos.X++;
+                        }
+                        else if (keyboard.IsKeyDown(Keys.Up) && selectedPos.Y > 0 && board[(int)selectedPos.X, (int)(selectedPos.Y - 1)].IsHighlighted)
+                        {
+                            moveUnit(selectedPos, 'u');
+                            selectedPos.Y--;
+                        }
+                        else if (keyboard.IsKeyDown(Keys.Down) && selectedPos.Y < boardHeight - 1 && board[(int)selectedPos.X, (int)(selectedPos.Y + 1)].IsHighlighted)
+                        {
+                            moveUnit(selectedPos, 'd');
+                            selectedPos.Y++;
+                        }
+                    }
+                    moveTimeElapsed = 0;
+                }
+
+                //Prevents holding a button to continuously activate events
+                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X))
                 {
-
-                    if (keyboard.IsKeyDown(Keys.Left) && selectedPos.X > 0 && board[(int)(selectedPos.X - 1), (int)selectedPos.Y].IsHighlighted)
-                    {
-                        moveUnit(selectedPos, 'l');
-                        selectedPos.X--;
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Right) && selectedPos.X < boardWidth - 1 && board[(int)(selectedPos.X + 1), (int)selectedPos.Y].IsHighlighted)
-                    {
-                        moveUnit(selectedPos, 'r');
-                        selectedPos.X++;
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Up) && selectedPos.Y > 0 && board[(int)selectedPos.X, (int)(selectedPos.Y - 1)].IsHighlighted)
-                    {
-                        moveUnit(selectedPos, 'u');
-                        selectedPos.Y--;
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Down) && selectedPos.Y < boardHeight - 1 && board[(int)selectedPos.X, (int)(selectedPos.Y + 1)].IsHighlighted)
-                    {
-                        moveUnit(selectedPos, 'd');
-                        selectedPos.Y++;
-                    }
+                    buttonPressed = false;
                 }
-                moveTimeElapsed = 0;
+                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X))
+                {
+                    buttonPressed = true;
+                }
             }
 
-            //Prevents holding a button to continuously activate events
-            if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X))
-            {
-                buttonPressed = false;
-            }
-            if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X))
-            {
-                buttonPressed = true;
-            }
+
+
+
+
         }
 
 
@@ -420,6 +462,9 @@ namespace JSA_Game.Maps
 
             //Draw cursor on top of board.
             cursor.draw(spriteBatch, startw, starth, tileSize);
+
+            //Draw HUD
+            HUD.Draw(spriteBatch);
         }
     }
 }

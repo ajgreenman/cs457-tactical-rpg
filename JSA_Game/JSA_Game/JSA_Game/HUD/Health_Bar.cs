@@ -13,12 +13,19 @@ namespace JSA_Game.HUD
         const int BAR_HEIGHT = 25;
         const int BAR_WIDTH = 250;
 
-        private int targetHealth;
+        private int targetMaxHealth;
+        private int targetCurrHealth;
         Texture2D healthBar;
 
-        public Health_Bar(int currentHealth)
+        public Health_Bar()
         {
-            targetHealth = currentHealth;
+            
+        }
+
+        public void characterSelect(Character c)
+        {
+            targetMaxHealth = c.MaxHP;
+            targetCurrHealth = c.CurrHp;
         }
 
         public void LoadContent(ContentManager Content)

@@ -39,18 +39,13 @@ namespace JSA_Game.HUD
         int targetArmor;
         int targetMagic;
         int targetResistance;
+        int targetAccuracy;
         int targetDodge;
+        int targetMovement;
 
         //Constructor
-        public Stat_Section(int tS, int tA, int tM, int tR, int tD)
+        public Stat_Section()
         {
-            //Initializing Stat Values
-            targetStrength = tS;
-            targetArmor = tA;
-            targetMagic = tM;
-            targetResistance = tR;
-            targetDodge = tD;
-
             //Initializing Vector2 Objects for Draw Positions
             stat_pos = new Vector2(STAT_POS, 530);
             str_pos = new Vector2(STR_POS, 550);
@@ -58,6 +53,17 @@ namespace JSA_Game.HUD
             mag_pos = new Vector2(MAG_POS, 550);
             res_pos = new Vector2(RES_POS, 570);
             dod_pos = new Vector2(DOD_POS, 590);
+        }
+
+        public void characterSelect(Character c)
+        {
+            targetStrength = c.Strength;
+            targetArmor = c.Armor;
+            targetMagic = c.Magic;
+            targetResistance = c.Resist;
+            targetAccuracy = c.Accuracy;
+            targetDodge = c.Dodge;
+            targetMovement = c.Movement;
         }
 
         //Loading Stat Fonts

@@ -119,8 +119,10 @@
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="HUD\Mana_Bar.cs" />
     <Compile Include="HUD\Stat_Section.cs" />
+    <Compile Include="Maps\TurnState.cs" />
     <Compile Include="Maps\Cursor.cs" />
     <Compile Include="Maps\Level.cs" />
+    <Compile Include="Maps\LevelState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

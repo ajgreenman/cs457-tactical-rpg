@@ -13,12 +13,18 @@ namespace JSA_Game.HUD
     {
         const int BAR_HEIGHT = 25;
         const int BAR_WIDTH = 250;
-        private int targetMana;
+        private int targetMaxMana;
+        private int targetCurrMana;
         Texture2D manaBar;
 
-        public Mana_Bar(int currentMana)
+        public Mana_Bar()
         {
-            targetMana = currentMana;
+        }
+
+        public void characterSelect(Character c)
+        {
+            targetMaxMana = c.MaxMP;
+            targetCurrMana = c.CurrMp;
         }
 
         public void LoadContent(ContentManager Content)

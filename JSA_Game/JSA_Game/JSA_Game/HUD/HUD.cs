@@ -5,11 +5,12 @@ using System.Text;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using JSA_Game.CharClasses;
 
 
 namespace JSA_Game.HUD
 {
-    public class HUD_Controller
+    class HUD_Controller
     {
         const int GRAPHIC_HEIGHT = 150;
         const int GRAPHIC_WIDTH = 900;
@@ -19,30 +20,24 @@ namespace JSA_Game.HUD
 
         Health_Bar healthBar;
         Mana_Bar manaBar;
+        //experienceBar;
         Stat_Section statSection;
 
-        int targetHealth;
-        int targetMana;
-        int targetStrength;
-        int targetArmor;
-        int targetMagic;
-        int targetResistance;
-        int targetDodge;
+        private Boolean hidden;
 
-        public HUD_Controller(int tH, int tMAN, int tS, int tA, int tMAG, int tR, int tD)
+        public HUD_Controller()
         {
-            targetHealth = tH;
-            targetMana = tMAN;
-            targetStrength = tS;
-            targetArmor = tA;
-            targetMagic = tMAG;
-            targetResistance = tR;
-            targetDodge = tD;
 
-            healthBar = new Health_Bar(targetHealth);
-            manaBar = new Mana_Bar(targetMana);
-            statSection = new Stat_Section(targetStrength, targetArmor, targetMagic, targetResistance, targetDodge);
+
+            healthBar = new Health_Bar();
+            manaBar = new Mana_Bar();
+            //experienceBar = new Experience_Bar()
+
+            statSection = new Stat_Section();
+
+            hidden = true;
         }
+
 
         public void LoadContent(ContentManager Content)
         {
@@ -53,6 +48,12 @@ namespace JSA_Game.HUD
             hud = Content.Load<Texture2D>("brown-rectangle");
         }
 
+        public void characterSelect(Character c)
+        {
+            healthBar.characterSelect(c);
+            manaBar.characterSelect(c);        
+            statSection.characterSelect(c);
+        }
         public void update(GameTime gameTime)
         {
 
@@ -62,9 +63,22 @@ namespace JSA_Game.HUD
         {
             //spriteBatch.Draw(gameBorder, new Rectangle(0, 0, 560, 620), Color.White);
             spriteBatch.Draw(hud, new Rectangle(0, 500, GRAPHIC_WIDTH, GRAPHIC_HEIGHT), Color.White);
-            manaBar.Draw(spriteBatch);
-            healthBar.Draw(spriteBatch);
-            statSection.Draw(spriteBatch);
+            if (!hidden)
+            {
+                manaBar.Draw(spriteBatch);
+                healthBar.Draw(spriteBatch);
+                statSection.Draw(spriteBatch);
+            }
+
+        }
+
+
+
+
+        public Boolean Hidden
+        {
+            get { return hidden; }
+            set { hidden = value; }
         }
     }
 }

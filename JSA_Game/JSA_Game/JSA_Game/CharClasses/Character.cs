@@ -13,7 +13,7 @@ namespace JSA_Game
         const int DEFAULT_STATS = 5;
 
 
-        protected Battle_Controller.Action[] actions;
+        public Battle_Controller.Action[] actions;
 
         public Battle_Controller.Action[] Actions
         {
@@ -27,6 +27,24 @@ namespace JSA_Game
             get { return isEnemy; }
             set { isEnemy = value; }
         }
+
+        private Boolean moveDisabled;
+        public Boolean MoveDisabled
+        {
+            get { return moveDisabled; }
+            set { moveDisabled = value; }
+        }
+
+        private Boolean actionDisabled;
+
+        public Boolean ActionDisabled
+        {
+            get { return actionDisabled; }
+            set { actionDisabled = value; }
+        }
+        
+        
+
 
         private int movement;
         public int Movement
@@ -64,6 +82,8 @@ namespace JSA_Game
             movement = DEFAULT_STATS;
             level = 1;
             isEnemy = false;
+            moveDisabled = false;
+            actionDisabled = false;
         }
 
         //Character stats
