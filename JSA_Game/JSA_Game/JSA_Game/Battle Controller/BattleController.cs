@@ -3,353 +3,263 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JSA_Game
+namespace JSA_Game.Battle_Controller
 {
-    // Ideas
-    // Add functionality for actions that affect more than one target.
-    // Add functionality for actions against non-characters (for example, land).
-
-    class BattleController
+    static class BattleController
     {
-        BattleController()
+        /// <summary>
+        /// Checks that a particular action is valid. At the moment it simply checks that the user is within range of the target.
+        /// </summary>
+        /// <param name="action">Action to be performed.</param>
+        /// <param name="userPosition">Position of the character performing the action. </param>
+        /// <param name="targetPosition">Position of the target character.</param>
+        /// <returns>True if the action is valid, false otherwise.</returns>
+        public static Boolean isValidAction(Action action, Character user, Position userPosition, Position targetPosition)
         {
-            // Does anything actually need to be initialized?
+            if (action.Aoe)
+            {
+                // If the action is an area of effect action, its range does not need to be checked.
+                return true;
+            }
+
+            return action.Range <= calculateDistance(userPosition, targetPosition);
         }
 
         /// <summary>
-        /// Attempts to initiate an action on a target character.
+        /// Attempts to perform an action on a single target. Assumes that the action has already been checked to be valid.
         /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>True if the action is valid, false otherwise.</returns>
-        public Boolean initiateAction(Action action, Character unit, Character target)
+        /// <param name="action">Action to be performed.</param>
+        /// <param name="user">Character performing the action.</param>
+        /// <param name="target">Target character.</param>
+        /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
+        public static Boolean performAction(Action action, Character user, Character target)
         {
-            if(!isValidAction(action, unit, target))
+            if(!didActionHit(action, user, target))
             {
                 return false;
             }
 
-            if (didUnitMiss(unit, target))
+            if (action.Aoe)
             {
-                return false;
+                // Different logic will need to be implemented for area of effect actions.
             }
-
-            unit.CurrMp -= action.MpCost;
-
-            int amount;
-            switch (action.StatTarget)
+            else
             {
-                case "hp":
-                    amount = calculateHp(action, unit, target);
-                    target.CurrHp -= amount;
-                    break;
-                case "mp":
-                    amount = calculateMp(action, unit, target);
-                    target.CurrMp -= amount;
-                    break;
-                case "strength":
-                    amount = calculateStrength(action, unit, target);
-                    target.Strength -= amount;
-                    break;
-                case "armor":
-                    amount = calculateArmor(action, unit, target);
-                    target.Armor -= amount;
-                    break;
-                case "accuracy":
-                    amount = calculateAccuracy(action, unit, target);
-                    target.Accuracy -= amount;
-                    break;
-                case "dodge":
-                    amount = calculateDodge(action, unit, target);
-                    target.Dodge -= amount;
-                    break;
-                case "magic":
-                    amount = calculateMagic(action, unit, target);
-                    target.Magic -= amount;
-                    break;
-                case "resist":
-                    amount = calculateResist(action, unit, target);
-                    target.Resist -= amount;
-                    break;
-                default:
-                    return false;
+                calculateAction(action, user, target);
             }
 
             return true;
         }
 
         /// <summary>
-        /// Determines whether an action is valid or not. An action is valid if the character performing
-        /// the action is both within range of the target and if the target character is a valid target 
-        /// to perform the action on.
+        /// Calculates the distance between two positions on the board.
         /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>True if the action is valid, false otherwise.</returns>
-        private Boolean isValidAction(Action action, Character unit, Character target)
+        /// <param name="position1">Position 1.</param>
+        /// <param name="position2">Position 2.</param>
+        /// <returns>Distance between two positions.</returns>
+        private static int calculateDistance(Position position1, Position position2)
         {
-            return isValidTarget(unit, target, action) && isWithinRange(action, unit, target);
+            return Math.Abs(position1.X - position2.X) + Math.Abs(position1.Y - position2.Y);
         }
 
         /// <summary>
-        /// Checks if the target character is a valid target to perform the action on.
+        /// Determines whether or not the action hits the intended target.
         /// </summary>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <param name="action">Attempted action.</param>
-        /// <returns>True is the target is valid, false otherwise.</returns>
-        private Boolean isValidTarget(Character unit, Character target, Action action)
+        /// <param name="action">Action to be performed.</param>
+        /// <param name="user">Character performing the action.</param>
+        /// <param name="target">Target character.</param>
+        /// <returns>True if the action hit, false if it misses.</returns>
+        private static Boolean didActionHit(Action action, Character user, Character target)
         {
-            if (action.Friendly)
+            if (action.Aoe)
             {
-                return unit.IsEnemy == target.IsEnemy;
+                // Area of effect attacks always hit.
+                return true;
             }
-            else
+
+            Random rng = new Random();
+
+            int chanceToHit = user.Accuracy - target.Dodge + 85;
+            int random = rng.Next(0, 100);
+
+            return chanceToHit >= random;
+        }
+
+        private static void calculateAction(Action action, Character user, Character target)
+        {
+            calculateUserCost(action, user);
+            calculateTargetEffect(action, user, target);
+        }
+
+        /// <summary>
+        /// Calculates the cost of an action on the user.
+        /// </summary>
+        /// <param name="action">Action to be performed.</param>
+        /// <param name="user">User performing the action.</param>
+        private static void calculateUserCost(Action action, Character user)
+        {
+            StatType[] costType = action.StatCost;
+
+            foreach (StatType stat in costType)
             {
-                return unit.IsEnemy != target.IsEnemy;
+                switch (stat)
+                {
+                    case StatType.Accuracy:
+                        user.Accuracy -= action.Cost;
+                        break;
+                    case StatType.Armor:
+                        user.Armor -= action.Cost;
+                        break;
+                    case StatType.Dodge:
+                        user.Dodge -= action.Cost;
+                        break;
+                    case StatType.Hp:
+                        user.CurrHp -= action.Cost;
+                        break;
+                    case StatType.Magic:
+                        user.Magic -= action.Cost;
+                        break;
+                    case StatType.Mp:
+                        user.CurrMp -= action.Cost;
+                        break;
+                    case StatType.Resist:
+                        user.Resist -= action.Cost;
+                        break;
+                    case StatType.Strength:
+                        user.Strength -= action.Cost;
+                        break;
+                    default:
+                        user.CurrMp -= action.Cost;
+                        break;
+                }
             }
         }
 
         /// <summary>
-        /// Checks that the unit performing the action is within range of the target.
+        /// Calculates the cost of an action on the target.
         /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Chracter initiating the action.</param>
-        /// <param name="target">Attempted action.</param>
-        /// <returns>True if target is within range, false otherwise.</returns>
-        private Boolean isWithinRange(Action action, Character unit, Character target)
+        /// <param name="action">Action to be performed.</param>
+        /// <param name="user">User performing the action.</param>
+        /// <param name="target">Target character.</param>
+        private static void calculateTargetEffect(Action action, Character user, Character target)
         {
-            int distance = calculateRange(unit, target);
+            StatType[] effectType = action.TargetStat;
 
-            if (action.Ranged)
-            {
-                return distance < 10;
-            }
-            else
-            {
-                return distance == 1;
-            }
-        }
-
-        /// <summary>
-        /// Calculates the distance between two characters.
-        /// </summary>
-        /// <param name="char1">First character.</param>
-        /// <param name="char2">Second character</param>
-        /// <returns>Distance between the two characters.</returns>
-        private int calculateRange(Character char1, Character char2)
-        {
-            float xDistance = Math.Abs(char1.Pos.X - char2.Pos.X);
-            float yDistance = Math.Abs(char1.Pos.Y - char2.Pos.Y);
-
-            return (int) (xDistance + yDistance);
-        }
-
-        /// <summary>
-        /// Determines whether or not the action will miss.
-        /// </summary>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>True if the action missed, false otherwise.</returns>
-        private Boolean didUnitMiss(Character unit, Character target)
-        {
-            Random rng = new Random(); // Seed this.
-
-            int chanceToHit = unit.Accuracy - target.Dodge + 70;
-            int value = rng.Next(100);
-
-            return chanceToHit < value;
-        }
-
-        /// <summary>
-        /// Calculates the amount of hp affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of hp affected.</returns>
-        private int calculateHp(Action action, Character unit, Character target)
-        {
             int amount = 0;
-
-            if (action.Spell)
+            foreach (StatType stat in effectType)
             {
-                amount = unit.Magic - target.Resist + 5;
+                switch (stat)
+                {
+                    case StatType.Accuracy:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Accuracy -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Accuracy -= amount;
+                        }
+                        break;
+                    case StatType.Armor:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Armor -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Armor -= amount;
+                        }
+                        break;
+                    case StatType.Dodge:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Dodge -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Dodge -= amount;
+                        }
+                        break;
+                    case StatType.Hp:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.CurrHp -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.CurrHp -= amount;
+                        }
+                        break;
+                    case StatType.Magic:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Magic -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Magic -= amount;
+                        }
+                        break;
+                    case StatType.Mp:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.CurrMp -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.CurrMp -= amount;
+                        }
+                        break;
+                    case StatType.Resist:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Resist -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Resist -= amount;
+                        }
+                        break;
+                    case StatType.Strength:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.Strength -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.Strength -= amount;
+                        }
+                        break;
+                    default:
+                        if (action.Type == ActionType.Physical)
+                        {
+                            amount = user.Magic - target.Resist + 5;
+                            target.CurrHp -= amount;
+                        }
+                        else
+                        {
+                            amount = user.Strength - target.Armor + 5;
+                            target.CurrHp -= amount;
+                        }
+                        break;
+                }
             }
-            else
-            {
-                amount = unit.Strength - target.Armor + 5;
-            }
-
-            return amount;
-        }
-
-        /// <summary>
-        /// Calculates the amount of mp affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of mp affected.</returns>
-        private int calculateMp(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Resist + 5;
-            }
-
-            return amount;
-        }
-
-        /// <summary>
-        /// Calculates the amount of strength affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of strength affected.</returns>
-        private int calculateStrength(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Resist + 5;
-            }
-
-            return amount;
-        }
-
-
-        /// <summary>
-        /// Calculates the amount of armor affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of armor affected.</returns>
-        private int calculateArmor(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Armor + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Armor + 5;
-            }
-
-            return amount;
-        }
-
-
-        /// <summary>
-        /// Calculates the amount of accuracy affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of accuracy affected.</returns>
-        private int calculateAccuracy(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Armor + 5;
-            }
-
-            return amount;
-        }
-
-
-        /// <summary>
-        /// Calculates the amount of dodge affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of dodge affected.</returns>
-        private int calculateDodge(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Armor + 5;
-            }
-
-            return amount;
-        }
-
-
-        /// <summary>
-        /// Calculates the amount of magic affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of magic affected.</returns>
-        private int calculateMagic(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Resist + 5;
-            }
-
-            return amount;
-        }
-
-
-        /// <summary>
-        /// Calculates the amount of resist affected by an action.
-        /// </summary>
-        /// <param name="action">Attempted action.</param>
-        /// <param name="unit">Character initiating the action.</param>
-        /// <param name="target">Target character to perform the action on.</param>
-        /// <returns>Amount of resist affected.</returns>
-        private int calculateResist(Action action, Character unit, Character target)
-        {
-            int amount = 0;
-
-            if (action.Spell)
-            {
-                amount = unit.Magic - target.Resist + 5;
-            }
-            else
-            {
-                amount = unit.Strength - target.Resist + 5;
-            }
-
-            return amount;
         }
     }
 }

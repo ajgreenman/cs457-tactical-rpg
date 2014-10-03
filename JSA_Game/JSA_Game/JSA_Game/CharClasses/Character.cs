@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 
 namespace JSA_Game
 {
-
     class Character
     {
         //Default Stats
@@ -131,6 +130,5 @@ namespace JSA_Game
             level = 1;
             isEnemy = false;
         }
-
     }
 }

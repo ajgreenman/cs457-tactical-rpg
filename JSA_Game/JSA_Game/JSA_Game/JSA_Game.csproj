@@ -108,7 +108,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Battle Controller\Action.cs" />
+    <Compile Include="Battle Controller\ActionType.cs" />
     <Compile Include="Battle Controller\BattleController.cs" />
+    <Compile Include="Battle Controller\Position.cs" />
+    <Compile Include="Battle Controller\StatType.cs" />
     <Compile Include="CharClasses\Mage.cs" />
     <Compile Include="CharClasses\Warrior.cs" />
     <Compile Include="CharClasses\Character.cs" />

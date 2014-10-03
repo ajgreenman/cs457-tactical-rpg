@@ -10,7 +10,7 @@ namespace JSA_Game.Battle_Controller
         private String name;
         private StatType[] targetStat, statCost;
         private ActionType type;
-        private Boolean ignoreEnemyStats, friendly;
+        private Boolean ignoreEnemyStats, friendly, aoe;
         private int powerMultiplier, cost, range;
 
         /// <summary>
@@ -22,10 +22,11 @@ namespace JSA_Game.Battle_Controller
         /// <param name="type">Type of action, physical or spell.</param>
         /// <param name="ignoreEnemyStats">Determines whether or not the action ignores enemy stats.</param>
         /// <param name="friendly">Determines whether or not the action is friendly.</param>
+        /// <param name="aoe">Determines whether or not the action is an area of effect action</param>
         /// <param name="powerMultiplier">Determines how much power the action has.</param>
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
         public Action(String name, StatType[] targetStat, StatType[] statCost, ActionType type,
-            Boolean ignoreEnemyStats, Boolean friendly, int powerMultiplier, int cost, int range)
+            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, int powerMultiplier, int cost, int range)
         {
             this.name = name;
             this.targetStat = targetStat;
@@ -33,6 +34,7 @@ namespace JSA_Game.Battle_Controller
             this.type = type;
             this.ignoreEnemyStats = ignoreEnemyStats;
             this.friendly = friendly;
+            this.aoe = aoe;
             this.powerMultiplier = powerMultiplier;
             this.cost = cost;
             this.range = range;
@@ -74,7 +76,7 @@ namespace JSA_Game.Battle_Controller
             set { statCost = value; }
         }
 
-        public ActionType TargetStat
+        public ActionType Type
         {
             get { return type; }
             set { type = value; }
@@ -90,6 +92,12 @@ namespace JSA_Game.Battle_Controller
         {
             get { return friendly; }
             set { friendly = value; }
+        }
+
+        public Boolean Aoe
+        {
+            get { return aoe; }
+            set { aoe = value; }
         }
 
         public int PowerMultiplier
