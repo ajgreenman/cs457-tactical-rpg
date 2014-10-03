@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using JSA_Game.HUD;
+using JSA_Game.Battle_Controller;
 
 namespace JSA_Game.Maps
 {
@@ -339,10 +340,12 @@ namespace JSA_Game.Maps
 
                             selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
 
+                            /*
                             if (playerUnits.ContainsKey(cursor.CursorPos))
                             {
                                 toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
                             }
+                             */
                         }
                     }
                     //If already selected, confirm move and hide movement range.
@@ -405,12 +408,58 @@ namespace JSA_Game.Maps
                     moveTimeElapsed = 0;
                 }
 
+
+                if (state == LevelState.Selected)
+                {
+                    if (keyboard.IsKeyDown(Keys.M) && !buttonPressed)
+                    {
+                        if (playerUnits.ContainsKey(cursor.CursorPos))
+                        {
+                            toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
+                        }
+                    }
+
+                    if (keyboard.IsKeyDown(Keys.A) && !buttonPressed)
+                    {
+                        state = LevelState.Action;
+                    }
+                }
+
+
+
+                if (state == LevelState.Action)
+                {
+                    if (keyboard.IsKeyDown(Keys.K) && !buttonPressed)
+                    {
+                        Character c = playerUnits[cursor.CursorPos];
+                        Vector2 target = new Vector2(cursor.CursorPos.X + 1, cursor.CursorPos.Y);
+                        Character enemy = enemyUnits[target];
+                        if (BattleController.isValidAction(c.Actions[0], c, cursor.CursorPos, target))
+                        {
+                            System.Diagnostics.Debug.Print("Enemy HP is " + enemy.CurrHp);
+                            BattleController.performAction(c.Actions[0], c, enemy);
+                            System.Diagnostics.Debug.Print("Enemy HP now is " + enemy.CurrHp);
+                        }
+
+                        if (enemyUnits[target].CurrHp < 1){
+                            board[(int)target.X, (int)target.Y].IsOccupied = false;
+                            enemyUnits.Remove(target);
+                        }
+
+                        state = LevelState.Selected;
+
+                    }
+                  
+                }
+
+
+
                 //Prevents holding a button to continuously activate events
-                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X))
+                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) || keyboard.IsKeyUp(Keys.A))
                 {
                     buttonPressed = false;
                 }
-                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X))
+                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) || keyboard.IsKeyDown(Keys.A))
                 {
                     buttonPressed = true;
                 }

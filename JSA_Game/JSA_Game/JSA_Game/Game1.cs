@@ -22,8 +22,9 @@ namespace JSA_Game
         //Constants
 
         const int TILE_SIZE = 50;
-        int MAP_START_H = 30;
-        int MAP_START_W = 30;
+
+        int MAP_START_H = 0;
+        int MAP_START_W = 0;
 
         //Game Variables
         GraphicsDeviceManager graphics;
@@ -41,8 +42,8 @@ namespace JSA_Game
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferHeight = 780;
-            graphics.PreferredBackBufferWidth = 900;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
             //Initialize Example Level

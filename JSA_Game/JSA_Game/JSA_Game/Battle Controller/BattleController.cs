@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -14,7 +15,7 @@ namespace JSA_Game.Battle_Controller
         /// <param name="userPosition">Position of the character performing the action. </param>
         /// <param name="targetPosition">Position of the target character.</param>
         /// <returns>True if the action is valid, false otherwise.</returns>
-        public static Boolean isValidAction(Action action, Character user, Position userPosition, Position targetPosition)
+        public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
             if (action.Aoe)
             {
@@ -57,9 +58,9 @@ namespace JSA_Game.Battle_Controller
         /// <param name="position1">Position 1.</param>
         /// <param name="position2">Position 2.</param>
         /// <returns>Distance between two positions.</returns>
-        private static int calculateDistance(Position position1, Position position2)
+        private static int calculateDistance(Vector2 position1, Vector2 position2)
         {
-            return Math.Abs(position1.X - position2.X) + Math.Abs(position1.Y - position2.Y);
+            return Math.Abs((int)position1.X - (int)position2.X) + Math.Abs((int)position1.Y - (int)position2.Y);
         }
 
         /// <summary>
@@ -189,14 +190,13 @@ namespace JSA_Game.Battle_Controller
                     case StatType.Hp:
                         if (action.Type == ActionType.Physical)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.CurrHp -= amount;
+                            amount = user.Strength - target.Armor + 3;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.CurrHp -= amount;
+                            amount = user.Magic - target.Resist + 5;
                         }
+                        target.CurrHp -= amount;
                         break;
                     case StatType.Magic:
                         if (action.Type == ActionType.Physical)
