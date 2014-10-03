@@ -28,7 +28,13 @@ namespace JSA_Game
             set { isEnemy = value; }
         }
 
-        int movement;
+        private int movement;
+        public int Movement
+        {
+            get { return movement; }
+            set { movement = value; }
+        }
+
         int level;
         int currExp;
 

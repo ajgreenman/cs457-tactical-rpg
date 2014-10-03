@@ -73,6 +73,24 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
       <Time>2014-09-29T16:41:27.8982332-04:00</Time>
     </Item>
+    <Item>
+      <Source>blue_highlight.png</Source>
+      <Name>blue_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blue_highlight.xnb</Output>
+      <Time>2014-10-03T16:55:52.1910343-04:00</Time>
+    </Item>
+    <Item>
+      <Source>no_highlight.png</Source>
+      <Name>no_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\no_highlight.xnb</Output>
+      <Time>2014-10-03T16:55:05.9517844-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID Null="true" />

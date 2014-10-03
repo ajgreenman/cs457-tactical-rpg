@@ -15,24 +15,25 @@ namespace JSA_Game
             get { return isOccupied; }
             set { isOccupied = value; }
         }
-
-        private Character occupant;
-        public Character Occupant
+        private Boolean isHighlighted;
+        public Boolean IsHighlighted
         {
-            get { return occupant; }
-            set { occupant = value; }
+            get { return isHighlighted; }
+            set { isHighlighted = value; }
         }
 
         public Tile()
         {
             landType = DEFAULT_LAND;
             isOccupied = false;
+            isHighlighted = false;
         }
 
         public Tile(String lType)
         {
             landType = lType;
             isOccupied = false;
+            isHighlighted = false;
         }
     }
 }

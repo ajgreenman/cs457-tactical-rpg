@@ -6,3 +6,5 @@ Content\bar_base.xnb
 Content\brown-rectangle.xnb
 Content\Border.xnb
 Content\StatFont.xnb
+Content\blue_highlight.xnb
+Content\no_highlight.xnb
