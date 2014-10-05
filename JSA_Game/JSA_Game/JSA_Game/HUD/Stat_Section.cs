@@ -11,12 +11,23 @@ namespace JSA_Game.HUD
     class Stat_Section
     {
         //Position Macros
-        const int STAT_POS = 390; 
-        const int STR_POS = 330;
-        const int ARMR_POS = 330;
-        const int MAG_POS = 450;
-        const int RES_POS = 450;
-        const int DOD_POS = 390;
+        const int STAT_POSx = 220; 
+        const int STR_POSx = 175;
+        const int ARMR_POSx = 175;
+        const int MAG_POSx = 265;
+        const int RES_POSx = 265;
+        const int DOD_POSx = 175;
+        const int ACC_POSx = 265;
+        const int MOV_POSx = 220;
+
+        const int STAT_POSy = 500;
+        const int STR_POSy= 520;
+        const int ARMR_POSy = 540;
+        const int MAG_POSy = 520;
+        const int RES_POSy = 540;
+        const int DOD_POSy = 560;
+        const int ACC_POSy = 560;
+        const int MOV_POSy = 580;
 
         //Vector2 Objects
         Vector2 stat_pos; 
@@ -25,6 +36,8 @@ namespace JSA_Game.HUD
         Vector2 mag_pos;
         Vector2 res_pos;
         Vector2 dod_pos;
+        Vector2 acc_pos;
+        Vector2 mov_pos;
 
         //Stat Fonts
         SpriteFont fStatHeader;
@@ -33,6 +46,8 @@ namespace JSA_Game.HUD
         SpriteFont fMagic;
         SpriteFont fResistance;
         SpriteFont fDodge;
+        SpriteFont fAccuracy;
+        SpriteFont fMovement;
 
         //Stat Types
         int targetStrength;
@@ -47,12 +62,14 @@ namespace JSA_Game.HUD
         public Stat_Section()
         {
             //Initializing Vector2 Objects for Draw Positions
-            stat_pos = new Vector2(STAT_POS, 530);
-            str_pos = new Vector2(STR_POS, 550);
-            armr_pos = new Vector2(ARMR_POS, 570);
-            mag_pos = new Vector2(MAG_POS, 550);
-            res_pos = new Vector2(RES_POS, 570);
-            dod_pos = new Vector2(DOD_POS, 590);
+            stat_pos = new Vector2(STAT_POSx, STAT_POSy);
+            str_pos = new Vector2(STR_POSx, STR_POSy);
+            armr_pos = new Vector2(ARMR_POSx, ARMR_POSy);
+            mag_pos = new Vector2(MAG_POSx, MAG_POSy);
+            res_pos = new Vector2(RES_POSx, RES_POSy);
+            dod_pos = new Vector2(DOD_POSx, DOD_POSy);
+            acc_pos = new Vector2(ACC_POSx, ACC_POSy);
+            mov_pos = new Vector2(MOV_POSx, MOV_POSy);
         }
 
         public void characterSelect(Character c)
@@ -75,23 +92,21 @@ namespace JSA_Game.HUD
             fMagic = Content.Load<SpriteFont>("StatFont");
             fResistance = Content.Load<SpriteFont>("StatFont");
             fDodge = Content.Load<SpriteFont>("StatFont");
-        }
-
-        //Updating Stat Values and Corresponding Fonts
-        public void update(GameTime gameTime)
-        {
-
+            fAccuracy = Content.Load<SpriteFont>("StatFont");
+            fMovement = Content.Load<SpriteFont>("StatFont");
         }
 
         //Drawing Stat Fonts
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(fStatHeader,"Stats", stat_pos, Color.Blue);
-            spriteBatch.DrawString(fStrength,"STR: " + targetStrength, str_pos, Color.Blue);
-            spriteBatch.DrawString(fArmor, "ARMR: " + targetArmor, armr_pos ,Color.Blue);
-            spriteBatch.DrawString(fMagic, "MAG: " + targetMagic, mag_pos, Color.Blue);
-            spriteBatch.DrawString(fResistance, "RES: " + targetResistance, res_pos, Color.Blue);
-            spriteBatch.DrawString(fDodge, "Dodge: " + targetDodge, dod_pos, Color.Blue);
+            spriteBatch.DrawString(fStatHeader,"Stats", stat_pos, Color.Black);
+            spriteBatch.DrawString(fStrength,"STR: " + targetStrength, str_pos, Color.Black);
+            spriteBatch.DrawString(fArmor, "ARM: " + targetArmor, armr_pos ,Color.Black);
+            spriteBatch.DrawString(fMagic, "MAG: " + targetMagic, mag_pos, Color.Black);
+            spriteBatch.DrawString(fResistance, "RES: " + targetResistance, res_pos, Color.Black);
+            spriteBatch.DrawString(fDodge, "DOD: " + targetDodge, dod_pos, Color.Black);
+            spriteBatch.DrawString(fAccuracy, "ACC: " + targetAccuracy, acc_pos, Color.Black);
+            spriteBatch.DrawString(fMovement, "MOV: " + targetMovement, mov_pos, Color.Black);
         }
     }
 }

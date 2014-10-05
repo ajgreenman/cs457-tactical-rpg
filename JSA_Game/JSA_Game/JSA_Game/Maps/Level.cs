@@ -375,7 +375,7 @@ namespace JSA_Game.Maps
                         selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
                     }
                 }
-                HUD.Hidden = state == LevelState.CursorSelection;
+                HUD.Hidden = state != LevelState.CursorSelection;
                 moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (selected && moveTimeElapsed >= moveDelay)   // A unit is selected
                 {

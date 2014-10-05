@@ -115,6 +115,7 @@
     <Compile Include="CharClasses\Mage.cs" />
     <Compile Include="CharClasses\Warrior.cs" />
     <Compile Include="CharClasses\Character.cs" />
+    <Compile Include="HUD\Experience_Bar.cs" />
     <Compile Include="HUD\Health_Bar.cs" />
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="HUD\Mana_Bar.cs" />

@@ -11,7 +11,7 @@ namespace JSA_Game.HUD
     class Health_Bar
     {
         const int BAR_HEIGHT = 25;
-        const int BAR_WIDTH = 250;
+        const int BAR_WIDTH = 125;
 
         private int targetMaxHealth;
         private int targetCurrHealth;
@@ -33,14 +33,9 @@ namespace JSA_Game.HUD
            healthBar = Content.Load<Texture2D>("bar_base");
         }
 
-        public void update(GameTime gameTime)
-        {
-
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(healthBar, new Rectangle(30, 585, BAR_WIDTH, BAR_HEIGHT), Color.White);
+            spriteBatch.Draw(healthBar, new Rectangle(30, 507, BAR_WIDTH, BAR_HEIGHT), Color.White);
         }
     }
 }
