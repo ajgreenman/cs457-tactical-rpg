@@ -12,57 +12,18 @@ namespace JSA_Game
         const int DEFAULT_HP = 15;
         const int DEFAULT_STATS = 5;
 
-
-        public Battle_Controller.Action[] actions;
-
-        public Battle_Controller.Action[] Actions
-        {
-            get { return actions; }
-            set { actions = value; }
-        }
-
-        Boolean isEnemy;
-        public Boolean IsEnemy
-        {
-            get { return isEnemy; }
-            set { isEnemy = value; }
-        }
+        private Battle_Controller.Action[] actions;
+        private Boolean isEnemy;
 
         private Boolean moveDisabled;
-        public Boolean MoveDisabled
-        {
-            get { return moveDisabled; }
-            set { moveDisabled = value; }
-        }
-
         private Boolean actionDisabled;
-
-        public Boolean ActionDisabled
-        {
-            get { return actionDisabled; }
-            set { actionDisabled = value; }
-        }
-        
-        
-
-
         private int movement;
-        public int Movement
-        {
-            get { return movement; }
-            set { movement = value; }
-        }
-
-        int level;
-        int currExp;
+        private int level;
+        private int currExp;
 
         //Image
         String texture;
-        public String Texture
-        {
-            get { return texture; }
-            set { texture = value; }
-        }
+        
 
         public Character()
         {
@@ -81,6 +42,7 @@ namespace JSA_Game
 
             movement = DEFAULT_STATS;
             level = 1;
+            currExp = 0;
             isEnemy = false;
             moveDisabled = false;
             actionDisabled = false;
@@ -165,6 +127,47 @@ namespace JSA_Game
         {
             get { return resist; }
             set { resist = value; }
+        }
+
+        public Battle_Controller.Action[] Actions
+        {
+            get { return actions; }
+            set { actions = value; }
+        }
+        public Boolean MoveDisabled
+        {
+            get { return moveDisabled; }
+            set { moveDisabled = value; }
+        }
+        public Boolean ActionDisabled
+        {
+            get { return actionDisabled; }
+            set { actionDisabled = value; }
+        }
+        public int Movement
+        {
+            get { return movement; }
+            set { movement = value; }
+        }
+        public int Level
+        {
+            get { return level; }
+            set { level = value; }
+        }
+        public int CurrExp
+        {
+            get { return currExp; }
+            set { currExp = value; }
+        }
+        public Boolean IsEnemy
+        {
+            get { return isEnemy; }
+            set { isEnemy = value; }
+        }
+        public String Texture
+        {
+            get { return texture; }
+            set { texture = value; }
         }
     }
 }

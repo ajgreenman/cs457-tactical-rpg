@@ -91,6 +91,17 @@ namespace JSA_Game.Maps
             }
         }
 
+
+        public void moveCursorDir(char dir)
+        {
+            switch(dir)
+            {
+                case 'l': cursorPos.X--; break;
+                case 'r': cursorPos.X++; break;
+                case 'u': cursorPos.Y--; break;
+                case 'd': cursorPos.Y++; break;
+            }
+        }
         public void draw(SpriteBatch spriteBatch, int startW, int startH, int tileSize)
         {
             spriteBatch.Draw(cursor, new Rectangle(startW + tileSize * (int)cursorPos.X, startH + tileSize * (int)cursorPos.Y, cursor.Width / 2, cursor.Height),

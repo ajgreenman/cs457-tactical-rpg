@@ -13,9 +13,8 @@ namespace JSA_Game.CharClasses
             Texture = "player";
 
             Battle_Controller.Action actionAttack = new Battle_Controller.Action();
-            actions[0] = actionAttack;
+            Actions[0] = actionAttack;
         }
 
-        
     }
 }

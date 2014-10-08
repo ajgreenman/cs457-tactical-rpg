@@ -127,11 +127,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Tile.cs" />
+    <Compile Include="State\CursorSelection.cs" />
+    <Compile Include="State\Movement.cs" />
+    <Compile Include="State\Selected.cs" />
+    <Compile Include="Maps\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="State\aStarLibrary.h" />
+    <Content Include="State\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JSA_GameContent\JSA_GameContent.contentproj">

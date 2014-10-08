@@ -48,8 +48,15 @@ namespace JSA_Game
 
             //Initialize Example Level
             testLevel = new Level(10, 10, 1, 1);
-            testLevel.addUnit(1, new Warrior(), new Vector2(1, testLevel.BoardHeight / 2));
-            testLevel.addUnit(0, new Mage(), new Vector2(testLevel.BoardWidth - 2, testLevel.BoardHeight / 2));
+
+            Character c = new Warrior();
+            //More movement for player
+            c.Movement = 8;
+
+            testLevel.addUnit(1, c, new Vector2(0, 0));
+            testLevel.addUnit(0, new Mage(), new Vector2(testLevel.BoardWidth -1, testLevel.BoardHeight - 1));
+
+            
 
             Content.RootDirectory = "Content";
 
