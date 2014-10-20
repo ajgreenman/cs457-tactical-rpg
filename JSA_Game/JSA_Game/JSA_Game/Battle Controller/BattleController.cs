@@ -8,6 +8,8 @@ namespace JSA_Game.Battle_Controller
 {
     static class BattleController
     {
+        private const int BASE_HIT = 60;
+
         /// <summary>
         /// Checks that a particular action is valid. At the moment it simply checks that the user is within range of the target.
         /// </summary>
@@ -35,6 +37,11 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
+            if (target == null)
+            {
+                return false;
+            }
+
             if(!didActionHit(action, user, target))
             {
                 return false;
@@ -79,9 +86,10 @@ namespace JSA_Game.Battle_Controller
             }
 
             Random rng = new Random();
-
-            int chanceToHit = user.Accuracy - target.Dodge + 85;
             int random = rng.Next(0, 100);
+
+            int chanceToHit = BASE_HIT;
+            chanceToHit *= (user.Accuracy / target.Dodge) + user.Accuracy;
 
             return chanceToHit >= random;
         }

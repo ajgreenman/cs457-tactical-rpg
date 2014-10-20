@@ -7,16 +7,18 @@ namespace JSA_Game.Battle_Controller
 {
     class Action
     {
-        private String name;
+        private String name, description;
         private StatType[] targetStat, statCost;
         private ActionType type;
         private Boolean ignoreEnemyStats, friendly, aoe;
-        private int powerMultiplier, cost, range;
+        private int cost, range;
+        private double powerMultipler;
 
         /// <summary>
         /// Describes any action that can be taken during a battle.
         /// </summary>
         /// <param name="name">Name of the action.</param>
+        /// <param name="description">Description of the action</param>
         /// <param name="targetStat">Stat the action targets (typically Hp).</param>
         /// <param name="statCost">Stat that is used to perform this action (typically Mp or nothing).</param>
         /// <param name="type">Type of action, physical or spell.</param>
@@ -25,17 +27,19 @@ namespace JSA_Game.Battle_Controller
         /// <param name="aoe">Determines whether or not the action is an area of effect action</param>
         /// <param name="powerMultiplier">Determines how much power the action has.</param>
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
-        public Action(String name, StatType[] targetStat, StatType[] statCost, ActionType type,
-            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, int powerMultiplier, int cost, int range)
+        /// <param name="range">Range of the action.</param>
+        public Action(String name, String description, StatType[] targetStat, StatType[] statCost, ActionType type,
+            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range)
         {
             this.name = name;
+            this.description = description;
             this.targetStat = targetStat;
             this.statCost = statCost;
             this.type = type;
             this.ignoreEnemyStats = ignoreEnemyStats;
             this.friendly = friendly;
             this.aoe = aoe;
-            this.powerMultiplier = powerMultiplier;
+            this.powerMultipler = powerMultiplier;
             this.cost = cost;
             this.range = range;
         }
@@ -46,12 +50,14 @@ namespace JSA_Game.Battle_Controller
         public Action()
         {
             this.name = "Attack";
+            this.description = "A standard attack.";
             this.targetStat = new StatType[] { StatType.Hp };
             this.statCost = new StatType[] { StatType.Mp };
             this.type = ActionType.Physical;
             this.ignoreEnemyStats = false;
             this.friendly = false;
-            this.powerMultiplier = 1;
+            this.aoe = false;
+            this.powerMultipler = 1.0;
             this.cost = 0;
             this.range = 1;
         }
@@ -62,6 +68,12 @@ namespace JSA_Game.Battle_Controller
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public String Description
+        {
+            get { return description; }
+            set { description = value; }
         }
 
         public StatType[] TargetStat
@@ -100,10 +112,10 @@ namespace JSA_Game.Battle_Controller
             set { aoe = value; }
         }
 
-        public int PowerMultiplier
+        public double PowerMultiplier
         {
-            get { return powerMultiplier; }
-            set { powerMultiplier = value; }
+            get { return powerMultipler; }
+            set { powerMultipler = value; }
         }
 
         public int Cost
