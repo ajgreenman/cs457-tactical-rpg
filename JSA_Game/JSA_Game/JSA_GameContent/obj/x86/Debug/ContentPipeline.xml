@@ -118,6 +118,15 @@
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\tempMove.xnb</Output>
       <Time>2014-10-08T01:21:22.5403291-04:00</Time>
     </Item>
+    <Item>
+      <Source>target_square.png</Source>
+      <Name>target_square</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\target_square.xnb</Output>
+      <Time>2014-10-19T18:01:08.9808509-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

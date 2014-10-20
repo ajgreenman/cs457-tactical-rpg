@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using JSA_Game.AI;
 
 namespace JSA_Game
 {
@@ -18,11 +19,19 @@ namespace JSA_Game
         private Boolean moveDisabled;
         private Boolean actionDisabled;
         private int movement;
+        private int attackRange;
+        
         private int level;
         private int currExp;
 
         //Image
         String texture;
+        
+        //Position
+        private Vector2 pos;
+        
+        //AI
+        private iAI ai;
         
 
         public Character()
@@ -41,11 +50,13 @@ namespace JSA_Game
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
 
             movement = DEFAULT_STATS;
+            attackRange = 1;
             level = 1;
             currExp = 0;
             isEnemy = false;
             moveDisabled = false;
             actionDisabled = false;
+            pos = new Vector2(-1, -1);
         }
 
         //Character stats
@@ -168,6 +179,22 @@ namespace JSA_Game
         {
             get { return texture; }
             set { texture = value; }
+        }
+
+        public iAI AI
+        {
+            get { return ai; }
+            set { ai = value; }
+        }
+        public int AttackRange
+        {
+            get { return attackRange; }
+            set { attackRange = value; }
+        }
+        public Vector2 Pos
+        {
+            get { return pos; }
+            set { pos = value; }
         }
     }
 }

@@ -10,9 +10,11 @@ namespace JSA_Game
     {
         private const String DEFAULT_LAND = "plain";
         private String landType;
-        private String moveImage;
+        //private String moveImage;
         private Boolean isOccupied;
         private Boolean isHighlighted;
+        private Boolean isSelected;
+
 
         //Variables used in pathfinding
         private int fScore;
@@ -35,7 +37,8 @@ namespace JSA_Game
         {
             isOccupied = false;
             isHighlighted = false;
-            moveImage = "";
+            isSelected = false;
+            //moveImage = "";
             
         }
 
@@ -44,11 +47,11 @@ namespace JSA_Game
             get { return landType; }
             set { landType = value; }
         }
-        public String MoveImage
-        {
-            get { return moveImage; }
-            set { moveImage = value; }
-        }
+        //public String MoveImage
+        //{
+        //    get { return moveImage; }
+        //    set { moveImage = value; }
+        //}
         public Boolean IsOccupied
         {
             get { return isOccupied; }
@@ -58,6 +61,11 @@ namespace JSA_Game
         {
             get { return isHighlighted; }
             set { isHighlighted = value; }
+        }
+        public Boolean IsSelected
+        {
+            get { return isSelected; }
+            set { isSelected = value; }
         }
         public int FScore
         {
@@ -74,5 +82,6 @@ namespace JSA_Game
             get { return pathParent; }
             set { pathParent = value; }
         }
+        
     }
 }

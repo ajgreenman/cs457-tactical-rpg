@@ -64,12 +64,12 @@ namespace JSA_Game.Maps
             cursor = content.Load<Texture2D>(cursorAnimation);
         }
 
-        public void moveCursor(GameTime gameTime, Level level, Boolean selected)
+        public void moveCursor(GameTime gameTime, Level level)
         {
 
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
             cursorTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (!selected && cursorTimeElapsed >= cursorMoveDelay)
+            if (/*!selected &&*/ cursorTimeElapsed >= cursorMoveDelay)
             {
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {

@@ -12,74 +12,46 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
+using JSA_Game.Maps.State;
 
 namespace JSA_Game.Maps
 {
     class Level
     {
-
         const int TILE_IMAGE_COUNT = 3;
-        const int HIGHLIGHT_IMAGE_COUNT = 2;
+        const int UTILITY_IMAGE_COUNT = 3;
 
-
-        int boardWidth;
-        public int BoardWidth
-        {
-            get { return boardWidth; }
-            set { boardWidth = value; }
-        }
-
-        int boardHeight;
-        public int BoardHeight
-        {
-            get { return boardHeight; }
-            set { boardHeight = value; }
-        }
+        int boardWidth, boardHeight;
+        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
+        private Boolean buttonPressed;
 
         private Tile[,] board;
-        public Tile[,] Board
-        {
-            get { return board; }
-            set { board = value; }
-        }
 
-        Boolean buttonPressed;
-        Boolean selected = false;
-        Vector2 selectedPos;
+        private Vector2 selectedPos;
 
         //Cursor Variables
-        Cursor cursor;
-
+        private Cursor cursor;
+       
         //Timing variables
-        float moveDelay = 100;
-        float moveTimeElapsed;
-
+        private float moveDelay = 100;
+        private float moveTimeElapsed;
+       
         //Image Data Structures
         Texture2D[] tileImages;
-        Texture2D[] highlightImages;
+        Texture2D[] utilityImages;
 
         //HUD
-        HUD_Controller HUD;
+        private HUD_Controller hud;
+        
 
-        LevelState state;
-        TurnState playerTurn;
-
-
-        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
+        //State
+        private LevelState state;
+        
+        private TurnState playerTurn;
+        
 
         Dictionary<Vector2, Character> playerUnits, enemyUnits;
         Dictionary<String, Texture2D> characterImages;
-
-        public Dictionary<Vector2, Character> PlayerUnits
-        {
-            get { return playerUnits; }
-            set { playerUnits = value; }
-        }
-        public Dictionary<Vector2, Character> EnemyUnits
-        {
-            get { return enemyUnits; }
-            set { enemyUnits = value; }
-        }
 
 
         /// <summary>
@@ -169,7 +141,7 @@ namespace JSA_Game.Maps
 
             board[1, 0].IsOccupied = true;
             board[1, 0].LandType = "stone_wall";
-            * */
+            */
 
             state = LevelState.CursorSelection;
             playerTurn = TurnState.Player;
@@ -178,7 +150,8 @@ namespace JSA_Game.Maps
             enemyUnitCount = 0;
             maxPlayerUnits = numPlayerUnits;
             MaxEnemyUnits = numEnemyUnits;
-            buttonPressed = selected = false;
+            //buttonPressed = selected = false;
+            buttonPressed = false;
             cursor = new Cursor();
 
             playerUnits = new Dictionary<Vector2, Character>();
@@ -186,9 +159,9 @@ namespace JSA_Game.Maps
 
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
-            highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
+            utilityImages = new Texture2D[UTILITY_IMAGE_COUNT];
 
-            HUD = new HUD_Controller();
+            hud = new HUD_Controller();
         }
 
 
@@ -209,6 +182,7 @@ namespace JSA_Game.Maps
                 playerUnitCount++;
                 board[xPos, yPos].IsOccupied = true;
                 playerUnits.Add(new Vector2(xPos, yPos), unit);
+                unit.Pos = pos;
             }
 
             else if (unit.IsEnemy && enemyUnitCount != MaxEnemyUnits)
@@ -216,6 +190,7 @@ namespace JSA_Game.Maps
                 enemyUnitCount++;
                 board[xPos, yPos].IsOccupied = true;
                 enemyUnits.Add(new Vector2(xPos, yPos), unit);
+                unit.Pos = pos;
             }
             else
             {
@@ -223,71 +198,33 @@ namespace JSA_Game.Maps
             }
         }
 
-        /*
-        /// <summary>
-        /// Moves a unit at the designated x and y coordinates in a specified direction
-        /// </summary>
-        /// <param name="pos">Position of the selected unit</param>
-        /// <param name="dir">Direction to make the unit move: 'l'=left, 'r'=right, 'u'=up, 'd'=down</param>
-        public void moveUnit(Vector2 pos, char dir)
-        {
-            int xPos = (int)pos.X;
-            int yPos = (int)pos.Y;
-
-            Character c = playerUnits[pos];
-            if (dir == 'l' && xPos > 0)
-            {
-                playerUnits.Add(new Vector2(xPos - 1, yPos), c);
-                board[xPos, yPos].IsOccupied = false;
-                board[xPos - 1, yPos].IsOccupied = true;
-                playerUnits.Remove(pos);
-            }
-            else if (dir == 'r' && xPos < boardWidth - 1)
-            {
-                playerUnits.Add(new Vector2(xPos + 1, yPos), c);
-                board[xPos, yPos].IsOccupied = false;
-                board[xPos + 1, yPos].IsOccupied = true;
-                playerUnits.Remove(pos);
-            }
-            else if (dir == 'u' && yPos > 0)
-            {
-                playerUnits.Add(new Vector2(xPos, yPos - 1), c);
-                board[xPos, yPos].IsOccupied = false;
-                board[xPos, yPos - 1].IsOccupied = true;
-                playerUnits.Remove(pos);
-            }
-            else if (dir == 'd' && yPos < boardHeight - 1)
-            {
-                playerUnits.Add(new Vector2(xPos, yPos + 1), c);
-                board[xPos, yPos].IsOccupied = false;
-                board[xPos, yPos + 1].IsOccupied = true;
-                playerUnits.Remove(pos);
-            }
-        }
-        */
 
 
         //Moves unit given a path, provided by A*
-        public void moveUnit(Vector2 startPos, Vector2 endPos)
+        public void moveUnit(Vector2 startPos, Vector2 endPos, Boolean AImoved)
         {
             Stack path = findPath(startPos, endPos);
             //if path exists
             if (path.Count > 0)
             {
                 int remMovement;
+                Character unit;
                 //stop variable stops movement for enemy units 1 early since
                 //the postion of a computer's target is their actual position.
                 int stop;
                 Boolean isEnemy = enemyUnits.ContainsKey(startPos);
                 if (isEnemy)
                 {
-                    remMovement = enemyUnits[startPos].Movement;
+                    unit = enemyUnits[startPos];
+                    remMovement = unit.Movement;
                     stop = 1;
                 }
                 else
                 {
-                    remMovement = playerUnits[startPos].Movement;
-                    stop = 0;
+
+                    unit = playerUnits[startPos];
+                    remMovement = unit.Movement;
+                    stop = AImoved ? 1 : 0;
                 }
 
                 //Starting position
@@ -318,6 +255,7 @@ namespace JSA_Game.Maps
                     pos = next;
                     remMovement--;
                 }
+                unit.Pos = pos;
             }
         }
 
@@ -543,8 +481,8 @@ namespace JSA_Game.Maps
             return path;
         }
 
-        // H score: Number of tiles from destination tile.
-        private int calcDist(Vector2 pos, Vector2 target)
+        // Number of tiles from destination tile. H Score in A*
+        public int calcDist(Vector2 pos, Vector2 target)
         {
             return (int)(Math.Abs(pos.X - target.X) + Math.Abs(pos.Y - target.Y));
         }
@@ -627,6 +565,49 @@ namespace JSA_Game.Maps
             }
         }
 
+        //Scan current location for attackable targets
+        public void scanForTargets(Boolean show, Vector2 pos, int range)
+        {
+            board[(int)pos.X, (int)pos.Y].IsSelected = show;
+            scanForTargets(show, (int)pos.X, (int)pos.Y, range);
+        }
+
+        private void scanForTargets(Boolean show, int x, int y, int range)
+        {
+            if (range <= 0) return;
+            if (x > 0)
+            {
+                if ((show && enemyUnits.ContainsKey(new Vector2(x - 1, y))) || !show)
+                {
+                    board[x - 1, y].IsSelected = show;
+                }
+                scanForTargets(show, x - 1, y, range - 1);
+            }
+            if (x < boardWidth - 1)
+            {
+                if ((show && enemyUnits.ContainsKey(new Vector2(x + 1, y))) || !show)
+                {
+                    board[x + 1, y].IsSelected = show;
+                }
+                scanForTargets(show, x + 1, y, range - 1);
+            }
+            if (y > 0)
+            {
+                if ((show && enemyUnits.ContainsKey(new Vector2(x, y - 1))) || !show)
+                {
+                    board[x, y - 1].IsSelected = show;
+                }
+                scanForTargets(show, x, y - 1, range - 1);
+            }
+            if (y < boardHeight - 1)
+            {
+                if ((show && enemyUnits.ContainsKey(new Vector2(x, y + 1))) || !show)
+                {
+                    board[x, y + 1].IsSelected = show;
+                }
+                scanForTargets(show, x, y + 1, range - 1);
+            }
+        }
         /// <summary>
         /// Loads content for use in the level.
         /// </summary>
@@ -636,9 +617,9 @@ namespace JSA_Game.Maps
             tileImages[0] = content.Load<Texture2D>("grass_tile");
             tileImages[1] = content.Load<Texture2D>("water");
             tileImages[2] = content.Load<Texture2D>("stone_wall");
-            //highlightImages[0] = content.Load<Texture2D>("no_highlight");
-            highlightImages[0] = content.Load<Texture2D>("tempMove");   //Change later!
-            highlightImages[1] = content.Load<Texture2D>("blue_highlight");
+            utilityImages[0] = content.Load<Texture2D>("no_highlight");
+            utilityImages[1] = content.Load<Texture2D>("blue_highlight");
+            utilityImages[2] = content.Load<Texture2D>("target_square");
 
             foreach (KeyValuePair<Vector2, Character> c in playerUnits)
             {
@@ -653,7 +634,7 @@ namespace JSA_Game.Maps
             }
 
             cursor.loadContent(content);
-            HUD.LoadContent(content);
+            hud.LoadContent(content);
         }
 
 
@@ -665,228 +646,23 @@ namespace JSA_Game.Maps
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
-            //Test A*   As enemy move AI
-            if (keyboard.IsKeyDown(Keys.E) && !buttonPressed && state == LevelState.CursorSelection)
-            {
-                //Each enemy
-                //Need to make copy since moving alters dictionary
-                int size = enemyUnits.Count;
-                //Character[] chars = new Character[size];
-                Vector2[] vecs = new Vector2[size];
-                int count = 0;
-                foreach (KeyValuePair<Vector2, Character> e in enemyUnits)
-                {
-                 //   chars[count] = e.Value;
-                    vecs[count] = e.Key;
-                    count++;
-                }
-
-                for (int i = 0; i < size;i++)
-                {
-                    //Picks closest target
-                    int dist;
-                    int shortestDist = 64;
-                    Vector2 target = new Vector2(-1,-1);
-                    foreach (KeyValuePair<Vector2, Character> p in playerUnits)
-                    {
-                        dist = calcDist(vecs[i], p.Key);
-                        if (dist < shortestDist)
-                        {
-                            shortestDist = dist;
-                            target = p.Key;
-                        } 
-
-                    }
-
-                    //Move towards target if found
-                    if (!target.Equals(new Vector2(-1, -1)))
-                    {
-                        //System.Diagnostics.Debug.Print("Enemy at (" + vecs[i].X + ", " + vecs[i].Y + ") moving");
-                        moveUnit(vecs[i], target);
-                    }
-                }
-                
-            }
-
-
             //Animate cursor
             cursor.animate(gameTime);
 
-
-            //Listen for input to move cursor
-            cursor.moveCursor(gameTime, this, selected);
-
             if (playerTurn == TurnState.Player)
             {
-                if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
-                {
+                if (state == LevelState.CursorSelection)
+                    CursorSelection.update(this, gameTime);
+                else if (state == LevelState.Selected)
+                    Selected.update(this, gameTime);
+                else if (state == LevelState.Movement)
+                    Movement.update(this, gameTime);
+                else if (state == LevelState.Action)
+                    ActionState.update(this, gameTime);
 
-                    if (state == LevelState.CursorSelection)
-                    {
-                        //Selecting a unit.  Shows the movement range.
-                        if ((playerUnits.ContainsKey(cursor.CursorPos) || enemyUnits.ContainsKey(cursor.CursorPos)) && !selected)
-                        {
-                            state = LevelState.Selected;
-                            selected = true;
-                            //Send HUD character info
-                            Character c;
-                            if (playerUnits.ContainsKey(cursor.CursorPos))
-                                c = playerUnits[cursor.CursorPos];
-                            else
-                                c = enemyUnits[cursor.CursorPos];
 
-                            //Send c to HUD
-                            HUD.characterSelect(c);
-
-                            selectedPos = new Vector2(cursor.CursorPos.X, cursor.CursorPos.Y);
-                        }
-                    }
-                    //If already selected, confirm move and hide movement range.
-                    else if (state == LevelState.Movement)
-                    {
-                        selected = false;
-
-                        if (playerUnits.ContainsKey(selectedPos))
-                        {
-                            toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
-                        }
-                        
-                        moveUnit(selectedPos, cursor.CursorPos);
-                        clearMoveArrows();
-                        state = LevelState.CursorSelection;
-                    }
-                }
-                
-
-                //Cancel button.  Undo's a move if the selected unit moved.
-                if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
-                {
-                    if (state == LevelState.Movement)
-                    {
-                        selected = false;
-                        state = LevelState.CursorSelection;
-                        if (playerUnits.ContainsKey(selectedPos))
-                        {
-                            toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
-                            cursor.CursorPos = new Vector2(selectedPos.X, selectedPos.Y);
-                            clearMoveArrows();
-                        }
-                    }
-                    else
-                    {
-                        selected = false;
-                        state = LevelState.CursorSelection;
-                    }
-                }
-
-                HUD.Hidden = state != LevelState.CursorSelection;
+                hud.Hidden = state != LevelState.CursorSelection;
                 moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                if (selected && moveTimeElapsed >= moveDelay && state == LevelState.Movement)   // A unit is selected
-                {
-                    //Move player character
-                    //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
-                    if (playerUnits.ContainsKey(selectedPos))
-                    {
-                      
-                        //Cursor now selects move location and selectedPos keeps track of original position.  Refactoring needed.
-                        Stack path = new Stack();
-                        int cX = (int)cursor.CursorPos.X;
-                        int cY = (int)cursor.CursorPos.Y;
-                        char dir = '0';
-                        if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && board[cX - 1, cY].IsHighlighted && !board[cX - 1, cY].IsOccupied)
-                        {
-                            dir = 'l';
-                        }
-                        else if (keyboard.IsKeyDown(Keys.Right) && cX < boardWidth - 1 && board[cX + 1, cY].IsHighlighted && (!board[cX + 1, cY].IsOccupied))
-                        {
-                            dir = 'r';
-                        }
-                        else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && board[cX, cY - 1].IsHighlighted && (!board[cX, cY - 1].IsOccupied))
-                        {
-                            dir = 'u';
-                        }
-                        else if (keyboard.IsKeyDown(Keys.Down) && cY < boardHeight - 1 && board[cX, cY + 1].IsHighlighted && (!board[cX, cY + 1].IsOccupied))
-                        {
-                            dir = 'd';
-                        }
-                        if (dir != '0')
-                        {
-                            clearMoveArrows();
-                            cursor.moveCursorDir(dir);
-                            path = findPath(selectedPos, cursor.CursorPos);
-                        }
-
-                        if (path.Count > 0)
-                        {
-                            //Draw out path
-                            Vector2 v;
-                            while (path.Count > 0)
-                            {
-                                v = (Vector2)path.Pop();
-                                board[(int)v.X, (int)v.Y].MoveImage = "tempMove";
-                            }
-                        }
-                    }
-                    moveTimeElapsed = 0;
-                }
-
-
-                if (state == LevelState.Selected)
-                {
-                    if (keyboard.IsKeyDown(Keys.M) && !buttonPressed)
-                    {
-                        if (playerUnits.ContainsKey(cursor.CursorPos))
-                        {
-                            toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
-                            state = LevelState.Movement;
-                        }
-                    }
-
-                    if (keyboard.IsKeyDown(Keys.A) && !buttonPressed)
-                    {
-                        state = LevelState.Action;
-                    }
-                }
-
-
-
-                if (state == LevelState.Action)
-                {
-                    if (keyboard.IsKeyDown(Keys.K) && !buttonPressed)
-                    {
-                        
-                        Character c = playerUnits[cursor.CursorPos];
-                        //Vector2 target = new Vector2(cursor.CursorPos.X + 1, cursor.CursorPos.Y);
-                        //Character enemy = enemyUnits[target];
-                        Character enemy = new Character();
-                        Vector2 epos = new Vector2(-1,-1);
-    //!!!!                    //Temporary!  Only attacks the one enemy!                              !!!!
-                        foreach (KeyValuePair<Vector2, Character> e in enemyUnits)
-                        {
-                            epos = e.Key;
-                            enemy = e.Value;
-                        }
-                        //if (BattleController.isValidAction(c.Actions[0], c, cursor.CursorPos, target))
-                        if (BattleController.isValidAction(c.Actions[0], c, cursor.CursorPos, epos) && /*temp*/ calcDist(cursor.CursorPos, epos) == 1)
-                        {
-                            System.Diagnostics.Debug.Print("Enemy HP is " + enemy.CurrHp);
-                            BattleController.performAction(c.Actions[0], c, enemy);
-                            System.Diagnostics.Debug.Print("Enemy HP now is " + enemy.CurrHp);
-                        }
-
-                        if (enemyUnits[epos].CurrHp < 1)
-                        {
-                            board[(int)epos.X, (int)epos.Y].IsOccupied = false;
-                            enemyUnits.Remove(epos);
-                        }
-
-                        state = LevelState.Selected;
-
-                    }
-                  
-                }
-
 
 
                 //Prevents holding a button to continuously activate events
@@ -900,9 +676,245 @@ namespace JSA_Game.Maps
                 }
             }
 
+            //Enemy turn
+            else
+            {
+                //copy enemylist since enemylist will be edited during loop.
+                Character[] enemies = new Character[enemyUnits.Count];
+                int count = 0;
+                foreach (KeyValuePair<Vector2, Character> e in enemyUnits)
+                {
+                    enemies[count++] = e.Value;
+                }
+                //Each enemy turn
+                for (int i = 0; i < enemyUnits.Count; i++)
+                {
+                    enemies[i].AI.move();
+                    enemies[i].AI.attack();
+                }
+
+                playerTurn = TurnState.Player;
+                foreach (KeyValuePair<Vector2, Character> c in playerUnits)
+                {
+                    c.Value.MoveDisabled = false;
+                    c.Value.ActionDisabled = false;
+                }
+                System.Diagnostics.Debug.Print("Player's turn");
+
+                //Check for loss
+                if (playerUnits.Count <= 0)
+                {
+                    System.Diagnostics.Debug.Print("Player Lost!");
+                }
+            }
+            
+        }
+        
+
+        // Update methods based on the state of the game
+
+
+        //CursorSelection State
+        private void cursorSelectionStateUpdate(GameTime gameTime)
+        {
+            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
+
+            //Listen for input to move cursor
+            cursor.moveCursor(gameTime, this);
+
+            if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
+            {
+                //Selecting a unit. 
+                if ((playerUnits.ContainsKey(cursor.CursorPos) || enemyUnits.ContainsKey(cursor.CursorPos)))
+                {
+                    int x = (int)cursor.CursorPos.X;
+                    int y = (int)cursor.CursorPos.Y;
+                    selectedPos = new Vector2(x, y);
+                    state = LevelState.Selected;
+                    //Send HUD character info
+                    Character c;
+                    if (playerUnits.ContainsKey(selectedPos))
+                        c = playerUnits[selectedPos];
+                    else
+                        c = enemyUnits[selectedPos];
+
+                    //Send c to HUD
+                    hud.characterSelect(c);
+
+                    
+                    board[x, y].IsSelected = true;
+                }
+            }
+
+            //End turn
+            else if (keyboard.IsKeyDown(Keys.E) && !buttonPressed)
+            {
+                playerTurn = TurnState.Enemy;
+                System.Diagnostics.Debug.Print("Enemy's turn");
+            }
+
+            
+
+        }
+        //Selected State
+        private void selectedStateUpdate(GameTime gameTime)
+        {
+            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
+
+            if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
+            {
+                state = LevelState.CursorSelection;
+                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
+            }
+
+            if (keyboard.IsKeyDown(Keys.M) && !buttonPressed && !playerUnits[selectedPos].MoveDisabled)
+            {
+                if (playerUnits.ContainsKey(cursor.CursorPos))
+                {
+                    toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
+                    state = LevelState.Movement;
+                }
+            }
+
+            if (keyboard.IsKeyDown(Keys.A) && !buttonPressed && !playerUnits[selectedPos].ActionDisabled)
+            {
+                //Scan and mark potential targets
+                scanForTargets(true, selectedPos, playerUnits[selectedPos].AttackRange);
+                state = LevelState.Action;
+            }
+
+            //Test AI for player unit
+            else if (keyboard.IsKeyDown(Keys.K) && !buttonPressed)
+            {
+                playerUnits[cursor.CursorPos].AI.move();
+                System.Diagnostics.Debug.Print("Player AI moved");
+                foreach(KeyValuePair<Vector2, Character> c in playerUnits){
+                    cursor.CursorPos = c.Key;
+                }
+            }
+
+        }
+
+        //Movement State
+        private void movementStateUpdate(GameTime gameTime)
+        {
+            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
+
+            //If already selected, confirm move and hide movement range.
+            if (keyboard.IsKeyDown(Keys.Z))
+            {
+                if (playerUnits.ContainsKey(selectedPos))
+                {
+                    toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
+                }
+                playerUnits[selectedPos].MoveDisabled = true;
+                moveUnit(selectedPos, cursor.CursorPos, false);
+                state = LevelState.CursorSelection;
+                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
+            }
+
+
+            //Cancel button.  Undo's a move if the selected unit moved.
+            if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
+            {
+                if (state == LevelState.Movement)
+                {
+                    state = LevelState.CursorSelection;
+                    board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
+                    if (playerUnits.ContainsKey(selectedPos))
+                    {
+                        toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
+                        cursor.CursorPos = new Vector2(selectedPos.X, selectedPos.Y);
+                    }
+                }
+               
+            }
+
+            if (moveTimeElapsed >= moveDelay)   // A unit is selected
+            {
+                //Move player character
+                //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
+                if (playerUnits.ContainsKey(selectedPos))
+                {
+                    //Cursor now selects move location and selectedPos keeps track of original position.  Refactoring needed.
+                    int cX = (int)cursor.CursorPos.X;
+                    int cY = (int)cursor.CursorPos.Y;
+                    char dir = '0';
+                    if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && board[cX - 1, cY].IsHighlighted && !board[cX - 1, cY].IsOccupied)
+                    {
+                        dir = 'l';
+                    }
+                    else if (keyboard.IsKeyDown(Keys.Right) && cX < boardWidth - 1 && board[cX + 1, cY].IsHighlighted && (!board[cX + 1, cY].IsOccupied))
+                    {
+                        dir = 'r';
+                    }
+                    else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && board[cX, cY - 1].IsHighlighted && (!board[cX, cY - 1].IsOccupied))
+                    {
+                        dir = 'u';
+                    }
+                    else if (keyboard.IsKeyDown(Keys.Down) && cY < boardHeight - 1 && board[cX, cY + 1].IsHighlighted && (!board[cX, cY + 1].IsOccupied))
+                    {
+                        dir = 'd';
+                    }
+
+                    cursor.moveCursorDir(dir);
+                }
+                moveTimeElapsed = 0;
+            }
+
 
 
         }
+
+        //Action state
+        private void actionStateUpdate(GameTime gameTime)
+        {
+            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
+
+            //Listen for input to move cursor
+            cursor.moveCursor(gameTime, this);
+
+            //Confirm attack
+            if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
+            {
+                System.Diagnostics.Debug.Print("Confirmed attack.");
+                if (enemyUnits.ContainsKey(cursor.CursorPos) && board[(int)cursor.CursorPos.X, (int)cursor.CursorPos.Y].IsSelected)
+                {
+                    Character c = playerUnits[selectedPos];
+                    Character e = enemyUnits[cursor.CursorPos];
+
+                    if (BattleController.isValidAction(c.Actions[0], c, selectedPos, cursor.CursorPos))
+                    {
+                        System.Diagnostics.Debug.Print("Enemy HP is " + e.CurrHp);
+                        BattleController.performAction(c.Actions[0], c, e);
+                        System.Diagnostics.Debug.Print("Enemy HP now is " + e.CurrHp);
+                    }
+
+                    if (enemyUnits[cursor.CursorPos].CurrHp < 1)
+                    {
+                        board[(int)cursor.CursorPos.X, (int)cursor.CursorPos.Y].IsOccupied = false;
+                        enemyUnits.Remove(cursor.CursorPos);
+                    }
+                    playerUnits[selectedPos].ActionDisabled = true;
+                    scanForTargets(false, selectedPos, playerUnits[selectedPos].AttackRange);
+                    state = LevelState.CursorSelection;
+                    
+                    //Check for win
+                    if (enemyUnits.Count <= 0)
+                    {
+                        System.Diagnostics.Debug.Print("Player Won!");
+                    }
+                }
+            }
+            else if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
+            {
+                state = LevelState.CursorSelection;
+                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
+            }
+        }
+
+
+
 
 
         /// <summary>
@@ -938,15 +950,9 @@ namespace JSA_Game.Maps
                     //Draws a semi-transparent tile to show available spaces for movement/attacking
                     if (board[i, j].IsHighlighted)
                     {
-                        spriteBatch.Draw(highlightImages[1], new Rectangle(startw + tileSize * i, starth + tileSize * j, tileSize, tileSize), Color.White);
+                        spriteBatch.Draw(utilityImages[1], new Rectangle(startw + tileSize * i, starth + tileSize * j, tileSize, tileSize), Color.White);
                     }
 
-                    //If moving, show arrows
-                    if (state == LevelState.Movement && board[i, j].MoveImage.Equals("tempMove"))
-                    {
-                        //Definitely need to change this
-                        spriteBatch.Draw(highlightImages[0], new Rectangle(startw + tileSize * i, starth + tileSize * j, tileSize, tileSize), Color.White);
-                    }
                 }
             }
 
@@ -955,31 +961,103 @@ namespace JSA_Game.Maps
             {
                 //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
                 spriteBatch.Draw(characterImages[c.Value.Texture], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
-
+                
+                //Draw box around character if selected
+                if (board[(int)c.Key.X, (int)c.Key.Y].IsSelected)
+                {
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+                }
             }
             foreach (KeyValuePair<Vector2, Character> c in enemyUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
+                
                 spriteBatch.Draw(characterImages[c.Value.Texture], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+                //Draw box around character if selected
+                if (board[(int)c.Key.X, (int)c.Key.Y].IsSelected)
+                {
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+                }
+            }
+
+            //Draws a box around a selected tile
+            if (board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected)
+            {
+                spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)selectedPos.X, starth + tileSize * (int)selectedPos.Y, tileSize, tileSize), Color.White);
             }
 
             //Draw cursor on top of board.
             cursor.draw(spriteBatch, startw, starth, tileSize);
 
             //Draw HUD
-            HUD.Draw(spriteBatch);
+            hud.Draw(spriteBatch);
         }
 
-        //Temporary function
-        private void clearMoveArrows()
+        //Setters and Getters
+        public int BoardWidth
         {
-            for (int i = 0; i < boardWidth; i++)
-            {
-                for (int j = 0; j < boardHeight; j++)
-                {
-                    board[i, j].MoveImage = "";
-                }
-            }
+            get { return boardWidth; }
+            set { boardWidth = value; }
+        }
+        public int BoardHeight
+        {
+            get { return boardHeight; }
+            set { boardHeight = value; }
+        }
+        public Tile[,] Board
+        {
+            get { return board; }
+            set { board = value; }
+        }
+        public Boolean ButtonPressed
+        {
+            get { return buttonPressed; }
+            set { buttonPressed = value; }
+        }
+        public Vector2 SelectedPos
+        {
+            get { return selectedPos; }
+            set { selectedPos = value; }
+        }
+        public Cursor Cursor
+        {
+            get { return cursor; }
+            set { cursor = value; }
+        }
+        public float MoveDelay
+        {
+            get { return moveDelay; }
+            set { moveDelay = value; }
+        }
+        public float MoveTimeElapsed
+        {
+            get { return moveTimeElapsed; }
+            set { moveTimeElapsed = value; }
+        }
+        public Dictionary<Vector2, Character> PlayerUnits
+        {
+            get { return playerUnits; }
+            set { playerUnits = value; }
+        }
+        public Dictionary<Vector2, Character> EnemyUnits
+        {
+            get { return enemyUnits; }
+            set { enemyUnits = value; }
+        }
+        public HUD_Controller HUD
+        {
+            get { return hud; }
+            set { hud = value; }
+        }
+        public LevelState State
+        {
+            get { return state; }
+            set { state = value; }
+        }
+        public TurnState PlayerTurn
+        {
+            get { return playerTurn; }
+            set { playerTurn = value; }
         }
     }
 }
