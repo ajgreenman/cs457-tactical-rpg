@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using JSA_Game.Maps;
 using JSA_Game.AI;
 
 namespace JSA_Game
@@ -10,53 +11,80 @@ namespace JSA_Game
     class Character
     {
         //Default Stats
-        const int DEFAULT_HP = 15;
-        const int DEFAULT_STATS = 5;
+        protected const int STRONG_STAT = 10;
+        protected const int STANDARD_STAT = 5;
+        protected const int WEAK_STAT = 2;
 
+        // Actions
+        private Battle_Controller.Action attack;
         private Battle_Controller.Action[] actions;
+        private int attackRange;
+
         private Boolean isEnemy;
 
         private Boolean moveDisabled;
         private Boolean actionDisabled;
         private int movement;
-        private int attackRange;
-        
         private int level;
         private int currExp;
+
+        //Position
+        private Vector2 pos;
+
+        //AI
+        private iAI ai;
 
         //Image
         String texture;
         
-        //Position
-        private Vector2 pos;
-        
-        //AI
-        private iAI ai;
-        
 
         public Character()
         {
-            maxHP = DEFAULT_HP;
-            maxMP = DEFAULT_STATS;
-            currHp = DEFAULT_STATS;
-            currHp = DEFAULT_STATS;
-            strength = DEFAULT_STATS;
-            armor = DEFAULT_STATS;
-            accuracy = DEFAULT_STATS;
-            dodge = DEFAULT_STATS;
-            magic = DEFAULT_STATS;
-            resist = DEFAULT_STATS;
+            maxHP = STANDARD_STAT;
+            maxMP = STANDARD_STAT;
+            currHp = STANDARD_STAT;
+            currMp = STANDARD_STAT;
+            strength = STANDARD_STAT;
+            armor = STANDARD_STAT;
+            accuracy = STANDARD_STAT;
+            dodge = STANDARD_STAT;
+            magic = STANDARD_STAT;
+            resist = STANDARD_STAT;
 
+            // Starting Armor
+            weapon = new Items.Weapon();
+            headArmor = new Items.HeadArmor();
+            chestArmor = new Items.ChestArmor();
+            legArmor = new Items.LegArmor();
+            handArmor = new Items.HandArmor();
+            feetArmor = new Items.FeetArmor();
+
+            attack = new Battle_Controller.Action();   // Default attack action.
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
 
-            movement = DEFAULT_STATS;
-            attackRange = 1;
+            movement = STANDARD_STAT;
             level = 1;
             currExp = 0;
             isEnemy = false;
             moveDisabled = false;
             actionDisabled = false;
+            attackRange = 1;
             pos = new Vector2(-1, -1);
+        }
+
+        private int getProtectionStats(StatType type)
+        {
+            switch (type)
+            {
+                case StatType.Armor:
+                    return HeadArmor.Armor + ChestArmor.Armor + LegArmor.Armor + HandArmor.Armor + FeetArmor.Armor;
+                case StatType.Dodge:
+                    return HeadArmor.Dodge + ChestArmor.Dodge + LegArmor.Dodge + HandArmor.Dodge + FeetArmor.Dodge;
+                case StatType.Resist:
+                    return HeadArmor.Resist + ChestArmor.Resist + LegArmor.Resist + HandArmor.Resist + FeetArmor.Resist;
+                default:
+                    return 0;
+            }
         }
 
         //Character stats
@@ -96,7 +124,7 @@ namespace JSA_Game
 
         public int Strength
         {
-            get { return strength; }
+            get { return strength + Weapon.Strength; }
             set { strength = value; }
         }
 
@@ -104,7 +132,7 @@ namespace JSA_Game
 
         public int Armor
         {
-            get { return armor; }
+            get { return armor + getProtectionStats(StatType.Armor); }
             set { armor = value; }
         }
 
@@ -112,7 +140,7 @@ namespace JSA_Game
 
         public int Accuracy
         {
-            get { return accuracy; }
+            get { return accuracy + Weapon.Accuracy; }
             set { accuracy = value; }
         }
 
@@ -120,7 +148,7 @@ namespace JSA_Game
 
         public int Dodge
         {
-            get { return dodge; }
+            get { return dodge + getProtectionStats(StatType.Dodge); }
             set { dodge = value; }
         }
 
@@ -128,7 +156,7 @@ namespace JSA_Game
 
         public int Magic
         {
-            get { return magic; }
+            get { return magic + Weapon.Magic; }
             set { magic = value; }
         }
 
@@ -136,8 +164,64 @@ namespace JSA_Game
 
         public int Resist
         {
-            get { return resist; }
+            get { return resist + getProtectionStats(StatType.Resist); }
             set { resist = value; }
+        }
+
+        // Armor
+        private Items.HeadArmor headArmor;
+
+        public Items.HeadArmor HeadArmor
+        {
+            get { return headArmor; }
+            set { headArmor = value; }
+        }
+
+        private Items.Protection chestArmor;
+
+        public Items.Protection ChestArmor
+        {
+            get { return chestArmor; }
+            set { chestArmor = value; }
+        }
+
+        private Items.Protection handArmor;
+
+        public Items.Protection HandArmor
+        {
+            get { return handArmor; }
+            set { handArmor = value; }
+        }
+
+        private Items.Protection legArmor;
+
+        public Items.Protection LegArmor
+        {
+            get { return legArmor; }
+            set { legArmor = value; }
+        }
+
+        private Items.Protection feetArmor;
+
+        public Items.Protection FeetArmor
+        {
+            get { return feetArmor; }
+            set { feetArmor = value; }
+        }
+
+        private Items.Weapon weapon;
+ 
+        public Items.Weapon Weapon
+        {
+            get { return weapon; }
+            set { weapon = value; }
+        } 
+
+        // Actions
+        public Battle_Controller.Action Attack
+        {
+            get { return attack; }
+            set { attack = value; }
         }
 
         public Battle_Controller.Action[] Actions

@@ -112,14 +112,23 @@
   <ItemGroup>
     <Compile Include="AI\AggressiveAI.cs" />
     <Compile Include="AI\iAI.cs" />
+    <Compile Include="CharClasses\Archer.cs" />
+    <Compile Include="CharClasses\Character.cs" />
+    <Compile Include="CharClasses\Cleric.cs" />
+    <Compile Include="CharClasses\Mage.cs" />
+    <Compile Include="CharClasses\Thief.cs" />
+    <Compile Include="CharClasses\Warrior.cs" />
+    <Compile Include="Items\ArmorType.cs" />
     <Compile Include="Battle Controller\Action.cs" />
     <Compile Include="Battle Controller\ActionType.cs" />
     <Compile Include="Battle Controller\BattleController.cs" />
     <Compile Include="Battle Controller\Position.cs" />
     <Compile Include="Battle Controller\StatType.cs" />
-    <Compile Include="CharClasses\Mage.cs" />
-    <Compile Include="CharClasses\Warrior.cs" />
-    <Compile Include="CharClasses\Character.cs" />
+    <Compile Include="Items\ChestArmor.cs" />
+    <Compile Include="Items\Consumable.cs" />
+    <Compile Include="Items\FeetArmor.cs" />
+    <Compile Include="Items\HandArmor.cs" />
+    <Compile Include="Items\HeadArmor.cs" />
     <Compile Include="HUD\ActionList\Attack_Button.cs" />
     <Compile Include="HUD\ActionList\Item_Button.cs" />
     <Compile Include="HUD\ActionList\Wait_Button.cs" />
@@ -128,6 +137,8 @@
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="HUD\Bars and Stats\Mana_Bar.cs" />
     <Compile Include="HUD\Bars and Stats\Stat_Section.cs" />
+    <Compile Include="Items\Item.cs" />
+    <Compile Include="Items\LegArmor.cs" />
     <Compile Include="Maps\State\ActionState.cs" />
     <Compile Include="Maps\TurnState.cs" />
     <Compile Include="Maps\Cursor.cs" />
@@ -140,6 +151,8 @@
     <Compile Include="Maps\State\Movement.cs" />
     <Compile Include="Maps\State\Selected.cs" />
     <Compile Include="Maps\Tile.cs" />
+    <Compile Include="Items\Protection.cs" />
+    <Compile Include="Items\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
