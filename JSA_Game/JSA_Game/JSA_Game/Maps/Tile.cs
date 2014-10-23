@@ -14,6 +14,7 @@ namespace JSA_Game
         private Boolean isOccupied;
         private Boolean isHighlighted;
         private Boolean isSelected;
+        private Character occupant;
 
 
         //Variables used in pathfinding
@@ -81,6 +82,11 @@ namespace JSA_Game
         {
             get { return pathParent; }
             set { pathParent = value; }
+        }
+        public Character Occupant
+        {
+            get { return occupant; }
+            set { occupant = value; }
         }
         
     }

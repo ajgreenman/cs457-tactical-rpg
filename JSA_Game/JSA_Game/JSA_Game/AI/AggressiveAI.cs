@@ -25,17 +25,8 @@ namespace JSA_Game.AI
 
         public void move()
         {
-            //Finds its position
-            Vector2 pos = new Vector2(-1,-1);
             Dictionary<Vector2, Character> charList = currLevel.PlayerUnits.ContainsValue(character) ? currLevel.PlayerUnits : currLevel.EnemyUnits;
             Dictionary<Vector2, Character> targetList = currLevel.PlayerUnits.ContainsValue(character) ? currLevel.EnemyUnits : currLevel.PlayerUnits;
-            foreach (KeyValuePair<Vector2, Character> i in charList)
-            {
-                if (i.Value == character)
-                {
-                    pos = i.Key;
-                }
-            }
 
             //Picks closest target
             int dist;
@@ -43,7 +34,7 @@ namespace JSA_Game.AI
             targetPos = new Vector2(-1, -1);
             foreach (KeyValuePair<Vector2, Character> t in targetList)
             {
-                dist = currLevel.calcDist(pos, t.Key);
+                dist = currLevel.calcDist(character.Pos, t.Key);
                 if (dist < shortestDist)
                 {
                     shortestDist = dist;
@@ -55,21 +46,21 @@ namespace JSA_Game.AI
             //Move towards target if found
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                currLevel.moveUnit(pos, targetPos, true);
+                currLevel.moveUnit(character.Pos, targetPos, true);
             }
         }
 
 
         public void attack()
         {
-            if (currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
+            if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
             {
                 Character target = currLevel.PlayerUnits.ContainsKey(targetPos) ? currLevel.PlayerUnits[targetPos] : currLevel.EnemyUnits[targetPos];
 
-                if (BattleController.isValidAction(character.Actions[0], character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
+                if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
                     System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);
-                    BattleController.performAction(character.Actions[0], character, target);
+                    BattleController.performAction(character.Attack, character, target);
                     System.Diagnostics.Debug.Print("Target HP now is " + target.CurrHp);
                 }
 
