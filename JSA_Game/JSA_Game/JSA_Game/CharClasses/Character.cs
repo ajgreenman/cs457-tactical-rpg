@@ -18,7 +18,6 @@ namespace JSA_Game
         // Actions
         private Battle_Controller.Action attack;
         private Battle_Controller.Action[] actions;
-        private int attackRange;
 
         private Boolean isEnemy;
 
@@ -68,7 +67,6 @@ namespace JSA_Game
             isEnemy = false;
             moveDisabled = false;
             actionDisabled = false;
-            attackRange = 1;
             pos = new Vector2(-1, -1);
         }
 
@@ -269,11 +267,6 @@ namespace JSA_Game
         {
             get { return ai; }
             set { ai = value; }
-        }
-        public int AttackRange
-        {
-            get { return attackRange; }
-            set { attackRange = value; }
         }
         public Vector2 Pos
         {

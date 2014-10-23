@@ -52,7 +52,6 @@ namespace JSA_Game
             Character c = new Warrior(testLevel);
             //More movement for player
             c.Movement = 8;
-            c.AttackRange = 3;
 
             testLevel.addUnit(1, c, new Vector2(0, 0));
             testLevel.addUnit(0, new Mage(testLevel), new Vector2(testLevel.BoardWidth -1, testLevel.BoardHeight - 1));

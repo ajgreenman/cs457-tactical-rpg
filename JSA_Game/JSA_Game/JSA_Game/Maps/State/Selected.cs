@@ -37,7 +37,7 @@ namespace JSA_Game.Maps.State
             if (keyboard.IsKeyDown(Keys.A) && !level.ButtonPressed && !level.PlayerUnits[level.SelectedPos].ActionDisabled)
             {
                 //Scan and mark potential targets
-                level.scanForTargets(true, level.SelectedPos, level.PlayerUnits[level.SelectedPos].AttackRange);
+                level.scanForTargets(true, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Actions[0].Range);
                 level.State = LevelState.Action;
             }
 

@@ -45,7 +45,7 @@ namespace JSA_Game.Maps.State
                         level.EnemyUnits.Remove( level.Cursor.CursorPos);
                     }
                     level.PlayerUnits[level.SelectedPos].ActionDisabled = true;
-                    level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].AttackRange);
+                    level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Attack.Range);
                     level.State = LevelState.CursorSelection;
 
                     //Check for win
@@ -58,7 +58,7 @@ namespace JSA_Game.Maps.State
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].AttackRange);
+                level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Attack.Range);
             }
 
         }

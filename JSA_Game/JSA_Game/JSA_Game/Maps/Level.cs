@@ -779,7 +779,7 @@ namespace JSA_Game.Maps
             if (keyboard.IsKeyDown(Keys.A) && !buttonPressed && !playerUnits[selectedPos].ActionDisabled)
             {
                 //Scan and mark potential targets
-                scanForTargets(true, selectedPos, playerUnits[selectedPos].AttackRange);
+                scanForTargets(true, selectedPos, playerUnits[selectedPos].Attack.Range);
                 state = LevelState.Action;
             }
 
@@ -896,7 +896,7 @@ namespace JSA_Game.Maps
                         enemyUnits.Remove(cursor.CursorPos);
                     }
                     playerUnits[selectedPos].ActionDisabled = true;
-                    scanForTargets(false, selectedPos, playerUnits[selectedPos].AttackRange);
+                    scanForTargets(false, selectedPos, playerUnits[selectedPos].Attack.Range);
                     state = LevelState.CursorSelection;
                     
                     //Check for win
