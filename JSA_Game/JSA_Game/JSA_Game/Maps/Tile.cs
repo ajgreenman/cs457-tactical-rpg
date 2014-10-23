@@ -14,10 +14,6 @@ namespace JSA_Game
         private Boolean isHighlighted;
         private Boolean isSelected;
         private Character occupant;
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Scott
 
         //Variables used in pathfinding
         private int fScore;

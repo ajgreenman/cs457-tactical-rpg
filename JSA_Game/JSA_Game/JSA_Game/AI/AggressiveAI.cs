@@ -26,12 +26,7 @@ namespace JSA_Game.AI
 
         public void move()
         {
-<<<<<<< HEAD
-=======
-            Dictionary<Vector2, Character> charList = currLevel.PlayerUnits.ContainsValue(character) ? currLevel.PlayerUnits : currLevel.EnemyUnits;
-            Dictionary<Vector2, Character> targetList = currLevel.PlayerUnits.ContainsValue(character) ? currLevel.EnemyUnits : currLevel.PlayerUnits;
 
->>>>>>> origin/Scott
             //Picks closest target
             int dist;
             int shortestDist = 64;
@@ -39,11 +34,7 @@ namespace JSA_Game.AI
             ArrayList targetList = currLevel.PUnits.Contains(character) ? currLevel.EUnits : currLevel.PUnits;
             foreach (Character t in targetList)
             {
-<<<<<<< HEAD
                 dist = currLevel.calcDist(character.Pos, t.Pos);
-=======
-                dist = currLevel.calcDist(character.Pos, t.Key);
->>>>>>> origin/Scott
                 if (dist < shortestDist)
                 {
                     shortestDist = dist;
@@ -62,24 +53,12 @@ namespace JSA_Game.AI
 
         public void attack()
         {
-<<<<<<< HEAD
+
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
                 if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
                     Character target = currLevel.Board[(int)targetPos.X, (int)targetPos.Y].Occupant;
-=======
-            if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
-            {
-                Character target = currLevel.PlayerUnits.ContainsKey(targetPos) ? currLevel.PlayerUnits[targetPos] : currLevel.EnemyUnits[targetPos];
-
-                if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
-                {
-                    System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);
-                    BattleController.performAction(character.Attack, character, target);
-                    System.Diagnostics.Debug.Print("Target HP now is " + target.CurrHp);
-                }
->>>>>>> origin/Scott
 
                     if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                     {
