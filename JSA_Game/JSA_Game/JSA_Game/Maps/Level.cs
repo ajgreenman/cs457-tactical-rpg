@@ -50,7 +50,8 @@ namespace JSA_Game.Maps
         private TurnState playerTurn;
         
 
-        Dictionary<Vector2, Character> playerUnits, enemyUnits;
+       // Dictionary<Vector2, Character> playerUnits, enemyUnits;
+        ArrayList pUnits, eUnits;
         Dictionary<String, Texture2D> characterImages;
 
 
@@ -150,12 +151,11 @@ namespace JSA_Game.Maps
             enemyUnitCount = 0;
             maxPlayerUnits = numPlayerUnits;
             MaxEnemyUnits = numEnemyUnits;
-            //buttonPressed = selected = false;
             buttonPressed = false;
             cursor = new Cursor();
 
-            playerUnits = new Dictionary<Vector2, Character>();
-            enemyUnits = new Dictionary<Vector2, Character>();
+            pUnits = new ArrayList(maxPlayerUnits);
+            eUnits = new ArrayList(MaxEnemyUnits);
 
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
@@ -181,7 +181,8 @@ namespace JSA_Game.Maps
             {
                 playerUnitCount++;
                 board[xPos, yPos].IsOccupied = true;
-                playerUnits.Add(new Vector2(xPos, yPos), unit);
+                pUnits.Add(unit);
+                board[xPos, yPos].Occupant = unit;
                 unit.Pos = pos;
             }
 
@@ -189,7 +190,8 @@ namespace JSA_Game.Maps
             {
                 enemyUnitCount++;
                 board[xPos, yPos].IsOccupied = true;
-                enemyUnits.Add(new Vector2(xPos, yPos), unit);
+                eUnits.Add(unit);
+                board[xPos, yPos].Occupant = unit;
                 unit.Pos = pos;
             }
             else
@@ -212,17 +214,17 @@ namespace JSA_Game.Maps
                 //stop variable stops movement for enemy units 1 early since
                 //the postion of a computer's target is their actual position.
                 int stop;
-                Boolean isEnemy = enemyUnits.ContainsKey(startPos);
+                Boolean isEnemy = board[(int)startPos.X, (int)startPos.Y].Occupant.IsEnemy;
                 if (isEnemy)
                 {
-                    unit = enemyUnits[startPos];
+                    unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
                     remMovement = unit.Movement;
                     stop = 1;
                 }
                 else
                 {
 
-                    unit = playerUnits[startPos];
+                    unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
                     remMovement = unit.Movement;
                     stop = AImoved ? 1 : 0;
                 }
@@ -233,23 +235,13 @@ namespace JSA_Game.Maps
                 {
                     int xPos = (int)pos.X;
                     int yPos = (int)pos.Y;
-                    Character c;
+                    //Character c;
                     Vector2 next;
 
-                    if (isEnemy)
-                    {
-                        next = (Vector2)path.Pop();
-                        c = enemyUnits[pos];
-                        enemyUnits.Add(next, c);
-                        enemyUnits.Remove(pos);
-                    }
-                    else
-                    {
-                        next = (Vector2)path.Pop();
-                        c = playerUnits[pos];
-                        playerUnits.Add(next, c);
-                        playerUnits.Remove(pos); 
-                    }
+                    next = (Vector2)path.Pop();
+                    board[(int)next.X, (int)next.Y].Occupant = board[(int)pos.X, (int)pos.Y].Occupant;
+                    board[(int)pos.X, (int)pos.Y].Occupant = null;
+
                     board[(int)pos.X, (int)pos.Y].IsOccupied = false;
                     board[(int)next.X, (int)next.Y].IsOccupied = true;
                     pos = next;
@@ -497,11 +489,11 @@ namespace JSA_Game.Maps
         {
             if (!former.Equals(current))
             {
-                playerUnits.Add(former, playerUnits[current]);
-                playerUnits.Remove(current);
+                board[(int)former.X, (int)former.Y].Occupant = board[(int)current.X, (int)current.Y].Occupant;
+                board[(int)current.X, (int)current.Y].Occupant = null;
                 board[(int)current.X, (int)current.Y].IsOccupied = false;
                 board[(int)former.X, (int)former.Y].IsOccupied = true;
-                toggleMoveRange(false, former, playerUnits[former].Movement);
+                toggleMoveRange(false, former, board[(int)former.X, (int)former.Y].Occupant.Movement);
             }
         }
         
@@ -577,7 +569,7 @@ namespace JSA_Game.Maps
             if (range <= 0) return;
             if (x > 0)
             {
-                if ((show && enemyUnits.ContainsKey(new Vector2(x - 1, y))) || !show)
+                if ((show && board[x - 1, y].Occupant != null) || !show)
                 {
                     board[x - 1, y].IsSelected = show;
                 }
@@ -585,7 +577,7 @@ namespace JSA_Game.Maps
             }
             if (x < boardWidth - 1)
             {
-                if ((show && enemyUnits.ContainsKey(new Vector2(x + 1, y))) || !show)
+                if ((show && board[x + 1, y].Occupant != null) || !show)
                 {
                     board[x + 1, y].IsSelected = show;
                 }
@@ -593,7 +585,7 @@ namespace JSA_Game.Maps
             }
             if (y > 0)
             {
-                if ((show && enemyUnits.ContainsKey(new Vector2(x, y - 1))) || !show)
+                if ((show && board[x, y - 1].Occupant != null) || !show)
                 {
                     board[x, y - 1].IsSelected = show;
                 }
@@ -601,7 +593,7 @@ namespace JSA_Game.Maps
             }
             if (y < boardHeight - 1)
             {
-                if ((show && enemyUnits.ContainsKey(new Vector2(x, y + 1))) || !show)
+                if ((show && board[x, y + 1].Occupant != null) || !show)
                 {
                     board[x, y + 1].IsSelected = show;
                 }
@@ -621,16 +613,16 @@ namespace JSA_Game.Maps
             utilityImages[1] = content.Load<Texture2D>("blue_highlight");
             utilityImages[2] = content.Load<Texture2D>("target_square");
 
-            foreach (KeyValuePair<Vector2, Character> c in playerUnits)
+            foreach (Character c in pUnits)
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
-                characterImages.Add(c.Value.Texture, content.Load<Texture2D>(c.Value.Texture));
+                characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
             }
 
-            foreach (KeyValuePair<Vector2, Character> c in enemyUnits)
+            foreach (Character c in eUnits)
             {
                 System.Diagnostics.Debug.Print("Created an enemy unit");
-                characterImages.Add(c.Value.Texture, content.Load<Texture2D>(c.Value.Texture));
+                characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
             }
 
             cursor.loadContent(content);
@@ -679,30 +671,24 @@ namespace JSA_Game.Maps
             //Enemy turn
             else
             {
-                //copy enemylist since enemylist will be edited during loop.
-                Character[] enemies = new Character[enemyUnits.Count];
-                int count = 0;
-                foreach (KeyValuePair<Vector2, Character> e in enemyUnits)
-                {
-                    enemies[count++] = e.Value;
-                }
+
                 //Each enemy turn
-                for (int i = 0; i < enemyUnits.Count; i++)
+                foreach (Character c in eUnits)
                 {
-                    enemies[i].AI.move();
-                    enemies[i].AI.attack();
+                    c.AI.move();
+                    c.AI.attack();
                 }
 
                 playerTurn = TurnState.Player;
-                foreach (KeyValuePair<Vector2, Character> c in playerUnits)
+                foreach (Character c in pUnits)
                 {
-                    c.Value.MoveDisabled = false;
-                    c.Value.ActionDisabled = false;
+                    c.MoveDisabled = false;
+                    c.ActionDisabled = false;
                 }
                 System.Diagnostics.Debug.Print("Player's turn");
 
                 //Check for loss
-                if (playerUnits.Count <= 0)
+                if (pUnits.Count <= 0)
                 {
                     System.Diagnostics.Debug.Print("Player Lost!");
                 }
@@ -710,212 +696,6 @@ namespace JSA_Game.Maps
             
         }
         
-
-        // Update methods based on the state of the game
-
-
-        //CursorSelection State
-        private void cursorSelectionStateUpdate(GameTime gameTime)
-        {
-            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-
-            //Listen for input to move cursor
-            cursor.moveCursor(gameTime, this);
-
-            if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
-            {
-                //Selecting a unit. 
-                if ((playerUnits.ContainsKey(cursor.CursorPos) || enemyUnits.ContainsKey(cursor.CursorPos)))
-                {
-                    int x = (int)cursor.CursorPos.X;
-                    int y = (int)cursor.CursorPos.Y;
-                    selectedPos = new Vector2(x, y);
-                    state = LevelState.Selected;
-                    //Send HUD character info
-                    Character c;
-                    if (playerUnits.ContainsKey(selectedPos))
-                        c = playerUnits[selectedPos];
-                    else
-                        c = enemyUnits[selectedPos];
-
-                    //Send c to HUD
-                    hud.characterSelect(c);
-
-                    
-                    board[x, y].IsSelected = true;
-                }
-            }
-
-            //End turn
-            else if (keyboard.IsKeyDown(Keys.E) && !buttonPressed)
-            {
-                playerTurn = TurnState.Enemy;
-                System.Diagnostics.Debug.Print("Enemy's turn");
-            }
-
-            
-
-        }
-        //Selected State
-        private void selectedStateUpdate(GameTime gameTime)
-        {
-            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-
-            if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
-            {
-                state = LevelState.CursorSelection;
-                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
-            }
-
-            if (keyboard.IsKeyDown(Keys.M) && !buttonPressed && !playerUnits[selectedPos].MoveDisabled)
-            {
-                if (playerUnits.ContainsKey(cursor.CursorPos))
-                {
-                    toggleMoveRange(true, cursor.CursorPos, playerUnits[cursor.CursorPos].Movement);
-                    state = LevelState.Movement;
-                }
-            }
-
-            if (keyboard.IsKeyDown(Keys.A) && !buttonPressed && !playerUnits[selectedPos].ActionDisabled)
-            {
-                //Scan and mark potential targets
-                scanForTargets(true, selectedPos, playerUnits[selectedPos].Attack.Range);
-                state = LevelState.Action;
-            }
-
-            //Test AI for player unit
-            else if (keyboard.IsKeyDown(Keys.K) && !buttonPressed)
-            {
-                playerUnits[cursor.CursorPos].AI.move();
-                System.Diagnostics.Debug.Print("Player AI moved");
-                foreach(KeyValuePair<Vector2, Character> c in playerUnits){
-                    cursor.CursorPos = c.Key;
-                }
-            }
-
-        }
-
-        //Movement State
-        private void movementStateUpdate(GameTime gameTime)
-        {
-            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-
-            //If already selected, confirm move and hide movement range.
-            if (keyboard.IsKeyDown(Keys.Z))
-            {
-                if (playerUnits.ContainsKey(selectedPos))
-                {
-                    toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
-                }
-                playerUnits[selectedPos].MoveDisabled = true;
-                moveUnit(selectedPos, cursor.CursorPos, false);
-                state = LevelState.CursorSelection;
-                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
-            }
-
-
-            //Cancel button.  Undo's a move if the selected unit moved.
-            if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
-            {
-                if (state == LevelState.Movement)
-                {
-                    state = LevelState.CursorSelection;
-                    board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
-                    if (playerUnits.ContainsKey(selectedPos))
-                    {
-                        toggleMoveRange(false, selectedPos, playerUnits[selectedPos].Movement);
-                        cursor.CursorPos = new Vector2(selectedPos.X, selectedPos.Y);
-                    }
-                }
-               
-            }
-
-            if (moveTimeElapsed >= moveDelay)   // A unit is selected
-            {
-                //Move player character
-                //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
-                if (playerUnits.ContainsKey(selectedPos))
-                {
-                    //Cursor now selects move location and selectedPos keeps track of original position.  Refactoring needed.
-                    int cX = (int)cursor.CursorPos.X;
-                    int cY = (int)cursor.CursorPos.Y;
-                    char dir = '0';
-                    if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && board[cX - 1, cY].IsHighlighted && !board[cX - 1, cY].IsOccupied)
-                    {
-                        dir = 'l';
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Right) && cX < boardWidth - 1 && board[cX + 1, cY].IsHighlighted && (!board[cX + 1, cY].IsOccupied))
-                    {
-                        dir = 'r';
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && board[cX, cY - 1].IsHighlighted && (!board[cX, cY - 1].IsOccupied))
-                    {
-                        dir = 'u';
-                    }
-                    else if (keyboard.IsKeyDown(Keys.Down) && cY < boardHeight - 1 && board[cX, cY + 1].IsHighlighted && (!board[cX, cY + 1].IsOccupied))
-                    {
-                        dir = 'd';
-                    }
-
-                    cursor.moveCursorDir(dir);
-                }
-                moveTimeElapsed = 0;
-            }
-
-
-
-        }
-
-        //Action state
-        private void actionStateUpdate(GameTime gameTime)
-        {
-            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-
-            //Listen for input to move cursor
-            cursor.moveCursor(gameTime, this);
-
-            //Confirm attack
-            if (keyboard.IsKeyDown(Keys.Z) && !buttonPressed)
-            {
-                System.Diagnostics.Debug.Print("Confirmed attack.");
-                if (enemyUnits.ContainsKey(cursor.CursorPos) && board[(int)cursor.CursorPos.X, (int)cursor.CursorPos.Y].IsSelected)
-                {
-                    Character c = playerUnits[selectedPos];
-                    Character e = enemyUnits[cursor.CursorPos];
-
-                    if (BattleController.isValidAction(c.Actions[0], c, selectedPos, cursor.CursorPos))
-                    {
-                        System.Diagnostics.Debug.Print("Enemy HP is " + e.CurrHp);
-                        BattleController.performAction(c.Actions[0], c, e);
-                        System.Diagnostics.Debug.Print("Enemy HP now is " + e.CurrHp);
-                    }
-
-                    if (enemyUnits[cursor.CursorPos].CurrHp < 1)
-                    {
-                        board[(int)cursor.CursorPos.X, (int)cursor.CursorPos.Y].IsOccupied = false;
-                        enemyUnits.Remove(cursor.CursorPos);
-                    }
-                    playerUnits[selectedPos].ActionDisabled = true;
-                    scanForTargets(false, selectedPos, playerUnits[selectedPos].Attack.Range);
-                    state = LevelState.CursorSelection;
-                    
-                    //Check for win
-                    if (enemyUnits.Count <= 0)
-                    {
-                        System.Diagnostics.Debug.Print("Player Won!");
-                    }
-                }
-            }
-            else if (keyboard.IsKeyDown(Keys.X) && !buttonPressed)
-            {
-                state = LevelState.CursorSelection;
-                board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected = false;
-            }
-        }
-
-
-
-
 
         /// <summary>
         /// Draws the level to the screen.
@@ -957,26 +737,26 @@ namespace JSA_Game.Maps
             }
 
             //Draw characters
-            foreach (KeyValuePair<Vector2, Character> c in playerUnits)
+            foreach (Character c in pUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-                spriteBatch.Draw(characterImages[c.Value.Texture], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
-                
+                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
+
                 //Draw box around character if selected
-                if (board[(int)c.Key.X, (int)c.Key.Y].IsSelected)
+                if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
                 }
             }
-            foreach (KeyValuePair<Vector2, Character> c in enemyUnits)
+            foreach (Character c in eUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-                
-                spriteBatch.Draw(characterImages[c.Value.Texture], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+
+                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
                 //Draw box around character if selected
-                if (board[(int)c.Key.X, (int)c.Key.Y].IsSelected)
+                if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Key.X, starth + tileSize * (int)c.Key.Y, tileSize, tileSize), Color.White);
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
                 }
             }
 
@@ -1036,15 +816,15 @@ namespace JSA_Game.Maps
             get { return moveTimeElapsed; }
             set { moveTimeElapsed = value; }
         }
-        public Dictionary<Vector2, Character> PlayerUnits
+        public ArrayList PUnits
         {
-            get { return playerUnits; }
-            set { playerUnits = value; }
+            get { return pUnits; }
+            set { pUnits = value; }
         }
-        public Dictionary<Vector2, Character> EnemyUnits
+        public ArrayList EUnits
         {
-            get { return enemyUnits; }
-            set { enemyUnits = value; }
+            get { return eUnits; }
+            set { eUnits = value; }
         }
         public HUD_Controller HUD
         {

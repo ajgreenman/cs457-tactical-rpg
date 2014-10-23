@@ -111,7 +111,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AggressiveAI.cs" />
+    <Compile Include="AI\DefensiveAI.cs" />
     <Compile Include="AI\iAI.cs" />
+    <Compile Include="AI\PassiveAI.cs" />
+    <Compile Include="AI\StationaryAI.cs" />
     <Compile Include="CharClasses\Archer.cs" />
     <Compile Include="CharClasses\Character.cs" />
     <Compile Include="CharClasses\Cleric.cs" />

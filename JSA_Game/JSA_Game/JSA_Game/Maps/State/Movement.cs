@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,11 @@ namespace JSA_Game.Maps.State
             //If already selected, confirm move and hide movement range.
             if (keyboard.IsKeyDown(Keys.Z))
             {
-                if (level.PlayerUnits.ContainsKey(level.SelectedPos))
+                if (level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant != null)
                 {
-                    level.toggleMoveRange(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Movement);
+                    level.toggleMoveRange(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Movement);
                 }
-                level.PlayerUnits[level.SelectedPos].MoveDisabled = true;
+                level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled = true;
                 level.moveUnit(level.SelectedPos, level.Cursor.CursorPos, false);
                 level.State = LevelState.CursorSelection;
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
@@ -38,9 +39,9 @@ namespace JSA_Game.Maps.State
             {
                 level.State = LevelState.CursorSelection;
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
-                if (level.PlayerUnits.ContainsKey(level.SelectedPos))
+                if (level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant != null)
                 {
-                    level.toggleMoveRange(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Movement);
+                    level.toggleMoveRange(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Movement);
                     level.Cursor.CursorPos = new Vector2(level.SelectedPos.X, level.SelectedPos.Y);
                 }
             }
@@ -49,9 +50,9 @@ namespace JSA_Game.Maps.State
             {
                 //Move player character
                 //moveUnit method used a character to determine direction (l = left, r = right, u = up, d = down)
-                if (level.PlayerUnits.ContainsKey(level.SelectedPos))
+                if (level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant != null)
                 {
-                    //Cursor now selects move location and selectedPos keeps track of original position.  Refactoring needed.
+                    //Cursor now selects move location and selectedPos keeps track of original position.
                     int cX = (int)level.Cursor.CursorPos.X;
                     int cY = (int)level.Cursor.CursorPos.Y;
                     char dir = '0';

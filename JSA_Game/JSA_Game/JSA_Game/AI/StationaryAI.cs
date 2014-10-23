@@ -10,23 +10,30 @@ using JSA_Game.Battle_Controller;
 
 namespace JSA_Game.AI
 {
-    class AggressiveAI : iAI
+    class StationaryAI
     {
+
         Level currLevel;
         Character character;
         Vector2 targetPos;
 
         // AI knows what character it is and its surroundings.
-        public AggressiveAI(Character c, Level currentLevel)
+        public StationaryAI(Character c, Level currentLevel)
         {
             character = c;
             currLevel = currentLevel;
             targetPos = new Vector2(-1, -1);
         }
 
+        //Stationary AI doesn't move
         public void move()
+        {  
+        }
+
+        //Attack only targets in range
+        public void attack()
         {
-            //Picks closest target
+            //Find target
             int dist;
             int shortestDist = 64;
             targetPos = new Vector2(-1, -1);
@@ -42,18 +49,10 @@ namespace JSA_Game.AI
 
             }
 
-            //Move towards target if found
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                currLevel.moveUnit(character.Pos, targetPos, true);
-            }
-        }
 
-
-        public void attack()
-        {
-            if (!targetPos.Equals(new Vector2(-1, -1)))
-            {
+                //Attack target
                 if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
                     Character target = currLevel.Board[(int)targetPos.X, (int)targetPos.Y].Occupant;

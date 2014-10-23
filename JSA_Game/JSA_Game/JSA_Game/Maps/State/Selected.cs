@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,32 +26,23 @@ namespace JSA_Game.Maps.State
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
             }
 
-            if (keyboard.IsKeyDown(Keys.M) && !level.ButtonPressed && !level.PlayerUnits[level.SelectedPos].MoveDisabled)
+            else if (keyboard.IsKeyDown(Keys.M) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled)
             {
-                if (level.PlayerUnits.ContainsKey(level.Cursor.CursorPos))
+                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant != null)
                 {
-                    level.toggleMoveRange(true, level.Cursor.CursorPos, level.PlayerUnits[level.Cursor.CursorPos].Movement);
+                    level.toggleMoveRange(true, level.Cursor.CursorPos, level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant.Movement);
                     level.State = LevelState.Movement;
                 }
             }
 
-            if (keyboard.IsKeyDown(Keys.A) && !level.ButtonPressed && !level.PlayerUnits[level.SelectedPos].ActionDisabled)
+            else if (keyboard.IsKeyDown(Keys.A) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.ActionDisabled)
             {
                 //Scan and mark potential targets
-                level.scanForTargets(true, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Actions[0].Range);
+                level.scanForTargets(true, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Actions[0].Range);
                 level.State = LevelState.Action;
             }
 
-            //Test AI for player unit
-            else if (keyboard.IsKeyDown(Keys.K) && !level.ButtonPressed)
-            {
-                level.PlayerUnits[level.Cursor.CursorPos].AI.move();
-                System.Diagnostics.Debug.Print("Player AI moved");
-                foreach (KeyValuePair<Vector2, Character> c in level.PlayerUnits)
-                {
-                    level.Cursor.CursorPos = c.Key;
-                }
-            }
+            
 
         }
     }

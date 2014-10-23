@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,10 @@ namespace JSA_Game.Maps.State
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {
                 System.Diagnostics.Debug.Print("Confirmed attack.");
-                if (level.EnemyUnits.ContainsKey(level.Cursor.CursorPos) && level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].IsSelected)
+                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant.IsEnemy && level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].IsSelected)
                 {
-                    Character c = level.PlayerUnits[level.SelectedPos];
-                    Character e = level.EnemyUnits[level.Cursor.CursorPos];
+                    Character c = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant;
+                    Character e = level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant;
 
                     if (BattleController.isValidAction(c.Actions[0], c, level.SelectedPos, level.Cursor.CursorPos))
                     {
@@ -39,17 +40,18 @@ namespace JSA_Game.Maps.State
                         System.Diagnostics.Debug.Print("Enemy HP now is " + e.CurrHp);
                     }
 
-                    if (level.EnemyUnits[level.Cursor.CursorPos].CurrHp < 1)
+                    if (e.CurrHp < 1)
                     {
                         level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].IsOccupied = false;
-                        level.EnemyUnits.Remove( level.Cursor.CursorPos);
+                        level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant = null;
+                        level.EUnits.Remove(e);
                     }
-                    level.PlayerUnits[level.SelectedPos].ActionDisabled = true;
-                    level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Attack.Range);
+                    c.ActionDisabled = true;
+                    level.scanForTargets(false, level.SelectedPos, c.Attack.Range);
                     level.State = LevelState.CursorSelection;
 
                     //Check for win
-                    if (level.EnemyUnits.Count <= 0)
+                    if (level.EUnits.Count <= 0)
                     {
                         System.Diagnostics.Debug.Print("Player Won!");
                     }
@@ -58,7 +60,7 @@ namespace JSA_Game.Maps.State
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.PlayerUnits[level.SelectedPos].Attack.Range);
+                level.scanForTargets(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack.Range);
             }
 
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,24 +27,16 @@ namespace JSA_Game.Maps.State
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {
                 //Selecting a unit. 
-                if ((level.PlayerUnits.ContainsKey(level.Cursor.CursorPos) || level.EnemyUnits.ContainsKey(level.Cursor.CursorPos)))
+                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant != null)
                 {
                     int x = (int)level.Cursor.CursorPos.X;
                     int y = (int)level.Cursor.CursorPos.Y;
                     level.SelectedPos = new Vector2(x, y);
                     level.State = LevelState.Selected;
-                    //Send HUD character info
-                    Character c;
-                    if (level.PlayerUnits.ContainsKey(level.SelectedPos))
-                        c = level.PlayerUnits[level.SelectedPos];
-                    else
-                        c = level.EnemyUnits[level.SelectedPos];
-
-                    //Send c to HUD
-                    level.HUD.characterSelect(c);
-
-
                     level.Board[x, y].IsSelected = true;
+
+                    //Send HUD character info
+                    level.HUD.characterSelect(level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant);
                 }
             }
 
@@ -52,7 +45,7 @@ namespace JSA_Game.Maps.State
             {
                 level.PlayerTurn = TurnState.Enemy;
                 System.Diagnostics.Debug.Print("Enemy's turn");
-            }   
+            }
         }
     }
 }
