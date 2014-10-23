@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -12,6 +13,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
+using JSA_Game.CharClasses;
 using JSA_Game.Maps.State;
 
 namespace JSA_Game.Maps
@@ -144,13 +146,109 @@ namespace JSA_Game.Maps
             board[1, 0].LandType = "stone_wall";
             */
 
+            maxPlayerUnits = numPlayerUnits;
+            MaxEnemyUnits = numEnemyUnits;
+
+            initialize();
+        }
+
+
+        //Read from text file
+        public Level(string filename)
+        {
+            System.Diagnostics.Debug.Print("Generating level from file: " + filename);
+            string line;
+
+            // Read the file and read it line by line.
+            StreamReader file = new StreamReader("Levels/" + filename + ".txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Length == 0)
+                {
+                    //Empty line
+                }
+                else if (line[0] == '/' || line[0] == '\n')
+                {
+                    //Comment
+                }
+                else if (line[0] == 'i')
+                {
+                    System.Diagnostics.Debug.Print("Initial Conditions: " + line);
+
+                    //Split string starting after identifying character and colon.
+                    string[] param = line.Substring(2).Split(',');
+
+                    boardWidth = Convert.ToInt32(param[0]);
+                    boardHeight = Convert.ToInt32(param[1]);
+                    maxPlayerUnits = Convert.ToInt32(param[2]);
+                    MaxEnemyUnits = Convert.ToInt32(param[3]);
+
+                    board = new Tile[boardWidth, boardHeight];
+                    initialize();
+
+                }
+                else if (line[0] == 'G')
+                {
+                    System.Diagnostics.Debug.Print("Primary Geography: " + line);
+                    for (int i = 0; i < boardWidth; i++)
+                        for (int j = 0; j < boardHeight; j++)
+                            board[i, j] = new Tile(line.Substring(2));
+                }
+
+                else if (line[0] == 'g')
+                {
+                    System.Diagnostics.Debug.Print("Specific Geography: " + line);
+
+                    //Split string starting after identifying character and colon.
+                    string[] param = line.Substring(2).Split(',');
+                    board[Convert.ToInt32(param[0]), Convert.ToInt32(param[1])] = new Tile(param[2]);
+                    board[Convert.ToInt32(param[0]), Convert.ToInt32(param[1])].IsOccupied = true;
+                }
+
+                //Placing units
+                else if (line[0] == 'p' || line[0] == 'e')
+                {
+                    int allyFlag = line[0] == 'p' ? 1 : 0;
+                    System.Diagnostics.Debug.Print("Player/Enemy unit: " + line);
+
+                    //Split string starting after identifying character and colon.
+                    string[] param = line.Substring(2).Split(',');
+                    int x, y;
+                    //width
+                    x = Convert.ToInt32(param[0]);
+                    y = Convert.ToInt32(param[1]);
+
+                    if(param[2].Equals("Warrior"))
+                    {
+                        addUnit(allyFlag, new Warrior(this), new Vector2(x, y));
+                    }
+                    else if (param[2].Equals("Mage"))
+                    {
+                        addUnit(allyFlag, new Mage(this), new Vector2(x, y));
+                    }
+                    else if (param[2].Equals("Archer"))
+                    {
+                        addUnit(allyFlag, new Archer(this), new Vector2(x, y));
+                    }
+                    //More
+
+                }
+
+            }
+                file.Close();
+                
+
+        }
+
+        //Initializes level
+        private void initialize()
+        {
             state = LevelState.CursorSelection;
             playerTurn = TurnState.Player;
 
             playerUnitCount = 0;
             enemyUnitCount = 0;
-            maxPlayerUnits = numPlayerUnits;
-            MaxEnemyUnits = numEnemyUnits;
+
             buttonPressed = false;
             cursor = new Cursor();
 
@@ -162,8 +260,8 @@ namespace JSA_Game.Maps
             utilityImages = new Texture2D[UTILITY_IMAGE_COUNT];
 
             hud = new HUD_Controller();
-        }
 
+        }
 
         /// <summary>
         /// Adds a unit to the board.

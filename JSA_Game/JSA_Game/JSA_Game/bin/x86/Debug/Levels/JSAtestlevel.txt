@@ -1,0 +1,65 @@
+/    How to make a level file   /
+
+/ For now, the order of the inputs must be in this order:  i -> G -> g -> p or e
+
+
+/ '/' denotes a comment
+/ 'i' denotes inital parameters: board width, board height, number of player units, and number of enemy units.
+/	Format: i:<width>,<height>,<player units>,<enemy units>
+/
+/ 'G' denotes primary geography: The Tile landType for all tiles
+/	Format: G:<land type>
+/
+/ 'g' denotes position-specific geography: landType at a given position on the board.
+/	Format: g:<x value>,<y value>,<land type>
+/
+/ 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.)
+/	Format: p:<x value>,<y value>,<character class>
+/
+/ 'e' denotes an enemy unit: Needs the class and location (later will add level, equip, etc.)
+/	Format: e:<x value>,<y value>,<character class>
+/
+
+/ Level name: testLevel
+
+i:10,10,1,1
+G:plains
+
+g:2,0,stone_wall
+g:2,1,stone_wall
+g:2,2,stone_wall
+g:2,3,stone_wall
+
+g:1,4,water
+g:2,4,water
+g:3,4,water
+g:1,5,water
+g:2,5,water
+g:3,5,water
+g:3,6,water
+g:3,7,water
+g:4,7,water
+g:5,7,water
+
+g:3,8,stone_wall
+g:5,9,stone_wall
+
+g:4,2,water
+g:5,2,water
+g:6,2,water
+g:6,3,water
+g:6,4,water
+g:6,5,water
+g:7,4,water
+g:7,5,water
+g:8,4,water
+g:8,5,water
+
+g:7,6,stone_wall
+g:7,7,stone_wall
+g:7,8,stone_wall
+g:7,9,stone_wall
+
+
+p:0,0,Warrior
+e:9,9,Mage
