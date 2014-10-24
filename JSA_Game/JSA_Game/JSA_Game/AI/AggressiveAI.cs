@@ -65,7 +65,7 @@ namespace JSA_Game.AI
             if (currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
             {
                 Character target = currLevel.PlayerUnits.ContainsKey(targetPos) ? currLevel.PlayerUnits[targetPos] : currLevel.EnemyUnits[targetPos];
-
+                System.Diagnostics.Debug.Print("Here.");
                 if (BattleController.isValidAction(character.Actions[0], character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
                 {
                     System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);

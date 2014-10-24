@@ -15,8 +15,8 @@ namespace JSA_Game.CharClasses
             AI = new AggressiveAI(this, level);
             Texture = "player";
 
-            MaxHP = STRONG_STAT;
-            MaxMP = STANDARD_STAT;
+            MaxHP = STRONG_HPMP;
+            MaxMP = STANDARD_HPMP;
             CurrHp = MaxHP;
             CurrMp = MaxMP;
             Strength = STRONG_STAT;

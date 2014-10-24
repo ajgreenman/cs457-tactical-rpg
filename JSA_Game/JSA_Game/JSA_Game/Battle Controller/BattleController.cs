@@ -89,7 +89,7 @@ namespace JSA_Game.Battle_Controller
             int random = rng.Next(0, 100);
 
             int chanceToHit = BASE_HIT;
-            chanceToHit *= (user.Accuracy / target.Dodge) + user.Accuracy;
+            chanceToHit += (user.Accuracy / target.Dodge) + user.Accuracy;
 
             return chanceToHit >= random;
         }
@@ -160,111 +160,114 @@ namespace JSA_Game.Battle_Controller
                 switch (stat)
                 {
                     case StatType.Accuracy:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Accuracy -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Accuracy -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Accuracy -= amount;
                         break;
                     case StatType.Armor:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Armor -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Armor -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Armor -= amount;
                         break;
                     case StatType.Dodge:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Dodge -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Dodge -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Dodge -= amount;
                         break;
                     case StatType.Hp:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Strength - target.Armor + 3;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Magic - target.Resist + 5;
+                            amount = user.Strength / target.Armor + 5;
                         }
                         target.CurrHp -= amount;
                         break;
                     case StatType.Magic:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Magic -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Magic -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Magic -= amount;
                         break;
                     case StatType.Mp:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.CurrMp -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.CurrMp -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.CurrMp -= amount;
                         break;
                     case StatType.Resist:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Resist -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Resist -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Resist -= amount;
                         break;
                     case StatType.Strength:
-                        if (action.Type == ActionType.Physical)
+                        if (action.Type == ActionType.Spell)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.Strength -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.Strength -= amount;
+                            amount = user.Strength / target.Armor + 5;
                         }
+                        target.Strength -= amount;
+                        break;
+                    case StatType.Movement:
+                        if (action.Type == ActionType.Spell)
+                        {
+                            amount = user.Magic / target.Resist + 5;
+                        }
+                        else
+                        {
+                            amount = user.Strength / target.Armor + 5;
+                        }
+                        target.Movement -= amount;
                         break;
                     default:
                         if (action.Type == ActionType.Physical)
                         {
-                            amount = user.Magic - target.Resist + 5;
-                            target.CurrHp -= amount;
-                        }
+                            amount = user.Strength / target.Armor + 5;
+                        } 
                         else
                         {
-                            amount = user.Strength - target.Armor + 5;
-                            target.CurrHp -= amount;
+                            amount = user.Magic / target.Resist + 5;
                         }
+                        target.CurrHp -= amount;
                         break;
                 }
             }
