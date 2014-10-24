@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -25,9 +26,11 @@ namespace JSA_Game
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //List of levels
+        ArrayList levels;
 
         //Example Level
-        Level testLevel;
+        Level currLevel;
 
 
         public Game1()
@@ -38,10 +41,18 @@ namespace JSA_Game
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
+            levels = new ArrayList();
+            levels.Add( new Level("Arena"));
+            levels.Add(new Level("JSAtestlevel"));
+
+            //Set first level
+            currLevel = (Level) levels[0];
+
+
             //Initialize Example Level
             //testLevel = new Level(10, 10, 1, 1);
             //testLevel = new Level("JSAtestlevel");
-            testLevel = new Level("Arena");
+            //estLevel = new Level("Arena");
 
             //Character c = new Warrior(testLevel);
             //More movement for player
@@ -79,7 +90,7 @@ namespace JSA_Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Load level content
-            testLevel.loadContent(Content);
+            currLevel.loadContent(Content);
 
         }
 
@@ -107,7 +118,25 @@ namespace JSA_Game
             // TODO: Add your update logic here
 
             //Update level
-            testLevel.update(gameTime);
+            if (currLevel.WinState == WinLossState.InProgess)
+            {
+                currLevel.update(gameTime);
+            }
+            else if (currLevel.WinState == WinLossState.Win)
+            {
+                //next level
+                levels.Remove(currLevel);
+                if (levels.Count > 0)
+                {
+                    currLevel = (Level)levels[0];
+                    currLevel.loadContent(Content);
+                    currLevel.ButtonPressed = true;
+                }
+            }
+            else
+            {
+                //Lost
+            }
 
             base.Update(gameTime);
         }
@@ -124,11 +153,9 @@ namespace JSA_Game
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            //Draw level
-            testLevel.draw(spriteBatch);
+            currLevel.draw(spriteBatch);
 
             spriteBatch.End();
-
 
             base.Draw(gameTime);
         }

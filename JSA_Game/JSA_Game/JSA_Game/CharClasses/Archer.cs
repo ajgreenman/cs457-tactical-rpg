@@ -12,7 +12,7 @@ namespace JSA_Game.CharClasses
         public Archer(Level level)
         {
             AI = new AggressiveAI(this, level);
-            Texture = "player";
+            Texture = "Archer";
 
             MaxHP = STANDARD_STAT;
             MaxMP = STANDARD_STAT;

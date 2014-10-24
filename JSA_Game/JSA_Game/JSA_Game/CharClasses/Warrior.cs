@@ -13,7 +13,7 @@ namespace JSA_Game.CharClasses
         public Warrior(Level level)
         {
             AI = new AggressiveAI(this, level);
-            Texture = "player";
+            Texture = "Warrior";
 
             MaxHP = STRONG_STAT;
             MaxMP = STANDARD_STAT;

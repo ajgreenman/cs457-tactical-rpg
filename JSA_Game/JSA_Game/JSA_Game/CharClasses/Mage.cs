@@ -11,7 +11,7 @@ namespace JSA_Game.CharClasses
     {
         public Mage(Level level)
         {
-            Texture = "enemy";
+            Texture = "Mage";
             AI = new AggressiveAI(this, level);
 
             MaxHP = STANDARD_STAT;

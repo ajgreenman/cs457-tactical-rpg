@@ -53,8 +53,8 @@ namespace JSA_Game.Maps
 
         //State
         private LevelState state;
-        
         private TurnState playerTurn;
+        private WinLossState winState;
         
 
        // Dictionary<Vector2, Character> playerUnits, enemyUnits;
@@ -82,18 +82,18 @@ namespace JSA_Game.Maps
                     board[i, j] = new Tile();
                 }
             }
-
-
             maxPlayerUnits = numPlayerUnits;
             MaxEnemyUnits = numEnemyUnits;
-
             initialize();
         }
 
 
-        //Read from text file
-        //Folder for files is located at
-        //\JSA_Game\bin\x86\Debug\Levels
+        
+        /// <summary>
+        /// Generates a level from a given text file
+        /// //Folder for files is located at \JSA_Game\bin\x86\Debug\Levels
+        /// </summary>
+        /// <param name="filename">Filename to read</param>
         public Level(string filename)
         {
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
@@ -162,17 +162,14 @@ namespace JSA_Game.Maps
                     if(param[2].Equals("Warrior"))
                     {
                         c = new Warrior(this);
-                        c.Texture = allyFlag == 1 ? "playerWarrior" : "enemyWarrior";
                     }
                     else if (param[2].Equals("Mage"))
                     {
                         c = new Mage(this);
-                        c.Texture = allyFlag == 1 ? "playerMage" : "enemyMage";
                     }
                     else if (param[2].Equals("Archer"))
                     {
                         c = new Archer(this);
-                        c.Texture = allyFlag == 1 ? "playerArcher" : "enemyArcher";
                     }
                     //More
 
@@ -190,6 +187,7 @@ namespace JSA_Game.Maps
                     {
                         c.AI = new StationaryAI(c, this);
                     }
+                    //More
 
                     addUnit(allyFlag, c, new Vector2(x, y));
                 }
@@ -197,14 +195,16 @@ namespace JSA_Game.Maps
             }
                 file.Close();
                 
-
         }
 
-        //Initializes level
+        /// <summary>
+        /// Initializes the level. Sets state, initializes containers, and creates a Cursor.
+        /// </summary>
         private void initialize()
         {
             state = LevelState.CursorSelection;
             playerTurn = TurnState.Player;
+            winState = WinLossState.InProgess;
 
             playerUnitCount = 0;
             enemyUnitCount = 0;
@@ -260,52 +260,62 @@ namespace JSA_Game.Maps
 
 
 
-        //Moves unit given a path, provided by A*
-        public void moveUnit(Vector2 startPos, Vector2 endPos, Boolean AImoved)
+        /// <summary>
+        /// Moves unit given a path, provided by A*
+        /// </summary>
+        /// <param name="startPos">Starting position of the unit</param>
+        /// <param name="endPos">Destination position for the unit</param>
+        /// <param name="AImoved">If an AI called this function</param>
+        /// <param name="moveIfInRange">If the AI only wants to move if the target is in range</param>
+        public void moveUnit(Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
             Stack path = findPath(startPos, endPos);
             //if path exists
             if (path.Count > 0)
             {
-                int remMovement;
-                Character unit;
-                //stop variable stops movement for enemy units 1 early since
-                //the postion of a computer's target is their actual position.
-                int stop;
-                Boolean isEnemy = board[(int)startPos.X, (int)startPos.Y].Occupant.IsEnemy;
-                if (isEnemy)
+                //If character will only move if a target is in range
+                if (!moveIfInRange || (moveIfInRange && path.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement+2))
                 {
-                    unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                    remMovement = unit.Movement;
-                    stop = 1;
+                    int remMovement;
+                    Character unit;
+                    //stop variable stops movement for enemy units 1 early since
+                    //the postion of a computer's target is their actual position.
+                    int stop;
+                    Boolean isEnemy = board[(int)startPos.X, (int)startPos.Y].Occupant.IsEnemy;
+                    if (isEnemy)
+                    {
+                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        remMovement = unit.Movement;
+                        stop = 1;
+                    }
+                    else
+                    {
+
+                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        remMovement = unit.Movement;
+                        stop = AImoved ? 1 : 0;
+                    }
+
+                    //Starting position
+                    Vector2 pos = (Vector2)path.Pop();
+                    while (remMovement > 0 && path.Count > stop)
+                    {
+                        int xPos = (int)pos.X;
+                        int yPos = (int)pos.Y;
+                        //Character c;
+                        Vector2 next;
+
+                        next = (Vector2)path.Pop();
+                        board[(int)next.X, (int)next.Y].Occupant = board[(int)pos.X, (int)pos.Y].Occupant;
+                        board[(int)pos.X, (int)pos.Y].Occupant = null;
+
+                        board[(int)pos.X, (int)pos.Y].IsOccupied = false;
+                        board[(int)next.X, (int)next.Y].IsOccupied = true;
+                        pos = next;
+                        remMovement--;
+                    }
+                    unit.Pos = pos;
                 }
-                else
-                {
-
-                    unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                    remMovement = unit.Movement;
-                    stop = AImoved ? 1 : 0;
-                }
-
-                //Starting position
-                Vector2 pos = (Vector2)path.Pop();
-                while (remMovement > 0 && path.Count > stop)
-                {
-                    int xPos = (int)pos.X;
-                    int yPos = (int)pos.Y;
-                    //Character c;
-                    Vector2 next;
-
-                    next = (Vector2)path.Pop();
-                    board[(int)next.X, (int)next.Y].Occupant = board[(int)pos.X, (int)pos.Y].Occupant;
-                    board[(int)pos.X, (int)pos.Y].Occupant = null;
-
-                    board[(int)pos.X, (int)pos.Y].IsOccupied = false;
-                    board[(int)next.X, (int)next.Y].IsOccupied = true;
-                    pos = next;
-                    remMovement--;
-                }
-                unit.Pos = pos;
             }
         }
 
@@ -615,23 +625,35 @@ namespace JSA_Game.Maps
             }
         }
 
-        //Scan current location for attackable targets
+        /// <summary>
+        /// Scan current location for attackable targets.
+        /// </summary>
+        /// <param name="show">Boolean determining whether to select or deselect targets</param>
+        /// <param name="pos">Position of the selected unit</param>
+        /// <param name="range">Attack range of the unit's action</param>
         public void scanForTargets(Boolean show, Vector2 pos, int range)
         {
             board[(int)pos.X, (int)pos.Y].IsSelected = show;
             scanForTargets(show, (int)pos.X, (int)pos.Y, range);
         }
 
-        private void scanForTargets(Boolean show, int x, int y, int range)
+        /// <summary>
+        /// Helper method to recursively find attackable targets on the board that
+        /// </summary>
+        /// <param name="show">Boolean determining whether to show or hide the range</param>
+        /// <param name="x">X position of the selected unit</param>
+        /// <param name="y">Y position of the selected unit</param>
+        /// <param name="remMove">Remaining attack range of the unit's action</param>
+        private void scanForTargets(Boolean show, int x, int y, int remRange)
         {
-            if (range <= 0) return;
+            if (remRange <= 0) return;
             if (x > 0)
             {
                 if ((show && board[x - 1, y].Occupant != null) || !show)
                 {
                     board[x - 1, y].IsSelected = show;
                 }
-                scanForTargets(show, x - 1, y, range - 1);
+                scanForTargets(show, x - 1, y, remRange - 1);
             }
             if (x < boardWidth - 1)
             {
@@ -639,7 +661,7 @@ namespace JSA_Game.Maps
                 {
                     board[x + 1, y].IsSelected = show;
                 }
-                scanForTargets(show, x + 1, y, range - 1);
+                scanForTargets(show, x + 1, y, remRange - 1);
             }
             if (y > 0)
             {
@@ -647,7 +669,7 @@ namespace JSA_Game.Maps
                 {
                     board[x, y - 1].IsSelected = show;
                 }
-                scanForTargets(show, x, y - 1, range - 1);
+                scanForTargets(show, x, y - 1, remRange - 1);
             }
             if (y < boardHeight - 1)
             {
@@ -655,7 +677,7 @@ namespace JSA_Game.Maps
                 {
                     board[x, y + 1].IsSelected = show;
                 }
-                scanForTargets(show, x, y + 1, range - 1);
+                scanForTargets(show, x, y + 1, remRange - 1);
             }
         }
         /// <summary>
@@ -675,7 +697,7 @@ namespace JSA_Game.Maps
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
                 if(!characterImages.ContainsKey(c.Texture)){
-                    characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                    characterImages.Add("player" + c.Texture, content.Load<Texture2D>("player" + c.Texture));
                 }
             }
 
@@ -684,7 +706,7 @@ namespace JSA_Game.Maps
                 System.Diagnostics.Debug.Print("Created an enemy unit");
                 if (!characterImages.ContainsKey(c.Texture))
                 {
-                    characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                    characterImages.Add("enemy" + c.Texture, content.Load<Texture2D>("enemy" + c.Texture));
                 }
             }
 
@@ -754,6 +776,7 @@ namespace JSA_Game.Maps
                 if (pUnits.Count <= 0)
                 {
                     System.Diagnostics.Debug.Print("Player Lost!");
+                    winState = WinLossState.Loss;
                 }
             }
             
@@ -800,7 +823,7 @@ namespace JSA_Game.Maps
             foreach (Character c in pUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["player" + c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
 
                 //Draw box around character if selected
                 if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
@@ -812,7 +835,7 @@ namespace JSA_Game.Maps
             {
                 //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
 
-                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["enemy" + c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                 {
@@ -900,6 +923,11 @@ namespace JSA_Game.Maps
         {
             get { return playerTurn; }
             set { playerTurn = value; }
+        }
+        public WinLossState WinState
+        {
+            get { return winState; }
+            set { winState = value; }
         }
     }
 }

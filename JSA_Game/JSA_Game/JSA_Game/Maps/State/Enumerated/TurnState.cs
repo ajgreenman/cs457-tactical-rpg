@@ -1,0 +1,5 @@
+﻿enum TurnState
+{
+    Player,
+    Enemy
+}

@@ -56,6 +56,7 @@ namespace JSA_Game.Maps.State
                         if (level.EUnits.Count <= 0)
                         {
                             System.Diagnostics.Debug.Print("Player Won!");
+                            level.WinState = WinLossState.Win;
                         }
                     }
                 }

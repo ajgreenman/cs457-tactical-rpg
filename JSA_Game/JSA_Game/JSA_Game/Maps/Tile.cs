@@ -36,9 +36,7 @@ namespace JSA_Game
         {
             isOccupied = false;
             isHighlighted = false;
-            isSelected = false;
-            //moveImage = "";
-            
+            isSelected = false; 
         }
 
         public String LandType

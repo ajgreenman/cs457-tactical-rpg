@@ -44,7 +44,7 @@ namespace JSA_Game.AI
             //Move towards target if found
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                currLevel.moveUnit(character.Pos, targetPos, true);
+                currLevel.moveUnit(character.Pos, targetPos, true, true);
             }
         }
 

@@ -26,10 +26,8 @@ namespace JSA_Game.Maps
             get { return cursorPos; }
             set { cursorPos = value; }
         }
-       // Rectangle cursorSourceRect;
         Rectangle[] cursorSourceRects;
         Rectangle[] cursorDestRects;
-        //String cursorAnimation;
 
         float elapsedTime;
         float animateDelay = 500f;
@@ -42,10 +40,13 @@ namespace JSA_Game.Maps
         int areaWidth;
         int areaHeight;
 
+        //array to move over (optional)
+        int[][] array = null;
 
         /// <summary>
         /// Cursor constructor.  A cursor is meant to work on items in a list
         /// or an array where the edges of the items are touching.
+        /// Calling this constructor means the caller needs to handle array boundaries for the cursor.
         /// </summary>
         /// <param name="wOffset">x-value offset for the location of the container</param>
         /// <param name="hOffset">y-value offset for the location of the container</param>
@@ -62,6 +63,31 @@ namespace JSA_Game.Maps
             cursorDestRects = new Rectangle[4];
             cursorPos = new Vector2(0, 0);
         }
+
+        /// <summary>
+        /// Cursor constructor.  A cursor is meant to work on items in a list
+        /// or an array where the edges of the items are touching.
+        /// Boundary checking is handled with this cursor constructor.
+        /// </summary>
+        /// <param name="array">Integer array the cursor is to move over</param>
+        /// <param name="wOffset">x-value offset for the location of the container</param>
+        /// <param name="hOffset">y-value offset for the location of the container</param>
+        /// <param name="areaW">width of item in container</param>
+        /// <param name="areaH">height of item in container</param>
+        public Cursor(int[][] arr, int wOffset, int hOffset, int areaW, int areaH)
+        {
+            widthOffset = wOffset;
+            heighOffset = hOffset;
+            areaWidth = areaW;
+            areaHeight = areaH;
+            cursorParts = new Texture2D[4];
+            cursorSourceRects = new Rectangle[4];
+            cursorDestRects = new Rectangle[4];
+            cursorPos = new Vector2(0, 0);
+            array = arr;
+        }
+
+
 
         public void animate(GameTime gameTime)
         {
@@ -112,6 +138,12 @@ namespace JSA_Game.Maps
 
         }
 
+        /// <summary>
+        /// Listens to user input to move cursor
+        /// If the cursor was created with the array parameter, this method
+        /// will check if the cursor is within the bounds of the array.
+        /// </summary>
+        /// <param name="gameTime">GameTime sent from main class</param>
         public void moveCursor(GameTime gameTime)
         {
 
@@ -121,24 +153,69 @@ namespace JSA_Game.Maps
             {
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
-                    cursorPos.X--;
+                    if (array != null)
+                    {
+                        if (cursorPos.X > 0)
+                        {
+                            cursorPos.X--;
+                        }
+                    }
+                    else
+                    {
+                        cursorPos.X--;
+                    }
                 }
                 else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != areaWidth - 1)
                 {
-                    cursorPos.X++;
+                    if (array != null)
+                    {
+                        if (cursorPos.X < array.Length)
+                        {
+                            cursorPos.X++;
+                        }
+                    }
+                    else
+                    {
+                        cursorPos.X++;
+                    }
+                    
                 }
                 else if (keyboard.IsKeyDown(Keys.Up) && cursorPos.Y != 0)
                 {
-                    cursorPos.Y--;
+                    if (array != null)
+                    {
+                        if (cursorPos.Y > 0)
+                        {
+                            cursorPos.Y--;
+                        }
+                    }
+                    else
+                    {
+                        cursorPos.Y--;
+                    }
                 }
                 else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != areaHeight - 1)
                 {
-                    cursorPos.Y++;
+                    if (array != null)
+                    {
+                        if (cursorPos.Y < array.GetLength(1))
+                        {
+                            cursorPos.Y++;
+                        }
+                    }
+                    else
+                    {
+                        cursorPos.Y++;
+                    }
                 }
                 cursorTimeElapsed = 0;
             }
         }
 
+        /// <summary>
+        /// Moves the cursor in a given direction
+        /// </summary>
+        /// <param name="dir">Direction to move the cursor: l = left, r = right, u = up, d = down</param>
         public void moveCursorDir(char dir)
         {
             switch(dir)
@@ -149,6 +226,11 @@ namespace JSA_Game.Maps
                 case 'd': cursorPos.Y++; break;
             }
         }
+
+        /// <summary>
+        /// Draws the cursor given the main spriteBatch
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch from main class</param>
         public void draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < cursorParts.Length; i++)

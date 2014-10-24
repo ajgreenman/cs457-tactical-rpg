@@ -28,7 +28,7 @@ namespace JSA_Game.Maps.State
                     level.toggleMoveRange(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Movement);
                 }
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled = true;
-                level.moveUnit(level.SelectedPos, level.Cursor.CursorPos, false);
+                level.moveUnit(level.SelectedPos, level.Cursor.CursorPos, false, false);
                 level.State = LevelState.CursorSelection;
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
             }
