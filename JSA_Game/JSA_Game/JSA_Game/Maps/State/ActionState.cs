@@ -22,7 +22,7 @@ namespace JSA_Game.Maps.State
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
             //Listen for input to move cursor
-            level.Cursor.moveCursor(gameTime, level);
+            level.Cursor.moveCursor(gameTime);
 
             //Confirm attack
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
@@ -35,10 +35,10 @@ namespace JSA_Game.Maps.State
                         Character c = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant;
                         Character e = level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant;
 
-                        if (BattleController.isValidAction(c.Actions[0], c, level.SelectedPos, level.Cursor.CursorPos))
+                        if (BattleController.isValidAction(c.Attack, c, level.SelectedPos, level.Cursor.CursorPos))
                         {
                             System.Diagnostics.Debug.Print("Enemy HP is " + e.CurrHp);
-                            BattleController.performAction(c.Actions[0], c, e);
+                            BattleController.performAction(c.Attack, c, e);
                             System.Diagnostics.Debug.Print("Enemy HP now is " + e.CurrHp);
                         }
 

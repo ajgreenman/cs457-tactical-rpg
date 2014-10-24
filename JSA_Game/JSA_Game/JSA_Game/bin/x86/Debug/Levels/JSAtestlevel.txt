@@ -61,5 +61,5 @@ g:7,8,stone_wall
 g:7,9,stone_wall
 
 
-p:0,0,Warrior
-e:9,9,Mage
+p:0,0,Warrior,Aggressive
+e:9,9,Mage,Aggressive

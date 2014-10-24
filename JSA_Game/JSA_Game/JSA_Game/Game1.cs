@@ -21,21 +21,13 @@ namespace JSA_Game
     {
         //Constants
 
-        const int TILE_SIZE = 50;
-
-        int MAP_START_H = 0;
-        int MAP_START_W = 0;
-
         //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
 
-        //GameBoard board;
-
         //Example Level
         Level testLevel;
-
 
 
         public Game1()
@@ -48,7 +40,8 @@ namespace JSA_Game
 
             //Initialize Example Level
             //testLevel = new Level(10, 10, 1, 1);
-            testLevel = new Level("JSAtestlevel");
+            //testLevel = new Level("JSAtestlevel");
+            testLevel = new Level("Arena");
 
             //Character c = new Warrior(testLevel);
             //More movement for player
@@ -132,7 +125,7 @@ namespace JSA_Game
             spriteBatch.Begin();
 
             //Draw level
-            testLevel.draw(spriteBatch, MAP_START_W, MAP_START_H, TILE_SIZE);
+            testLevel.draw(spriteBatch);
 
             spriteBatch.End();
 

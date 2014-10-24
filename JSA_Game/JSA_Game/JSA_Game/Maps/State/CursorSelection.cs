@@ -22,7 +22,7 @@ namespace JSA_Game.Maps.State
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
             //Listen for input to move cursor
-            level.Cursor.moveCursor(gameTime, level);
+            level.Cursor.moveCursor(gameTime);
 
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {

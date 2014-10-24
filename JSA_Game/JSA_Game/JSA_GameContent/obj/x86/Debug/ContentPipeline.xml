@@ -29,15 +29,6 @@
       <Time>2014-10-03T16:58:26.4314505-04:00</Time>
     </Item>
     <Item>
-      <Source>cursorAnim.png</Source>
-      <Name>cursorAnim</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorAnim.xnb</Output>
-      <Time>2014-10-03T16:58:26.4274503-04:00</Time>
-    </Item>
-    <Item>
       <Source>bar_base.jpg</Source>
       <Name>bar_base</Name>
       <Importer>TextureImporter</Importer>
@@ -110,15 +101,6 @@
       <Time>2014-10-20T16:08:14.3821547-04:00</Time>
     </Item>
     <Item>
-      <Source>tempMove.jpg</Source>
-      <Name>tempMove</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\tempMove.xnb</Output>
-      <Time>2014-10-20T16:08:14.3665547-04:00</Time>
-    </Item>
-    <Item>
       <Source>target_square.png</Source>
       <Name>target_square</Name>
       <Importer>TextureImporter</Importer>
@@ -153,6 +135,96 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\attackButton.xnb</Output>
       <Time>2014-10-20T17:21:44.4661455-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBLAnim.png</Source>
+      <Name>cursorBLAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBLAnim.xnb</Output>
+      <Time>2014-10-24T01:40:29.5712937-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBRAnim.png</Source>
+      <Name>cursorBRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
+      <Time>2014-10-24T02:16:09.4736891-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorTLAnim.png</Source>
+      <Name>cursorTLAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
+      <Time>2014-10-24T01:40:52.4085999-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorTRAnim.png</Source>
+      <Name>cursorTRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTRAnim.xnb</Output>
+      <Time>2014-10-24T02:16:27.6607294-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyArcher.png</Source>
+      <Name>enemyArcher</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyArcher.xnb</Output>
+      <Time>2014-10-24T02:43:22.3470842-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyMage.png</Source>
+      <Name>enemyMage</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyMage.xnb</Output>
+      <Time>2014-10-24T02:43:22.3490843-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyWarrior.png</Source>
+      <Name>enemyWarrior</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyWarrior.xnb</Output>
+      <Time>2014-10-24T02:43:22.3500843-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerArcher.png</Source>
+      <Name>playerArcher</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerArcher.xnb</Output>
+      <Time>2014-10-24T02:43:22.3520844-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerMage.png</Source>
+      <Name>playerMage</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb</Output>
+      <Time>2014-10-24T02:43:22.3540846-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerWarrior.png</Source>
+      <Name>playerWarrior</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
+      <Time>2014-10-24T02:43:22.3560847-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

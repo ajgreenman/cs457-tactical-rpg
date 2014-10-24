@@ -10,7 +10,7 @@ using JSA_Game.Battle_Controller;
 
 namespace JSA_Game.AI
 {
-    class PassiveAI
+    class PassiveAI : iAI
     {
         Level currLevel;
         Character character;

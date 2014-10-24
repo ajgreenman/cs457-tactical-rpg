@@ -34,12 +34,11 @@ namespace JSA_Game.AI
             foreach (Character t in targetList)
             {
                 dist = currLevel.calcDist(character.Pos, t.Pos);
-                if (dist < shortestDist)
+                if (dist < shortestDist && dist <= character.Movement)
                 {
                     shortestDist = dist;
                     targetPos = t.Pos;
                 }
-
             }
 
             //Move towards target if found

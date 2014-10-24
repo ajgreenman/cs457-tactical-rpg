@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using JSA_Game.AI;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
 using JSA_Game.CharClasses;
@@ -22,6 +23,10 @@ namespace JSA_Game.Maps
     {
         const int TILE_IMAGE_COUNT = 3;
         const int UTILITY_IMAGE_COUNT = 3;
+        const int TILE_SIZE = 50;
+        int MAP_START_H = 0;
+        int MAP_START_W = 0;
+
 
         int boardWidth, boardHeight;
         int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
@@ -56,7 +61,6 @@ namespace JSA_Game.Maps
         ArrayList pUnits, eUnits;
         Dictionary<String, Texture2D> characterImages;
 
-
         /// <summary>
         /// Creates a level and initializes variables
         /// </summary>
@@ -80,72 +84,6 @@ namespace JSA_Game.Maps
             }
 
 
-            //Make level more interesting for testing
-
-            for (int i = 1; i < width - 1; i++)
-            {
-                if(i != width/2 && i != width/2-1)
-                {
-                    board[i, height / 2].IsOccupied = true;
-                    board[i, height / 2].LandType = "water";
-                    board[i, height / 2-1].IsOccupied = true;
-                    board[i, height / 2-1].LandType = "water";
-                }
-            }
-
-            //Very hardcoded
-            board[width / 2+1, height / 2 - 2].IsOccupied = true;
-            board[width / 2+1, height / 2 - 2].LandType = "water";
-            board[width / 2+1, height / 2 - 3].IsOccupied = true;
-            board[width / 2+1, height / 2 - 3].LandType = "water";
-            board[width / 2, height / 2 - 3].IsOccupied = true;
-            board[width / 2, height / 2 - 3].LandType = "water";
-            board[width / 2-1, height / 2 - 3].IsOccupied = true;
-            board[width / 2-1, height / 2 - 3].LandType = "water";
-
-            board[width / 2 -2, height / 2 +1].IsOccupied = true;
-            board[width / 2 -2, height / 2 +1].LandType = "water";
-            board[width / 2 -2, height / 2 +2].IsOccupied = true;
-            board[width / 2 -2, height / 2 +2].LandType = "water";
-            board[width / 2-1, height / 2 +2].IsOccupied = true;
-            board[width / 2-1, height / 2 +2].LandType = "water";
-            board[width / 2 , height / 2 +2].IsOccupied = true;
-            board[width / 2 , height / 2 +2].LandType = "water";
-
-            board[width / 2+2, height / 2 + 2].IsOccupied = true;
-            board[width / 2 + 2, height / 2 + 2].LandType = "stone_wall";
-            board[width / 2 +2, height / 2 +3].IsOccupied = true;
-            board[width / 2 +2, height / 2 + 3].LandType = "stone_wall";
-            board[width / 2 + 2, height / 2 + 1].IsOccupied = true;
-            board[width / 2 + 2, height / 2 + 1].LandType = "stone_wall";
-            board[width / 2 + 2, height / 2 + 4].IsOccupied = true;
-            board[width / 2 + 2, height / 2 + 4].LandType = "stone_wall";
-
-
-            board[width / 2 - 3, height / 2 - 2].IsOccupied = true;
-            board[width / 2 - 3, height / 2 - 2].LandType = "stone_wall";
-            board[width / 2 - 3, height / 2 - 3].IsOccupied = true;
-            board[width / 2 - 3, height / 2 - 3].LandType = "stone_wall";
-            board[width / 2 - 3, height / 2 - 4].IsOccupied = true;
-            board[width / 2 - 3, height / 2 - 4].LandType = "stone_wall";
-            board[width / 2 - 3, height / 2 - 5].IsOccupied = true;
-            board[width / 2 - 3, height / 2 - 5].LandType = "stone_wall";
-
-            board[width / 2, height-1].IsOccupied = true;
-            board[width / 2, height - 1].LandType = "stone_wall";
-            board[width / 2 - 2, height - 2].IsOccupied = true;
-            board[width / 2 - 2, height - 2].LandType = "stone_wall";
-            
-           
-            
-            /*  Wall off player
-            board[0, 1].IsOccupied = true;
-            board[0, 1].LandType = "stone_wall";
-
-            board[1, 0].IsOccupied = true;
-            board[1, 0].LandType = "stone_wall";
-            */
-
             maxPlayerUnits = numPlayerUnits;
             MaxEnemyUnits = numEnemyUnits;
 
@@ -154,6 +92,8 @@ namespace JSA_Game.Maps
 
 
         //Read from text file
+        //Folder for files is located at
+        //\JSA_Game\bin\x86\Debug\Levels
         public Level(string filename)
         {
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
@@ -209,6 +149,7 @@ namespace JSA_Game.Maps
                 else if (line[0] == 'p' || line[0] == 'e')
                 {
                     int allyFlag = line[0] == 'p' ? 1 : 0;
+                    Character c = new Character();
                     System.Diagnostics.Debug.Print("Player/Enemy unit: " + line);
 
                     //Split string starting after identifying character and colon.
@@ -220,18 +161,37 @@ namespace JSA_Game.Maps
 
                     if(param[2].Equals("Warrior"))
                     {
-                        addUnit(allyFlag, new Warrior(this), new Vector2(x, y));
+                        c = new Warrior(this);
+                        c.Texture = allyFlag == 1 ? "playerWarrior" : "enemyWarrior";
                     }
                     else if (param[2].Equals("Mage"))
                     {
-                        addUnit(allyFlag, new Mage(this), new Vector2(x, y));
+                        c = new Mage(this);
+                        c.Texture = allyFlag == 1 ? "playerMage" : "enemyMage";
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        addUnit(allyFlag, new Archer(this), new Vector2(x, y));
+                        c = new Archer(this);
+                        c.Texture = allyFlag == 1 ? "playerArcher" : "enemyArcher";
                     }
                     //More
 
+
+                    //Setting AI
+                    if (param[3].Equals("Aggressive"))
+                    {
+                        c.AI = new AggressiveAI(c, this);
+                    }
+                    else if (param[3].Equals("Defensive"))
+                    {
+                        c.AI = new DefensiveAI(c, this);
+                    }
+                    else if (param[3].Equals("Stationary"))
+                    {
+                        c.AI = new StationaryAI(c, this);
+                    }
+
+                    addUnit(allyFlag, c, new Vector2(x, y));
                 }
 
             }
@@ -250,7 +210,7 @@ namespace JSA_Game.Maps
             enemyUnitCount = 0;
 
             buttonPressed = false;
-            cursor = new Cursor();
+            cursor = new Cursor(MAP_START_W, MAP_START_H, TILE_SIZE, TILE_SIZE);
 
             pUnits = new ArrayList(maxPlayerUnits);
             eUnits = new ArrayList(MaxEnemyUnits);
@@ -714,13 +674,18 @@ namespace JSA_Game.Maps
             foreach (Character c in pUnits)
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
-                characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                if(!characterImages.ContainsKey(c.Texture)){
+                    characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                }
             }
 
             foreach (Character c in eUnits)
             {
                 System.Diagnostics.Debug.Print("Created an enemy unit");
-                characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                if (!characterImages.ContainsKey(c.Texture))
+                {
+                    characterImages.Add(c.Texture, content.Load<Texture2D>(c.Texture));
+                }
             }
 
             cursor.loadContent(content);
@@ -799,10 +764,7 @@ namespace JSA_Game.Maps
         /// Draws the level to the screen.
         /// </summary>
         /// <param name="spriteBatch">SpriteBatch from main class.</param>
-        /// <param name="startw">Offset width for the start of the board</param>
-        /// <param name="starth">Offset height for the start of the board</param>
-        /// <param name="tileSize">Size of each tile on the board</param>
-        public void draw(SpriteBatch spriteBatch, int startw, int starth, int tileSize)
+        public void draw(SpriteBatch spriteBatch)
         {
             //Draw board
             for (int i = 0; i < boardWidth; i++)
@@ -822,13 +784,13 @@ namespace JSA_Game.Maps
                     {
                         land = tileImages[0];
                     }
-                    spriteBatch.Draw(land, new Rectangle(startw + tileSize * i, starth + tileSize * j, tileSize, tileSize), Color.White);
+                    spriteBatch.Draw(land, new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
 
 
                     //Draws a semi-transparent tile to show available spaces for movement/attacking
                     if (board[i, j].IsHighlighted)
                     {
-                        spriteBatch.Draw(utilityImages[1], new Rectangle(startw + tileSize * i, starth + tileSize * j, tileSize, tileSize), Color.White);
+                        spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
                     }
 
                 }
@@ -838,34 +800,34 @@ namespace JSA_Game.Maps
             foreach (Character c in pUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
+                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
 
                 //Draw box around character if selected
                 if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
             foreach (Character c in eUnits)
             {
                 //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
 
-                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
+                spriteBatch.Draw(characterImages[c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)c.Pos.X, starth + tileSize * (int)c.Pos.Y, tileSize, tileSize), Color.White);
+                    spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
 
             //Draws a box around a selected tile
             if (board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected)
             {
-                spriteBatch.Draw(utilityImages[2], new Rectangle(startw + tileSize * (int)selectedPos.X, starth + tileSize * (int)selectedPos.Y, tileSize, tileSize), Color.White);
+                spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)selectedPos.X, MAP_START_H + TILE_SIZE * (int)selectedPos.Y, TILE_SIZE, TILE_SIZE), Color.White);
             }
 
             //Draw cursor on top of board.
-            cursor.draw(spriteBatch, startw, starth, tileSize);
+            cursor.draw(spriteBatch);
 
             //Draw HUD
             hud.Draw(spriteBatch);
