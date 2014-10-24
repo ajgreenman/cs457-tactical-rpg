@@ -150,9 +150,10 @@ namespace JSA_Game.Battle_Controller
         /// <param name="action">Action to be performed.</param>
         /// <param name="user">User performing the action.</param>
         /// <param name="target">Target character.</param>
+        
         private static void calculateTargetEffect(Action action, Character user, Character target)
         {
-            StatType[] effectType = action.TargetStat;
+            StatType[] effectType =  {StatType.Hp};
 
             int amount = 0;
             foreach (StatType stat in effectType)
@@ -270,7 +271,11 @@ namespace JSA_Game.Battle_Controller
                         target.CurrHp -= amount;
                         break;
                 }
+         
+       
             }
+         
         }
+        
     }
 }

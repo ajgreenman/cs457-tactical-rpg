@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Maps;
 using JSA_Game.AI;
+using JSA_Game.CharClasses.StatEffect;
 
 namespace JSA_Game
 {
@@ -18,6 +19,12 @@ namespace JSA_Game
         protected const int STANDARD_STAT = 5;
         protected const int WEAK_STAT = 2;
 
+        //Experience
+        protected readonly int[] EXP_VALS = {0,2,6,14};
+
+        //Status effects
+        private Status[] status;
+
         // Actions
         private Battle_Controller.Action attack;
         private Battle_Controller.Action[] actions;
@@ -27,7 +34,7 @@ namespace JSA_Game
         private Boolean moveDisabled;
         private Boolean actionDisabled;
         private int movement;
-        private int level;
+        private int charLevel;
         private int currExp;
 
         //Position
@@ -56,16 +63,23 @@ namespace JSA_Game
             weapon = new Items.Weapon();
             protection = new Items.Protection();
 
+            status = new Status[2];
+
             attack = new Battle_Controller.Action();   // Default attack action.
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
 
             movement = STANDARD_STAT;
-            level = 1;
+            charLevel = 1;
             currExp = 0;
             isEnemy = false;
             moveDisabled = false;
             actionDisabled = false;
             pos = new Vector2(-1, -1);
+        }
+
+        public int yieldExp()
+        {
+            return charLevel; 
         }
 
         //Character stats
@@ -194,13 +208,23 @@ namespace JSA_Game
         }
         public int Level
         {
-            get { return level; }
-            set { level = value; }
+            get { return charLevel; }
+            set { charLevel = value; }
         }
         public int CurrExp
         {
             get { return currExp; }
-            set { currExp = value; }
+            set
+            {
+                currExp = value;
+                while (currExp >= EXP_VALS[charLevel] && charLevel < EXP_VALS.Length)
+                {
+                    
+                    //Level up!
+                    charLevel++;
+                    System.Diagnostics.Debug.Print("Level up to " + charLevel + "!");
+                }
+            }
         }
         public Boolean IsEnemy
         {
@@ -224,14 +248,23 @@ namespace JSA_Game
             set { pos = value; }
         }
 
-        public int hpPercent
+        public float hpPercent
         {
-            get { return currHp / maxHP * 100; }
+            get { return currHp / (float)maxHP; }
         }
 
-        public int mpPercent
+        public float mpPercent
         {
-            get { return currMp / maxMP * 100; }
+            get { return currMp / (float)maxMP; }
+        }
+        public float expPercent
+        {
+            get { return (currExp-EXP_VALS[charLevel - 1]) / (float)(EXP_VALS[charLevel]-EXP_VALS[charLevel-1]); }
+        }
+        public Status[] Status
+        {
+            get { return status; }
+            set { status = value; }
         }
     }
 }

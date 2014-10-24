@@ -26,17 +26,17 @@ namespace JSA_Game.CharClasses
             Resist = WEAK_STAT;
 
             Battle_Controller.Action actionHeal = new Battle_Controller.Action("Heal", "Heal a friendly unit.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 3, 5);
             Actions[0] = actionHeal;
 
             Battle_Controller.Action actionShield = new Battle_Controller.Action("Shield", "Shield a friendly unit.",
-                new StatType[] { StatType.Armor, StatType.Resist },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 2, 5);
             Actions[1] = actionShield;
 
             Battle_Controller.Action actionJudgment = new Battle_Controller.Action("Judgment", "Smite the enemy.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5);
             Actions[2] = actionJudgment;
         }

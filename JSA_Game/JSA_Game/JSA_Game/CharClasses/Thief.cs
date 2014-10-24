@@ -26,7 +26,7 @@ namespace JSA_Game.CharClasses
             Resist = WEAK_STAT;
 
             Battle_Controller.Action actionStab = new Battle_Controller.Action("Stab", "A precise attack. Ignores enemy stats.", 
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.0, 1, 1);
             Actions[0] = actionStab;
         }

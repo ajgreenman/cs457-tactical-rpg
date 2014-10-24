@@ -13,23 +13,33 @@ namespace JSA_Game.HUD
 {
     class HUD_Controller
     {
-        const int GRAPHIC_HEIGHT = 100;
-        const int GRAPHIC_WIDTH = 500;
+        //HUD Graphic 
+        Vector2 hudSize;
+        Vector2 hudPos;
+        Rectangle hudRec;
+        Texture2D hudText;
 
-        Texture2D hud;
-
+        //Assisting Objects
         Health_Bar healthBar;
         Mana_Bar manaBar;
         Experience_Bar experienceBar;
         Stat_Section statSection;
-        Attack_Button attackB;
-        Item_Button itemB;
+        Action_Button actionB;
         Wait_Button waitB;
+        Item_Button itemB;
+        
 
         private Boolean hidden;
+        private Boolean statPage;
+        private Boolean buttonPage;
 
         public HUD_Controller()
         {
+            //Init Graphic Size
+            hudSize = new Vector2(500, 100);
+            hudPos = new Vector2(0, 500);
+            hudRec = new Rectangle((int)hudPos.X, (int)hudPos.Y, (int)hudSize.X, (int)hudSize.Y);
+
             //Init Bars and Stat Section
             healthBar = new Health_Bar();
             manaBar = new Mana_Bar();
@@ -37,16 +47,18 @@ namespace JSA_Game.HUD
             statSection = new Stat_Section();
 
             //Init Buttons
-            attackB = new Attack_Button();
-            itemB = new Item_Button();
+            actionB = new Action_Button();
             waitB = new Wait_Button();
+            itemB = new Item_Button();
 
             hidden = true;
+            statPage = true;
+            buttonPage = false;
         }
 
         public void LoadContent(ContentManager Content)
         {
-            hud = Content.Load<Texture2D>("brown-rectangle");
+            hudText = Content.Load<Texture2D>("brown-rectangle");
 
             //Loading Bars and Stat Section
             manaBar.LoadContent(Content);
@@ -54,21 +66,10 @@ namespace JSA_Game.HUD
             healthBar.LoadContent(Content);
             statSection.LoadContent(Content);
 
-
             //Loading Buttons
-            attackB.LoadContent(Content);
-            itemB.LoadContent(Content);
+            actionB.LoadContent(Content);
             waitB.LoadContent(Content);
-        }
-
-        public bool mouseUpdate()
-        {
-            MouseState mouse = Mouse.GetState();
-
-            //Updating if Button Pressed
-            if (attackB.mouseUpdate(mouse) || itemB.mouseUpdate(mouse) || waitB.mouseUpdate(mouse)) return true;
-
-            return false;
+            itemB.LoadContent(Content);
         }
 
         public void characterSelect(Character c)
@@ -78,31 +79,52 @@ namespace JSA_Game.HUD
             healthBar.characterSelect(c);
             manaBar.characterSelect(c);
             statSection.characterSelect(c);
+            //Updating Buttons
+            actionB.characterSelect(c);
+            waitB.characterSelect(c);
+            itemB.characterSelect(c);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(hud, new Rectangle(0, 500, GRAPHIC_WIDTH, GRAPHIC_HEIGHT), Color.White);
+            spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
             if (hidden)
             {
-                //Drawing Bars and Stat Section
-                experienceBar.Draw(spriteBatch);
-                manaBar.Draw(spriteBatch);
-                healthBar.Draw(spriteBatch);
-                statSection.Draw(spriteBatch);
+                if (statPage)
+                {
+                    //Drawing Bars and Stat Section
+                    experienceBar.Draw(spriteBatch);
+                    manaBar.Draw(spriteBatch);
+                    healthBar.Draw(spriteBatch);
+                    statSection.Draw(spriteBatch);
+                }
 
-                //Drawing Buttons
-                attackB.Draw(spriteBatch);
-                itemB.Draw(spriteBatch);
-                waitB.Draw(spriteBatch);
+                if (buttonPage)
+                {
+                    //Drawing Buttons
+                    actionB.Draw(spriteBatch);
+                    waitB.Draw(spriteBatch);
+                    itemB.Draw(spriteBatch);
+                }
             }
-
         }
 
         public Boolean Hidden
         {
             get { return hidden; }
             set { hidden = value; }
+        }
+
+        public Boolean StatPage
+        {
+            get { return statPage; }
+            set { statPage = value; }
+        }
+
+        public Boolean ButtonPage
+        {
+            get { return buttonPage; }
+            set { buttonPage = value; }
         }
     }
 }

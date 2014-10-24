@@ -42,8 +42,10 @@ namespace JSA_Game
             this.IsMouseVisible = true;
 
             levels = new ArrayList();
-            levels.Add( new Level("Arena"));
+            levels.Add(new Level("Arena"));
             levels.Add(new Level("JSAtestlevel"));
+            
+            
 
             //Set first level
             currLevel = (Level) levels[0];

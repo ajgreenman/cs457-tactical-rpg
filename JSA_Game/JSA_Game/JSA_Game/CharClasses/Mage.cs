@@ -26,18 +26,18 @@ namespace JSA_Game.CharClasses
             Resist = STANDARD_STAT;
 
             Battle_Controller.Action actionFireball = new Battle_Controller.Action("Fireball", "Blast the enemy with a raging fireball.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5);
             Actions[0] = actionFireball;
 
             Battle_Controller.Action actionShock = new Battle_Controller.Action("Shock",
                 "Call down a lightning storm, affecting all enemies in range.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, true, 1.0, 4, 3);
             Actions[1] = actionShock;
 
             Battle_Controller.Action actionSlow = new Battle_Controller.Action("Slow", "Slows the enemy, lowering dodge and movement.",
-                new StatType[] { StatType.Dodge, StatType.Movement },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5);
             Actions[2] = actionSlow;
         }

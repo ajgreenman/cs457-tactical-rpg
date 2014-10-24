@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
-      <Time>2014-10-20T16:08:14.1169543-04:00</Time>
+      <Time>2014-10-24T17:27:37.7949409-04:00</Time>
     </Item>
     <Item>
       <Source>brown-rectangle.jpg</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
-      <Time>2014-10-20T16:08:14.1793544-04:00</Time>
+      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
     </Item>
     <Item>
       <Source>Border.png</Source>
@@ -116,7 +116,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemButton.xnb</Output>
-      <Time>2014-10-20T17:21:44.4817455-04:00</Time>
+      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
     </Item>
     <Item>
       <Source>waitButton.png</Source>
@@ -125,7 +125,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\waitButton.xnb</Output>
-      <Time>2014-10-20T17:21:44.4973455-04:00</Time>
+      <Time>2014-10-24T17:25:27.9259566-04:00</Time>
     </Item>
     <Item>
       <Source>attackButton.png</Source>
@@ -134,7 +134,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\attackButton.xnb</Output>
-      <Time>2014-10-20T17:21:44.4661455-04:00</Time>
+      <Time>2014-10-24T17:25:27.8947566-04:00</Time>
     </Item>
     <Item>
       <Source>cursorBLAnim.png</Source>
@@ -225,6 +225,15 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
       <Time>2014-10-24T16:44:14.4236436-04:00</Time>
+    </Item>
+    <Item>
+      <Source>actionButton.png</Source>
+      <Name>actionButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
+      <Time>2014-10-24T17:25:26.459554-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

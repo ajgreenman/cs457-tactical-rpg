@@ -28,13 +28,13 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionCripple =
                 new Battle_Controller.Action("Cripple", "Cripple the target, lowering dodge and movement. Ignores enemy stats.",
-                    new StatType[] {StatType.Hp, StatType.Dodge, StatType.Movement},
+                    null,
                     new StatType[] {StatType.Mp}, ActionType.Physical, true, false, false, 0.8, 0, 1);
             Actions[0] = actionCripple;
 
             Battle_Controller.Action actionBattleCry =
                 new Battle_Controller.Action("Battle Cry", "Lowers enemy accuracy, strength, and magic.", 
-                    new StatType[] {StatType.Accuracy, StatType.Strength, StatType.Magic},
+                    null,
                     new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 2, 3);
             Actions[1] = actionBattleCry;
         }

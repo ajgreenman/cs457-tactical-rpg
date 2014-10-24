@@ -11,7 +11,7 @@ namespace JSA_Game.HUD
     class Stat_Section
     {
         //Position Macros
-        const int STAT_POSx = 220; 
+        const int STAT_POSx = 225; 
         const int STR_POSx = 175;
         const int ARMR_POSx = 175;
         const int MAG_POSx = 265;
@@ -19,8 +19,11 @@ namespace JSA_Game.HUD
         const int DOD_POSx = 175;
         const int ACC_POSx = 265;
         const int MOV_POSx = 220;
+        const int EFF_POSx = 375;
+        const int BUF_POSx = 358;
+        const int DBUF_POSx = 350;
 
-        const int STAT_POSy = 500;
+        const int STAT_POSy = 502;
         const int STR_POSy= 520;
         const int ARMR_POSy = 540;
         const int MAG_POSy = 520;
@@ -28,6 +31,9 @@ namespace JSA_Game.HUD
         const int DOD_POSy = 560;
         const int ACC_POSy = 560;
         const int MOV_POSy = 580;
+        const int EFF_POSy = 502;
+        const int BUF_POSy = 525;
+        const int DBUF_POSy = 555;
 
         //Vector2 Objects
         Vector2 stat_pos; 
@@ -38,8 +44,11 @@ namespace JSA_Game.HUD
         Vector2 dod_pos;
         Vector2 acc_pos;
         Vector2 mov_pos;
+        Vector2 eff_pos;
+        Vector2 buf_pos;
+        Vector2 dbuf_pos;
 
-        //Stat Fonts
+        //Stat and Effect Fonts
         SpriteFont fStatHeader;
         SpriteFont fStrength;
         SpriteFont fArmor;
@@ -48,8 +57,11 @@ namespace JSA_Game.HUD
         SpriteFont fDodge;
         SpriteFont fAccuracy;
         SpriteFont fMovement;
+        SpriteFont fEffectsHeader;
+        SpriteFont fBuff;
+        SpriteFont fDBuff;
 
-        //Stat Types
+        //Stat and Effect Types
         int targetStrength;
         int targetArmor;
         int targetMagic;
@@ -57,6 +69,8 @@ namespace JSA_Game.HUD
         int targetAccuracy;
         int targetDodge;
         int targetMovement;
+        String targetBuff;
+        String targetDBuff;
 
         //Constructor
         public Stat_Section()
@@ -70,8 +84,12 @@ namespace JSA_Game.HUD
             dod_pos = new Vector2(DOD_POSx, DOD_POSy);
             acc_pos = new Vector2(ACC_POSx, ACC_POSy);
             mov_pos = new Vector2(MOV_POSx, MOV_POSy);
+            eff_pos = new Vector2(EFF_POSx, EFF_POSy);
+            buf_pos = new Vector2(BUF_POSx, BUF_POSy);
+            dbuf_pos = new Vector2(DBUF_POSx, DBUF_POSy);
         }
 
+        //Getting Character Values
         public void characterSelect(Character c)
         {
             targetStrength = c.Strength;
@@ -81,9 +99,11 @@ namespace JSA_Game.HUD
             targetAccuracy = c.Accuracy;
             targetDodge = c.Dodge;
             targetMovement = c.Movement;
+            //targetBuff = c.Buff;
+            //targetDBuff = c.DBuff;
         }
 
-        //Loading Stat Fonts
+        //Loading Stat Fonts and Effect Fonts
         public void LoadContent(ContentManager Content)
         {
             fStatHeader = Content.Load<SpriteFont>("StatFont");
@@ -94,19 +114,25 @@ namespace JSA_Game.HUD
             fDodge = Content.Load<SpriteFont>("StatFont");
             fAccuracy = Content.Load<SpriteFont>("StatFont");
             fMovement = Content.Load<SpriteFont>("StatFont");
+            fEffectsHeader = Content.Load<SpriteFont>("StatFont");
+            fBuff = Content.Load<SpriteFont>("StatFont");
+            fDBuff = Content.Load<SpriteFont>("StatFont");
         }
 
-        //Drawing Stat Fonts
+        //Drawing Stat Fonts and Effect Fonts
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(fStatHeader,"Stats", stat_pos, Color.Black);
-            spriteBatch.DrawString(fStrength,"STR: " + targetStrength, str_pos, Color.Black);
-            spriteBatch.DrawString(fArmor, "ARM: " + targetArmor, armr_pos ,Color.Black);
-            spriteBatch.DrawString(fMagic, "MAG: " + targetMagic, mag_pos, Color.Black);
-            spriteBatch.DrawString(fResistance, "RES: " + targetResistance, res_pos, Color.Black);
-            spriteBatch.DrawString(fDodge, "DOD: " + targetDodge, dod_pos, Color.Black);
-            spriteBatch.DrawString(fAccuracy, "ACC: " + targetAccuracy, acc_pos, Color.Black);
-            spriteBatch.DrawString(fMovement, "MOV: " + targetMovement, mov_pos, Color.Black);
+            spriteBatch.DrawString(fStatHeader, "Stats", stat_pos, Color.White);
+            spriteBatch.DrawString(fStrength, "STR: " + targetStrength, str_pos, Color.White);
+            spriteBatch.DrawString(fArmor, "ARM: " + targetArmor, armr_pos, Color.White);
+            spriteBatch.DrawString(fMagic, "MAG: " + targetMagic, mag_pos, Color.White);
+            spriteBatch.DrawString(fResistance, "RES: " + targetResistance, res_pos, Color.White);
+            spriteBatch.DrawString(fDodge, "DOD: " + targetDodge, dod_pos, Color.White);
+            spriteBatch.DrawString(fAccuracy, "ACC: " + targetAccuracy, acc_pos, Color.White);
+            spriteBatch.DrawString(fMovement, "MOV: " + targetMovement, mov_pos, Color.White);
+            spriteBatch.DrawString(fEffectsHeader, "Effects", eff_pos, Color.White);
+            spriteBatch.DrawString(fBuff, "BUF: " + targetBuff, buf_pos, Color.White);
+            spriteBatch.DrawString(fDBuff, "DBUF: " + targetDBuff, dbuf_pos, Color.White);
         }
     }
 }

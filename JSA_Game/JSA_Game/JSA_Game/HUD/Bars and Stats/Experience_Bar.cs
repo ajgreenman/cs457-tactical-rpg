@@ -10,21 +10,30 @@ namespace JSA_Game.HUD
 {
     class Experience_Bar
     {
+        const int BAR_SIZE = 125;
 
-        const int BAR_HEIGHT = 25;
-        const int BAR_WIDTH = 125;
+        //Experience Bar Graphic
+        Texture2D experienceBar;
+        Vector2 experienceSize;
+        Vector2 experiencePos;
+        Rectangle experienceRec;
+
 
         private int targetCurrExperience;
-        Texture2D experienceBar;
+        
 
         public Experience_Bar()
         {
-            
+            experienceSize = new Vector2(BAR_SIZE, 25);
+            experiencePos = new Vector2(30, 570);
+            experienceRec = new Rectangle((int)experiencePos.X, (int)experiencePos.Y, (int)experienceSize.X, (int)experienceSize.Y);
         }
 
         public void characterSelect(Character c)
         {
-            //targetCurrExperience = c.
+            targetCurrExperience = c.CurrExp;
+            experienceSize.X = BAR_SIZE * c.expPercent;
+            experienceRec.Width = (int)experienceSize.X;
         }
 
         public void LoadContent(ContentManager Content)
@@ -34,7 +43,7 @@ namespace JSA_Game.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(experienceBar, new Rectangle(30, 570, BAR_WIDTH, BAR_HEIGHT), Color.White);
+            spriteBatch.Draw(experienceBar, experienceRec, Color.Green);
         }
     }
 }

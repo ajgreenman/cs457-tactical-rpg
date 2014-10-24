@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JSA_Game.CharClasses;
+using JSA_Game.CharClasses.StatEffect;
 
 namespace JSA_Game.Battle_Controller
 {
     class Action
     {
         private String name, description;
-        private StatType[] targetStat, statCost;
+        private StatType[] statCost;
+        private Status actionEffect;
         private ActionType type;
         private Boolean ignoreEnemyStats, friendly, aoe;
         private int cost, range;
@@ -19,7 +22,7 @@ namespace JSA_Game.Battle_Controller
         /// </summary>
         /// <param name="name">Name of the action.</param>
         /// <param name="description">Description of the action</param>
-        /// <param name="targetStat">Stat the action targets (typically Hp).</param>
+        /// <param name="actionEffect">Effect the action has on the target.</param>
         /// <param name="statCost">Stat that is used to perform this action (typically Mp or nothing).</param>
         /// <param name="type">Type of action, physical or spell.</param>
         /// <param name="ignoreEnemyStats">Determines whether or not the action ignores enemy stats.</param>
@@ -28,12 +31,12 @@ namespace JSA_Game.Battle_Controller
         /// <param name="powerMultiplier">Determines how much power the action has.</param>
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
         /// <param name="range">Range of the action.</param>
-        public Action(String name, String description, StatType[] targetStat, StatType[] statCost, ActionType type,
+        public Action(String name, String description, Status actionEffect, StatType[] statCost, ActionType type,
             Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range)
         {
             this.name = name;
             this.description = description;
-            this.targetStat = targetStat;
+            this.actionEffect = actionEffect;
             this.statCost = statCost;
             this.type = type;
             this.ignoreEnemyStats = ignoreEnemyStats;
@@ -51,7 +54,7 @@ namespace JSA_Game.Battle_Controller
         {
             this.name = "Attack";
             this.description = "A standard attack.";
-            this.targetStat = new StatType[] { StatType.Hp };
+            this.actionEffect = null;
             this.statCost = new StatType[] { StatType.Mp };
             this.type = ActionType.Physical;
             this.ignoreEnemyStats = false;
@@ -76,10 +79,10 @@ namespace JSA_Game.Battle_Controller
             set { description = value; }
         }
 
-        public StatType[] TargetStat
+        public Status ActionEffect
         {
-            get { return targetStat; }
-            set { targetStat = value; }
+            get { return actionEffect; }
+            set { actionEffect = value; }
         }
 
         public StatType[] StatCost

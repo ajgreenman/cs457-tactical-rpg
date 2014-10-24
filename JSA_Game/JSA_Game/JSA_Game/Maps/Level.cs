@@ -855,7 +855,6 @@ namespace JSA_Game.Maps
 
             //Draw HUD
             hud.Draw(spriteBatch);
-            hud.mouseUpdate();
 
         }
 

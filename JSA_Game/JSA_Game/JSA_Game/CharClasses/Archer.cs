@@ -25,21 +25,21 @@ namespace JSA_Game.CharClasses
             Magic = WEAK_STAT;
             Resist = STANDARD_STAT;
 
-            Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", new StatType[] { StatType.Hp},
+            Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
                 new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5);
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 1, 8);
             Actions[0] = actionLongshot;
 
             Battle_Controller.Action actionSnipe = new Battle_Controller.Action("Snipe", "A powerful attack. Ignores enemy stats.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 3, 5);
             Actions[1] = actionSnipe;
 
             Battle_Controller.Action actionMultishot = new Battle_Controller.Action("Multishot", "Shoot multiple targets.",
-                new StatType[] { StatType.Hp },
+                null,
                 new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, .6, 3, 5);
             Actions[2] = actionMultishot;
 

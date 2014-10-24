@@ -44,6 +44,7 @@ namespace JSA_Game.Maps.State
 
                         if (e.CurrHp < 1)
                         {
+                            c.CurrExp += e.yieldExp();
                             level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].IsOccupied = false;
                             level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant = null;
                             level.EUnits.Remove(e);
