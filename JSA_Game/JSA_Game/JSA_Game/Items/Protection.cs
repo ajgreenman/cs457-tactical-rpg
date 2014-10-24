@@ -5,26 +5,26 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
-    abstract class Protection : Item
+    class Protection : Item
     {
-        protected ArmorType type;
         protected int armor;
         protected int dodge;
         protected int resist;
 
-        public Protection(String name, int worth, ArmorType type, int armor, int dodge, int resist) :
+        public Protection(String name, int worth, int armor, int dodge, int resist) :
             base(name, worth)
         {
-            this.type = type;
             this.armor = armor;
             this.dodge = dodge;
             this.resist = resist;
         }
 
-        public ArmorType Type
+        public Protection() :
+            base("Leather Armor", 2)
         {
-            get { return type; }
-            set { type = value; }
+            armor = 2;
+            dodge = 2;
+            resist = 2;
         }
 
         public int Armor

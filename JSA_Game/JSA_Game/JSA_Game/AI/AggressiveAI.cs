@@ -60,6 +60,7 @@ namespace JSA_Game.AI
                 {
                     Character target = currLevel.Board[(int)targetPos.X, (int)targetPos.Y].Occupant;
 
+
                     if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                     {
                         System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);

@@ -11,6 +11,9 @@ namespace JSA_Game
     class Character
     {
         //Default Stats
+        protected const int STRONG_HPMP = 20;
+        protected const int STANDARD_HPMP = 15;
+        protected const int WEAK_HPMP = 10;
         protected const int STRONG_STAT = 10;
         protected const int STANDARD_STAT = 5;
         protected const int WEAK_STAT = 2;
@@ -39,8 +42,8 @@ namespace JSA_Game
 
         public Character()
         {
-            maxHP = STANDARD_STAT;
-            maxMP = STANDARD_STAT;
+            maxHP = STANDARD_HPMP;
+            maxMP = STANDARD_HPMP;
             currHp = STANDARD_STAT;
             currMp = STANDARD_STAT;
             strength = STANDARD_STAT;
@@ -50,13 +53,8 @@ namespace JSA_Game
             magic = STANDARD_STAT;
             resist = STANDARD_STAT;
 
-            // Starting Armor
             weapon = new Items.Weapon();
-            headArmor = new Items.HeadArmor();
-            chestArmor = new Items.ChestArmor();
-            legArmor = new Items.LegArmor();
-            handArmor = new Items.HandArmor();
-            feetArmor = new Items.FeetArmor();
+            protection = new Items.Protection();
 
             attack = new Battle_Controller.Action();   // Default attack action.
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
@@ -68,21 +66,6 @@ namespace JSA_Game
             moveDisabled = false;
             actionDisabled = false;
             pos = new Vector2(-1, -1);
-        }
-
-        private int getProtectionStats(StatType type)
-        {
-            switch (type)
-            {
-                case StatType.Armor:
-                    return HeadArmor.Armor + ChestArmor.Armor + LegArmor.Armor + HandArmor.Armor + FeetArmor.Armor;
-                case StatType.Dodge:
-                    return HeadArmor.Dodge + ChestArmor.Dodge + LegArmor.Dodge + HandArmor.Dodge + FeetArmor.Dodge;
-                case StatType.Resist:
-                    return HeadArmor.Resist + ChestArmor.Resist + LegArmor.Resist + HandArmor.Resist + FeetArmor.Resist;
-                default:
-                    return 0;
-            }
         }
 
         //Character stats
@@ -130,7 +113,7 @@ namespace JSA_Game
 
         public int Armor
         {
-            get { return armor + getProtectionStats(StatType.Armor); }
+            get { return armor + Protection.Armor; }
             set { armor = value; }
         }
 
@@ -146,7 +129,7 @@ namespace JSA_Game
 
         public int Dodge
         {
-            get { return dodge + getProtectionStats(StatType.Dodge); }
+            get { return dodge + Protection.Dodge; }
             set { dodge = value; }
         }
 
@@ -162,49 +145,16 @@ namespace JSA_Game
 
         public int Resist
         {
-            get { return resist + getProtectionStats(StatType.Resist); }
+            get { return resist + Protection.Resist; }
             set { resist = value; }
         }
 
-        // Armor
-        private Items.HeadArmor headArmor;
+        private Items.Protection protection;
 
-        public Items.HeadArmor HeadArmor
+        public Items.Protection Protection
         {
-            get { return headArmor; }
-            set { headArmor = value; }
-        }
-
-        private Items.Protection chestArmor;
-
-        public Items.Protection ChestArmor
-        {
-            get { return chestArmor; }
-            set { chestArmor = value; }
-        }
-
-        private Items.Protection handArmor;
-
-        public Items.Protection HandArmor
-        {
-            get { return handArmor; }
-            set { handArmor = value; }
-        }
-
-        private Items.Protection legArmor;
-
-        public Items.Protection LegArmor
-        {
-            get { return legArmor; }
-            set { legArmor = value; }
-        }
-
-        private Items.Protection feetArmor;
-
-        public Items.Protection FeetArmor
-        {
-            get { return feetArmor; }
-            set { feetArmor = value; }
+            get { return protection; }
+            set { protection = value; }
         }
 
         private Items.Weapon weapon;
@@ -272,6 +222,16 @@ namespace JSA_Game
         {
             get { return pos; }
             set { pos = value; }
+        }
+
+        public int hpPercent
+        {
+            get { return currHp / maxHP * 100; }
+        }
+
+        public int mpPercent
+        {
+            get { return currMp / maxMP * 100; }
         }
     }
 }
