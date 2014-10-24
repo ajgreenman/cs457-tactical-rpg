@@ -26,7 +26,7 @@ namespace JSA_Game.CharClasses
             Resist = STANDARD_STAT;
 
             Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", new StatType[] { StatType.Hp},
-                new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 1);
+                new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5);
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
                 new StatType[] { StatType.Hp },

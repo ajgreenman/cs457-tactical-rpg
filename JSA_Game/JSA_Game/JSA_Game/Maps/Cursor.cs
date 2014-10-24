@@ -93,9 +93,7 @@ namespace JSA_Game.Maps
             cursorSourceRects = new Rectangle[4];
             cursorDestRects = new Rectangle[4];
             cursorPos = new Vector2(0, 0);
-            
         }
-
 
 
         public void animate(GameTime gameTime)
