@@ -39,6 +39,8 @@ namespace JSA_Game.Maps
         int heighOffset;
         int areaWidth;
         int areaHeight;
+        int width;
+        int height;
 
         //array to move over (optional)
         int[][] array = null;
@@ -50,14 +52,18 @@ namespace JSA_Game.Maps
         /// </summary>
         /// <param name="wOffset">x-value offset for the location of the container</param>
         /// <param name="hOffset">y-value offset for the location of the container</param>
+        /// <param name="w">width of the container</param>
+        /// <param name="h">height of the container</param>
         /// <param name="areaW">width of item in container</param>
         /// <param name="areaH">height of item in container</param>
-        public Cursor(int wOffset, int hOffset, int areaW, int areaH)
+        public Cursor(int wOffset, int hOffset, int w, int h, int areaW, int areaH)
         {
             widthOffset = wOffset;
             heighOffset = hOffset;
             areaWidth = areaW;
             areaHeight = areaH;
+            width = w;
+            height = h;
             cursorParts = new Texture2D[4];
             cursorSourceRects = new Rectangle[4];
             cursorDestRects = new Rectangle[4];
@@ -76,15 +82,18 @@ namespace JSA_Game.Maps
         /// <param name="areaH">height of item in container</param>
         public Cursor(int[][] arr, int wOffset, int hOffset, int areaW, int areaH)
         {
+            array = arr;
             widthOffset = wOffset;
             heighOffset = hOffset;
+            width = arr.GetLength(0);
+            height = arr.GetLength(1);
             areaWidth = areaW;
             areaHeight = areaH;
             cursorParts = new Texture2D[4];
             cursorSourceRects = new Rectangle[4];
             cursorDestRects = new Rectangle[4];
             cursorPos = new Vector2(0, 0);
-            array = arr;
+            
         }
 
 
@@ -153,60 +162,19 @@ namespace JSA_Game.Maps
             {
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
-                    if (array != null)
-                    {
-                        if (cursorPos.X > 0)
-                        {
-                            cursorPos.X--;
-                        }
-                    }
-                    else
-                    {
-                        cursorPos.X--;
-                    }
+                    cursorPos.X--;
                 }
-                else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != areaWidth - 1)
+                else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != width - 1)
                 {
-                    if (array != null)
-                    {
-                        if (cursorPos.X < array.Length)
-                        {
-                            cursorPos.X++;
-                        }
-                    }
-                    else
-                    {
-                        cursorPos.X++;
-                    }
-                    
+                    cursorPos.X++;
                 }
                 else if (keyboard.IsKeyDown(Keys.Up) && cursorPos.Y != 0)
                 {
-                    if (array != null)
-                    {
-                        if (cursorPos.Y > 0)
-                        {
-                            cursorPos.Y--;
-                        }
-                    }
-                    else
-                    {
-                        cursorPos.Y--;
-                    }
+                    cursorPos.Y--; 
                 }
-                else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != areaHeight - 1)
+                else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != height - 1)
                 {
-                    if (array != null)
-                    {
-                        if (cursorPos.Y < array.GetLength(1))
-                        {
-                            cursorPos.Y++;
-                        }
-                    }
-                    else
-                    {
-                        cursorPos.Y++;
-                    }
+                    cursorPos.Y++;
                 }
                 cursorTimeElapsed = 0;
             }

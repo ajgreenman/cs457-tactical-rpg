@@ -210,7 +210,7 @@ namespace JSA_Game.Maps
             enemyUnitCount = 0;
 
             buttonPressed = false;
-            cursor = new Cursor(MAP_START_W, MAP_START_H, TILE_SIZE, TILE_SIZE);
+            cursor = new Cursor(MAP_START_W, MAP_START_H, boardWidth, boardHeight, TILE_SIZE, TILE_SIZE);
 
             pUnits = new ArrayList(maxPlayerUnits);
             eUnits = new ArrayList(MaxEnemyUnits);
