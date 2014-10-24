@@ -230,5 +230,15 @@ namespace JSA_Game
             get { return pos; }
             set { pos = value; }
         }
+
+        public int hpPercent
+        {
+            get { return currHp / maxHP * 100; }
+        }
+
+        public int mpPercent
+        {
+            get { return currMp / maxMP * 100; }
+        }
     }
 }

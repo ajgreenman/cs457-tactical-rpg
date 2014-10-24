@@ -66,10 +66,10 @@ namespace JSA_Game.AI
             {
                 Character target = currLevel.PlayerUnits.ContainsKey(targetPos) ? currLevel.PlayerUnits[targetPos] : currLevel.EnemyUnits[targetPos];
                 System.Diagnostics.Debug.Print("Here.");
-                if (BattleController.isValidAction(character.Actions[0], character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
+                if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.AttackRange)
                 {
                     System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);
-                    BattleController.performAction(character.Actions[0], character, target);
+                    BattleController.performAction(character.Attack, character, target);
                     System.Diagnostics.Debug.Print("Target HP now is " + target.CurrHp);
                 }
 
