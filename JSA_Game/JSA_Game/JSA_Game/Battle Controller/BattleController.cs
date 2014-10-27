@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -24,8 +25,7 @@ namespace JSA_Game.Battle_Controller
                 // If the action is an area of effect action, its range does not need to be checked.
                 return true;
             }
-
-            return action.Range <= calculateDistance(userPosition, targetPosition);
+            return action.Range >= calculateDistance(userPosition, targetPosition);
         }
 
         /// <summary>
@@ -153,7 +153,9 @@ namespace JSA_Game.Battle_Controller
         
         private static void calculateTargetEffect(Action action, Character user, Character target)
         {
-            StatType[] effectType =  {StatType.Hp};
+
+            //StatType[] effectType = action.TargetStat;
+            StatType[] effectType = {StatType.Hp};
 
             int amount = 0;
             foreach (StatType stat in effectType)

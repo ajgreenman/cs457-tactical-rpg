@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Maps;
 using JSA_Game.AI;
-using JSA_Game.CharClasses.StatEffect;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game
 {

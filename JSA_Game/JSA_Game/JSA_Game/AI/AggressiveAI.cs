@@ -58,24 +58,7 @@ namespace JSA_Game.AI
             {
                 if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
-                    Character target = currLevel.Board[(int)targetPos.X, (int)targetPos.Y].Occupant;
-
-
-                    if (BattleController.isValidAction(character.Attack, character, character.Pos, targetPos) && currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
-                    {
-                        System.Diagnostics.Debug.Print("Target HP is " + target.CurrHp);
-                        BattleController.performAction(character.Attack, character, target);
-                        System.Diagnostics.Debug.Print("Target HP now is " + target.CurrHp);
-                    }
-
-                    if (target.CurrHp < 1)
-                    {
-                        currLevel.Board[(int)targetPos.X, (int)targetPos.Y].IsOccupied = false;
-                        if (target.IsEnemy)
-                            currLevel.EUnits.Remove(target);
-                        else
-                            currLevel.PUnits.Remove(target);
-                    }
+                    currLevel.attackTarget(character.Pos, targetPos, character.Attack);
                 }
             }
         }

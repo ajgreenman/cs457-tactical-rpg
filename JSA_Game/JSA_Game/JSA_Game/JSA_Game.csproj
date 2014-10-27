@@ -120,8 +120,8 @@
     <Compile Include="CharClasses\Character.cs" />
     <Compile Include="CharClasses\Cleric.cs" />
     <Compile Include="CharClasses\Mage.cs" />
-    <Compile Include="CharClasses\StatEffect\Status.cs" />
-    <Compile Include="CharClasses\StatEffect\StatusEffect.cs" />
+    <Compile Include="Battle Controller\StatEffect\Status.cs" />
+    <Compile Include="Battle Controller\StatEffect\StatusEffect.cs" />
     <Compile Include="CharClasses\Thief.cs" />
     <Compile Include="CharClasses\Warrior.cs" />
     <Compile Include="Battle Controller\ActionType.cs" />

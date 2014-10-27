@@ -141,8 +141,41 @@ namespace JSA_Game.Maps
 
                     //Split string starting after identifying character and colon.
                     string[] param = line.Substring(2).Split(',');
-                    board[Convert.ToInt32(param[0]), Convert.ToInt32(param[1])] = new Tile(param[2]);
-                    board[Convert.ToInt32(param[0]), Convert.ToInt32(param[1])].IsOccupied = true;
+                    int xStartLoop = 0, xEndLoop = 0;
+                    int yStartLoop = 0, yEndLoop = 0;
+                    if (param[0].Contains('-'))
+                    {
+                        string[] bounds = param[0].Split('-');
+                        xStartLoop = Convert.ToInt32(bounds[0]);
+                        xEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        xStartLoop = Convert.ToInt32(param[0]);
+                        xEndLoop = xStartLoop;
+                    }
+                    if (param[1].Contains('-'))
+                    {
+                        string[] bounds = param[1].Split('-');
+                        yStartLoop = Convert.ToInt32(bounds[0]);
+                        yEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        yStartLoop = Convert.ToInt32(param[1]);
+                        yEndLoop = yStartLoop;
+                    }
+
+                    for(int i = xStartLoop; i < xEndLoop+1; i++)
+                    {
+                        for (int j = yStartLoop; j < yEndLoop+1; j++)
+                        {
+                            board[i, j] = new Tile(param[2]);
+                            board[i,j].IsOccupied = true;
+                        }
+                    }
+
+                    
                 }
 
                 //Placing units
@@ -680,6 +713,53 @@ namespace JSA_Game.Maps
                 scanForTargets(show, x, y + 1, remRange - 1);
             }
         }
+
+
+        public void attackTarget(Vector2 currPos, Vector2 targetPos, JSA_Game.Battle_Controller.Action action)
+        {
+            Character c = board[(int)currPos.X, (int)currPos.Y].Occupant;
+            Character t = board[(int)targetPos.X, (int)targetPos.Y].Occupant;
+
+            if (BattleController.isValidAction(action, c, currPos, targetPos))
+            {
+                System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
+                BattleController.performAction(action, c, t);
+                System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+            }
+
+            if (t.CurrHp < 1)
+            {
+                c.CurrExp += t.yieldExp();
+                board[(int)targetPos.X, (int)targetPos.Y].IsOccupied = false;
+                board[(int)targetPos.X, (int)targetPos.Y].Occupant = null;
+                if (t.IsEnemy)
+                {
+                    eUnits.Remove(t);
+                }
+                else
+                {
+                    pUnits.Remove(t);
+                }
+            }
+            c.ActionDisabled = true;
+            scanForTargets(false, currPos, action.Range);
+
+            //Check for win
+            if (t.IsEnemy && eUnits.Count <= 0)
+            {
+                System.Diagnostics.Debug.Print("Player Won!");
+                winState = WinLossState.Win;
+            }
+            else if (!t.IsEnemy && pUnits.Count <= 0)
+            {
+                System.Diagnostics.Debug.Print("Player Lost!");
+                winState = WinLossState.Loss;
+            }
+
+
+        }
+
+
         /// <summary>
         /// Loads content for use in the level.
         /// </summary>
