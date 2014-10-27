@@ -26,7 +26,7 @@ namespace JSA_Game.HUD
         public Action_Button()
         {
             actionSize = new Vector2(125, 25);
-            actionPos = new Vector2(0, 0);
+            actionPos = new Vector2(265, 507);
             actionRec = new Rectangle((int)actionPos.X, (int)actionPos.Y,
                  (int)actionSize.X, (int)actionSize.Y);
             actionCol = new Color(255, 255, 255, 255);
@@ -35,11 +35,6 @@ namespace JSA_Game.HUD
         public void LoadContent(ContentManager Content)
         {
             actionText = Content.Load<Texture2D>("actionButton");
-        }
-
-        public void characterSelect(Character c)
-        {
-
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -819,16 +819,41 @@ namespace JSA_Game.Maps
                     ActionState.update(this, gameTime);
 
 
+
                 hud.Hidden = state != LevelState.CursorSelection;
+                if (hud.Hidden)
+                {
+                    if (keyboard.IsKeyDown(Keys.F1))
+                    {
+                        hud.ShowOriginal = true;
+                        hud.ShowBars = false;
+                        hud.ShowStat = false;
+                    }
+                    if (keyboard.IsKeyDown(Keys.F2))
+                    {
+                        hud.ShowOriginal = false;
+                        hud.ShowBars = true;
+                        hud.ShowStat = false;
+                    }
+                    if (keyboard.IsKeyDown(Keys.F3))
+                    {
+                        hud.ShowOriginal = false;
+                        hud.ShowBars = false;
+                        hud.ShowStat = true;
+                    }
+                }
+
                 moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 
                 //Prevents holding a button to continuously activate events
-                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) || keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E))
+                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) || 
+                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) ||keyboard.IsKeyUp(Keys.F2) ||keyboard.IsKeyUp(Keys.F3) )
                 {
                     buttonPressed = false;
                 }
-                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) || keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E))
+                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
+                    keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3))
                 {
                     buttonPressed = true;
                 }
