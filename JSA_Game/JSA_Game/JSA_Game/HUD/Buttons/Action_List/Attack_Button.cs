@@ -30,7 +30,7 @@ namespace JSA_Game.HUD
         public Attack_Button()
         {
             attackSize = new Vector2(125, 25);
-            attackPos = new Vector2(340, 507);
+            attackPos = new Vector2(265, 507);
             attackRec = new Rectangle((int)attackPos.X, (int)attackPos.Y,
                  (int)attackSize.X, (int)attackSize.Y);
             attackCol = new Color(255, 255, 255, 255);
@@ -40,13 +40,6 @@ namespace JSA_Game.HUD
         {
             attackText = Content.Load<Texture2D>("attackButton");
         }
-
-        /*
-        public bool CursorSelect(MouseState mouse)
-        {
-            //Select's Button
-        }
-         */
 
         public void Draw(SpriteBatch spriteBatch)
         {

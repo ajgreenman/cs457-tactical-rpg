@@ -10,6 +10,7 @@ namespace JSA_Game.HUD
 {
     class Experience_Bar
     {
+        //Bar Size Macro
         const int BAR_SIZE = 125;
 
         //Experience Bar Graphic
@@ -17,6 +18,9 @@ namespace JSA_Game.HUD
         Vector2 experienceSize;
         Vector2 experiencePos;
         Rectangle experienceRec;
+
+        SpriteFont experienceFont;
+        Vector2 experiencef_pos;
 
 
         private int targetCurrExperience;
@@ -27,6 +31,7 @@ namespace JSA_Game.HUD
             experienceSize = new Vector2(BAR_SIZE, 25);
             experiencePos = new Vector2(30, 570);
             experienceRec = new Rectangle((int)experiencePos.X, (int)experiencePos.Y, (int)experienceSize.X, (int)experienceSize.Y);
+            experiencef_pos = new Vector2(55, 574);
         }
 
         public void characterSelect(Character c)
@@ -39,11 +44,13 @@ namespace JSA_Game.HUD
         public void LoadContent(ContentManager Content)
         {
            experienceBar = Content.Load<Texture2D>("bar_base");
+           experienceFont = Content.Load<SpriteFont>("StatFont");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(experienceBar, experienceRec, Color.Green);
+            spriteBatch.DrawString(experienceFont, "XP: " + targetCurrExperience, experiencef_pos, Color.White);
         }
     }
 }

@@ -42,28 +42,16 @@ namespace JSA_Game
             this.IsMouseVisible = true;
 
             levels = new ArrayList();
-            levels.Add(new Level("Arena"));
             levels.Add(new Level("JSAtestlevel"));
+            levels.Add(new Level("Coast"));
+            levels.Add(new Level("Arena"));
+            
             
             
 
             //Set first level
             currLevel = (Level) levels[0];
 
-
-            //Initialize Example Level
-            //testLevel = new Level(10, 10, 1, 1);
-            //testLevel = new Level("JSAtestlevel");
-            //estLevel = new Level("Arena");
-
-            //Character c = new Warrior(testLevel);
-            //More movement for player
-            //c.Movement = 8;
-
-            //testLevel.addUnit(1, c, new Vector2(0, 0));
-            //testLevel.addUnit(0, new Mage(testLevel), new Vector2(testLevel.BoardWidth -1, testLevel.BoardHeight - 1));
-
-            
 
             Content.RootDirectory = "Content";
 

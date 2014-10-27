@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JSA_Game.CharClasses;
-using JSA_Game.CharClasses.StatEffect;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game.Battle_Controller
 {

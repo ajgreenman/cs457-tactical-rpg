@@ -24,14 +24,28 @@ namespace JSA_Game.HUD
         Mana_Bar manaBar;
         Experience_Bar experienceBar;
         Stat_Section statSection;
+        Effect_Section effectSection;
         Action_Button actionB;
         Wait_Button waitB;
         Item_Button itemB;
+        Attack_Button attackB;
+        Ability_Button abilityB;
+        Exert_Button exertB;
         
-
+        //Hides the HUD
         private Boolean hidden;
-        private Boolean statPage;
-        private Boolean buttonPage;
+        //Shows HUD with stats and buttons
+        private Boolean showStat;
+        //Shows HUD with bars and buttons
+        private Boolean showBars;
+        //Shows HUD without buttons
+        private Boolean showOriginal;
+        //Show Action Buttons
+        private Boolean showActionButtons;
+        //Show Ability Buttons
+        private Boolean showAbilityButtons;
+        //Show Inventory
+        private Boolean showInventory;
 
         public HUD_Controller()
         {
@@ -45,15 +59,22 @@ namespace JSA_Game.HUD
             manaBar = new Mana_Bar();
             experienceBar = new Experience_Bar();
             statSection = new Stat_Section();
+            effectSection = new Effect_Section();
 
             //Init Buttons
             actionB = new Action_Button();
             waitB = new Wait_Button();
             itemB = new Item_Button();
+            attackB = new Attack_Button();
+            abilityB = new Ability_Button();
+            exertB = new Exert_Button();
 
             hidden = true;
-            statPage = true;
-            buttonPage = false;
+            showOriginal = false;
+            showStat = true;
+            showBars = false;
+            showActionButtons = false;
+            showAbilityButtons = false;
         }
 
         public void LoadContent(ContentManager Content)
@@ -65,11 +86,15 @@ namespace JSA_Game.HUD
             experienceBar.LoadContent(Content);
             healthBar.LoadContent(Content);
             statSection.LoadContent(Content);
+            effectSection.LoadContent(Content);
 
             //Loading Buttons
             actionB.LoadContent(Content);
             waitB.LoadContent(Content);
             itemB.LoadContent(Content);
+            attackB.LoadContent(Content);
+            abilityB.LoadContent(Content);
+            exertB.LoadContent(Content);
         }
 
         public void characterSelect(Character c)
@@ -79,32 +104,57 @@ namespace JSA_Game.HUD
             healthBar.characterSelect(c);
             manaBar.characterSelect(c);
             statSection.characterSelect(c);
-            //Updating Buttons
-            actionB.characterSelect(c);
-            waitB.characterSelect(c);
-            itemB.characterSelect(c);
+            effectSection.characterSelect(c);
         }
 
         public void Draw(SpriteBatch spriteBatch)
-        {
+        {   
+            //Updating Stat Section Positions for Draw
+            statSection.updatePositions(showOriginal);
+            
             spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
             if (hidden)
             {
-                if (statPage)
+                //Draws Buttons and Stat Section
+                if (showStat)
                 {
-                    //Drawing Bars and Stat Section
+                    actionB.Draw(spriteBatch);
+                    waitB.Draw(spriteBatch);
+                    itemB.Draw(spriteBatch);
+                    statSection.Draw(spriteBatch);
+                    if (showActionButtons)
+                    {
+                        attackB.Draw(spriteBatch);
+                        abilityB.Draw(spriteBatch);
+                        exertB.Draw(spriteBatch);
+                    }
+                }
+
+                //Draws Bars and Buttons
+                if (showBars)
+                {
+                    experienceBar.Draw(spriteBatch);
+                    manaBar.Draw(spriteBatch);
+                    healthBar.Draw(spriteBatch);
+                    actionB.Draw(spriteBatch);
+                    waitB.Draw(spriteBatch);
+                    itemB.Draw(spriteBatch);
+                    if (showActionButtons)
+                    {
+                        attackB.Draw(spriteBatch);
+                        abilityB.Draw(spriteBatch);
+                        exertB.Draw(spriteBatch);
+                    }
+                }
+
+                //Draws Bars and Stat Section
+                if (showOriginal)
+                {
                     experienceBar.Draw(spriteBatch);
                     manaBar.Draw(spriteBatch);
                     healthBar.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);
-                }
-
-                if (buttonPage)
-                {
-                    //Drawing Buttons
-                    actionB.Draw(spriteBatch);
-                    waitB.Draw(spriteBatch);
-                    itemB.Draw(spriteBatch);
+                    effectSection.Draw(spriteBatch);
                 }
             }
         }
@@ -115,16 +165,22 @@ namespace JSA_Game.HUD
             set { hidden = value; }
         }
 
-        public Boolean StatPage
+        public Boolean ShowBars
         {
-            get { return statPage; }
-            set { statPage = value; }
+            get { return showBars; }
+            set { showBars = value; }
         }
 
-        public Boolean ButtonPage
+        public Boolean ShowStat
         {
-            get { return buttonPage; }
-            set { buttonPage = value; }
+            get { return showStat; }
+            set { showStat = value; }
+        }
+
+        public Boolean ShowOriginal
+        {
+            get { return showOriginal; }
+            set { showOriginal = value; }
         }
     }
 }

@@ -18,10 +18,7 @@ namespace JSA_Game.HUD
         const int RES_POSx = 265;
         const int DOD_POSx = 175;
         const int ACC_POSx = 265;
-        const int MOV_POSx = 220;
-        const int EFF_POSx = 375;
-        const int BUF_POSx = 358;
-        const int DBUF_POSx = 350;
+        const int MOV_POSx = 225;
 
         const int STAT_POSy = 502;
         const int STR_POSy= 520;
@@ -31,9 +28,16 @@ namespace JSA_Game.HUD
         const int DOD_POSy = 560;
         const int ACC_POSy = 560;
         const int MOV_POSy = 580;
-        const int EFF_POSy = 502;
-        const int BUF_POSy = 525;
-        const int DBUF_POSy = 555;
+        
+        //Position Update Macros
+        const int STAT_POSx2 = 75;
+        const int STR_POSx2 = 25;
+        const int ARMR_POSx2 = 25;
+        const int MAG_POSx2 = 115;
+        const int RES_POSx2 = 115;
+        const int DOD_POSx2 = 25;
+        const int ACC_POSx2 = 115;
+        const int MOV_POSx2 = 75;
 
         //Vector2 Objects
         Vector2 stat_pos; 
@@ -44,9 +48,6 @@ namespace JSA_Game.HUD
         Vector2 dod_pos;
         Vector2 acc_pos;
         Vector2 mov_pos;
-        Vector2 eff_pos;
-        Vector2 buf_pos;
-        Vector2 dbuf_pos;
 
         //Stat and Effect Fonts
         SpriteFont fStatHeader;
@@ -57,9 +58,6 @@ namespace JSA_Game.HUD
         SpriteFont fDodge;
         SpriteFont fAccuracy;
         SpriteFont fMovement;
-        SpriteFont fEffectsHeader;
-        SpriteFont fBuff;
-        SpriteFont fDBuff;
 
         //Stat and Effect Types
         int targetStrength;
@@ -69,8 +67,6 @@ namespace JSA_Game.HUD
         int targetAccuracy;
         int targetDodge;
         int targetMovement;
-        String targetBuff;
-        String targetDBuff;
 
         //Constructor
         public Stat_Section()
@@ -84,9 +80,33 @@ namespace JSA_Game.HUD
             dod_pos = new Vector2(DOD_POSx, DOD_POSy);
             acc_pos = new Vector2(ACC_POSx, ACC_POSy);
             mov_pos = new Vector2(MOV_POSx, MOV_POSy);
-            eff_pos = new Vector2(EFF_POSx, EFF_POSy);
-            buf_pos = new Vector2(BUF_POSx, BUF_POSy);
-            dbuf_pos = new Vector2(DBUF_POSx, DBUF_POSy);
+        }
+
+        public void updatePositions(Boolean original)
+        {
+            if (!original)
+            {
+                stat_pos.X = STAT_POSx2;
+                str_pos.X = STR_POSx2;
+                armr_pos.X = ARMR_POSx2;
+                mag_pos.X = MAG_POSx2;
+                res_pos.X = RES_POSx2;
+                dod_pos.X = DOD_POSx2;
+                acc_pos.X = ACC_POSx2;
+                mov_pos.X = MOV_POSx2;
+            }
+
+            else
+            {
+                stat_pos.X = STAT_POSx;
+                str_pos.X = STR_POSx;
+                armr_pos.X = ARMR_POSx;
+                mag_pos.X = MAG_POSx;
+                res_pos.X = RES_POSx;
+                dod_pos.X = DOD_POSx;
+                acc_pos.X = ACC_POSx;
+                mov_pos.X = MOV_POSx;
+            }
         }
 
         //Getting Character Values
@@ -114,9 +134,6 @@ namespace JSA_Game.HUD
             fDodge = Content.Load<SpriteFont>("StatFont");
             fAccuracy = Content.Load<SpriteFont>("StatFont");
             fMovement = Content.Load<SpriteFont>("StatFont");
-            fEffectsHeader = Content.Load<SpriteFont>("StatFont");
-            fBuff = Content.Load<SpriteFont>("StatFont");
-            fDBuff = Content.Load<SpriteFont>("StatFont");
         }
 
         //Drawing Stat Fonts and Effect Fonts
@@ -130,9 +147,6 @@ namespace JSA_Game.HUD
             spriteBatch.DrawString(fDodge, "DOD: " + targetDodge, dod_pos, Color.White);
             spriteBatch.DrawString(fAccuracy, "ACC: " + targetAccuracy, acc_pos, Color.White);
             spriteBatch.DrawString(fMovement, "MOV: " + targetMovement, mov_pos, Color.White);
-            spriteBatch.DrawString(fEffectsHeader, "Effects", eff_pos, Color.White);
-            spriteBatch.DrawString(fBuff, "BUF: " + targetBuff, buf_pos, Color.White);
-            spriteBatch.DrawString(fDBuff, "DBUF: " + targetDBuff, dbuf_pos, Color.White);
         }
     }
 }

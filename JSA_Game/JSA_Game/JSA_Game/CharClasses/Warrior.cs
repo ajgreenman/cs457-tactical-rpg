@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using JSA_Game.Maps;
 using JSA_Game.AI;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game.CharClasses
 {
@@ -28,7 +30,8 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionCripple =
                 new Battle_Controller.Action("Cripple", "Cripple the target, lowering dodge and movement. Ignores enemy stats.",
-                    null,
+                    new Status("Cripple","Cripple the target, lowering dodge and movement.  Ignores enemy stats.",2,
+                        new StatType[] {StatType.Hp,StatType.Dodge,StatType.Movement},new int[] {0,4,2},"enemy",Color.White), 
                     new StatType[] {StatType.Mp}, ActionType.Physical, true, false, false, 0.8, 0, 1);
             Actions[0] = actionCripple;
 

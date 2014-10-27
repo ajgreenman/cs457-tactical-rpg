@@ -29,22 +29,13 @@
       <Time>2014-09-25T16:22:49.3505561-04:00</Time>
     </Item>
     <Item>
-      <Source>cursorAnim.png</Source>
-      <Name>cursorAnim</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorAnim.xnb</Output>
-      <Time>2014-09-25T16:22:49.3505561-04:00</Time>
-    </Item>
-    <Item>
       <Source>bar_base.jpg</Source>
       <Name>bar_base</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
-      <Time>2014-09-29T16:41:27.8992343-04:00</Time>
+      <Time>2014-10-24T22:23:47.9539681-04:00</Time>
     </Item>
     <Item>
       <Source>brown-rectangle.jpg</Source>
@@ -53,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
-      <Time>2014-09-29T16:41:27.9022359-04:00</Time>
+      <Time>2014-10-24T22:23:47.9559694-04:00</Time>
     </Item>
     <Item>
       <Source>Border.png</Source>
@@ -101,15 +92,6 @@
       <Time>2014-10-15T19:53:50.3320724-04:00</Time>
     </Item>
     <Item>
-      <Source>tempMove.jpg</Source>
-      <Name>tempMove</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\tempMove.xnb</Output>
-      <Time>2014-10-15T19:53:50.3310727-04:00</Time>
-    </Item>
-    <Item>
       <Source>target_square.png</Source>
       <Name>target_square</Name>
       <Importer>TextureImporter</Importer>
@@ -153,6 +135,105 @@
       <Options>None</Options>
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
       <Time>2014-10-15T19:53:50.2740735-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBLAnim.png</Source>
+      <Name>cursorBLAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBLAnim.xnb</Output>
+      <Time>2014-10-24T16:55:20.9469322-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorTLAnim.png</Source>
+      <Name>cursorTLAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
+      <Time>2014-10-24T16:55:20.9479329-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBRAnim.png</Source>
+      <Name>cursorBRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
+      <Time>2014-10-24T16:55:20.9479329-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorTRAnim.png</Source>
+      <Name>cursorTRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTRAnim.xnb</Output>
+      <Time>2014-10-24T16:55:20.9479329-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyArcher.png</Source>
+      <Name>enemyArcher</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyArcher.xnb</Output>
+      <Time>2014-10-24T16:55:20.9489335-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyMage.png</Source>
+      <Name>enemyMage</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyMage.xnb</Output>
+      <Time>2014-10-24T16:55:20.9499342-04:00</Time>
+    </Item>
+    <Item>
+      <Source>enemyWarrior.png</Source>
+      <Name>enemyWarrior</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyWarrior.xnb</Output>
+      <Time>2014-10-24T16:55:20.9499342-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerArcher.png</Source>
+      <Name>playerArcher</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerArcher.xnb</Output>
+      <Time>2014-10-24T16:55:20.9539368-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerMage.png</Source>
+      <Name>playerMage</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb</Output>
+      <Time>2014-10-24T16:55:20.9549375-04:00</Time>
+    </Item>
+    <Item>
+      <Source>playerWarrior.png</Source>
+      <Name>playerWarrior</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
+      <Time>2014-10-24T16:55:20.9549375-04:00</Time>
+    </Item>
+    <Item>
+      <Source>actionButton.png</Source>
+      <Name>actionButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
+      <Time>2014-10-24T22:23:47.9539681-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

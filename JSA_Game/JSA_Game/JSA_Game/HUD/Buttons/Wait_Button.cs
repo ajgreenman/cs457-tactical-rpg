@@ -29,7 +29,7 @@ namespace JSA_Game.HUD
         public Wait_Button()
         {
             waitSize = new Vector2(125, 25);
-            waitPos = new Vector2(0, 0);
+            waitPos = new Vector2(355, 548);
             waitRec = new Rectangle((int)waitPos.X, (int)waitPos.Y,
                  (int)waitSize.X, (int)waitSize.Y);
             waitCol = new Color(255, 255, 255, 255);
@@ -40,17 +40,9 @@ namespace JSA_Game.HUD
             waitText = Content.Load<Texture2D>("waitButton");
         }
 
-        public void characterSelect(Character c)
-        {
-
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(waitText, waitRec, waitCol);
         }
-
-       
     }
-
 }

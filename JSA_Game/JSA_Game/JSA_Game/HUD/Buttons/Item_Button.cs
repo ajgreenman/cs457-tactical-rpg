@@ -29,7 +29,7 @@ namespace JSA_Game.HUD
         public Item_Button()
         {
             itemSize = new Vector2(125, 25);
-            itemPos = new Vector2(0, 0);
+            itemPos = new Vector2(175, 548);
             itemRec = new Rectangle((int)itemPos.X, (int)itemPos.Y,
                  (int)itemSize.X, (int)itemSize.Y);
             itemCol = new Color(255, 255, 255, 255);
@@ -38,10 +38,6 @@ namespace JSA_Game.HUD
         public void LoadContent(ContentManager Content)
         {
             itemText = Content.Load<Texture2D>("itemButton");
-        }
-
-        public void characterSelect(Character c)
-        {
         }
 
         public void Draw(SpriteBatch spriteBatch)
