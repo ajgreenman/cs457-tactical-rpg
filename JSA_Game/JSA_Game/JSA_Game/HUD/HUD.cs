@@ -70,8 +70,8 @@ namespace JSA_Game.HUD
             exertB = new Exert_Button();
 
             hidden = true;
-            showOriginal = false;
-            showStat = true;
+            showOriginal = true;
+            showStat = false;
             showBars = false;
             showActionButtons = false;
             showAbilityButtons = false;

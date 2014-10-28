@@ -36,7 +36,7 @@ namespace JSA_Game.HUD
 
         public void LoadContent(ContentManager Content)
         {
-            abilityText = Content.Load<Texture2D>("attackButton");
+            abilityText = Content.Load<Texture2D>("abilityButton");
         }
 
         public void Draw(SpriteBatch spriteBatch)

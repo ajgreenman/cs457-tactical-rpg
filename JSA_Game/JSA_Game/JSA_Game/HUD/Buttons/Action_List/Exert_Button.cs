@@ -36,7 +36,7 @@ namespace JSA_Game.HUD
 
         public void LoadContent(ContentManager Content)
         {
-            exertText = Content.Load<Texture2D>("attackButton");
+            exertText = Content.Load<Texture2D>("exertButton");
         }
 
         public void Draw(SpriteBatch spriteBatch)

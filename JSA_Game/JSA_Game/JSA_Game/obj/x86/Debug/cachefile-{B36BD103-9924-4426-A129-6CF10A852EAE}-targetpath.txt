@@ -6,7 +6,6 @@ Content\brown-rectangle.xnb
 Content\Border.xnb
 Content\blue_highlight.xnb
 Content\no_highlight.xnb
-Content\StatFont.xnb
 Content\stone_wall.xnb
 Content\water.xnb
 Content\target_square.xnb
@@ -14,8 +13,8 @@ Content\itemButton.xnb
 Content\waitButton.xnb
 Content\attackButton.xnb
 Content\cursorBLAnim.xnb
-Content\cursorBRAnim.xnb
 Content\cursorTLAnim.xnb
+Content\cursorBRAnim.xnb
 Content\cursorTRAnim.xnb
 Content\enemyArcher.xnb
 Content\enemyMage.xnb
@@ -24,3 +23,6 @@ Content\playerArcher.xnb
 Content\playerMage.xnb
 Content\playerWarrior.xnb
 Content\actionButton.xnb
+Content\StatFont.xnb
+Content\abilityButton.xnb
+Content\exertButton.xnb

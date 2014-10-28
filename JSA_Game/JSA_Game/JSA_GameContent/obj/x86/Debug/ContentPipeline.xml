@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb</Output>
-      <Time>2014-10-03T16:58:26.4354507-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb</Output>
+      <Time>2014-10-25T12:17:09.8300836-04:00</Time>
     </Item>
     <Item>
       <Source>player.jpg</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb</Output>
-      <Time>2014-10-03T16:58:26.5044547-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb</Output>
+      <Time>2014-10-25T12:17:09.8650856-04:00</Time>
     </Item>
     <Item>
       <Source>enemy.jpg</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb</Output>
-      <Time>2014-10-03T16:58:26.4314505-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb</Output>
+      <Time>2014-10-25T12:17:09.8250833-04:00</Time>
     </Item>
     <Item>
       <Source>bar_base.jpg</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
-      <Time>2014-10-24T17:27:37.7949409-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
+      <Time>2014-10-26T20:36:05.7442233-04:00</Time>
     </Item>
     <Item>
       <Source>brown-rectangle.jpg</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
-      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
+      <Time>2014-10-25T12:17:09.8160828-04:00</Time>
     </Item>
     <Item>
       <Source>Border.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Border.xnb</Output>
-      <Time>2014-10-20T16:08:14.0233541-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Border.xnb</Output>
+      <Time>2014-10-25T12:17:09.7960817-04:00</Time>
     </Item>
     <Item>
       <Source>blue_highlight.png</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blue_highlight.xnb</Output>
-      <Time>2014-10-03T16:58:26.4034489-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blue_highlight.xnb</Output>
+      <Time>2014-10-25T12:17:09.8110825-04:00</Time>
     </Item>
     <Item>
       <Source>no_highlight.png</Source>
@@ -70,17 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\no_highlight.xnb</Output>
-      <Time>2014-10-03T16:58:26.4694527-04:00</Time>
-    </Item>
-    <Item>
-      <Source>StatFont.spritefont</Source>
-      <Name>StatFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
-      <Time>2014-10-20T16:08:14.1013542-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\no_highlight.xnb</Output>
+      <Time>2014-10-25T12:17:09.8480846-04:00</Time>
     </Item>
     <Item>
       <Source>stone_wall.jpg</Source>
@@ -88,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\stone_wall.xnb</Output>
-      <Time>2014-10-20T16:08:14.3509547-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\stone_wall.xnb</Output>
+      <Time>2014-10-25T12:17:09.8690858-04:00</Time>
     </Item>
     <Item>
       <Source>water.jpg</Source>
@@ -97,8 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\water.xnb</Output>
-      <Time>2014-10-20T16:08:14.3821547-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\water.xnb</Output>
+      <Time>2014-10-25T12:17:09.8740861-04:00</Time>
     </Item>
     <Item>
       <Source>target_square.png</Source>
@@ -106,8 +97,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\target_square.xnb</Output>
-      <Time>2014-10-20T16:08:14.3509547-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\target_square.xnb</Output>
+      <Time>2014-10-25T12:17:09.8700859-04:00</Time>
     </Item>
     <Item>
       <Source>itemButton.png</Source>
@@ -115,8 +106,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemButton.xnb</Output>
+      <Time>2014-10-25T12:17:09.8470846-04:00</Time>
     </Item>
     <Item>
       <Source>waitButton.png</Source>
@@ -124,8 +115,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\waitButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.9259566-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\waitButton.xnb</Output>
+      <Time>2014-10-25T12:17:09.8730861-04:00</Time>
     </Item>
     <Item>
       <Source>attackButton.png</Source>
@@ -133,8 +124,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\attackButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.8947566-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\attackButton.xnb</Output>
+      <Time>2014-10-25T12:17:09.8070823-04:00</Time>
     </Item>
     <Item>
       <Source>cursorBLAnim.png</Source>
@@ -142,17 +133,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBLAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.1740432-04:00</Time>
-    </Item>
-    <Item>
-      <Source>cursorBRAnim.png</Source>
-      <Name>cursorBRAnim</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.1896432-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBLAnim.xnb</Output>
+      <Time>2014-10-25T12:17:09.820083-04:00</Time>
     </Item>
     <Item>
       <Source>cursorTLAnim.png</Source>
@@ -160,8 +142,17 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.2052432-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
+      <Time>2014-10-25T12:17:09.8220831-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBRAnim.png</Source>
+      <Name>cursorBRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
+      <Time>2014-10-25T12:17:09.8210831-04:00</Time>
     </Item>
     <Item>
       <Source>cursorTRAnim.png</Source>
@@ -169,8 +160,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTRAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.2208432-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTRAnim.xnb</Output>
+      <Time>2014-10-25T12:17:09.8230832-04:00</Time>
     </Item>
     <Item>
       <Source>enemyArcher.png</Source>
@@ -178,8 +169,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyArcher.xnb</Output>
-      <Time>2014-10-24T16:44:14.2520433-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyArcher.xnb</Output>
+      <Time>2014-10-25T12:17:09.8260834-04:00</Time>
     </Item>
     <Item>
       <Source>enemyMage.png</Source>
@@ -187,8 +178,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyMage.xnb</Output>
-      <Time>2014-10-24T16:44:14.2676433-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyMage.xnb</Output>
+      <Time>2014-10-25T12:17:09.8280835-04:00</Time>
     </Item>
     <Item>
       <Source>enemyWarrior.png</Source>
@@ -196,8 +187,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyWarrior.xnb</Output>
-      <Time>2014-10-24T16:44:14.2988434-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyWarrior.xnb</Output>
+      <Time>2014-10-25T12:17:09.8290835-04:00</Time>
     </Item>
     <Item>
       <Source>playerArcher.png</Source>
@@ -205,8 +196,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerArcher.xnb</Output>
-      <Time>2014-10-24T16:44:14.3768435-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerArcher.xnb</Output>
+      <Time>2014-10-25T12:17:09.8660857-04:00</Time>
     </Item>
     <Item>
       <Source>playerMage.png</Source>
@@ -214,8 +205,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb</Output>
-      <Time>2014-10-24T16:44:14.4080436-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb</Output>
+      <Time>2014-10-25T12:17:09.8670857-04:00</Time>
     </Item>
     <Item>
       <Source>playerWarrior.png</Source>
@@ -223,8 +214,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
-      <Time>2014-10-24T16:44:14.4236436-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
+      <Time>2014-10-25T12:17:09.8680858-04:00</Time>
     </Item>
     <Item>
       <Source>actionButton.png</Source>
@@ -232,8 +223,35 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
-      <Time>2014-10-24T17:25:26.459554-04:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
+      <Time>2014-10-25T12:17:09.8060822-04:00</Time>
+    </Item>
+    <Item>
+      <Source>StatFont.spritefont</Source>
+      <Name>StatFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
+      <Time>2014-10-26T20:36:05.7412231-04:00</Time>
+    </Item>
+    <Item>
+      <Source>abilityButton.png</Source>
+      <Name>abilityButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\abilityButton.xnb</Output>
+      <Time>2014-10-28T17:14:33.2131143-04:00</Time>
+    </Item>
+    <Item>
+      <Source>exertButton.png</Source>
+      <Name>exertButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\exertButton.xnb</Output>
+      <Time>2014-10-28T17:14:57.3164929-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -241,10 +259,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_GameContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_GameContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -273,7 +291,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2014-09-21T22:20:37.1461074-04:00</Value>
+        <Value>2014-09-01T23:20:12.502068-04:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
