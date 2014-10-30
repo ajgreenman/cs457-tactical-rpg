@@ -159,6 +159,7 @@
     <Compile Include="Maps\Tile.cs" />
     <Compile Include="Items\Protection.cs" />
     <Compile Include="Items\Weapon.cs" />
+    <Compile Include="Story\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
