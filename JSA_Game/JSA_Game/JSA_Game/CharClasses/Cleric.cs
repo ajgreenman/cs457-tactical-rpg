@@ -13,6 +13,7 @@ namespace JSA_Game.CharClasses
         {
             AI = new AggressiveAI(this, level);
             Texture = "player";
+            name = "Cleric";
 
             MaxHP = STANDARD_HPMP;
             MaxMP = STRONG_HPMP;

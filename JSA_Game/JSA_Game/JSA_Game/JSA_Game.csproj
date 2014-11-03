@@ -119,6 +119,7 @@
     <Compile Include="CharClasses\Archer.cs" />
     <Compile Include="CharClasses\Character.cs" />
     <Compile Include="CharClasses\Cleric.cs" />
+    <Compile Include="CharClasses\LevelManager.cs" />
     <Compile Include="CharClasses\Mage.cs" />
     <Compile Include="Battle Controller\StatEffect\Status.cs" />
     <Compile Include="Battle Controller\StatEffect\StatusEffect.cs" />
@@ -159,7 +160,9 @@
     <Compile Include="Maps\Tile.cs" />
     <Compile Include="Items\Protection.cs" />
     <Compile Include="Items\Weapon.cs" />
-    <Compile Include="Story\User.cs" />
+    <Compile Include="Story\Player.cs" />
+    <Compile Include="Story\Screen.cs" />
+    <Compile Include="Story\ScreenManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

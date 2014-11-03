@@ -7,7 +7,7 @@ namespace JSA_Game.Story
 {
     class Player
     {
-        int currentLevel;
+        int currentLevel, money;
         String username;
         Character[] activeUnits = new Character[10];
         Character[] barracks = new Character[100];

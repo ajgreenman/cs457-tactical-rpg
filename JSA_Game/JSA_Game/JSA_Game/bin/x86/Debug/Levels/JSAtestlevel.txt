@@ -22,7 +22,7 @@
 
 / Level name: testLevel
 
-i:10,10,1,1
+i:10,10,3,3
 G:plains
 
 g:2,0,stone_wall
@@ -62,4 +62,8 @@ g:7,9,stone_wall
 
 
 p:0,0,Warrior,Aggressive
-e:9,9,Mage,Aggressive
+p:0,1,Archer,Aggressive
+p:0,2,Mage,Aggressive
+e:9,7,Mage,Aggressive
+e:9,8,Warrior,Aggressive
+e:9,9,Archer,Aggressive

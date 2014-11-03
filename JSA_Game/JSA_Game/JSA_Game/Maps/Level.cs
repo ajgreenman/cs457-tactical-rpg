@@ -776,9 +776,10 @@ namespace JSA_Game.Maps
             foreach (Character c in pUnits)
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
-                if(!characterImages.ContainsKey(c.Texture)){
+                if (!characterImages.ContainsKey(c.Texture))
+                {
                     characterImages.Add("player" + c.Texture, content.Load<Texture2D>("player" + c.Texture));
-                    
+
                 }
             }
 

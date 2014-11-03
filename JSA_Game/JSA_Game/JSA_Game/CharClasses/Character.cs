@@ -6,11 +6,14 @@ using Microsoft.Xna.Framework;
 using JSA_Game.Maps;
 using JSA_Game.AI;
 using JSA_Game.Battle_Controller.StatEffect;
+using JSA_Game.CharClasses;
 
 namespace JSA_Game
 {
     class Character
     {
+        protected String name = "Character";
+
         //Default Stats
         protected const int STRONG_HPMP = 20;
         protected const int STANDARD_HPMP = 15;
@@ -219,10 +222,7 @@ namespace JSA_Game
                 currExp = value;
                 while (currExp >= EXP_VALS[charLevel] && charLevel < EXP_VALS.Length)
                 {
-                    
-                    //Level up!
-                    charLevel++;
-                    System.Diagnostics.Debug.Print("Level up to " + charLevel + "!");
+                    LevelManager.LevelUp(this);
                 }
             }
         }
@@ -265,6 +265,11 @@ namespace JSA_Game
         {
             get { return status; }
             set { status = value; }
+        }
+        public String Name
+        {
+            get { return name; }
+            set { name = value; }
         }
     }
 }

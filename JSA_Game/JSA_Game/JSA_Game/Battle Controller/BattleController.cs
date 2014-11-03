@@ -9,7 +9,7 @@ namespace JSA_Game.Battle_Controller
 {
     static class BattleController
     {
-        private const int BASE_HIT = 60;
+        private const int BASE_HIT = 75;
 
         /// <summary>
         /// Checks that a particular action is valid. At the moment it simply checks that the user is within range of the target.
