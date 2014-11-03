@@ -20,14 +20,10 @@ namespace JSA_Game.HUD
         Texture2D hudText;
 
         //Assisting Objects
-        Health_Bar healthBar;
-        Mana_Bar manaBar;
-        Experience_Bar experienceBar;
+        Bar_Section barSection;
         Stat_Section statSection;
         Effect_Section effectSection;
-        Action_Button actionB;
-        Wait_Button waitB;
-        Item_Button itemB;
+        Button_Section buttonSection;
         Attack_Button attackB;
         Ability_Button abilityB;
         Exert_Button exertB;
@@ -55,16 +51,12 @@ namespace JSA_Game.HUD
             hudRec = new Rectangle((int)hudPos.X, (int)hudPos.Y, (int)hudSize.X, (int)hudSize.Y);
 
             //Init Bars and Stat Section
-            healthBar = new Health_Bar();
-            manaBar = new Mana_Bar();
-            experienceBar = new Experience_Bar();
+            barSection = new Bar_Section();
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
 
             //Init Buttons
-            actionB = new Action_Button();
-            waitB = new Wait_Button();
-            itemB = new Item_Button();
+            buttonSection = new Button_Section();
             attackB = new Attack_Button();
             abilityB = new Ability_Button();
             exertB = new Exert_Button();
@@ -82,16 +74,12 @@ namespace JSA_Game.HUD
             hudText = Content.Load<Texture2D>("brown-rectangle");
 
             //Loading Bars and Stat Section
-            manaBar.LoadContent(Content);
-            experienceBar.LoadContent(Content);
-            healthBar.LoadContent(Content);
+            barSection.LoadContent(Content);
             statSection.LoadContent(Content);
             effectSection.LoadContent(Content);
 
             //Loading Buttons
-            actionB.LoadContent(Content);
-            waitB.LoadContent(Content);
-            itemB.LoadContent(Content);
+            buttonSection.LoadContent(Content);
             attackB.LoadContent(Content);
             abilityB.LoadContent(Content);
             exertB.LoadContent(Content);
@@ -100,9 +88,7 @@ namespace JSA_Game.HUD
         public void characterSelect(Character c)
         {
             //Updating Bars and Stat Section
-            experienceBar.characterSelect(c);
-            healthBar.characterSelect(c);
-            manaBar.characterSelect(c);
+            barSection.characterSelect(c);
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
         }
@@ -118,9 +104,7 @@ namespace JSA_Game.HUD
                 //Draws Buttons and Stat Section
                 if (showStat)
                 {
-                    actionB.Draw(spriteBatch);
-                    waitB.Draw(spriteBatch);
-                    itemB.Draw(spriteBatch);
+                    buttonSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);
                     if (showActionButtons)
                     {
@@ -133,12 +117,8 @@ namespace JSA_Game.HUD
                 //Draws Bars and Buttons
                 if (showBars)
                 {
-                    experienceBar.Draw(spriteBatch);
-                    manaBar.Draw(spriteBatch);
-                    healthBar.Draw(spriteBatch);
-                    actionB.Draw(spriteBatch);
-                    waitB.Draw(spriteBatch);
-                    itemB.Draw(spriteBatch);
+                    barSection.Draw(spriteBatch);
+                    buttonSection.Draw(spriteBatch);
                     if (showActionButtons)
                     {
                         attackB.Draw(spriteBatch);
@@ -150,9 +130,7 @@ namespace JSA_Game.HUD
                 //Draws Bars and Stat Section
                 if (showOriginal)
                 {
-                    experienceBar.Draw(spriteBatch);
-                    manaBar.Draw(spriteBatch);
-                    healthBar.Draw(spriteBatch);
+                    barSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);
                     effectSection.Draw(spriteBatch);
                 }
