@@ -24,9 +24,6 @@ namespace JSA_Game.HUD
         Stat_Section statSection;
         Effect_Section effectSection;
         Button_Section buttonSection;
-        Attack_Button attackB;
-        Ability_Button abilityB;
-        Exert_Button exertB;
         
         //Hides the HUD
         private Boolean hidden;
@@ -36,12 +33,6 @@ namespace JSA_Game.HUD
         private Boolean showBars;
         //Shows HUD without buttons
         private Boolean showOriginal;
-        //Show Action Buttons
-        private Boolean showActionButtons;
-        //Show Ability Buttons
-        private Boolean showAbilityButtons;
-        //Show Inventory
-        private Boolean showInventory;
 
         public HUD_Controller()
         {
@@ -57,16 +48,11 @@ namespace JSA_Game.HUD
 
             //Init Buttons
             buttonSection = new Button_Section();
-            attackB = new Attack_Button();
-            abilityB = new Ability_Button();
-            exertB = new Exert_Button();
 
             hidden = true;
             showOriginal = true;
             showStat = false;
             showBars = false;
-            showActionButtons = false;
-            showAbilityButtons = false;
         }
 
         public void LoadContent(ContentManager Content)
@@ -80,9 +66,6 @@ namespace JSA_Game.HUD
 
             //Loading Buttons
             buttonSection.LoadContent(Content);
-            attackB.LoadContent(Content);
-            abilityB.LoadContent(Content);
-            exertB.LoadContent(Content);
         }
 
         public void characterSelect(Character c)
@@ -106,12 +89,6 @@ namespace JSA_Game.HUD
                 {
                     buttonSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);
-                    if (showActionButtons)
-                    {
-                        attackB.Draw(spriteBatch);
-                        abilityB.Draw(spriteBatch);
-                        exertB.Draw(spriteBatch);
-                    }
                 }
 
                 //Draws Bars and Buttons
@@ -119,12 +96,6 @@ namespace JSA_Game.HUD
                 {
                     barSection.Draw(spriteBatch);
                     buttonSection.Draw(spriteBatch);
-                    if (showActionButtons)
-                    {
-                        attackB.Draw(spriteBatch);
-                        abilityB.Draw(spriteBatch);
-                        exertB.Draw(spriteBatch);
-                    }
                 }
 
                 //Draws Bars and Stat Section
