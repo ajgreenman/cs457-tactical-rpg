@@ -13,10 +13,7 @@ namespace JSA_Game.CharClasses
             if (target.CurrHp > 0)
                 return;
 
-            System.Diagnostics.Debug.Print("Killing blow has been made.");
-
             int yield = target.yieldExp();
-            System.Diagnostics.Debug.Print("Unit yields " + yield + " experience.");
 
             calculateExp(user, target.yieldExp());
             Level.KillUnit(target);
@@ -41,7 +38,6 @@ namespace JSA_Game.CharClasses
             for (int i = 0; i < yieldExp; i++)
             {
                 c.CurrExp += 1;
-                Console.WriteLine("Level : " + c.Level + ", Current Experience: " + c.CurrExp + ".");
 
                 if (c.CurrExp == getExpPerLevel(c.Level))
                 {
@@ -59,7 +55,6 @@ namespace JSA_Game.CharClasses
 
         private static void LevelUp(Character c)
         {
-            System.Diagnostics.Debug.Print("Unit leveled up from level " + c.Level + " to level " + (c.Level + 1) + "!");
             c.Level++;
             updateStats(c);
         } 
@@ -104,8 +99,6 @@ namespace JSA_Game.CharClasses
             c.Magic += weakStat();
             c.Resist += avgStat();
             c.Strength += strongStat();
-
-            Console.WriteLine("Archer Health: " + c.MaxHP);
         }
 
         private static void updateCleric(Character c)
