@@ -823,26 +823,8 @@ namespace JSA_Game.Maps
                 hud.Hidden = state != LevelState.CursorSelection;
                 if (hud.Hidden)
                 {
-                    if (keyboard.IsKeyDown(Keys.F1))
-                    {
-                        hud.ShowOriginal = true;
-                        hud.ShowBars = false;
-                        hud.ShowStat = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.F2))
-                    {
-                        hud.ShowOriginal = false;
-                        hud.ShowBars = true;
-                        hud.ShowStat = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.F3))
-                    {
-                        hud.ShowOriginal = false;
-                        hud.ShowBars = false;
-                        hud.ShowStat = true;
-                    }
+                    hud.ButtonSelect(keyboard);
                 }
-
                 moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 

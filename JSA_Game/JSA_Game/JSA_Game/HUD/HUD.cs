@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using JSA_Game.CharClasses;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 
 namespace JSA_Game.HUD
@@ -24,7 +25,7 @@ namespace JSA_Game.HUD
         Stat_Section statSection;
         Effect_Section effectSection;
         Button_Section buttonSection;
-        
+
         //Hides the HUD
         private Boolean hidden;
         //Shows HUD with stats and buttons
@@ -41,14 +42,13 @@ namespace JSA_Game.HUD
             hudPos = new Vector2(0, 500);
             hudRec = new Rectangle((int)hudPos.X, (int)hudPos.Y, (int)hudSize.X, (int)hudSize.Y);
 
-            //Init Bars and Stat Section
+            //Init Bars, Buttons, and Stat Section
             barSection = new Bar_Section();
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
-
-            //Init Buttons
             buttonSection = new Button_Section();
 
+            //INIT Display Values
             hidden = true;
             showOriginal = true;
             showStat = false;
@@ -59,28 +59,50 @@ namespace JSA_Game.HUD
         {
             hudText = Content.Load<Texture2D>("brown-rectangle");
 
-            //Loading Bars and Stat Section
+            //Loading Bars, Buttons and Stat/Effect Section
             barSection.LoadContent(Content);
             statSection.LoadContent(Content);
             effectSection.LoadContent(Content);
-
-            //Loading Buttons
             buttonSection.LoadContent(Content);
         }
 
         public void characterSelect(Character c)
         {
-            //Updating Bars and Stat Section
+            //Updating Bars, Buttons, and Stat/Effect Section
             barSection.characterSelect(c);
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
+            buttonSection.CharacterSelect(c);
+        }
+
+        public int ButtonSelect(KeyboardState keyboard)
+        {
+            if (keyboard.IsKeyDown(Keys.F1))
+            {
+                showOriginal = true;
+                showBars = false;
+                showStat = false;
+            }
+            if (keyboard.IsKeyDown(Keys.F2))
+            {
+                showOriginal = false;
+                showBars = true;
+                showStat = false;
+            }
+            if (keyboard.IsKeyDown(Keys.F3))
+            {
+                showOriginal = false;
+                showBars = false;
+                showStat = true;
+            }
+            return(buttonSection.ButtonSelect(keyboard));
         }
 
         public void Draw(SpriteBatch spriteBatch)
-        {   
+        {
             //Updating Stat Section Positions for Draw
             statSection.updatePositions(showOriginal);
-            
+
             spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
             if (hidden)
             {
@@ -112,24 +134,6 @@ namespace JSA_Game.HUD
         {
             get { return hidden; }
             set { hidden = value; }
-        }
-
-        public Boolean ShowBars
-        {
-            get { return showBars; }
-            set { showBars = value; }
-        }
-
-        public Boolean ShowStat
-        {
-            get { return showStat; }
-            set { showStat = value; }
-        }
-
-        public Boolean ShowOriginal
-        {
-            get { return showOriginal; }
-            set { showOriginal = value; }
         }
     }
 }

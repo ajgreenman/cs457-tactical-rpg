@@ -84,7 +84,6 @@ namespace JSA_Game.HUD
             targetCurrMana = c.CurrMp;
             manaSize.X = BAR_SIZE * c.mpPercent;
             manaRec.Width = (int)manaSize.X;
-
         }
 
         public void LoadContent(ContentManager Content)
