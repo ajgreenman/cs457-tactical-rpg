@@ -23,4 +23,6 @@ Content\playerArcher.xnb
 Content\playerMage.xnb
 Content\playerWarrior.xnb
 Content\actionButton.xnb
+Content\abilityButton.xnb
+Content\exertButton.xnb
 Content\StatFont.xnb

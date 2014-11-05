@@ -128,19 +128,10 @@
     <Compile Include="Battle Controller\BattleController.cs" />
     <Compile Include="Battle Controller\Position.cs" />
     <Compile Include="Battle Controller\StatType.cs" />
-    <Compile Include="HUD\Bars and Stats\Effect_Section.cs" />
-    <Compile Include="HUD\Bars and Stats\Experience_Bar.cs" />
-    <Compile Include="HUD\Bars and Stats\Health_Bar.cs" />
-    <Compile Include="HUD\Bars and Stats\Mana_Bar.cs" />
-    <Compile Include="HUD\Bars and Stats\Stat_Section.cs" />
-    <Compile Include="HUD\Buttons\Action_Button.cs" />
-    <Compile Include="HUD\Buttons\Action_List\Ability_Button.cs" />
-    <Compile Include="HUD\Buttons\Action_List\Ability_List\Ability_Choice_Buttons.cs" />
-    <Compile Include="HUD\Buttons\Action_List\Attack_Button.cs" />
-    <Compile Include="HUD\Buttons\Action_List\Exert_Button.cs" />
-    <Compile Include="HUD\Buttons\Item_Button.cs" />
-    <Compile Include="HUD\Buttons\Item_List\Item_Choice_Buttons.cs" />
-    <Compile Include="HUD\Buttons\Wait_Button.cs" />
+    <Compile Include="HUD\Bars, Stats, and Buttons\Effect_Section.cs" />
+    <Compile Include="HUD\Bars, Stats, and Buttons\Bar_Section.cs" />
+    <Compile Include="HUD\Bars, Stats, and Buttons\Stat_Section.cs" />
+    <Compile Include="HUD\Bars, Stats, and Buttons\Button_Section.cs" />
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="Items\Consumable.cs" />
     <Compile Include="Items\Item.cs" />
@@ -199,9 +190,6 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="HUD\Bars and Stats\Experience_Bar.cs~master" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

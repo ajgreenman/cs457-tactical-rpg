@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
-      <Time>2014-10-24T17:27:37.7949409-04:00</Time>
+      <Time>2014-11-05T16:35:46.021423-05:00</Time>
     </Item>
     <Item>
       <Source>brown-rectangle.jpg</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
-      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
+      <Time>2014-11-05T16:35:46.021423-05:00</Time>
     </Item>
     <Item>
       <Source>Border.png</Source>
@@ -224,7 +224,25 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
-      <Time>2014-10-24T17:25:26.459554-04:00</Time>
+      <Time>2014-11-05T16:35:46.021423-05:00</Time>
+    </Item>
+    <Item>
+      <Source>abilityButton.png</Source>
+      <Name>abilityButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\abilityButton.xnb</Output>
+      <Time>2014-11-05T16:38:09.88949-05:00</Time>
+    </Item>
+    <Item>
+      <Source>exertButton.png</Source>
+      <Name>exertButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\exertButton.xnb</Output>
+      <Time>2014-11-05T16:38:09.88949-05:00</Time>
     </Item>
     <Item>
       <Source>StatFont.spritefont</Source>
