@@ -6,7 +6,6 @@ C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\JSA_Game.pdb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.exe
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.pdb
-C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.csprojResolveAssemblyReference.cache
 C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\grass_tile.xnb
 C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\player.xnb
 C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemy.xnb
@@ -69,3 +68,4 @@ C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.csprojResolveAssemblyReference.cache

@@ -74,15 +74,6 @@
       <Time>2014-10-03T16:58:26.4694527-04:00</Time>
     </Item>
     <Item>
-      <Source>StatFont.spritefont</Source>
-      <Name>StatFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
-      <Time>2014-10-20T16:08:14.1013542-04:00</Time>
-    </Item>
-    <Item>
       <Source>stone_wall.jpg</Source>
       <Name>stone_wall</Name>
       <Importer>TextureImporter</Importer>
@@ -146,15 +137,6 @@
       <Time>2014-10-24T16:44:14.1740432-04:00</Time>
     </Item>
     <Item>
-      <Source>cursorBRAnim.png</Source>
-      <Name>cursorBRAnim</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.1896432-04:00</Time>
-    </Item>
-    <Item>
       <Source>cursorTLAnim.png</Source>
       <Name>cursorTLAnim</Name>
       <Importer>TextureImporter</Importer>
@@ -162,6 +144,15 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
       <Time>2014-10-24T16:44:14.2052432-04:00</Time>
+    </Item>
+    <Item>
+      <Source>cursorBRAnim.png</Source>
+      <Name>cursorBRAnim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
+      <Time>2014-10-24T16:44:14.1896432-04:00</Time>
     </Item>
     <Item>
       <Source>cursorTRAnim.png</Source>
@@ -234,6 +225,15 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
       <Time>2014-10-24T17:25:26.459554-04:00</Time>
+    </Item>
+    <Item>
+      <Source>StatFont.spritefont</Source>
+      <Name>StatFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
+      <Time>2014-10-20T16:08:14.1013542-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

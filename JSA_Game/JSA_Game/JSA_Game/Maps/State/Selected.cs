@@ -28,9 +28,11 @@ namespace JSA_Game.Maps.State
 
             else if (keyboard.IsKeyDown(Keys.M) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled)
             {
-                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant != null)
+                Vector2 sourcePos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
+                if (level.Board[(int)sourcePos.X, (int)sourcePos.Y].Occupant != null)
                 {
-                    level.toggleMoveRange(true, level.Cursor.CursorPos, level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant.Movement);
+                   
+                    level.toggleMoveRange(true, sourcePos, level.Board[(int)sourcePos.X, (int)sourcePos.Y].Occupant.Movement);
                     level.State = LevelState.Movement;
                 }
             }

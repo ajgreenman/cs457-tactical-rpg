@@ -31,8 +31,8 @@ namespace JSA_Game.Maps
 
         float elapsedTime;
         float animateDelay = 500f;
-        float cursorTimeElapsed;
-        float cursorMoveDelay = 100;
+        //float cursorTimeElapsed;
+        //float cursorMoveDelay = 100;
 
         //Location variables for drawing
         int widthOffset;
@@ -44,6 +44,27 @@ namespace JSA_Game.Maps
 
         //array to move over (optional)
         int[][] array = null;
+
+
+        /// <summary>
+        /// Cursor constructor.
+        /// </summary>
+        /// <param name="level">Level to use the cursor</param>
+
+        public Cursor(Level level)
+        {
+            widthOffset = Level.MAP_START_W;
+            heighOffset = Level.MAP_START_H;
+            areaWidth = Level.TILE_SIZE;
+            areaHeight = Level.TILE_SIZE;
+            width = level.NumTilesShowing;
+            height = level.NumTilesShowing;         //!!CHANGE
+            cursorParts = new Texture2D[4];
+            cursorSourceRects = new Rectangle[4];
+            cursorDestRects = new Rectangle[4];
+            cursorPos = new Vector2(0, 0);
+        }
+
 
         /// <summary>
         /// Cursor constructor.  A cursor is meant to work on items in a list
@@ -155,9 +176,9 @@ namespace JSA_Game.Maps
         {
 
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-            cursorTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (cursorTimeElapsed >= cursorMoveDelay)
-            {
+            //cursorTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (cursorTimeElapsed >= cursorMoveDelay)
+            //{
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
                     cursorPos.X--;
@@ -174,8 +195,8 @@ namespace JSA_Game.Maps
                 {
                     cursorPos.Y++;
                 }
-                cursorTimeElapsed = 0;
-            }
+               // cursorTimeElapsed = 0;
+           // }
         }
 
         /// <summary>

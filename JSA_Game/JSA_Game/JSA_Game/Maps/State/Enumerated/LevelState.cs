@@ -3,5 +3,6 @@
     CursorSelection,
     Selected,
     Movement,
-    Action
+    Action,
+    ActionSelect
 }

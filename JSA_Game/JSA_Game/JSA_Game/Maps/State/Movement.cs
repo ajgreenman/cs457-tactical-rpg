@@ -27,10 +27,14 @@ namespace JSA_Game.Maps.State
                 {
                     level.toggleMoveRange(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Movement);
                 }
-                level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled = true;
-                level.moveUnit(level.SelectedPos, level.Cursor.CursorPos, false, false);
+                if (!level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.IsEnemy)
+                {
+                    level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled = true;
+                    Vector2 destination = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
+                    level.moveUnit(level.SelectedPos, destination, false, false);      
+                    level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
+                }
                 level.State = LevelState.CursorSelection;
-                level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
             }
 
 
@@ -42,7 +46,7 @@ namespace JSA_Game.Maps.State
                 if (level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant != null)
                 {
                     level.toggleMoveRange(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Movement);
-                    level.Cursor.CursorPos = new Vector2(level.SelectedPos.X, level.SelectedPos.Y);
+                    level.Cursor.CursorPos = new Vector2(level.SelectedPos.X-level.ShowStartX, level.SelectedPos.Y-level.ShowStartY);
                 }
             }
 
@@ -53,24 +57,52 @@ namespace JSA_Game.Maps.State
                 if (level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant != null)
                 {
                     //Cursor now selects move location and selectedPos keeps track of original position.
-                    int cX = (int)level.Cursor.CursorPos.X;
-                    int cY = (int)level.Cursor.CursorPos.Y;
+                    int cX = (int)level.Cursor.CursorPos.X + level.ShowStartX;
+                    int cY = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
                     char dir = '0';
                     if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && level.Board[cX - 1, cY].IsHighlighted && !level.Board[cX - 1, cY].IsOccupied)
                     {
-                        dir = 'l';
+                        if (level.Cursor.CursorPos.X == 1 && cX != 1)
+                        {
+                            level.ShowStartX--;
+                        }
+                        else
+                        {
+                            dir = 'l';
+                        }
                     }
                     else if (keyboard.IsKeyDown(Keys.Right) && cX < level.BoardWidth - 1 && level.Board[cX + 1, cY].IsHighlighted && (!level.Board[cX + 1, cY].IsOccupied))
                     {
-                        dir = 'r';
+                        if (level.ShowStartX + level.NumTilesShowing - 2 == cX && cY != level.BoardWidth - 3)
+                        {
+                            level.ShowStartX++;
+                        }
+                        else
+                        {
+                            dir = 'r';
+                        }
                     }
                     else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && level.Board[cX, cY - 1].IsHighlighted && (!level.Board[cX, cY - 1].IsOccupied))
                     {
-                        dir = 'u';
+                        if (level.Cursor.CursorPos.Y == 1 && cY != 1)
+                        {
+                            level.ShowStartY--;
+                        }
+                        else
+                        {
+                            dir = 'u';
+                        }
                     }
                     else if (keyboard.IsKeyDown(Keys.Down) && cY < level.BoardHeight - 1 && level.Board[cX, cY + 1].IsHighlighted && (!level.Board[cX, cY + 1].IsOccupied))
                     {
-                        dir = 'd';
+                        if (level.ShowStartY + level.NumTilesShowing - 2 == cY && cY != level.BoardHeight - 3)
+                        {
+                            level.ShowStartY++;
+                        }
+                        else
+                        {
+                            dir = 'd';
+                        }
                     }
 
                     level.Cursor.moveCursorDir(dir);
