@@ -80,13 +80,13 @@ namespace JSA_Game.HUD
 
         public void ButtonSelect(KeyboardState keyboard)
         {
-            if (keyboard.IsKeyDown(Keys.F1) || !selectedChar.MoveDisabled)
+            if (keyboard.IsKeyDown(Keys.F1))
             {
                 showOriginal = true;
                 showBars = false;
                 showStat = false;
             }
-            if (keyboard.IsKeyDown(Keys.F2) || selectedChar.MoveDisabled)
+            if (keyboard.IsKeyDown(Keys.F2))
             {
                 showOriginal = false;
                 showBars = true;
