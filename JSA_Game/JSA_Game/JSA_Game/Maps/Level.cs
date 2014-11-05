@@ -202,7 +202,7 @@ namespace JSA_Game.Maps
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        c = new Archer(this, 5);
+                        c = new Archer(this, 1);
                     }
                     //More
 
