@@ -68,6 +68,9 @@ namespace JSA_Game.Maps
         ArrayList pUnits, eUnits;
         Dictionary<String, Texture2D> characterImages;
 
+        //Selected action
+        private Battle_Controller.Action selectedAction;
+
 
         /// <summary>
         /// Generates a level from a given text file
@@ -253,6 +256,7 @@ namespace JSA_Game.Maps
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
             utilityImages = new Texture2D[UTILITY_IMAGE_COUNT];
 
+            selectedAction = null;
             hud = new HUD_Controller();
 
         }
@@ -1039,6 +1043,10 @@ namespace JSA_Game.Maps
             get { return numTilesShowing; }
             set { numTilesShowing = value; }
         }
-       
+        public Battle_Controller.Action SelectedAction
+        {
+            get { return selectedAction; }
+            set { selectedAction = value; }
+        }
     }
 }

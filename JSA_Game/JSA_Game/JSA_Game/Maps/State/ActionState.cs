@@ -59,8 +59,9 @@ namespace JSA_Game.Maps.State
                 {
                     if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected)
                     {
-                        JSA_Game.Battle_Controller.Action action = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
-                        level.attackTarget(level.SelectedPos, new Vector2(x,y), action);
+
+                        //JSA_Game.Battle_Controller.Action action = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
+                        level.attackTarget(level.SelectedPos, new Vector2(x,y), level.SelectedAction);
 
                         level.State = LevelState.CursorSelection;
                     }
@@ -69,7 +70,7 @@ namespace JSA_Game.Maps.State
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack.Range);
+                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range);
             }
         }
     }

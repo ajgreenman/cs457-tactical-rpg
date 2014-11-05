@@ -35,6 +35,8 @@ namespace JSA_Game.HUD
         //Shows HUD without buttons
         private Boolean showOriginal;
 
+        private Character selectedChar;
+
         public HUD_Controller()
         {
             //Init Graphic Size
@@ -73,17 +75,18 @@ namespace JSA_Game.HUD
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
             buttonSection.CharacterSelect(c);
+            selectedChar = c;
         }
 
-        public int ButtonSelect(KeyboardState keyboard)
+        public void ButtonSelect(KeyboardState keyboard)
         {
-            if (keyboard.IsKeyDown(Keys.F1))
+            if (keyboard.IsKeyDown(Keys.F1) || !selectedChar.MoveDisabled)
             {
                 showOriginal = true;
                 showBars = false;
                 showStat = false;
             }
-            if (keyboard.IsKeyDown(Keys.F2))
+            if (keyboard.IsKeyDown(Keys.F2) || selectedChar.MoveDisabled)
             {
                 showOriginal = false;
                 showBars = true;
@@ -95,7 +98,7 @@ namespace JSA_Game.HUD
                 showBars = false;
                 showStat = true;
             }
-            return(buttonSection.ButtonSelect(keyboard));
+            buttonSection.ButtonSelect(keyboard);
         }
 
         public void Draw(SpriteBatch spriteBatch)

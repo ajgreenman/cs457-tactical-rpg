@@ -34,7 +34,7 @@ namespace JSA_Game.Maps.State
                     level.moveUnit(level.SelectedPos, destination, false, false);      
                     level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
                 }
-                level.State = LevelState.CursorSelection;
+                level.State = LevelState.Selected;
             }
 
 

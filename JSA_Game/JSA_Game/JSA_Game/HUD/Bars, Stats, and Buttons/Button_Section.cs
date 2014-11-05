@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using JSA_Game.Maps.State;
 
 namespace JSA_Game.HUD
 {
@@ -68,18 +69,18 @@ namespace JSA_Game.HUD
         public string targetItem3 = "Item";
         public string targetItem4 = "Item";
         //Button Display Values
-        public Boolean startDisplay;
-        public Boolean actionDisplay;
-        public Boolean abilityDisplay;
-        public Boolean itemDisplay;
+        public enum ButtonState{
+            startDisplay,
+            actionDisplay,
+            abilityDisplay,
+            itemDisplay
+        }
+        public ButtonState bState;
         
         public Button_Section()
         {
             //INIT Display 
-            startDisplay = true;
-            actionDisplay = false;
-            abilityDisplay = false;
-            itemDisplay = false;
+            bState = ButtonState.startDisplay;
 
             //INIT Button1
             Button1Size = new Vector2(125, 25);
@@ -139,9 +140,9 @@ namespace JSA_Game.HUD
             //targetItem4 = c.Inventory[3];
         }
 
-        public int ButtonSelect(KeyboardState keyboard)
+        public void ButtonSelect(KeyboardState keyboard)
         {
-            if (startDisplay)
+            if (bState == ButtonState.startDisplay)
             {
                 //Wait
                 if (keyboard.IsKeyDown(Keys.D3))
@@ -151,24 +152,18 @@ namespace JSA_Game.HUD
                 //Item
                 if (keyboard.IsKeyDown(Keys.D2))
                 {
-                    Console.WriteLine("Wait Key Pressed");
-                    startDisplay = false;
-                    itemDisplay = true;
-                    abilityDisplay = false;
-                    actionDisplay = false;
+                    Console.WriteLine("Item Key Pressed");
+                    bState = ButtonState.itemDisplay;
                 }
                 //Action
                 if (keyboard.IsKeyDown(Keys.D1))
                 {
                     Console.WriteLine("Action Key Pressed");
-                    startDisplay = false;
-                    actionDisplay = true;
-                    abilityDisplay = false;
-                    itemDisplay = false;
+                    bState = ButtonState.actionDisplay;
                 }
             }
 
-            if (actionDisplay)
+            if (bState == ButtonState.actionDisplay)
             {
                 //Exert
                 if (keyboard.IsKeyDown(Keys.D3))
@@ -178,57 +173,57 @@ namespace JSA_Game.HUD
                 //Ability
                 else if (keyboard.IsKeyDown(Keys.D2))
                 {
-                    actionDisplay = false;
-                    abilityDisplay = true;
+
+                    bState = ButtonState.abilityDisplay;
                 }
                 //Attack
                 else if (keyboard.IsKeyDown(Keys.D1))
                 {
-                    
+                    Selected.setAction(PerformedType.Attack, -1);
                 }
             }
 
-            if(abilityDisplay)
+            if(bState == ButtonState.abilityDisplay)
             {
                 if (keyboard.IsKeyDown(Keys.D4))
                 {
-                    return 4;
+                    Selected.setAction(PerformedType.Ability, 3);
                 }
                 else if (keyboard.IsKeyDown(Keys.D3))
                 {
-                    return 3;
+                    Selected.setAction(PerformedType.Ability, 2);
                 }
                 else if (keyboard.IsKeyDown(Keys.D2))
                 {
-                    return 2;
+                    Selected.setAction(PerformedType.Ability, 1);
                 }
                 else if (keyboard.IsKeyDown(Keys.D1))
                 {
-                    return 1;
+                    Selected.setAction(PerformedType.Ability, 0);
                 }
             }
 
-            if (itemDisplay)
+            if (bState == ButtonState.itemDisplay)
             {
                 if (keyboard.IsKeyDown(Keys.D4))
                 {
-                    return 4;
+                    //return 4;
                 }
                 else if (keyboard.IsKeyDown(Keys.D3))
                 {
-                    return 3;
+                    //return 3;
                 }
                 else if (keyboard.IsKeyDown(Keys.D2))
                 {
-                    return 2;
+                    //return 2;
                 }
                 else if (keyboard.IsKeyDown(Keys.D1))
                 {
-                    return 1;
+                    //return 1;
                 }
             }
 
-            return 666;
+           // return 666;
         }
 
         public void LoadContent(ContentManager Content)
@@ -243,7 +238,7 @@ namespace JSA_Game.HUD
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (startDisplay)
+            if (bState == ButtonState.startDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
@@ -253,7 +248,7 @@ namespace JSA_Game.HUD
                 spriteBatch.DrawString(defaultFont, actions, font3pos, Color.Blue);
             }
 
-            if (actionDisplay)
+            if (bState == ButtonState.actionDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
@@ -263,7 +258,7 @@ namespace JSA_Game.HUD
                 spriteBatch.DrawString(defaultFont, attack, font3pos, Color.Blue);
             }
 
-            if (abilityDisplay)
+            if (bState == ButtonState.abilityDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
@@ -275,7 +270,7 @@ namespace JSA_Game.HUD
                 spriteBatch.DrawString(defaultFont, targetAbility4, font5pos, Color.Blue);
             }
 
-            if (itemDisplay)
+            if (bState == ButtonState.itemDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
