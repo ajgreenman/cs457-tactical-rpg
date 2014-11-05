@@ -9,11 +9,13 @@ namespace JSA_Game.CharClasses
 {
     class Cleric : Character
     {
-        public Cleric(Level level)
+        public Cleric(Level level, int startingLevel = 1)
         {
+            charLevel = startingLevel;
             AI = new AggressiveAI(this, level);
             Texture = "player";
             name = "Cleric";
+            className = "Cleric";
 
             MaxHP = STANDARD_HPMP;
             MaxMP = STRONG_HPMP;

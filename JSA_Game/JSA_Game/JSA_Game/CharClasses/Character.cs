@@ -22,8 +22,7 @@ namespace JSA_Game
         protected const int STANDARD_STAT = 5;
         protected const int WEAK_STAT = 2;
 
-        //Experience
-        protected readonly int[] EXP_VALS = {0,2,6,14};
+        protected String className;
 
         //Status effects
         private Status[] status;
@@ -37,7 +36,7 @@ namespace JSA_Game
         private Boolean moveDisabled;
         private Boolean actionDisabled;
         private int movement;
-        private int charLevel;
+        protected int charLevel;
         private int currExp;
 
         //Position
@@ -50,7 +49,7 @@ namespace JSA_Game
         String texture;
         
 
-        public Character()
+        public Character(int startingLevel = 1)
         {
             maxHP = STANDARD_HPMP;
             maxMP = STANDARD_HPMP;
@@ -65,14 +64,16 @@ namespace JSA_Game
 
             weapon = new Items.Weapon();
             protection = new Items.Protection();
+            inventory = new Items.Consumable[4];
 
             status = new Status[2];
 
-            attack = new Battle_Controller.Action();   // Default attack action.
+
+            attack = new Battle_Controller.Action();   // Defa nult attack action.
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
 
             movement = STANDARD_STAT;
-            charLevel = 1;
+            charLevel = startingLevel;
             currExp = 0;
             isEnemy = false;
             moveDisabled = false;
@@ -166,6 +167,8 @@ namespace JSA_Game
             set { resist = value; }
         }
 
+        // Items
+
         private Items.Protection protection;
 
         public Items.Protection Protection
@@ -180,7 +183,15 @@ namespace JSA_Game
         {
             get { return weapon; }
             set { weapon = value; }
-        } 
+        }
+
+        private Items.Consumable[] inventory;
+
+        public Items.Consumable[] Inventory
+        {
+            get { return inventory; }
+            set { inventory = value; }
+        }
 
         // Actions
         public Battle_Controller.Action Attack
@@ -220,10 +231,6 @@ namespace JSA_Game
             set
             {
                 currExp = value;
-                while (currExp >= EXP_VALS[charLevel] && charLevel < EXP_VALS.Length)
-                {
-                    LevelManager.LevelUp(this);
-                }
             }
         }
         public Boolean IsEnemy
@@ -259,7 +266,7 @@ namespace JSA_Game
         }
         public float expPercent
         {
-            get { return (currExp-EXP_VALS[charLevel - 1]) / (float)(EXP_VALS[charLevel]-EXP_VALS[charLevel-1]); }
+            get { return LevelUpManager.GetExpPercent(this); }//(currExp-EXP_VALS[charLevel - 1]) / (float)(EXP_VALS[charLevel]-EXP_VALS[charLevel-1]); }
         }
         public Status[] Status
         {
@@ -270,6 +277,12 @@ namespace JSA_Game
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public String ClassName
+        {
+            get { return className; }
+            set { className = value; }
         }
     }
 }

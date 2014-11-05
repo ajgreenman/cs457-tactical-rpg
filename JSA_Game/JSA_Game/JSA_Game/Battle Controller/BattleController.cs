@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Battle_Controller.StatEffect;
+using JSA_Game.CharClasses;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -273,10 +274,12 @@ namespace JSA_Game.Battle_Controller
                         target.CurrHp -= amount;
                         break;
                 }
-         
-       
             }
-         
+
+            if (target.CurrHp <= 0)
+            {
+                LevelUpManager.KillingBlow(user, target);
+            }
         }
         
     }

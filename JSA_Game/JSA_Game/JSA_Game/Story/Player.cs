@@ -16,12 +16,19 @@ namespace JSA_Game.Story
         {
             this.username = username;
             currentLevel = 1;
+            money = 0;
         }
 
         public int CurrentLevel
         {
             get { return currentLevel; }
             set { currentLevel = value; }
+        }
+
+        public int Money
+        {
+            get { return money; }
+            set { money = value; }
         }
 
         public String Username

@@ -119,7 +119,7 @@
     <Compile Include="CharClasses\Archer.cs" />
     <Compile Include="CharClasses\Character.cs" />
     <Compile Include="CharClasses\Cleric.cs" />
-    <Compile Include="CharClasses\LevelManager.cs" />
+    <Compile Include="CharClasses\LevelUpManager.cs" />
     <Compile Include="CharClasses\Mage.cs" />
     <Compile Include="Battle Controller\StatEffect\Status.cs" />
     <Compile Include="Battle Controller\StatEffect\StatusEffect.cs" />

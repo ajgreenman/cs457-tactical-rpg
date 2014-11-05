@@ -11,12 +11,14 @@ namespace JSA_Game.CharClasses
 {
     class Warrior : Character
     {
-        
-        public Warrior(Level level)
+
+        public Warrior(Level level, int startingLevel = 1)
         {
+            charLevel = startingLevel;
             AI = new AggressiveAI(this, level);
             Texture = "Warrior";
             name = "Warrior";
+            className = "Warrior";
 
             MaxHP = STRONG_HPMP;
             MaxMP = STANDARD_HPMP;

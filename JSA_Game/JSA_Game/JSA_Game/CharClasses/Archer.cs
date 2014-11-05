@@ -9,11 +9,13 @@ namespace JSA_Game.CharClasses
 {
     class Archer : Character
     {
-        public Archer(Level level)
+        public Archer(Level level, int startingLevel)
         {
+            charLevel = 1;
             AI = new AggressiveAI(this, level);
             Texture = "Archer";
             name = "Archer";
+            className = "Archer";
 
             MaxHP = STANDARD_HPMP;
             MaxMP = STANDARD_HPMP;
@@ -25,6 +27,7 @@ namespace JSA_Game.CharClasses
             Dodge = STANDARD_STAT;
             Magic = WEAK_STAT;
             Resist = STANDARD_STAT;
+            LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
                 new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5);

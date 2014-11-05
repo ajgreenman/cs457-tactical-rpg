@@ -43,8 +43,6 @@ namespace JSA_Game
 
             levels = new ArrayList();
             levels.Add(new Level("JSAtestlevel"));
-            levels.Add(new Level("Coast"));
-            levels.Add(new Level("Arena"));
             
             
             

@@ -194,15 +194,15 @@ namespace JSA_Game.Maps
 
                     if(param[2].Equals("Warrior"))
                     {
-                        c = new Warrior(this);
+                        c = new Warrior(this, 1);
                     }
                     else if (param[2].Equals("Mage"))
                     {
-                        c = new Mage(this);
+                        c = new Mage(this, 1);
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        c = new Archer(this);
+                        c = new Archer(this, 5);
                     }
                     //More
 
@@ -723,13 +723,13 @@ namespace JSA_Game.Maps
             if (BattleController.isValidAction(action, c, currPos, targetPos))
             {
                 System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
-                BattleController.performAction(action, c, t);
+                if (!BattleController.performAction(action, c, t))
+                    System.Diagnostics.Debug.Print("Missed!");
                 System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
             }
 
             if (t.CurrHp < 1)
             {
-                c.CurrExp += t.yieldExp();
                 board[(int)targetPos.X, (int)targetPos.Y].IsOccupied = false;
                 board[(int)targetPos.X, (int)targetPos.Y].Occupant = null;
                 if (t.IsEnemy)
@@ -961,6 +961,11 @@ namespace JSA_Game.Maps
 
             //Draw HUD
             hud.Draw(spriteBatch);
+
+        }
+
+        public static void KillUnit(Character c)
+        {
 
         }
 
