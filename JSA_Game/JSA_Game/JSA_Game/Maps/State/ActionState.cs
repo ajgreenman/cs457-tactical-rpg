@@ -21,18 +21,47 @@ namespace JSA_Game.Maps.State
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
-            //Listen for input to move cursor
-            level.Cursor.moveCursor(gameTime);
+            if (level.MoveTimeElapsed >= level.MoveDelay)   // A unit is selected
+            {
+                //Scroll board if necessary
+                if (keyboard.IsKeyDown(Keys.Left) && level.Cursor.CursorPos.X == 1 && level.ShowStartX != 0)
+                {
+                    level.ShowStartX--;
+                }
+                else if (keyboard.IsKeyDown(Keys.Right) && level.Cursor.CursorPos.X == level.NumTilesShowing - 2 && level.ShowStartX + level.NumTilesShowing != level.BoardWidth)
+                {
+                    level.ShowStartX++;
+                }
+                else if (keyboard.IsKeyDown(Keys.Up) && level.Cursor.CursorPos.Y == 1 && level.ShowStartY != 0)
+                {
+                    level.ShowStartY--;
+                }
+                else if (keyboard.IsKeyDown(Keys.Down) && level.Cursor.CursorPos.Y == level.NumTilesShowing - 2 && level.ShowStartY + level.NumTilesShowing != level.BoardHeight)
+                {
+                    level.ShowStartY++;
+                }
+                else if ((keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
+                    && level.Cursor.CursorPos.X != level.ShowStartX + level.NumTilesShowing && level.Cursor.CursorPos.Y != level.ShowStartY + level.NumTilesShowing)
+                {
+                    //Listen for input to move cursor
+                    level.Cursor.moveCursor(gameTime);
+                }
+
+                level.MoveTimeElapsed = 0;
+            }
 
             //Confirm attack
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {
-                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant != null)
+                int x = (int)level.Cursor.CursorPos.X + level.ShowStartX;
+                int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
+                if (level.Board[x, y].Occupant != null)
                 {
-                    if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant.IsEnemy && level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].IsSelected)
+                    if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected)
                     {
-                        JSA_Game.Battle_Controller.Action action = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
-                        level.attackTarget(level.SelectedPos, level.Cursor.CursorPos, action);
+
+                        //JSA_Game.Battle_Controller.Action action = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
+                        level.attackTarget(level.SelectedPos, new Vector2(x,y), level.SelectedAction);
 
                         level.State = LevelState.CursorSelection;
                     }
@@ -41,7 +70,7 @@ namespace JSA_Game.Maps.State
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack.Range);
+                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range);
             }
         }
     }

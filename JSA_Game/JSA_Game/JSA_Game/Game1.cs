@@ -29,9 +29,11 @@ namespace JSA_Game
         //List of levels
         ArrayList levels;
 
-        //Example Level
+        //Current level
         Level currLevel;
 
+        //List of player characters
+        ArrayList playerChars;
 
         public Game1()
         {
@@ -41,12 +43,20 @@ namespace JSA_Game
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
+            //Idea: In warrior, mage, etc. constructors, get rid of Level parameter
+            //In character class, add initializeChar() method
+            //This method will initialize enemy AI and maybe other things.
+            //This is so the created characters don't have to be sent the level
+            //they're on since they will be stored in a list in this class.
+            playerChars = new ArrayList();
+
+
             levels = new ArrayList();
             levels.Add(new Level("JSAtestlevel"));
+            levels.Add(new Level("Coast"));
+            levels.Add(new Level("Arena"));
             
             
-            
-
             //Set first level
             currLevel = (Level) levels[0];
 

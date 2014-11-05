@@ -235,6 +235,24 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
       <Time>2014-10-30T20:00:00.9702026-04:00</Time>
     </Item>
+    <Item>
+      <Source>abilityButton.png</Source>
+      <Name>abilityButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\abilityButton.xnb</Output>
+      <Time>2014-11-05T18:21:53.7572791-05:00</Time>
+    </Item>
+    <Item>
+      <Source>exertButton.png</Source>
+      <Name>exertButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\exertButton.xnb</Output>
+      <Time>2014-11-05T18:21:53.7572791-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID Null="true" />

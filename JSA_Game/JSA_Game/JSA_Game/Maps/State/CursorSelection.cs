@@ -21,16 +21,43 @@ namespace JSA_Game.Maps.State
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
-            //Listen for input to move cursor
-            level.Cursor.moveCursor(gameTime);
+
+            if (level.MoveTimeElapsed >= level.MoveDelay) 
+            {
+                //Scroll board if necessary
+                if (keyboard.IsKeyDown(Keys.Left) && level.Cursor.CursorPos.X == 1 && level.ShowStartX != 0)
+                {
+                    level.ShowStartX--;
+                }
+                else if (keyboard.IsKeyDown(Keys.Right) && level.Cursor.CursorPos.X == level.NumTilesShowing - 2 && level.ShowStartX + level.NumTilesShowing != level.BoardWidth)
+                {
+                    level.ShowStartX++;
+                }
+                else if (keyboard.IsKeyDown(Keys.Up) && level.Cursor.CursorPos.Y == 1 && level.ShowStartY != 0)
+                {
+                    level.ShowStartY--;
+                }
+                else if (keyboard.IsKeyDown(Keys.Down) && level.Cursor.CursorPos.Y == level.NumTilesShowing - 2 && level.ShowStartY + level.NumTilesShowing != level.BoardHeight)
+                {
+                    level.ShowStartY++;
+                }
+                else if ((keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
+                    && level.Cursor.CursorPos.X != level.ShowStartX + level.NumTilesShowing && level.Cursor.CursorPos.Y != level.ShowStartY + level.NumTilesShowing)
+                {
+                    //Listen for input to move cursor
+                    level.Cursor.moveCursor(gameTime);
+                }
+
+                level.MoveTimeElapsed = 0;
+            }
 
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {
                 //Selecting a unit. 
-                if (level.Board[(int)level.Cursor.CursorPos.X, (int)level.Cursor.CursorPos.Y].Occupant != null)
+                int x = (int)level.Cursor.CursorPos.X + level.ShowStartX;
+                int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
+                if (level.Board[x, y].Occupant != null)
                 {
-                    int x = (int)level.Cursor.CursorPos.X;
-                    int y = (int)level.Cursor.CursorPos.Y;
                     level.SelectedPos = new Vector2(x, y);
                     level.State = LevelState.Selected;
                     level.Board[x, y].IsSelected = true;

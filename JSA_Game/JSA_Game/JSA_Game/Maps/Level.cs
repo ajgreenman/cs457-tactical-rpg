@@ -16,6 +16,7 @@ using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
 using JSA_Game.CharClasses;
 using JSA_Game.Maps.State;
+using JSA_Game.Maps.Tiles;
 
 namespace JSA_Game.Maps
 {
@@ -23,9 +24,15 @@ namespace JSA_Game.Maps
     {
         const int TILE_IMAGE_COUNT = 3;
         const int UTILITY_IMAGE_COUNT = 3;
-        const int TILE_SIZE = 50;
-        int MAP_START_H = 0;
-        int MAP_START_W = 0;
+        public const int TILE_SIZE = 50;
+
+        int numTilesShowing;
+        const int DEFAULT_NUM_TILES_SHOWING = 10;
+
+        //Draw related variables
+        int showStartX, showStartY;
+        public const int MAP_START_H = 0;
+        public const int MAP_START_W = 0;
 
 
         int boardWidth, boardHeight;
@@ -61,34 +68,10 @@ namespace JSA_Game.Maps
         ArrayList pUnits, eUnits;
         Dictionary<String, Texture2D> characterImages;
 
-        /// <summary>
-        /// Creates a level and initializes variables
-        /// </summary>
-        /// <param name="width">Width of the board</param>
-        /// <param name="height">Height of the board</param>
-        /// <param name="numPlayerUnits">Number of player units to place on the board</param>
-        /// <param name="numEnemyUnits">Number of enemy units to place on the board</param>
-
-        public Level(int width, int height, int numPlayerUnits, int numEnemyUnits)
-        {
-            boardWidth = width;
-            boardHeight = height;
-            board = new Tile[width, height];
-
-            for (int i = 0; i < width; i++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    board[i, j] = new Tile();
-                }
-            }
-            maxPlayerUnits = numPlayerUnits;
-            MaxEnemyUnits = numEnemyUnits;
-            initialize();
-        }
+        //Selected action
+        private Battle_Controller.Action selectedAction;
 
 
-        
         /// <summary>
         /// Generates a level from a given text file
         /// //Folder for files is located at \JSA_Game\bin\x86\Debug\Levels
@@ -132,7 +115,8 @@ namespace JSA_Game.Maps
                     System.Diagnostics.Debug.Print("Primary Geography: " + line);
                     for (int i = 0; i < boardWidth; i++)
                         for (int j = 0; j < boardHeight; j++)
-                            board[i, j] = new Tile(line.Substring(2));
+                            board[i, j] = tileChooser(line.Substring(2));
+                            //board[i, j] = new Tile(line.Substring(2));
                 }
 
                 else if (line[0] == 'g')
@@ -170,8 +154,9 @@ namespace JSA_Game.Maps
                     {
                         for (int j = yStartLoop; j < yEndLoop+1; j++)
                         {
-                            board[i, j] = new Tile(param[2]);
-                            board[i,j].IsOccupied = true;
+                            board[i, j] = tileChooser(param[2]);
+                            //board[i, j] = new Tile(param[2]);
+                            //board[i,j].IsOccupied = true;
                         }
                     }
 
@@ -230,6 +215,21 @@ namespace JSA_Game.Maps
                 
         }
 
+        private Tile tileChooser(string tileName)
+        {
+            if(tileName.Equals("plain")){
+                return new PlainsTile();
+            }
+            else if( tileName.Equals("water")){
+                return new WaterTile();
+            }
+            else if( tileName.Equals("stone_wall")){
+                return new StoneWallTile();
+            }
+            else
+                return new PlainsTile();
+        }
+
         /// <summary>
         /// Initializes the level. Sets state, initializes containers, and creates a Cursor.
         /// </summary>
@@ -239,11 +239,15 @@ namespace JSA_Game.Maps
             playerTurn = TurnState.Player;
             winState = WinLossState.InProgess;
 
+            showStartX = 0;
+            showStartY = 0;
+            numTilesShowing = DEFAULT_NUM_TILES_SHOWING;
+
             playerUnitCount = 0;
             enemyUnitCount = 0;
 
             buttonPressed = false;
-            cursor = new Cursor(MAP_START_W, MAP_START_H, boardWidth, boardHeight, TILE_SIZE, TILE_SIZE);
+            cursor = new Cursor(this);
 
             pUnits = new ArrayList(maxPlayerUnits);
             eUnits = new ArrayList(MaxEnemyUnits);
@@ -252,6 +256,7 @@ namespace JSA_Game.Maps
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
             utilityImages = new Texture2D[UTILITY_IMAGE_COUNT];
 
+            selectedAction = null;
             hud = new HUD_Controller();
 
         }
@@ -465,7 +470,7 @@ namespace JSA_Game.Maps
                     ArrayList possibleNew = new ArrayList();
 
                     //If left is open
-                    if ((x > 0 && !board[x - 1, y].IsOccupied) || (endPos.X == x - 1 && endPos.Y == y))
+                    if ((x > 0 && board[x - 1, y].IsWalkable && !board[x - 1, y].IsOccupied) || (endPos.X == x - 1 && endPos.Y == y))
                     {
                         newTile = new Vector2(x - 1, y);
                         possibleNew.Add(newTile);
@@ -474,7 +479,7 @@ namespace JSA_Game.Maps
                     }
 
                     //If right is open
-                    if ((x < boardWidth - 1 && !board[x + 1, y].IsOccupied) || (endPos.X == x + 1 && endPos.Y == y))
+                    if ((x < boardWidth - 1 && board[x + 1, y].IsWalkable && !board[x + 1, y].IsOccupied) || (endPos.X == x + 1 && endPos.Y == y))
                     {
                         newTile = new Vector2(x + 1, y);
                         possibleNew.Add(newTile);
@@ -482,7 +487,7 @@ namespace JSA_Game.Maps
                     }
 
                     //If up is open
-                    if ((y > 0 && !board[x, y - 1].IsOccupied) || (endPos.X == x && endPos.Y == y - 1))
+                    if ((y > 0 && board[x, y - 1].IsWalkable && !board[x, y - 1].IsOccupied) || (endPos.X == x && endPos.Y == y - 1))
                     {
                         newTile = new Vector2(x, y - 1);
                         possibleNew.Add(newTile);
@@ -490,7 +495,7 @@ namespace JSA_Game.Maps
                     }
 
                     //If down is open
-                    if ((y < boardHeight - 1 && !board[x, y + 1].IsOccupied) || (endPos.X == x && endPos.Y == y + 1))
+                    if ((y < boardHeight - 1 && board[x, y + 1].IsWalkable && !board[x, y + 1].IsOccupied) || (endPos.X == x && endPos.Y == y + 1))
                     {
                         newTile = new Vector2(x, y + 1);
                         possibleNew.Add(newTile);
@@ -626,7 +631,7 @@ namespace JSA_Game.Maps
             board[x, y].IsHighlighted = show;
             if (x > 0)
             {
-                if ((show && !board[x - 1, y].IsOccupied) || !show)
+                if ((show && board[x - 1, y].IsWalkable && !board[x - 1, y].IsOccupied) || !show)
                 {
                     board[x - 1, y].IsHighlighted = show;
                     toggleMoveRange(show, x - 1, y, remMove - 1);
@@ -634,7 +639,7 @@ namespace JSA_Game.Maps
             }
             if (x < boardWidth - 1)
             {
-                if ((show && !board[x + 1, y].IsOccupied) || !show)
+                if ((show && board[x + 1, y].IsWalkable && !board[x + 1, y].IsOccupied) || !show)
                 {
                     board[x + 1, y].IsHighlighted = show;
                     toggleMoveRange(show, x + 1, y, remMove - 1);
@@ -642,7 +647,7 @@ namespace JSA_Game.Maps
             }
             if (y > 0)
             {
-                if ((show && !board[x, y - 1].IsOccupied) || !show)
+                if ((show && board[x, y - 1].IsWalkable && !board[x, y - 1].IsOccupied) || !show)
                 {
                     board[x, y - 1].IsHighlighted = show;
                     toggleMoveRange(show, x, y - 1, remMove - 1);
@@ -650,7 +655,7 @@ namespace JSA_Game.Maps
             }
             if (y < boardHeight - 1)
             {
-                if ((show && !board[x, y + 1].IsOccupied) || !show)
+                if ((show && board[x, y + 1].IsWalkable && !board[x, y + 1].IsOccupied) || !show)
                 {
                     board[x, y + 1].IsHighlighted = show;
                     toggleMoveRange(show, x, y + 1, remMove - 1);
@@ -686,7 +691,10 @@ namespace JSA_Game.Maps
                 {
                     board[x - 1, y].IsSelected = show;
                 }
-                scanForTargets(show, x - 1, y, remRange - 1);
+                if (board[x - 1, y].IsAttackThroughable)
+                {
+                    scanForTargets(show, x - 1, y, remRange - 1);
+                }
             }
             if (x < boardWidth - 1)
             {
@@ -694,7 +702,10 @@ namespace JSA_Game.Maps
                 {
                     board[x + 1, y].IsSelected = show;
                 }
-                scanForTargets(show, x + 1, y, remRange - 1);
+                if (board[x + 1, y].IsAttackThroughable)
+                {
+                    scanForTargets(show, x + 1, y, remRange - 1);
+                }
             }
             if (y > 0)
             {
@@ -702,7 +713,10 @@ namespace JSA_Game.Maps
                 {
                     board[x, y - 1].IsSelected = show;
                 }
-                scanForTargets(show, x, y - 1, remRange - 1);
+                if (board[x, y - 1].IsAttackThroughable)
+                {
+                    scanForTargets(show, x, y - 1, remRange - 1);
+                }
             }
             if (y < boardHeight - 1)
             {
@@ -710,7 +724,10 @@ namespace JSA_Game.Maps
                 {
                     board[x, y + 1].IsSelected = show;
                 }
-                scanForTargets(show, x, y + 1, remRange - 1);
+                if (board[x, y + 1].IsAttackThroughable)
+                {
+                    scanForTargets(show, x, y + 1, remRange - 1);
+                }
             }
         }
 
@@ -824,40 +841,28 @@ namespace JSA_Game.Maps
                 hud.Hidden = state != LevelState.CursorSelection;
                 if (hud.Hidden)
                 {
-                    if (keyboard.IsKeyDown(Keys.F1))
-                    {
-                        hud.ShowOriginal = true;
-                        hud.ShowBars = false;
-                        hud.ShowStat = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.F2))
-                    {
-                        hud.ShowOriginal = false;
-                        hud.ShowBars = true;
-                        hud.ShowStat = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.F3))
-                    {
-                        hud.ShowOriginal = false;
-                        hud.ShowBars = false;
-                        hud.ShowStat = true;
-                    }
+                    hud.ButtonSelect(keyboard);
                 }
-
                 moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 
                 //Prevents holding a button to continuously activate events
+                if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
+                {
+                    moveTimeElapsed = moveDelay-20;
+                }
                 if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) || 
-                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) ||keyboard.IsKeyUp(Keys.F2) ||keyboard.IsKeyUp(Keys.F3) )
+                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) ||keyboard.IsKeyUp(Keys.F2) ||keyboard.IsKeyUp(Keys.F3))
                 {
                     buttonPressed = false;
                 }
                 if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
-                    keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3))
+                    keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
+                    keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down) )
                 {
                     buttonPressed = true;
                 }
+                
             }
 
             //Enemy turn
@@ -896,17 +901,17 @@ namespace JSA_Game.Maps
         /// <param name="spriteBatch">SpriteBatch from main class.</param>
         public void draw(SpriteBatch spriteBatch)
         {
-            //Draw board
-            for (int i = 0; i < boardWidth; i++)
+
+            for (int i = showStartX; i < showStartX + numTilesShowing; i++)
             {
-                for (int j = 0; j < boardHeight; j++)
+                for (int j = showStartY; j < showStartY + numTilesShowing; j++)
                 {
                     Texture2D land;
-                    if(board[i,j].LandType.Equals("water"))
+                    if (board[i, j].LandType.Equals("water"))
                     {
                         land = tileImages[1];
                     }
-                    else if(board[i,j].LandType.Equals("stone_wall"))
+                    else if (board[i, j].LandType.Equals("stone_wall"))
                     {
                         land = tileImages[2];
                     }
@@ -914,46 +919,35 @@ namespace JSA_Game.Maps
                     {
                         land = tileImages[0];
                     }
-                    spriteBatch.Draw(land, new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
+                    spriteBatch.Draw(land, new Rectangle(MAP_START_W + TILE_SIZE * (i-showStartX), MAP_START_H + TILE_SIZE * (j-showStartY), TILE_SIZE, TILE_SIZE), Color.White);
 
 
                     //Draws a semi-transparent tile to show available spaces for movement/attacking
                     if (board[i, j].IsHighlighted)
                     {
-                        spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * i, MAP_START_H + TILE_SIZE * j, TILE_SIZE, TILE_SIZE), Color.White);
+                        spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+
+                    if (board[i, j].Occupant != null)
+                    {
+                        Character c = board[i, j].Occupant;
+                        String charTexture = board[i, j].Occupant.IsEnemy ? "enemy" + c.Texture : "player" + c.Texture;
+                        spriteBatch.Draw(characterImages[charTexture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+
+                        //Draw box around character if selected
+                        if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
+                        {
+                            spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                        }
                     }
 
                 }
             }
-
-            //Draw characters
-            foreach (Character c in pUnits)
-            {
-                //System.Diagnostics.Debug.Print("Drawing player character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-                spriteBatch.Draw(characterImages["player" + c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
-
-                //Draw box around character if selected
-                if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
-                {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
-                }
-            }
-            foreach (Character c in eUnits)
-            {
-                //System.Diagnostics.Debug.Print("Drawing enemy character at position " + c.Pos.X + "," + c.Pos.Y + ". Texture = " + c.Texture);
-
-                spriteBatch.Draw(characterImages["enemy" + c.Texture], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
-                //Draw box around character if selected
-                if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
-                {
-                    spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)c.Pos.X, MAP_START_H + TILE_SIZE * (int)c.Pos.Y, TILE_SIZE, TILE_SIZE), Color.White);
-                }
-            }
-
+            
             //Draws a box around a selected tile
             if (board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected)
             {
-                spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (int)selectedPos.X, MAP_START_H + TILE_SIZE * (int)selectedPos.Y, TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * ((int)selectedPos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)selectedPos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
             }
 
             //Draw cursor on top of board.
@@ -979,6 +973,16 @@ namespace JSA_Game.Maps
         {
             get { return boardHeight; }
             set { boardHeight = value; }
+        }
+        public int ShowStartX
+        {
+            get { return showStartX; }
+            set { showStartX = value; }
+        }
+        public int ShowStartY
+        {
+            get { return showStartY; }
+            set { showStartY = value; }
         }
         public Tile[,] Board
         {
@@ -1039,6 +1043,16 @@ namespace JSA_Game.Maps
         {
             get { return winState; }
             set { winState = value; }
+        }
+        public int NumTilesShowing
+        {
+            get { return numTilesShowing; }
+            set { numTilesShowing = value; }
+        }
+        public Battle_Controller.Action SelectedAction
+        {
+            get { return selectedAction; }
+            set { selectedAction = value; }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace JSA_Game.CharClasses
     {
         public Mage(Level level, int startingLevel = 1)
         {
-            charLevel = startingLevel;
+            charLevel = 1;
             Texture = "Mage";
             name = "Mage";
             className = "Mage";
@@ -27,6 +27,7 @@ namespace JSA_Game.CharClasses
             Dodge = STANDARD_STAT;
             Magic = STRONG_STAT;
             Resist = STANDARD_STAT;
+            LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Battle_Controller.Action actionFireball = new Battle_Controller.Action("Fireball", "Blast the enemy with a raging fireball.",
                 null,

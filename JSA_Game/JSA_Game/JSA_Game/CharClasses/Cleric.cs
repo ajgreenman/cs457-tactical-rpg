@@ -11,7 +11,7 @@ namespace JSA_Game.CharClasses
     {
         public Cleric(Level level, int startingLevel = 1)
         {
-            charLevel = startingLevel;
+            charLevel = 1;
             AI = new AggressiveAI(this, level);
             Texture = "player";
             name = "Cleric";
@@ -27,6 +27,7 @@ namespace JSA_Game.CharClasses
             Dodge = STANDARD_STAT;
             Magic = STRONG_STAT;
             Resist = WEAK_STAT;
+            LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Battle_Controller.Action actionHeal = new Battle_Controller.Action("Heal", "Heal a friendly unit.",
                 null,

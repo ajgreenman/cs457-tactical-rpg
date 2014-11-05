@@ -22,48 +22,43 @@
 
 / Level name: testLevel
 
+<<<<<<< HEAD
 i:10,10,3,3
+=======
+i:15,15,1,1
+>>>>>>> 978fdf7a511afa3aed2ad94e8a845911fa79847b
 G:plains
 
-g:2,0,stone_wall
-g:2,1,stone_wall
-g:2,2,stone_wall
-g:2,3,stone_wall
 
-g:1,4,water
-g:2,4,water
-g:3,4,water
-g:1,5,water
-g:2,5,water
-g:3,5,water
+
+g:1-3,4-5,water
 g:3,6,water
-g:3,7,water
-g:4,7,water
-g:5,7,water
+g:3-5,7,water
+g:4-6,2,water
 
+g:6,3-5,water
+
+g:7-8,4-5,water
+g:9-14,5,water
+g:10-14,11-12,water
+
+g:2,0-3,stone_wall
 g:3,8,stone_wall
-g:5,9,stone_wall
-
-g:4,2,water
-g:5,2,water
-g:6,2,water
-g:6,3,water
-g:6,4,water
-g:6,5,water
-g:7,4,water
-g:7,5,water
-g:8,4,water
-g:8,5,water
-
-g:7,6,stone_wall
-g:7,7,stone_wall
-g:7,8,stone_wall
-g:7,9,stone_wall
+g:5,9-11,stone_wall
+g:5,13-14,stone_wall
+g:7,6-9,stone_wall
 
 
+
+
+<<<<<<< HEAD
 p:0,0,Warrior,Aggressive
 p:0,1,Archer,Aggressive
 p:0,2,Mage,Aggressive
 e:9,7,Mage,Aggressive
 e:9,8,Warrior,Aggressive
 e:9,9,Archer,Aggressive
+=======
+p:12,1,Archer,Aggressive
+e:0,1,Mage,Aggressive
+>>>>>>> 978fdf7a511afa3aed2ad94e8a845911fa79847b

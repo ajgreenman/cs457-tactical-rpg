@@ -12,7 +12,7 @@ namespace JSA_Game.AI
 {
     class PassiveAI : iAI
     {
-        Level currLevel;
+        private Level currLevel;
         Character character;
         Vector2 targetPos;
 
@@ -32,6 +32,10 @@ namespace JSA_Game.AI
         public void attack()
         {
         }
-
+        public Level CurrLevel
+        {
+            get { return currLevel; }
+            set { currLevel = value; }
+        }
     }
 }

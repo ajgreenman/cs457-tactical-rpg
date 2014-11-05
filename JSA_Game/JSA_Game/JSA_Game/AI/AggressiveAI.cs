@@ -12,7 +12,7 @@ namespace JSA_Game.AI
 {
     class AggressiveAI : iAI
     {
-        Level currLevel;
+        private Level currLevel;
         Character character;
         Vector2 targetPos;
 
@@ -62,6 +62,10 @@ namespace JSA_Game.AI
                 }
             }
         }
-
+        public Level CurrLevel
+        {
+            get { return currLevel; }
+            set { currLevel = value; }
+        }
     }
 }

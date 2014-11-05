@@ -11,7 +11,7 @@ namespace JSA_Game.CharClasses
     {
         public Thief(Level level, int startingLevel = 1)
         {
-            charLevel = startingLevel;
+            charLevel = 1;
             AI = new AggressiveAI(this, level);
             Texture = "player";
             name = "Thief";
@@ -27,6 +27,7 @@ namespace JSA_Game.CharClasses
             Dodge = STRONG_STAT;
             Magic = STANDARD_STAT;
             Resist = WEAK_STAT;
+            LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Battle_Controller.Action actionStab = new Battle_Controller.Action("Stab", "A precise attack. Ignores enemy stats.", 
                 null,

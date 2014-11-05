@@ -14,7 +14,7 @@ namespace JSA_Game.CharClasses
 
         public Warrior(Level level, int startingLevel = 1)
         {
-            charLevel = startingLevel;
+            charLevel = 1;
             AI = new AggressiveAI(this, level);
             Texture = "Warrior";
             name = "Warrior";
@@ -30,6 +30,7 @@ namespace JSA_Game.CharClasses
             Dodge = STANDARD_STAT;
             Magic = WEAK_STAT;
             Resist = WEAK_STAT;
+            LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Battle_Controller.Action actionCripple =
                 new Battle_Controller.Action("Cripple", "Cripple the target, lowering dodge and movement. Ignores enemy stats.",
