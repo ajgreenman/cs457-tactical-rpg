@@ -18,31 +18,26 @@ namespace JSA_Game.HUD
         public Texture2D Button2Text;
         public Texture2D Button3Text;
         public Texture2D Button4Text;
-        public Texture2D Button5Text;
         //Size of Button
         public Vector2 Button1Size;
         public Vector2 Button2Size;
         public Vector2 Button3Size;
         public Vector2 Button4Size;
-        public Vector2 Button5Size;
         //Button Position
         public Vector2 Button1Pos;
         public Vector2 Button2Pos;
         public Vector2 Button3Pos;
         public Vector2 Button4Pos;
-        public Vector2 Button5Pos;
         //Button Rectangle
         public Rectangle Button1Rec;
         public Rectangle Button2Rec;
         public Rectangle Button3Rec;
         public Rectangle Button4Rec;
-        public Rectangle Button5Rec;
         //Button Color
         public Color Button1Col;
         public Color Button2Col;
         public Color Button3Col;
         public Color Button4Col;
-        public Color Button5Col;
         //Font
         SpriteFont defaultFont;
         //Font Positions
@@ -50,26 +45,29 @@ namespace JSA_Game.HUD
         public Vector2 font2pos;
         public Vector2 font3pos;
         public Vector2 font4pos;
-        public Vector2 font5pos;
         //Generic Constant Names
         public const string attack = "Attack";
+        public const string defend = "Defend";
         public const string items = "Items";
         public const string exert = "Exert";
         public const string wait = "Wait";
+        public const string move = "Move";
         public const string actions = "Actions";
         public const string abilities = "Abilities";
         //Ability Names
-        public string targetAbility1;
-        public string targetAbility2;
-        public string targetAbility3 = "Ability";
-        public string targetAbility4 = "Ability";
+        public string targetAbility1 = "Empty";
+        public string targetAbility2 = "Empty";
+        public string targetAbility3 = "Empty";
+        public string targetAbility4 = "Empty";
         //Item Names
-        public string targetItem1 = "Item";
-        public string targetItem2 = "Item";
-        public string targetItem3 = "Item";
-        public string targetItem4 = "Item";
+        public string targetItem1 = "Empty";
+        public string targetItem2 = "Empty";
+        public string targetItem3 = "Empty";
+        public string targetItem4 = "Empty";
+        
         //Button Display Values
-        public enum ButtonState{
+        public enum ButtonState
+        {
             startDisplay,
             actionDisplay,
             abilityDisplay,
@@ -102,7 +100,7 @@ namespace JSA_Game.HUD
 
             //INIT Button 3
             Button3Size = new Vector2(125, 25);
-            Button3Pos = new Vector2(265, 517);
+            Button3Pos = new Vector2(195, 517);
             Button3Rec = new Rectangle((int)Button3Pos.X, (int)Button3Pos.Y,
                  (int)Button3Size.X, (int)Button3Size.Y);
             Button3Col = new Color(255, 255, 255, 255);
@@ -111,119 +109,98 @@ namespace JSA_Game.HUD
 
             //INIT Button 4
             Button4Size = new Vector2(125, 25);
-            Button4Pos = new Vector2(195, 517);
+            Button4Pos = new Vector2(335, 517);
             Button4Rec = new Rectangle((int)Button4Pos.X, (int)Button4Pos.Y,
                  (int)Button4Size.X, (int)Button4Size.Y);
             Button4Col = new Color(255, 255, 255, 255);
             font4pos.X = Button4Pos.X + 30;
             font4pos.Y = Button4Pos.Y + 3;
-
-            //INIT Button 5
-            Button5Size = new Vector2(125, 25);
-            Button5Pos = new Vector2(335, 517);
-            Button5Rec = new Rectangle((int)Button5Pos.X, (int)Button5Pos.Y,
-                 (int)Button5Size.X, (int)Button5Size.Y);
-            Button5Col = new Color(255, 255, 255, 255);
-            font5pos.X = Button5Pos.X + 30;
-            font5pos.Y = Button5Pos.Y + 3;
         }
 
         public void CharacterSelect(Character c)
         {
-            targetAbility1 = c.Actions[0].Name;
-            targetAbility2 = c.Actions[1].Name;
-            //targetAbility3 = c.Actions[2].Name;
-            //targetAbility4 = c.Actions[3].Name;
-            //targetItem1 = c.Inventory[0];
-            //targetItem2 = c.Inventory[1];
-            //targetItem3 = c.Inventory[2];
-            //targetItem4 = c.Inventory[3];
+            if (c.Actions[0] != null) {targetAbility1 = c.Actions[0].Name;}
+            if (c.Actions[1] != null) {targetAbility2 = c.Actions[1].Name;}
+            if (c.Actions[2] != null) {targetAbility3 = c.Actions[2].Name;}
+            if (c.Actions[3] != null) {targetAbility4 = c.Actions[3].Name;}
+            if (c.Inventory[0] != null) {targetItem1 = c.Inventory[0].Name;}
+            if (c.Inventory[1] != null) {targetItem2 = c.Inventory[1].Name;}
+            if (c.Inventory[2] != null) {targetItem3 = c.Inventory[2].Name;}
+            if (c.Inventory[3] != null) {targetItem4 = c.Inventory[3].Name;}
         }
 
         public void ButtonSelect(KeyboardState keyboard)
         {
-            if (bState == ButtonState.startDisplay)
+            //Start Display
+            if(bState == ButtonState.startDisplay)
             {
                 //Wait
-                if (keyboard.IsKeyDown(Keys.D3))
-                {
-                    Console.WriteLine("Wait Key Pressed");
-                }
+                if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Wait, -1);}
+                
                 //Item
-                if (keyboard.IsKeyDown(Keys.D2))
-                {
-                    Console.WriteLine("Item Key Pressed");
-                    bState = ButtonState.itemDisplay;
-                }
+                else if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.itemDisplay;}
+
                 //Action
-                if (keyboard.IsKeyDown(Keys.D1))
-                {
-                    Console.WriteLine("Action Key Pressed");
-                    bState = ButtonState.actionDisplay;
-                }
+                else if (keyboard.IsKeyDown(Keys.D2)) {bState = ButtonState.actionDisplay;}
+        
+                //Move
+                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Move, -1);}
             }
 
+            //Action Display
             if (bState == ButtonState.actionDisplay)
             {
-                //Exert
-                if (keyboard.IsKeyDown(Keys.D3))
-                {
-                    //TODO
-                }
-                //Ability
-                else if (keyboard.IsKeyDown(Keys.D2))
-                {
+                //Go Back a State
+                if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
 
-                    bState = ButtonState.abilityDisplay;
-                }
+                //Exert
+                else if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Exert, -1);}
+               
+                //Ability
+                else if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.abilityDisplay;}
+
+                //Defend
+                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Defend, -1);}
+
                 //Attack
-                else if (keyboard.IsKeyDown(Keys.D1))
-                {
-                    Selected.setAction(PerformedType.Attack, -1);
-                }
+                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}
             }
 
             if(bState == ButtonState.abilityDisplay)
             {
-                if (keyboard.IsKeyDown(Keys.D4))
-                {
-                    Selected.setAction(PerformedType.Ability, 3);
-                }
-                else if (keyboard.IsKeyDown(Keys.D3))
-                {
-                    Selected.setAction(PerformedType.Ability, 2);
-                }
-                else if (keyboard.IsKeyDown(Keys.D2))
-                {
-                    Selected.setAction(PerformedType.Ability, 1);
-                }
-                else if (keyboard.IsKeyDown(Keys.D1))
-                {
-                    Selected.setAction(PerformedType.Ability, 0);
-                }
+                //Go Back a State
+                if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.actionDisplay;}
+               
+                //Ability 4
+                else if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Ability, 3);}
+                
+                //Ability 3
+                else if (keyboard.IsKeyDown(Keys.D3)) {Selected.setAction(PerformedType.Ability, 2);}
+                
+                //Ability 2
+                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Ability, 1);}
+                
+                //Ability 1
+                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Ability, 0);}
             }
 
             if (bState == ButtonState.itemDisplay)
             {
-                if (keyboard.IsKeyDown(Keys.D4))
-                {
-                    //return 4;
-                }
-                else if (keyboard.IsKeyDown(Keys.D3))
-                {
-                    //return 3;
-                }
-                else if (keyboard.IsKeyDown(Keys.D2))
-                {
-                    //return 2;
-                }
-                else if (keyboard.IsKeyDown(Keys.D1))
-                {
-                    //return 1;
-                }
+                //Go Back a State
+                if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
+                
+                //Item 4
+                if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Item, 3);}
+                
+                //Item 3
+                else if (keyboard.IsKeyDown(Keys.D3)) {Selected.setAction(PerformedType.Item, 2);}
+                
+                //Item 2
+                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Item, 1);}
+                
+                //Item 1
+                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Item, 0);}
             }
-
-           // return 666;
         }
 
         public void LoadContent(ContentManager Content)
@@ -232,7 +209,6 @@ namespace JSA_Game.HUD
                 Button2Text = Content.Load<Texture2D>("bar_base");
                 Button3Text = Content.Load<Texture2D>("bar_base");
                 Button4Text = Content.Load<Texture2D>("bar_base");
-                Button5Text = Content.Load<Texture2D>("bar_base");
                 defaultFont = Content.Load<SpriteFont>("StatFont");
         }
 
@@ -243,9 +219,11 @@ namespace JSA_Game.HUD
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
                 spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
+                spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
                 spriteBatch.DrawString(defaultFont, wait, font1pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, items, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, actions, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, move, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, actions, font4pos, Color.Blue);
             }
 
             if (bState == ButtonState.actionDisplay)
@@ -253,33 +231,35 @@ namespace JSA_Game.HUD
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
                 spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
+                spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
                 spriteBatch.DrawString(defaultFont, exert, font1pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, abilities, font2pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, attack, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, defend, font4pos, Color.Blue);
             }
 
             if (bState == ButtonState.abilityDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
+                spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
                 spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.Draw(Button5Text, Button5Rec, Button5Col);
                 spriteBatch.DrawString(defaultFont, targetAbility1, font1pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, targetAbility2, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetAbility3, font4pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetAbility4, font5pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility3, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility4, font4pos, Color.Blue);
             }
 
             if (bState == ButtonState.itemDisplay)
             {
                 spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
+                spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
                 spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.Draw(Button5Text, Button5Rec, Button5Col);
                 spriteBatch.DrawString(defaultFont, targetItem1, font1pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, targetItem2, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetItem3, font4pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetItem4, font5pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetItem3, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetItem4, font4pos, Color.Blue);
             }
         }
     }
