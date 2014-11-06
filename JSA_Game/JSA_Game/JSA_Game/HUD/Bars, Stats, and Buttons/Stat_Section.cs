@@ -28,16 +28,6 @@ namespace JSA_Game.HUD
         const int DOD_POSy = 560;
         const int ACC_POSy = 560;
         const int LVL_POSy = 580;
-        
-        //Position Update Macros
-        const int STAT_POSx2 = 75;
-        const int STR_POSx2 = 25;
-        const int ARMR_POSx2 = 25;
-        const int MAG_POSx2 = 115;
-        const int RES_POSx2 = 115;
-        const int DOD_POSx2 = 25;
-        const int ACC_POSx2 = 115;
-        const int LVL_POSx2 = 75;
 
         //Vector2 Objects
         Vector2 stat_pos; 
@@ -80,33 +70,6 @@ namespace JSA_Game.HUD
             dod_pos = new Vector2(DOD_POSx, DOD_POSy);
             acc_pos = new Vector2(ACC_POSx, ACC_POSy);
             lvl_pos = new Vector2(LVL_POSx, LVL_POSy);
-        }
-
-        public void updatePositions(Boolean original)
-        {
-            if (!original)
-            {
-                stat_pos.X = STAT_POSx2;
-                str_pos.X = STR_POSx2;
-                armr_pos.X = ARMR_POSx2;
-                mag_pos.X = MAG_POSx2;
-                res_pos.X = RES_POSx2;
-                dod_pos.X = DOD_POSx2;
-                acc_pos.X = ACC_POSx2;
-                lvl_pos.X = LVL_POSx2;
-            }
-
-            else
-            {
-                stat_pos.X = STAT_POSx;
-                str_pos.X = STR_POSx;
-                armr_pos.X = ARMR_POSx;
-                mag_pos.X = MAG_POSx;
-                res_pos.X = RES_POSx;
-                dod_pos.X = DOD_POSx;
-                acc_pos.X = ACC_POSx;
-                lvl_pos.X = LVL_POSx;
-            }
         }
 
         //Getting Character Values
