@@ -26,6 +26,9 @@ namespace JSA_Game
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Game state
+        GameState gameState;
+
         //List of levels
         ArrayList levels;
 
@@ -43,6 +46,7 @@ namespace JSA_Game
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
+            gameState = GameState.Level;
             //Idea: In warrior, mage, etc. constructors, get rid of Level parameter
             //In character class, add initializeChar() method
             //This method will initialize enemy AI and maybe other things.

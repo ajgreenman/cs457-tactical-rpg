@@ -28,12 +28,14 @@ namespace JSA_Game.HUD
 
         //Hides the HUD
         private Boolean hidden;
-        //Shows HUD with stats and buttons
-        private Boolean showStat;
-        //Shows HUD with bars and buttons
-        private Boolean showBars;
-        //Shows HUD without buttons
-        private Boolean showOriginal;
+
+        public enum HUDState
+        {
+            showActions,
+            showOriginal
+        }
+
+        public HUDState hState;
 
         private Character selectedChar;
 
@@ -52,9 +54,7 @@ namespace JSA_Game.HUD
 
             //INIT Display Values
             hidden = true;
-            showOriginal = true;
-            showStat = false;
-            showBars = false;
+            hState = HUDState.showOriginal;
         }
 
         public void LoadContent(ContentManager Content)
@@ -80,51 +80,26 @@ namespace JSA_Game.HUD
 
         public void ButtonSelect(KeyboardState keyboard)
         {
-            if (keyboard.IsKeyDown(Keys.F1))
-            {
-                showOriginal = true;
-                showBars = false;
-                showStat = false;
-            }
-            if (keyboard.IsKeyDown(Keys.F2))
-            {
-                showOriginal = false;
-                showBars = true;
-                showStat = false;
-            }
-            if (keyboard.IsKeyDown(Keys.F3))
-            {
-                showOriginal = false;
-                showBars = false;
-                showStat = true;
-            }
+            if (keyboard.IsKeyDown(Keys.F1)) {hState = HUDState.showOriginal;}
+            if (keyboard.IsKeyDown(Keys.F2)) {hState = HUDState.showActions;}
+         
             buttonSection.ButtonSelect(keyboard);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //Updating Stat Section Positions for Draw
-            statSection.updatePositions(showOriginal);
-
             spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
             if (hidden)
             {
-                //Draws Buttons and Stat Section
-                if (showStat)
-                {
-                    buttonSection.Draw(spriteBatch);
-                    statSection.Draw(spriteBatch);
-                }
-
                 //Draws Bars and Buttons
-                if (showBars)
+                if (hState == HUDState.showActions)
                 {
                     barSection.Draw(spriteBatch);
                     buttonSection.Draw(spriteBatch);
                 }
 
                 //Draws Bars and Stat Section
-                if (showOriginal)
+                if (hState == HUDState.showOriginal)
                 {
                     barSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);

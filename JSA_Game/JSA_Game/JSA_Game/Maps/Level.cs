@@ -34,6 +34,8 @@ namespace JSA_Game.Maps
         public const int MAP_START_H = 0;
         public const int MAP_START_W = 0;
 
+        KeyboardState keyboardState;
+        KeyboardState oldKeyboardState;
 
         int boardWidth, boardHeight;
         int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
@@ -820,6 +822,7 @@ namespace JSA_Game.Maps
         /// <param name="gameTime">GameTime sent from main class</param>
         public void update(GameTime gameTime)
         {
+            keyboardState = Keyboard.GetState();
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
             //Animate cursor
@@ -891,7 +894,7 @@ namespace JSA_Game.Maps
                     winState = WinLossState.Loss;
                 }
             }
-            
+            oldKeyboardState = keyboardState;
         }
         
 
@@ -962,6 +965,13 @@ namespace JSA_Game.Maps
         {
 
         }
+
+        private bool CheckKey(Keys theKey)
+        {
+            return keyboardState.IsKeyUp(theKey) &&
+                oldKeyboardState.IsKeyDown(theKey);
+        }
+
 
         //Setters and Getters
         public int BoardWidth

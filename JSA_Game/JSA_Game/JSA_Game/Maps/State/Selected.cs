@@ -59,23 +59,30 @@ namespace JSA_Game.Maps.State
              switch (type)
             {
                  case PerformedType.Attack:
-                    lvl.SelectedAction = c.Attack;
-                    lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range);
-                    lvl.State = LevelState.Action;
+                    if (c.ActionDisabled)
+                    {
+                        lvl.SelectedAction = c.Attack;
+                        lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range);
+                        lvl.State = LevelState.Action;
+                        
+                    }
                     break;
-
                  case PerformedType.Ability:
-                    lvl.SelectedAction = c.Actions[index];
-                    lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range);
-                    lvl.State = LevelState.Action;
+                    if (c.ActionDisabled)
+                    {
+                        lvl.SelectedAction = c.Actions[index];
+                        lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range);
+                        lvl.State = LevelState.Action;
+                    }
                     break;
                  //case PerformedType.Item:
                  //   lvl.SelectedAction = c.Inventory[index].Action;
                  //   break;
 
                  case PerformedType.Move:
+                     
                     Vector2 sourcePos = new Vector2(lvl.Cursor.CursorPos.X + lvl.ShowStartX, lvl.Cursor.CursorPos.Y + lvl.ShowStartY);
-                    if (lvl.Board[(int)sourcePos.X, (int)sourcePos.Y].Occupant != null)
+                    if (c != null && !c.MoveDisabled)
                     {
                         lvl.toggleMoveRange(true, sourcePos, lvl.Board[(int)sourcePos.X, (int)sourcePos.Y].Occupant.Movement);
                         lvl.State = LevelState.Movement;
