@@ -1,4 +1,4 @@
-﻿  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,10 @@ namespace JSA_Game.Battle_Controller
 {
     static class BattleController
     {
-        private const int BASE_HIT = 75;
+        private const int BASE_HIT = 80;
+        private const int BASE_PHYSICAL = 4;
+        private const int BASE_SPELL = 5;
+        private const int CRIT_CHANCE = 15;
 
         /// <summary>
         /// Checks that a particular action is valid. At the moment it simply checks that the user is within range of the target.
@@ -21,11 +24,6 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action is valid, false otherwise.</returns>
         public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
-            if (action.Aoe)
-            {
-                // If the action is an area of effect action, its range does not need to be checked.
-                return true;
-            }
             return action.Range >= calculateDistance(userPosition, targetPosition);
         }
 
@@ -47,17 +45,25 @@ namespace JSA_Game.Battle_Controller
             {
                 return false;
             }
-
-            if (action.Aoe)
-            {
-                // Different logic will need to be implemented for area of effect actions.
-            }
-            else
-            {
-                calculateAction(action, user, target);
-            }
+            
+            calculateAction(action, user, target);
+            
 
             return true;
+        }
+
+        public static Boolean performAction(Action action, Character user, Character[] targets)
+        {
+            Boolean ret_val = false;
+            foreach (Character target in targets)
+            {
+                if (performAction(action, user, target))
+                {
+                    ret_val = true;
+                }
+            }
+
+            return ret_val;
         }
 
         /// <summary>
@@ -154,133 +160,95 @@ namespace JSA_Game.Battle_Controller
         
         private static void calculateTargetEffect(Action action, Character user, Character target)
         {
+            double amount = 0;
 
-            //StatType[] effectType = action.TargetStat;
-            StatType[] effectType = {StatType.Hp};
-
-            int amount = 0;
-            foreach (StatType stat in effectType)
+            if (action.Type == ActionType.Physical)
             {
-                switch (stat)
+                if (action.IgnoreEnemyStats)
                 {
-                    case StatType.Accuracy:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Accuracy -= amount;
-                        break;
-                    case StatType.Armor:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Armor -= amount;
-                        break;
-                    case StatType.Dodge:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Dodge -= amount;
-                        break;
-                    case StatType.Hp:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.CurrHp -= amount;
-                        break;
-                    case StatType.Magic:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Magic -= amount;
-                        break;
-                    case StatType.Mp:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.CurrMp -= amount;
-                        break;
-                    case StatType.Resist:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Resist -= amount;
-                        break;
-                    case StatType.Strength:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Strength -= amount;
-                        break;
-                    case StatType.Movement:
-                        if (action.Type == ActionType.Spell)
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        else
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        }
-                        target.Movement -= amount;
-                        break;
-                    default:
-                        if (action.Type == ActionType.Physical)
-                        {
-                            amount = user.Strength / target.Armor + 5;
-                        } 
-                        else
-                        {
-                            amount = user.Magic / target.Resist + 5;
-                        }
-                        target.CurrHp -= amount;
-                        break;
+                    amount = (user.Strength / 2);
                 }
+                else
+                {
+                    amount = (user.Strength / 2) - (target.Armor);
+                }
+
+                if (amount < 0)
+                {
+                    amount = 0;
+                }
+
+                amount += BASE_PHYSICAL;
             }
+            else
+            {
+                if (action.IgnoreEnemyStats)
+                {
+                    amount = (user.Magic / 2);
+                }
+                else
+                {
+                    amount = (user.Magic / 2) - (target.Resist);
+                }
+                
+                if (amount < 0)
+                {
+                    amount = 0;
+                }
+
+                amount += BASE_SPELL;
+            }
+
+            target.CurrHp -= calculateActionAmount(user, action, amount);
 
             if (target.CurrHp <= 0)
             {
                 LevelUpManager.KillingBlow(user, target);
             }
         }
-        
+
+        private static int calculateActionAmount(Character user, Action action, double value)
+        {
+            if (value <= 0)
+            {
+                value = 1;
+            }
+            double amount = value * user.Level;
+
+            Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            int rand = rng.Next((int) amount - (3), (int) amount + (3));
+            amount = rand;
+            
+            if (amount <= 0)
+            {
+                amount = 1;
+            }
+
+            amount *= action.PowerMultiplier;
+
+            if (criticalHit())
+            {
+                amount *= 1.5;
+            }
+
+            amount = Math.Ceiling(amount);
+
+            Console.WriteLine(user.ClassName + " attack hit for " + amount + " damage.");
+
+            return (int) amount;
+        }
+
+        private static Boolean criticalHit()
+        {
+            Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            int rand = rng.Next(0, 100);
+
+            if (rand <= CRIT_CHANCE)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

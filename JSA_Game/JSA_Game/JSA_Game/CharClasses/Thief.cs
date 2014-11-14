@@ -31,8 +31,23 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionStab = new Battle_Controller.Action("Stab", "A precise attack. Ignores enemy stats.", 
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.0, 1, 1);
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.0, 1, 1, 0);
             Actions[0] = actionStab;
+
+            Battle_Controller.Action actionAmbush = new Battle_Controller.Action("Ambush", "A powerful attack. Ignores enemy stats.",
+                null,
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.5, 6, 1, 0);
+            Actions[1] = actionAmbush;
+
+            Battle_Controller.Action actionPrepare = new Battle_Controller.Action("Prepare", "Prepare to attack. Increasing stats.",
+                null, // Buff stats.
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, true, false, 1.2, 3, 1, 0);
+            Actions[2] = actionPrepare;
+
+            Battle_Controller.Action actionPoisonedStrike = new Battle_Controller.Action("Poisoned Strike", "Attack with a poisoned weapon.",
+                null, // Poison effect.
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.2, 4, 1, 0);
+            Actions[3] = actionPoisonedStrike;
         }
     }
 }

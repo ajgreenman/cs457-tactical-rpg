@@ -44,6 +44,8 @@ namespace JSA_Game.CharClasses
                     LevelUp(c);
                 }
             }
+
+            Console.WriteLine(c.Inventory[0].Name);
         }
 
         private static int getExpPerLevel(int level)
