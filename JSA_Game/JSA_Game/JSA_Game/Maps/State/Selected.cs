@@ -59,7 +59,7 @@ namespace JSA_Game.Maps.State
              switch (type)
             {
                  case PerformedType.Attack:
-                    if (c.ActionDisabled)
+                    if (!c.ActionDisabled)
                     {
                         lvl.SelectedAction = c.Attack;
                         lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range);
@@ -68,7 +68,7 @@ namespace JSA_Game.Maps.State
                     }
                     break;
                  case PerformedType.Ability:
-                    if (c.ActionDisabled)
+                    if (!c.ActionDisabled)
                     {
                         lvl.SelectedAction = c.Actions[index];
                         lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range);
