@@ -69,9 +69,10 @@ namespace JSA_Game.Maps.State
                     lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range);
                     lvl.State = LevelState.Action;
                     break;
-                 //case PerformedType.Item:
-                 //   lvl.SelectedAction = c.Inventory[index].Action;
-                 //   break;
+                 case PerformedType.Item:
+                    lvl.SelectedAction = c.Inventory[index].Action;
+                    lvl.scanForTargets(true, lvl.SelectedPos, c.Inventory[index].Action.Range);
+                    break;
 
                  case PerformedType.Move:
                     Vector2 sourcePos = new Vector2(lvl.Cursor.CursorPos.X + lvl.ShowStartX, lvl.Cursor.CursorPos.Y + lvl.ShowStartY);

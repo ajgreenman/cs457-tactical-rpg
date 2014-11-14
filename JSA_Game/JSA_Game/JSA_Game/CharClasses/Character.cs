@@ -65,11 +65,15 @@ namespace JSA_Game
             weapon = new Items.Weapon();
             protection = new Items.Protection();
             inventory = new Items.Consumable[4];
+            Items.Consumable potion = new Items.Consumable("Weak Potion", 2, 1,
+                new Battle_Controller.Action("Weak Potion", "A simple potion of healing.", null, new StatType[] {StatType.Mp},
+                    ActionType.Spell, false, true, false, 1.0, 0, 5, 0));
+            inventory[0] = potion;
 
             status = new Status[2];
 
 
-            attack = new Battle_Controller.Action();   // Defa nult attack action.
+            attack = new Battle_Controller.Action();   // Default attack action.
             actions = new Battle_Controller.Action[4]; // Default number of possible actions.
 
             movement = STANDARD_STAT;

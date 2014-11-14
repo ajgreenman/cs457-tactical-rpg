@@ -1,4 +1,4 @@
-﻿  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,11 +24,6 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action is valid, false otherwise.</returns>
         public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
-            if (action.Aoe)
-            {
-                // If the action is an area of effect action, its range does not need to be checked.
-                return true;
-            }
             return action.Range >= calculateDistance(userPosition, targetPosition);
         }
 
@@ -50,17 +45,25 @@ namespace JSA_Game.Battle_Controller
             {
                 return false;
             }
-
-            if (action.Aoe)
-            {
-                // Different logic will need to be implemented for area of effect actions.
-            }
-            else
-            {
-                calculateAction(action, user, target);
-            }
+            
+            calculateAction(action, user, target);
+            
 
             return true;
+        }
+
+        public static Boolean performAction(Action action, Character user, Character[] targets)
+        {
+            Boolean ret_val = false;
+            foreach (Character target in targets)
+            {
+                if (performAction(action, user, target))
+                {
+                    ret_val = true;
+                }
+            }
+
+            return ret_val;
         }
 
         /// <summary>

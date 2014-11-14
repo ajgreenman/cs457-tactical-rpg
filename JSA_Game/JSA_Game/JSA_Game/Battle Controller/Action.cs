@@ -14,7 +14,7 @@ namespace JSA_Game.Battle_Controller
         private Status actionEffect;
         private ActionType type;
         private Boolean ignoreEnemyStats, friendly, aoe;
-        private int cost, range;
+        private int cost, range, aoeRange;
         private double powerMultipler;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace JSA_Game.Battle_Controller
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
         /// <param name="range">Range of the action.</param>
         public Action(String name, String description, Status actionEffect, StatType[] statCost, ActionType type,
-            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range)
+            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range, int aoeRange)
         {
             this.name = name;
             this.description = description;
@@ -45,6 +45,7 @@ namespace JSA_Game.Battle_Controller
             this.powerMultipler = powerMultiplier;
             this.cost = cost;
             this.range = range;
+            this.aoeRange = aoeRange;
         }
 
         /// <summary>
