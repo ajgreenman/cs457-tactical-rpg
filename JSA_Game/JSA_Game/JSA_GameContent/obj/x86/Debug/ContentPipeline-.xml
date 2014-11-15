@@ -253,6 +253,42 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\exertButton.xnb</Output>
       <Time>2014-11-06T11:59:07.3747821-05:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\bow_attack.wav</Source>
+      <Name>Audio\bow_attack</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\bow_attack.xnb</Output>
+      <Time>2014-11-15T10:09:20.223704-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\multishot.wav</Source>
+      <Name>Audio\multishot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\multishot.xnb</Output>
+      <Time>2014-11-15T10:15:33.0626597-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\shock_spell.wav</Source>
+      <Name>Audio\shock_spell</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\shock_spell.xnb</Output>
+      <Time>2014-11-15T10:11:52.8961059-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\swoosh.wav</Source>
+      <Name>Audio\swoosh</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
+      <Time>2014-11-15T10:12:58.9159317-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID Null="true" />

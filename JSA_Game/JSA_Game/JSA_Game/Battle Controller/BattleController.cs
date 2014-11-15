@@ -36,6 +36,7 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
+            Console.WriteLine(action.Name);
             if (target == null)
             {
                 return false;
@@ -47,13 +48,18 @@ namespace JSA_Game.Battle_Controller
             }
             
             calculateAction(action, user, target);
-            
+
+            if (!action.Aoe)
+            {
+                Game1.PlaySound(action.Sound);
+            }
 
             return true;
         }
 
         public static Boolean performAction(Action action, Character user, Character[] targets)
         {
+            Console.WriteLine(action.Name);
             Boolean ret_val = false;
             foreach (Character target in targets)
             {
@@ -62,6 +68,8 @@ namespace JSA_Game.Battle_Controller
                     ret_val = true;
                 }
             }
+
+            Game1.PlaySound(action.Sound);
 
             return ret_val;
         }

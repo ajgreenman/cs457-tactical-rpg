@@ -38,6 +38,16 @@ namespace JSA_Game
         //List of player characters
         ArrayList playerChars;
 
+        // Audio
+        private static SoundEffect bow_attack;
+        //private SoundEffect fire_spell;
+        //private SoundEffect heavy_attack;
+        //private SoundEffect knife_attack;
+        private SoundEffect multishot;
+        private SoundEffect shock_spell;
+        private SoundEffect swoosh;
+        //private SoundEffect sword_attack;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -67,6 +77,15 @@ namespace JSA_Game
 
             Content.RootDirectory = "Content";
 
+            // Load Sounds
+            bow_attack = Content.Load<SoundEffect>("Audio\\bow_attack");
+            //fire_spell = Content.Load<SoundEffect>("Audio\\fire_spell");
+            //heavy_attack = Content.Load<SoundEffect>("Audio\\heavy_attack");
+            //knife_attack = Content.Load<SoundEffect>("Audio\\knife_attack");
+            multishot = Content.Load<SoundEffect>("Audio\\multishot");
+            shock_spell = Content.Load<SoundEffect>("Audio\\shock_spell");
+            swoosh = Content.Load<SoundEffect>("Audio\\swoosh");
+            //sword_attack = Content.Load<SoundEffect>("Audio\\sword_attack");
         }
 
         /// <summary>
@@ -160,6 +179,10 @@ namespace JSA_Game
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void PlaySound(String sound) {
+            bow_attack.Play();
         }
     }
 }

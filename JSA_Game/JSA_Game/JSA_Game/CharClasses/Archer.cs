@@ -30,26 +30,26 @@ namespace JSA_Game.CharClasses
             LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
-                new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 0, 5, 0, "bow_attack");
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 3, 8, 0);
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 3, 8, 0, "bow_attack");
             Actions[0] = actionLongshot;
 
             Battle_Controller.Action actionSnipe = new Battle_Controller.Action("Snipe", "A powerful attack. Ignores enemy stats.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 5, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 5, 5, 0, "bow_attack");
             Actions[1] = actionSnipe;
 
             Battle_Controller.Action actionMultishot = new Battle_Controller.Action("Multishot", "Shoot multiple targets.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, .6, 4, 5, 2);
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, .6, 4, 5, 2, "multishot");
             Actions[2] = actionMultishot;
 
             Battle_Controller.Action actionFireArrow = new Battle_Controller.Action("Fire Arrow", "Shoot a flaming arrow.",
                 null, // Add a burn status?
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.2, 4, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.2, 4, 5, 0, "bow_attack");
             Actions[3] = actionFireArrow;
 
             Weapon = new Items.Weapon("Wooden Bow", 2, 2, 2, 2);
