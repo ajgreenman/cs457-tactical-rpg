@@ -30,3 +30,6 @@ Content\Audio\bow_attack.xnb
 Content\Audio\multishot.xnb
 Content\Audio\shock_spell.xnb
 Content\Audio\swoosh.xnb
+Content\Audio\fire_spell.xnb
+Content\Audio\ice_spell.xnb
+Content\Audio\sword_attack.xnb

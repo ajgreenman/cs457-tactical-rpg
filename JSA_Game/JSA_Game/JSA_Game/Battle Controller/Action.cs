@@ -67,6 +67,7 @@ namespace JSA_Game.Battle_Controller
             this.powerMultipler = 1.0;
             this.cost = 0;
             this.range = 1;
+            this.sound = "sword_attack";
         }
 
         // GETTERS AND SETTERS
