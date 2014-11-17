@@ -31,7 +31,7 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionFireball = new Battle_Controller.Action("Fireball", "Blast the enemy with a raging fireball.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "fire_ball");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "fire_spell");
             Actions[0] = actionFireball;
 
             Battle_Controller.Action actionShock = new Battle_Controller.Action("Shock",
