@@ -55,7 +55,7 @@ namespace JSA_Game.Maps.State
                         //Clear old aoe range
                         level.scanForTargets(false, oldPos, level.SelectedAction.AoeRange, true);
 
-                        level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range);
+                        level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false);
                         //Show new aoe range
                         //System.Diagnostics.Debug.Print("Showing aoe range");
                          level.scanForTargets(true, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
@@ -81,20 +81,24 @@ namespace JSA_Game.Maps.State
 
                 }
 
-                if (level.TargetList.Count > 0)
+                if (level.TargetList.Count > 0 && level.calcDist(level.Cursor.CursorPos, level.SelectedPos) <= level.SelectedAction.Range)
                 {
                     System.Diagnostics.Debug.Print("Num targets: " + level.TargetList.Count);
                     //Here apply attack to all aoe targets
                     Character[] targetList = new Character[level.TargetList.Count];
 
-                    for (int i = 0; i < level.TargetList.Count; i++)
+                    int count = 0;
+                    foreach (Character c in level.TargetList)
                     {
-                        targetList[i] = (Character) level.TargetList[i];
+                        targetList[count] = c;
+                        count++;
                     }
+
                     for (int i = 0; i < level.TargetList.Count; i++)
                     {
                         Character c = targetList[i];
-                    
+
+                       // System.Diagnostics.Debug.Print("Target pos is " + c.Pos.X + ", " + c.Pos.Y);
                         level.attackTarget(level.SelectedPos, c.Pos, level.SelectedAction);
                     }
 
@@ -107,14 +111,16 @@ namespace JSA_Game.Maps.State
 
                         
                    // }
+                    
                     level.State = LevelState.CursorSelection;
-                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange);
+                    level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
+                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
                 }
             }
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range);
+                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
                 if (level.SelectedAction != null)
                 {
                     level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);

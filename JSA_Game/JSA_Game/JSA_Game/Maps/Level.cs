@@ -77,7 +77,8 @@ namespace JSA_Game.Maps
         private Battle_Controller.Action prevSelectedAction;
 
         //Attack target list
-        ArrayList targetList;
+        HashSet<Character> targetList;
+       
 
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace JSA_Game.Maps
             highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
 
             selectedAction = null;
-            targetList = new ArrayList();
+            targetList = new HashSet<Character>();
             hud = new HUD_Controller();
 
         }
@@ -680,12 +681,12 @@ namespace JSA_Game.Maps
         /// <param name="show">Boolean determining whether to select or deselect targets</param>
         /// <param name="pos">Position of the selected unit</param>
         /// <param name="range">Attack range of the unit's action</param>
-        public void scanForTargets(Boolean show, Vector2 pos, int range)
-        {
-            targetList.Clear();
-            board[(int)pos.X, (int)pos.Y].IsSelected = show;
-            scanForTargets(show, (int)pos.X, (int)pos.Y, range, HighlightState.ACTION);
-        }
+        //public void scanForTargets(Boolean show, Vector2 pos, int range)
+        //{
+        //    targetList.Clear();
+        //    board[(int)pos.X, (int)pos.Y].IsSelected = show;
+        //    scanForTargets(show, (int)pos.X, (int)pos.Y, range, HighlightState.ACTION);
+        //}
 
         /// <summary>
         /// Scan current location for attackable targets.
@@ -741,7 +742,8 @@ namespace JSA_Game.Maps
                 if ((show && board[x - 1, y].Occupant != null) || !show)
                 {
                     board[x - 1, y].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy)
+                    if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x-1,y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x - 1, y].Occupant);
                     }
@@ -761,7 +763,8 @@ namespace JSA_Game.Maps
                 if ((show && board[x + 1, y].Occupant != null) || !show)
                 {
                     board[x + 1, y].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy)
+                    if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x + 1, y].Occupant);
                     }
@@ -781,7 +784,8 @@ namespace JSA_Game.Maps
                 if ((show && board[x, y - 1].Occupant != null) || !show)
                 {
                     board[x, y - 1].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy)
+                    if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x, y - 1].Occupant);
                     }
@@ -801,7 +805,8 @@ namespace JSA_Game.Maps
                 if ((show && board[x, y + 1].Occupant != null) || !show)
                 {
                     board[x, y + 1].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy)
+                    if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x, y + 1].Occupant);
                     }
@@ -842,7 +847,7 @@ namespace JSA_Game.Maps
                 }
             }
             c.ActionDisabled = true;
-            scanForTargets(false, currPos, action.Range);
+           // scanForTargets(false, currPos, action.Range);
 
             //Check for win
             if (t.IsEnemy && eUnits.Count <= 0)
@@ -1165,7 +1170,7 @@ namespace JSA_Game.Maps
             get { return prevSelectedAction; }
             set { prevSelectedAction = value; }
         }
-        public ArrayList TargetList
+        public HashSet<Character> TargetList
         {
             get { return targetList; }
             set { targetList = value; }

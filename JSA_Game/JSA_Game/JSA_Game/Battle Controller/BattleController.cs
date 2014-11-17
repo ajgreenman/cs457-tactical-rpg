@@ -24,7 +24,7 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action is valid, false otherwise.</returns>
         public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
-            return action.Range >= calculateDistance(userPosition, targetPosition);
+            return action.Range + action.AoeRange >= calculateDistance(userPosition, targetPosition);
         }
 
         /// <summary>
