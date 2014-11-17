@@ -25,6 +25,7 @@ namespace JSA_Game.HUD
         Stat_Section statSection;
         Effect_Section effectSection;
         Button_Section buttonSection;
+        CombatText comText;
 
         //Hides the HUD
         private Boolean hidden;
@@ -51,6 +52,7 @@ namespace JSA_Game.HUD
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
             buttonSection = new Button_Section();
+            comText = new CombatText();
 
             //INIT Display Values
             hidden = true;
@@ -75,6 +77,7 @@ namespace JSA_Game.HUD
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
             buttonSection.CharacterSelect(c);
+            comText.characterSelect(c);
             selectedChar = c;
         }
 

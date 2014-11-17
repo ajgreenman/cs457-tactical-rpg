@@ -38,12 +38,15 @@ namespace JSA_Game.HUD
             eff_pos = new Vector2(EFF_POSx, EFF_POSy);
             buf_pos = new Vector2(BUF_POSx, BUF_POSy);
             dbuf_pos = new Vector2(DBUF_POSx, DBUF_POSy);
+
+            targetBuff = "None";
+            targetDBuff = "None";
         }
 
         public void characterSelect(Character c)
         {
-            //targetBuff = c.Buff;
-            //targetDBuff = c.DBuff;
+            if (c.Status[0] != null) { targetBuff = c.Status[0].Name; }
+            if (c.Status[1] != null) { targetDBuff = c.Status[1].Name; }
         }
 
         public void LoadContent(ContentManager Content)

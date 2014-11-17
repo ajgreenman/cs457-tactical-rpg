@@ -12,7 +12,6 @@ Content\target_square.xnb
 Content\itemButton.xnb
 Content\waitButton.xnb
 Content\attackButton.xnb
-Content\StatFont.xnb
 Content\cursorBLAnim.xnb
 Content\cursorTLAnim.xnb
 Content\cursorBRAnim.xnb
@@ -26,10 +25,11 @@ Content\playerWarrior.xnb
 Content\actionButton.xnb
 Content\abilityButton.xnb
 Content\exertButton.xnb
+Content\StatFont.xnb
+Content\Audio\fire_spell.xnb
+Content\Audio\ice_spell.xnb
+Content\Audio\sword_attack.xnb
 Content\Audio\bow_attack.xnb
 Content\Audio\multishot.xnb
 Content\Audio\shock_spell.xnb
 Content\Audio\swoosh.xnb
-Content\Audio\fire_spell.xnb
-Content\Audio\ice_spell.xnb
-Content\Audio\sword_attack.xnb

@@ -37,6 +37,10 @@ namespace JSA_Game.HUD
         SpriteFont manaFont;
         Vector2 manaf_pos;
 
+        //Mana and Health Bar Color
+        Color manaColor;
+        Color healthColor;
+
         //Target Values
         private int targetCurrExperience;
         private int targetMaxHealth;
@@ -58,12 +62,14 @@ namespace JSA_Game.HUD
             healthPos = new Vector2(30, 507);
             healthRec = new Rectangle((int)healthPos.X, (int)healthPos.Y, (int)healthSize.X, (int)healthSize.Y);
             healthf_pos = new Vector2(55, 510);
+            healthColor = Color.Red;
 
             //Mana Bar INIT
             manaSize = new Vector2(BAR_SIZE, 25);
             manaPos = new Vector2(30, 538);
             manaRec = new Rectangle((int)manaPos.X, (int)manaPos.Y, (int)manaSize.X, (int)manaSize.Y);
             manaf_pos = new Vector2(55, 542);
+            manaColor = Color.Blue;
         }
 
         public void characterSelect(Character c)
@@ -84,6 +90,98 @@ namespace JSA_Game.HUD
             targetCurrMana = c.CurrMp;
             manaSize.X = BAR_SIZE * c.mpPercent;
             manaRec.Width = (int)manaSize.X;
+
+            /*
+             * Below Contains the Logic for Updating the Bar Color if 
+             * affected by a Buff, Debuff, or Both.
+             */
+
+            //Updating if Health or Mana Buff
+            if (c.Status[0] != null)
+            {
+                if (c.Status[0].AffectedStats.Contains<StatType>(StatType.Hp))
+                {
+                    healthColor = Color.DarkRed;
+                }
+
+                if (c.Status[0].AffectedStats.Contains<StatType>(StatType.Mp))
+                {
+                    manaColor = Color.DarkBlue;
+                }
+            }
+
+            //Updating if Health or Mana Debuff
+            if (c.Status[1] != null)
+            {
+                if (c.Status[1].AffectedStats.Contains<StatType>(StatType.Hp))
+                {
+                    healthColor = Color.Purple;
+                }
+
+                if (c.Status[1].AffectedStats.Contains<StatType>(StatType.Mp))
+                {
+                    manaColor = Color.Brown;
+                }
+            }
+
+            //Comparing Buff and Debuff for Greatest Effect
+            if (c.Status[0] != null && c.Status[1] != null)
+            {
+                if (c.Status[0].AffectedStats.Contains<StatType>(StatType.Hp) && c.Status[1].AffectedStats.Contains<StatType>(StatType.Hp))
+                {
+                    int BuffPosition = 0;
+                    int DebuffPosition = 0;
+                    for (int i = 0; i < c.Status[0].AffectedStats.Length; i++) { if (c.Status[0].AffectedStats[i] == StatType.Hp) { BuffPosition = i; } }
+                    for (int i = 0; i < c.Status[1].AffectedStats.Length; i++) { if (c.Status[1].AffectedStats[i] == StatType.Hp) { DebuffPosition = i; } }
+
+                    if (c.Status[0].Amount.ElementAt<int>(BuffPosition) < c.Status[1].Amount.ElementAt<int>(DebuffPosition)) { healthColor = Color.Purple; }
+                    else { healthColor = Color.DarkRed; }
+                }
+
+                if (c.Status[0].AffectedStats.Contains<StatType>(StatType.Mp) && c.Status[1].AffectedStats.Contains<StatType>(StatType.Mp))
+                {
+                    int BuffPosition = 0;
+                    int DebuffPosition = 0;
+                    for (int i = 0; i < c.Status[0].AffectedStats.Length; i++) { if (c.Status[0].AffectedStats[i] == StatType.Mp) { BuffPosition = i; } }
+                    for (int i = 0; i < c.Status[1].AffectedStats.Length; i++) { if (c.Status[1].AffectedStats[i] == StatType.Mp) { DebuffPosition = i; } }
+
+                    if (c.Status[0].Amount.ElementAt<int>(BuffPosition) < c.Status[1].Amount.ElementAt<int>(DebuffPosition)) { manaColor = Color.Brown; }
+                    else { manaColor = Color.DarkBlue; }
+                }
+            }
+
+            /*
+             *  Below Contains the logic for resetting Stat Colors when not affected
+             *  by a Buff or Debuff
+             */
+
+            //If no Effect Present Reset
+            if (c.Status[0] == null && c.Status[1] == null)
+            {
+                healthColor = Color.White;
+                manaColor = Color.Blue;
+            }
+
+            //If Debuff Present (Attempt to Reset Correct Values)
+            if (c.Status[0] == null && c.Status[1] != null)
+            {
+                if (!c.Status[1].AffectedStats.Contains<StatType>(StatType.Hp)) { healthColor = Color.Red; }
+                if (!c.Status[1].AffectedStats.Contains<StatType>(StatType.Mp)) { manaColor = Color.Blue; }
+            }
+
+            //If Buff Present (Attempt to Reset Correct Values)
+            if (c.Status[0] != null && c.Status[1] == null)
+            {
+                if (!c.Status[0].AffectedStats.Contains<StatType>(StatType.Hp)) { healthColor = Color.Red; }
+                if (!c.Status[0].AffectedStats.Contains<StatType>(StatType.Mp)) { manaColor = Color.Blue; }
+            }
+
+            //If Buff and Debuff Present (Attempt to Reset Correct Values)
+            if (c.Status[0] != null && c.Status[1] != null)
+            {
+                if (!c.Status[0].AffectedStats.Contains<StatType>(StatType.Hp) && !c.Status[1].AffectedStats.Contains<StatType>(StatType.Hp)) { healthColor = Color.Red; }
+                if (!c.Status[0].AffectedStats.Contains<StatType>(StatType.Mp) && !c.Status[1].AffectedStats.Contains<StatType>(StatType.Mp)) { manaColor = Color.Blue; }
+            }
         }
 
         public void LoadContent(ContentManager Content)
