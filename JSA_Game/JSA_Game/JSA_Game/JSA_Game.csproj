@@ -133,6 +133,7 @@
     <Compile Include="HUD\Bars, Stats, and Buttons\Bar_Section.cs" />
     <Compile Include="HUD\Bars, Stats, and Buttons\Stat_Section.cs" />
     <Compile Include="HUD\Bars, Stats, and Buttons\Button_Section.cs" />
+    <Compile Include="HUD\Floating Combat Text\CombatText.cs" />
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="Items\Consumable.cs" />
     <Compile Include="Items\Item.cs" />

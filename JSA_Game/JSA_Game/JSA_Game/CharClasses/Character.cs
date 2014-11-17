@@ -67,7 +67,7 @@ namespace JSA_Game
             inventory = new Items.Consumable[4];
             Items.Consumable potion = new Items.Consumable("Weak Potion", 2, 1,
                 new Battle_Controller.Action("Weak Potion", "A simple potion of healing.", null, new StatType[] {StatType.Mp},
-                    ActionType.Spell, false, true, false, 1.0, 0, 5, 0));
+                    ActionType.Spell, false, true, false, 1.0, 0, 5, 0, "swoosh"));
             inventory[0] = potion;
 
             status = new Status[2];

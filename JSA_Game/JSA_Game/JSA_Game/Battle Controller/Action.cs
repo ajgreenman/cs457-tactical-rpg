@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JSA_Game.CharClasses;
 using JSA_Game.Battle_Controller.StatEffect;
+using Microsoft.Xna.Framework.Audio;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -16,6 +17,7 @@ namespace JSA_Game.Battle_Controller
         private Boolean ignoreEnemyStats, friendly, aoe;
         private int cost, range, aoeRange;
         private double powerMultipler;
+        private String sound;
 
         /// <summary>
         /// Describes any action that can be taken during a battle.
@@ -32,7 +34,7 @@ namespace JSA_Game.Battle_Controller
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
         /// <param name="range">Range of the action.</param>
         public Action(String name, String description, Status actionEffect, StatType[] statCost, ActionType type,
-            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range, int aoeRange)
+            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range, int aoeRange, String sound)
         {
             this.name = name;
             this.description = description;
@@ -46,6 +48,7 @@ namespace JSA_Game.Battle_Controller
             this.cost = cost;
             this.range = range;
             this.aoeRange = aoeRange;
+            this.sound = sound;
         }
 
         /// <summary>
@@ -65,6 +68,7 @@ namespace JSA_Game.Battle_Controller
             this.cost = 0;
             this.range = 1;
             this.aoeRange = 0;
+            this.sound = "sword_attack";
         }
 
         // GETTERS AND SETTERS
@@ -134,10 +138,19 @@ namespace JSA_Game.Battle_Controller
             get { return range; }
             set { range = value; }
         }
+
         public int AoeRange
         {
             get { return aoeRange; }
             set { aoeRange = value; }
         }
+
+
+        public String Sound
+        {
+            get { return sound; }
+            set { sound = value; }
+        }
+
     }
 }

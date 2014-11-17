@@ -86,7 +86,7 @@ namespace JSA_Game.HUD
             Button1Rec = new Rectangle((int)Button1Pos.X, (int)Button1Pos.Y,
                  (int)Button1Size.X, (int)Button1Size.Y);
             Button1Col = new Color(255, 255, 255, 255);
-            font1pos.X = Button1Pos.X + 30;
+            font1pos.X = Button1Pos.X + 5;
             font1pos.Y = Button1Pos.Y + 3;
 
             //INIT Button 2
@@ -95,7 +95,7 @@ namespace JSA_Game.HUD
             Button2Rec = new Rectangle((int)Button2Pos.X, (int)Button2Pos.Y,
                  (int)Button2Size.X, (int)Button2Size.Y);
             Button2Col = new Color(255, 255, 255, 255);
-            font2pos.X = Button2Pos.X + 30;
+            font2pos.X = Button2Pos.X + 5;
             font2pos.Y = Button2Pos.Y + 3;
 
             //INIT Button 3
@@ -104,7 +104,7 @@ namespace JSA_Game.HUD
             Button3Rec = new Rectangle((int)Button3Pos.X, (int)Button3Pos.Y,
                  (int)Button3Size.X, (int)Button3Size.Y);
             Button3Col = new Color(255, 255, 255, 255);
-            font3pos.X = Button3Pos.X + 30;
+            font3pos.X = Button3Pos.X + 5;
             font3pos.Y = Button3Pos.Y + 3;
 
             //INIT Button 4
@@ -113,20 +113,22 @@ namespace JSA_Game.HUD
             Button4Rec = new Rectangle((int)Button4Pos.X, (int)Button4Pos.Y,
                  (int)Button4Size.X, (int)Button4Size.Y);
             Button4Col = new Color(255, 255, 255, 255);
-            font4pos.X = Button4Pos.X + 30;
+            font4pos.X = Button4Pos.X + 5;
             font4pos.Y = Button4Pos.Y + 3;
         }
 
         public void CharacterSelect(Character c)
         {
-            if (c.Actions[0] != null) {targetAbility1 = c.Actions[0].Name;}
-            if (c.Actions[1] != null) {targetAbility2 = c.Actions[1].Name;}
-            if (c.Actions[2] != null) {targetAbility3 = c.Actions[2].Name;}
-            if (c.Actions[3] != null) {targetAbility4 = c.Actions[3].Name;}
-            if (c.Inventory[0] != null) {targetItem1 = c.Inventory[0].Name;}
-            if (c.Inventory[1] != null) {targetItem2 = c.Inventory[1].Name;}
-            if (c.Inventory[2] != null) {targetItem3 = c.Inventory[2].Name;}
-            if (c.Inventory[3] != null) {targetItem4 = c.Inventory[3].Name;}
+            //Getting Character Ability Names
+            if (c.Actions[0] != null) { targetAbility1 = c.Actions[0].Name; }
+            if (c.Actions[1] != null) { targetAbility2 = c.Actions[1].Name; }
+            if (c.Actions[2] != null) { targetAbility3 = c.Actions[2].Name; }
+            if (c.Actions[3] != null) { targetAbility4 = c.Actions[3].Name; }
+            //Getting Character Inventory Names
+            if (c.Inventory[0] != null) { targetItem1 = c.Inventory[0].Name; }
+            if (c.Inventory[1] != null) { targetItem2 = c.Inventory[1].Name; }
+            if (c.Inventory[2] != null) { targetItem3 = c.Inventory[2].Name; }
+            if (c.Inventory[3] != null) { targetItem4 = c.Inventory[3].Name; }
         }
 
         public void ButtonSelect(KeyboardState keyboard)
@@ -136,15 +138,15 @@ namespace JSA_Game.HUD
             {
                 //Wait
                 if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Wait, -1);}
-                
+
                 //Item
-                else if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.itemDisplay;}
+                if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.itemDisplay;}
 
                 //Action
-                else if (keyboard.IsKeyDown(Keys.D2)) {bState = ButtonState.actionDisplay;}
+                if (keyboard.IsKeyDown(Keys.D2)) {bState = ButtonState.actionDisplay;}
         
                 //Move
-                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Move, -1);}
+                if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Move, -1);}
             }
 
             //Action Display
@@ -153,53 +155,77 @@ namespace JSA_Game.HUD
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
 
-                //Exert
-                else if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Exert, -1);}
-               
+                 if(exert != null)
+                 {
+                    //Exert
+                    if(keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Exert, -1);}
+                 }
+ 
                 //Ability
-                else if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.abilityDisplay;}
+                if(keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.abilityDisplay;}
 
                 //Defend
-                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Defend, -1);}
+                if(keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Defend, -1);}
 
                 //Attack
-                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}
+                if(keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}
             }
 
             if(bState == ButtonState.abilityDisplay)
             {
                 //Go Back a State
-                if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.actionDisplay;}
-               
+                if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.actionDisplay; }
+
                 //Ability 4
-                else if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Ability, 3);}
-                
+                if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D4))
+                {
+                   Selected.setAction(PerformedType.Ability, 3); 
+                }
                 //Ability 3
-                else if (keyboard.IsKeyDown(Keys.D3)) {Selected.setAction(PerformedType.Ability, 2);}
-                
+                if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                {
+                    Selected.setAction(PerformedType.Ability, 2); 
+                }
                 //Ability 2
-                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Ability, 1);}
-                
+                if (targetAbility2 != "Empty" && keyboard.IsKeyDown(Keys.D2))
+                {
+                    Selected.setAction(PerformedType.Ability, 1); 
+                }
                 //Ability 1
-                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Ability, 0);}
+                if (targetAbility1 != "Empty" && keyboard.IsKeyDown(Keys.D1))
+                {
+                    Selected.setAction(PerformedType.Ability, 0); 
+                }
             }
 
             if (bState == ButtonState.itemDisplay)
             {
                 //Go Back a State
-                if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
-                
+                if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.startDisplay; }
+
                 //Item 4
-                if (keyboard.IsKeyDown(Keys.D4)) {Selected.setAction(PerformedType.Item, 3);}
-                
+                if (targetItem4 != "Empty" && keyboard.IsKeyDown(Keys.D4))
+                {
+                    Selected.setAction(PerformedType.Item, 3); 
+                }
+
                 //Item 3
-                else if (keyboard.IsKeyDown(Keys.D3)) {Selected.setAction(PerformedType.Item, 2);}
-                
+                if (targetItem3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                {
+                    Selected.setAction(PerformedType.Item, 2); 
+                }
+
                 //Item 2
-                else if (keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Item, 1);}
-                
+                if (targetItem2 != "Empty" && keyboard.IsKeyDown(Keys.D2))
+                {
+                    Selected.setAction(PerformedType.Item, 1); 
+                }
+
                 //Item 1
-                else if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Item, 0);}
+                if (targetItem1 != "Empty" && keyboard.IsKeyDown(Keys.D1))
+                {
+                    Selected.setAction(PerformedType.Item, 0); 
+                }
             }
         }
 
@@ -244,10 +270,10 @@ namespace JSA_Game.HUD
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
                 spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
                 spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.DrawString(defaultFont, targetAbility1, font1pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetAbility2, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetAbility3, font3pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetAbility4, font4pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility3, font1pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility4, font2pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility1, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetAbility2, font4pos, Color.Blue);
             }
 
             if (bState == ButtonState.itemDisplay)

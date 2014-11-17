@@ -35,6 +35,15 @@ namespace JSA_Game
         //List of player characters
         ArrayList playerChars;
 
+        // Audio
+        private static SoundEffect bow_attack;
+        private static SoundEffect fire_spell;
+        private static SoundEffect ice_spell;
+        private static SoundEffect multishot;
+        private static SoundEffect shock_spell;
+        private static SoundEffect swoosh;
+        private static SoundEffect sword_attack;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -63,6 +72,14 @@ namespace JSA_Game
 
             Content.RootDirectory = "Content";
 
+            // Load Sounds
+            bow_attack = Content.Load<SoundEffect>("Audio\\bow_attack");
+            fire_spell = Content.Load<SoundEffect>("Audio\\fire_spell");
+            ice_spell = Content.Load<SoundEffect>("Audio\\ice_spell");
+            multishot = Content.Load<SoundEffect>("Audio\\multishot");
+            shock_spell = Content.Load<SoundEffect>("Audio\\shock_spell");
+            swoosh = Content.Load<SoundEffect>("Audio\\swoosh");
+            sword_attack = Content.Load<SoundEffect>("Audio\\sword_attack");
         }
 
         /// <summary>
@@ -156,6 +173,33 @@ namespace JSA_Game
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void PlaySound(String sound) {
+            switch (sound)
+            {
+                case "bow_attack":
+                    bow_attack.Play();
+                    break;
+                case "fire_spell":
+                    fire_spell.Play();
+                    break;
+                case "ice_spell":
+                    ice_spell.Play();
+                    break;
+                case "multishot":
+                    multishot.Play();
+                    break;
+                case "shock_spell":
+                    shock_spell.Play();
+                    break;
+                case "swoosh":
+                    swoosh.Play();
+                    break;
+                case "sword_attack":
+                    sword_attack.Play();
+                    break;
+            }
         }
     }
 }

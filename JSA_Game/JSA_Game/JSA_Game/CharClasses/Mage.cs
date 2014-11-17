@@ -31,23 +31,23 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionFireball = new Battle_Controller.Action("Fireball", "Blast the enemy with a raging fireball.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "fire_spell");
             Actions[0] = actionFireball;
 
             Battle_Controller.Action actionShock = new Battle_Controller.Action("Shock",
                 "Call down a lightning storm, affecting all enemies in range.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, true, 1.0, 4, 3, 2);
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, true, 1.0, 4, 3, 2, "shock_spell");
             Actions[1] = actionShock;
 
             Battle_Controller.Action actionSlow = new Battle_Controller.Action("Slow", "Slows the enemy, lowering dodge and movement.",
                 null, // Slow status effect.
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "swoosh");
             Actions[2] = actionSlow;
 
             Battle_Controller.Action actionIceBolt = new Battle_Controller.Action("Ice Bolt", "Shoot a frosty bolt of ice at the enemy. May freeze the enemy",
                 null, // Chance for freeze effect?
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.4, 6, 5, 0);
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.4, 6, 5, 0, "ice_spell");
         }
     }
 }

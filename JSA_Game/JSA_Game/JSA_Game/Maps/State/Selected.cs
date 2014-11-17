@@ -91,7 +91,7 @@ namespace JSA_Game.Maps.State
                         lvl.State = LevelState.Action;
                         lvl.PrevselectedAction = new Battle_Controller.Action(lvl.SelectedAction.Name, lvl.SelectedAction.Description, lvl.SelectedAction.ActionEffect,
                             lvl.SelectedAction.StatCost, lvl.SelectedAction.Type, lvl.SelectedAction.IgnoreEnemyStats, lvl.SelectedAction.Friendly, lvl.SelectedAction.Aoe,
-                            lvl.SelectedAction.PowerMultiplier, lvl.SelectedAction.Cost, lvl.SelectedAction.Range, lvl.SelectedAction.AoeRange);
+                            lvl.SelectedAction.PowerMultiplier, lvl.SelectedAction.Cost, lvl.SelectedAction.Range, lvl.SelectedAction.AoeRange, lvl.SelectedAction.Sound);
                         
                     }
                     break;
