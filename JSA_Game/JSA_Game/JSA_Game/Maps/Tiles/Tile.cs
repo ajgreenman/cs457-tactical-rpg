@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using JSA_Game.Maps.State;
 
 namespace JSA_Game.Maps.Tiles
 {
     class Tile
     {
+        
+
         private const String DEFAULT_LAND = "plain";
         private String landType;
 
@@ -17,7 +20,8 @@ namespace JSA_Game.Maps.Tiles
         private Boolean isAttackThroughable;
         private Boolean isDestructible;
 
-        private Boolean isHighlighted;
+        //private Boolean isHighlighted;
+        private HighlightState hlState;
         private Boolean isSelected;
         private Character occupant;
 
@@ -28,6 +32,7 @@ namespace JSA_Game.Maps.Tiles
         
         public Tile()
         {
+            hlState = HighlightState.NONE;
             //initialize();
         }
 
@@ -44,7 +49,7 @@ namespace JSA_Game.Maps.Tiles
             isAttackThroughable = false;
             isDestructible = false;
 
-            isHighlighted = false;
+            //isHighlighted = false;
             isSelected = false; 
         }
 
@@ -58,11 +63,11 @@ namespace JSA_Game.Maps.Tiles
             get { return isOccupied; }
             set { isOccupied = value; }
         }
-        public Boolean IsHighlighted
-        {
-            get { return isHighlighted; }
-            set { isHighlighted = value; }
-        }
+        //public Boolean IsHighlighted
+        //{
+        //    get { return isHighlighted; }
+        //    set { isHighlighted = value; }
+        //}
         public Boolean IsSelected
         {
             get { return isSelected; }
@@ -103,6 +108,11 @@ namespace JSA_Game.Maps.Tiles
             get { return isDestructible; }
             set { isDestructible = value; }
         }
-        
+
+        public HighlightState HlState
+        {
+            get { return hlState; }
+            set { hlState = value; }
+        }
     }
 }

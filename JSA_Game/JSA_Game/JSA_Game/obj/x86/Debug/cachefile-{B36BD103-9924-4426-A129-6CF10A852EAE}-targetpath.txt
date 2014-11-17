@@ -26,3 +26,5 @@ Content\actionButton.xnb
 Content\abilityButton.xnb
 Content\exertButton.xnb
 Content\StatFont.xnb
+Content\red_highlight.xnb
+Content\orange_highlight.xnb

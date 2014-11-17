@@ -63,7 +63,7 @@ namespace JSA_Game.Maps.State
                     int cX = (int)level.Cursor.CursorPos.X + level.ShowStartX;
                     int cY = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
                     char dir = '0';
-                    if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && level.Board[cX - 1, cY].IsHighlighted && !level.Board[cX - 1, cY].IsOccupied)
+                    if (keyboard.IsKeyDown(Keys.Left) && cX > 0 && level.Board[cX - 1, cY].HlState == HighlightState.MOVE && !level.Board[cX - 1, cY].IsOccupied)
                     {
                         if (level.Cursor.CursorPos.X == 1 && cX != 1)
                         {
@@ -74,7 +74,7 @@ namespace JSA_Game.Maps.State
                             dir = 'l';
                         }
                     }
-                    else if (keyboard.IsKeyDown(Keys.Right) && cX < level.BoardWidth - 1 && level.Board[cX + 1, cY].IsHighlighted && (!level.Board[cX + 1, cY].IsOccupied))
+                    else if (keyboard.IsKeyDown(Keys.Right) && cX < level.BoardWidth - 1 && level.Board[cX + 1, cY].HlState == HighlightState.MOVE && (!level.Board[cX + 1, cY].IsOccupied))
                     {
                         if (level.ShowStartX + level.NumTilesShowing - 2 == cX && cY != level.BoardWidth - 3)
                         {
@@ -85,7 +85,7 @@ namespace JSA_Game.Maps.State
                             dir = 'r';
                         }
                     }
-                    else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && level.Board[cX, cY - 1].IsHighlighted && (!level.Board[cX, cY - 1].IsOccupied))
+                    else if (keyboard.IsKeyDown(Keys.Up) && cY > 0 && level.Board[cX, cY - 1].HlState == HighlightState.MOVE && (!level.Board[cX, cY - 1].IsOccupied))
                     {
                         if (level.Cursor.CursorPos.Y == 1 && cY != 1)
                         {
@@ -96,7 +96,7 @@ namespace JSA_Game.Maps.State
                             dir = 'u';
                         }
                     }
-                    else if (keyboard.IsKeyDown(Keys.Down) && cY < level.BoardHeight - 1 && level.Board[cX, cY + 1].IsHighlighted && (!level.Board[cX, cY + 1].IsOccupied))
+                    else if (keyboard.IsKeyDown(Keys.Down) && cY < level.BoardHeight - 1 && level.Board[cX, cY + 1].HlState == HighlightState.MOVE && (!level.Board[cX, cY + 1].IsOccupied))
                     {
                         if (level.ShowStartY + level.NumTilesShowing - 2 == cY && cY != level.BoardHeight - 3)
                         {

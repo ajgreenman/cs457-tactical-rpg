@@ -63,16 +63,41 @@ namespace JSA_Game.Maps.State
                     {
                         lvl.SelectedAction = c.Attack;
                         lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range);
+                        //if (lvl.SelectedAction.Aoe) //If the action is an aoe action
+                       // {
+                            //Show aoe range
+                            lvl.scanForTargets(true, lvl.SelectedPos, lvl.SelectedAction.AoeRange, true);
+                       // }
                         lvl.State = LevelState.Action;
                         
                     }
                     break;
                  case PerformedType.Ability:
                     if (!c.ActionDisabled)
-                    {
+                    {                      
                         lvl.SelectedAction = c.Actions[index];
+
+                        if (lvl.PrevselectedAction != null)
+                        {
+                            if (!lvl.PrevselectedAction.Name.Equals(lvl.SelectedAction))
+                            {
+                                lvl.scanForTargets(false, lvl.SelectedPos, lvl.PrevselectedAction.Range);
+                            }
+                        }
+
+
                         lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range);
+                        System.Diagnostics.Debug.Print("Action selected was " + lvl.SelectedAction.Name);
+                        if (lvl.SelectedAction.Aoe) //If the action is an aoe action
+                        {
+                            //Show aoe range
+                            lvl.scanForTargets(true, lvl.SelectedPos, lvl.SelectedAction.AoeRange, true);
+                        }
                         lvl.State = LevelState.Action;
+                        lvl.PrevselectedAction = new Battle_Controller.Action(lvl.SelectedAction.Name, lvl.SelectedAction.Description, lvl.SelectedAction.ActionEffect,
+                            lvl.SelectedAction.StatCost, lvl.SelectedAction.Type, lvl.SelectedAction.IgnoreEnemyStats, lvl.SelectedAction.Friendly, lvl.SelectedAction.Aoe,
+                            lvl.SelectedAction.PowerMultiplier, lvl.SelectedAction.Cost, lvl.SelectedAction.Range, lvl.SelectedAction.AoeRange);
+                        
                     }
                     break;
                  case PerformedType.Item:

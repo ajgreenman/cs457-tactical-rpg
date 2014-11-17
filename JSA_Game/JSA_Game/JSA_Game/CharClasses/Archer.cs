@@ -29,8 +29,11 @@ namespace JSA_Game.CharClasses
             Resist = STANDARD_STAT;
             LevelUpManager.LevelUpCharacter(this, startingLevel);
 
+            //Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
+            //    new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5, 0);
+
             Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
-                new StatType[] {StatType.Mp}, ActionType.Physical, false, false, false, 1.0, 0, 5, 0);
+                new StatType[] {StatType.Mp}, ActionType.Physical, false, false, true, 1.0, 0, 5, 1);
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
                 null,

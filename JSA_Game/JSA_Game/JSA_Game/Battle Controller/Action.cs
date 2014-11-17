@@ -64,6 +64,7 @@ namespace JSA_Game.Battle_Controller
             this.powerMultipler = 1.0;
             this.cost = 0;
             this.range = 1;
+            this.aoeRange = 0;
         }
 
         // GETTERS AND SETTERS
@@ -132,6 +133,11 @@ namespace JSA_Game.Battle_Controller
         {
             get { return range; }
             set { range = value; }
+        }
+        public int AoeRange
+        {
+            get { return aoeRange; }
+            set { aoeRange = value; }
         }
     }
 }

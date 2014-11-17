@@ -172,7 +172,7 @@ namespace JSA_Game.Maps
         /// will check if the cursor is within the bounds of the array.
         /// </summary>
         /// <param name="gameTime">GameTime sent from main class</param>
-        public void moveCursor(GameTime gameTime)
+        public bool moveCursor(GameTime gameTime)
         {
 
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
@@ -182,19 +182,24 @@ namespace JSA_Game.Maps
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
                     cursorPos.X--;
+                    return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != width - 1)
                 {
                     cursorPos.X++;
+                    return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Up) && cursorPos.Y != 0)
                 {
-                    cursorPos.Y--; 
+                    cursorPos.Y--;
+                    return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != height - 1)
                 {
                     cursorPos.Y++;
+                    return true;
                 }
+                return false;
                // cursorTimeElapsed = 0;
            // }
         }
