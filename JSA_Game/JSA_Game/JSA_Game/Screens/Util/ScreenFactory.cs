@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using GameStateManagement;
 
+/* Included for now, but is not used.  May be necessary for future screens.  */
 namespace JSA_Game.Screens
 {
     public class ScreenFactory : IScreenFactory

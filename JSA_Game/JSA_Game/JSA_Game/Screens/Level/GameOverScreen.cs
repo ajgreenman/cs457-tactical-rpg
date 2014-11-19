@@ -16,21 +16,20 @@ namespace JSA_Game.Screens
         public GameOverScreen()
             : base("Game Over!")
         {
-            // Create our menu entries.
+
             MenuEntry titleMenuEntry = new MenuEntry("Title Menu");
             MenuEntry exitGameMenuEntry = new MenuEntry("Exit Game");
 
-            // Hook up menu event handlers.
+
             titleMenuEntry.Selected += titleMenuEntrySelected;
             exitGameMenuEntry.Selected += ExitGameMenuEntrySelected;
 
-            // Add entries to the menu.
             MenuEntries.Add(titleMenuEntry);
             MenuEntries.Add(exitGameMenuEntry);
         }
 
         /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
+        /// Event handler for when the Title Menu menu entry is selected.
         /// </summary>
         void titleMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
@@ -51,24 +50,9 @@ namespace JSA_Game.Screens
         }
 
 
-        /// <summary>
-        /// When the user cancels the main menu, ask if they want to exit the sample.
-        /// </summary>
-        protected override void OnCancel(PlayerIndex playerIndex)
-        {
-            //const string message = "Are you sure you want to exit this sample?";
-
-           // MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message);
-
-           // confirmExitMessageBox.Accepted += ConfirmExitMessageBoxAccepted;
-
-           // ScreenManager.AddScreen(confirmExitMessageBox, playerIndex);
-        }
-
 
         /// <summary>
-        /// Event handler for when the user selects ok on the "are you sure
-        /// you want to exit" message box.
+        /// Event handler for accepting the message box
         /// </summary>
         void ConfirmExitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {

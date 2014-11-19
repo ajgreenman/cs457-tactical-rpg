@@ -33,8 +33,7 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Constructor lets the caller specify whether to include the standard
-        /// "A=ok, B=cancel" usage text prompt.
+        /// Constructor lets the caller specify whether to include the usage text prompt.
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
@@ -57,10 +56,7 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Loads graphics content for this screen. This uses the shared ContentManager
-        /// provided by the Game class, so the content will remain loaded forever.
-        /// Whenever a subsequent MessageBoxScreen tries to load this same content,
-        /// it will just get back another reference to the already loaded data.
+        /// Loads graphics content for this screen. 
         /// </summary>
         public override void Activate(bool instancePreserved)
         {
@@ -79,11 +75,6 @@ namespace JSA_Game.Screens
         {
             PlayerIndex playerIndex;
 
-            // We pass in our ControllingPlayer, which may either be null (to
-            // accept input from any player) or a specific index. If we pass a null
-            // controlling player, the InputState helper returns to us which player
-            // actually provided the input. We pass that through to our Accepted and
-            // Cancelled events, so they can tell which player triggered them.
             if (menuSelect.Evaluate(input, ControllingPlayer, out playerIndex))
             {
                 //if (!isNotification)

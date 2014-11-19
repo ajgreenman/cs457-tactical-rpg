@@ -25,11 +25,7 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Loads graphics content for this screen. The background texture is quite
-        /// big, so we use our own local ContentManager to load it. This allows us
-        /// to unload before going from the menus into the game itself, wheras if we
-        /// used the shared ContentManager provided by the Game class, the content
-        /// would remain loaded forever.
+        /// Loads graphics content for this screen.
         /// </summary>
         public override void Activate(bool instancePreserved)
         {
@@ -54,11 +50,7 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Updates the background screen. Unlike most screens, this should not
-        /// transition off even if it has been covered by another screen: it is
-        /// supposed to be covered, after all! This overload forces the
-        /// coveredByOtherScreen parameter to false in order to stop the base
-        /// Update method wanting to transition off.
+        /// Updates the background screen. 
         /// </summary>
         public override void Update(GameTime gameTime, bool otherScreenHasFocus,
                                                        bool coveredByOtherScreen)

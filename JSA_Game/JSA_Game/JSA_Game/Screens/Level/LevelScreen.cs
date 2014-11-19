@@ -14,27 +14,18 @@ using JSA_Game.Maps;
 
 namespace JSA_Game.Screens
 {
-    /// <summary>
-    /// This screen implements the actual game logic. It is just a
-    /// placeholder to get the idea across: you'll probably want to
-    /// put some more interesting gameplay in here!
-    /// </summary>
+
     class LevelScreen : GameScreen
     {
 
         //Screen Variables
         ContentManager content;
 
-
         Random random = new Random();
 
         float pauseAlpha;
 
-
         InputAction pauseAction;
-
-
-
 
         Level currLevel;
 
@@ -66,16 +57,6 @@ namespace JSA_Game.Screens
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-                //gameFont = content.Load<SpriteFont>("gamefont");
-
-                // A real game would probably have more content than this sample, so
-                // it would take longer to load. We simulate that by delaying for a
-                // while, giving you a chance to admire the beautiful loading screen.
-                //Thread.Sleep(1000);
-
-                // once the load has finished, we use ResetElapsedTime to tell the game's
-                // timing mechanism that we have just finished a very long frame, and that
-                // it should not try to catch up.
                 ScreenManager.Game.ResetElapsedTime();
                 currLevel.loadContent(content);
             }
@@ -117,23 +98,13 @@ namespace JSA_Game.Screens
             if (IsActive)
             {
 
-                // Apply a stabilizing force to stop the enemy moving off the screen.
-             //  Vector2 targetPosition = new Vector2(
-               //     ScreenManager.GraphicsDevice.Viewport.Width / 2 - gameFont.MeasureString("Insert Gameplay Here").X / 2, 
-              //      200);
-
-              //  enemyPosition = Vector2.Lerp(enemyPosition, targetPosition, 0.05f);
-
-                // TODO: this game isn't very fun! You could probably improve
-                // it by inserting something more interesting in this space :-)
                 if (currLevel.WinState == WinLossState.InProgess)
                 {
                     currLevel.update(gameTime);
                 }
                 else if (currLevel.WinState == WinLossState.Win)
                 {
-                   //What happens when you win? Back to town right?
-                    //this.ExitScreen();
+                   //After win, go back to town
                     foreach (GameScreen screen in ScreenManager.GetScreens())
                         screen.ExitScreen();
                     ScreenManager.AddScreen(new TownBackgroundScreen(), null);
@@ -152,9 +123,7 @@ namespace JSA_Game.Screens
                 }
                 else
                 {
-                   
                     //Lost
-                    //ExitScreen();
                     ScreenManager.AddScreen(new GameOverScreen(), null);
                 }
 
@@ -181,27 +150,6 @@ namespace JSA_Game.Screens
             {
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
-            else
-            {
-                // Otherwise move the player position.
-                Vector2 movement = Vector2.Zero;
-
-                if (keyboardState.IsKeyDown(Keys.Left))
-                    movement.X--;
-
-                if (keyboardState.IsKeyDown(Keys.Right))
-                    movement.X++;
-
-                if (keyboardState.IsKeyDown(Keys.Up))
-                    movement.Y--;
-
-                if (keyboardState.IsKeyDown(Keys.Down))
-                    movement.Y++;
-
-                if (movement.Length() > 1)
-                    movement.Normalize();
-
-            }
         }
 
 
@@ -210,11 +158,9 @@ namespace JSA_Game.Screens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // This game has a blue background. Why? Because!
             ScreenManager.GraphicsDevice.Clear(ClearOptions.Target,
                                                Color.CornflowerBlue, 0, 0);
 
-            // Our player and enemy are both actually just text strings.
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 
             spriteBatch.Begin();

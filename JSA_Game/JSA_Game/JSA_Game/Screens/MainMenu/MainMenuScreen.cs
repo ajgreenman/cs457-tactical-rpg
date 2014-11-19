@@ -43,15 +43,10 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Event handler for when the Play Game menu entry is selected.
+        /// Event handler for when the New Game menu entry is selected.
         /// </summary>
         void NewGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            //Go to loading screen first.  Loading screen handles transitions 
-            //  between screens.
-            //ScreenManager.AddScreen(new LevelScreen("Coast"), e.PlayerIndex);
-            //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-             //                  new GameplayScreen());
 
             //First Level
             ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName()), e.PlayerIndex);
@@ -62,7 +57,7 @@ namespace JSA_Game.Screens
 
 
         /// <summary>
-        /// Event handler for when the Options menu entry is selected.
+        /// Event handler for when the Load Game menu entry is selected.
         /// </summary>
         void loadGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
@@ -70,7 +65,7 @@ namespace JSA_Game.Screens
         }
 
         /// <summary>
-        /// Event handler for when the Options menu entry is selected.
+        /// Event handler for when the Exit Game menu entry is selected.
         /// </summary>
         void exitGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
@@ -96,7 +91,9 @@ namespace JSA_Game.Screens
             //ScreenManager.Game.Exit();
         }
 
-        //C# sure is an interesting language
+        /// <summary>
+        /// Event handler for when the Testing... menu entry is selected.
+        /// </summary>
         void TestMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             const string message = "It's a test message box!";

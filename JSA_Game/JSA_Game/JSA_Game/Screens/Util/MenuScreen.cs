@@ -66,19 +66,12 @@ namespace JSA_Game.Screens
         /// </summary>
         public override void HandleInput(GameTime gameTime, InputState input)
         {
-            // For input tests we pass in our ControllingPlayer, which may
-            // either be null (to accept input from any player) or a specific index.
-            // If we pass a null controlling player, the InputState helper returns to
-            // us which player actually provided the input. We pass that through to
-            // OnSelectEntry and OnCancel, so they can tell which player triggered them.
             PlayerIndex playerIndex;
 
             // Move to the previous menu entry?
             if (menuUp.Evaluate(input, ControllingPlayer, out playerIndex))
             {
                 selectedEntry--;
-
-                
 
                 if (selectedEntry < 0)
                     selectedEntry = menuEntries.Count - 1;
@@ -178,9 +171,6 @@ namespace JSA_Game.Screens
                     position.X = ScreenManager.GraphicsDevice.Viewport.Width / 2 - menuEntry.GetWidth(this) / 2;
                 else if (alignment.Equals("right"))
                     position.X = ScreenManager.GraphicsDevice.Viewport.Width - menuEntry.GetWidth(this) - 10;
-
-
-               
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;
