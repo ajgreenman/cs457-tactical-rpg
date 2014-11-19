@@ -37,8 +37,8 @@ namespace JSA_Game.Screens
         /// </summary>
         public MessageBoxScreen(string message, bool includeUsageText)
         {
-            const string usageText = "\nZ Key = ok" +
-                                     "\nX Key = cancel";
+            const string usageText = "\nZ Key = Ok" +
+                                     "\nX Key = Cancel";
 
             if (includeUsageText)
                 this.message = message + usageText;
