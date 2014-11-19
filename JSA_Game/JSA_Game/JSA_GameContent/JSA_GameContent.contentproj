@@ -228,6 +228,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="red_highlight.png">
+      <Name>red_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="orange_highlight.png">
+      <Name>orange_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="Audio\fire_spell.wav">
       <Name>fire_spell</Name>
       <Importer>WavImporter</Importer>

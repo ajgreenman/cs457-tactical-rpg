@@ -139,6 +139,7 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Maps\State\ActionState.cs" />
     <Compile Include="Maps\State\Enumerated\GameState.cs" />
+    <Compile Include="Maps\State\Enumerated\HighlightState.cs" />
     <Compile Include="Maps\State\Enumerated\PerformedType.cs" />
     <Compile Include="Maps\State\Enumerated\TurnState.cs" />
     <Compile Include="Maps\Cursor.cs" />

@@ -23,7 +23,8 @@ namespace JSA_Game.Maps
     class Level
     {
         const int TILE_IMAGE_COUNT = 3;
-        const int UTILITY_IMAGE_COUNT = 3;
+        const int UTILITY_IMAGE_COUNT = 2;
+        const int HIGHLIGHT_IMAGE_COUNT = 3;
         public const int TILE_SIZE = 50;
 
         int numTilesShowing;
@@ -55,6 +56,7 @@ namespace JSA_Game.Maps
         //Image Data Structures
         Texture2D[] tileImages;
         Texture2D[] utilityImages;
+        Texture2D[] highlightImages;
 
         //HUD
         private HUD_Controller hud;
@@ -72,6 +74,11 @@ namespace JSA_Game.Maps
 
         //Selected action
         private Battle_Controller.Action selectedAction;
+        private Battle_Controller.Action prevSelectedAction;
+
+        //Attack target list
+        HashSet<Character> targetList;
+       
 
 
         /// <summary>
@@ -257,8 +264,10 @@ namespace JSA_Game.Maps
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
             utilityImages = new Texture2D[UTILITY_IMAGE_COUNT];
+            highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
 
             selectedAction = null;
+            targetList = new HashSet<Character>();
             hud = new HUD_Controller();
 
         }
@@ -614,7 +623,8 @@ namespace JSA_Game.Maps
         /// <param name="move">The movement stat of the selected unit</param>
         public void toggleMoveRange(Boolean show, Vector2 pos, int move)
         {
-            board[(int)pos.X, (int)pos.Y].IsHighlighted = show;
+            //board[(int)pos.X, (int)pos.Y].IsHighlighted = show;
+            board[(int)pos.X, (int)pos.Y].HlState = show? HighlightState.MOVE : HighlightState.NONE;
             toggleMoveRange(show, (int)pos.X, (int)pos.Y, move);
         }
 
@@ -630,12 +640,12 @@ namespace JSA_Game.Maps
         {
 
             if (remMove <= 0) return;
-            board[x, y].IsHighlighted = show;
+            board[x, y].HlState = show ? HighlightState.MOVE : HighlightState.NONE;
             if (x > 0)
             {
                 if ((show && board[x - 1, y].IsWalkable && !board[x - 1, y].IsOccupied) || !show)
                 {
-                    board[x - 1, y].IsHighlighted = show;
+                    board[x - 1, y].HlState = show ? HighlightState.MOVE : HighlightState.NONE;
                     toggleMoveRange(show, x - 1, y, remMove - 1);
                 }
             }
@@ -643,7 +653,7 @@ namespace JSA_Game.Maps
             {
                 if ((show && board[x + 1, y].IsWalkable && !board[x + 1, y].IsOccupied) || !show)
                 {
-                    board[x + 1, y].IsHighlighted = show;
+                    board[x + 1, y].HlState = show ? HighlightState.MOVE : HighlightState.NONE;
                     toggleMoveRange(show, x + 1, y, remMove - 1);
                 }
             }
@@ -651,7 +661,7 @@ namespace JSA_Game.Maps
             {
                 if ((show && board[x, y - 1].IsWalkable && !board[x, y - 1].IsOccupied) || !show)
                 {
-                    board[x, y - 1].IsHighlighted = show;
+                    board[x, y - 1].HlState = show ? HighlightState.MOVE : HighlightState.NONE;
                     toggleMoveRange(show, x, y - 1, remMove - 1);
                 }
             }
@@ -659,7 +669,7 @@ namespace JSA_Game.Maps
             {
                 if ((show && board[x, y + 1].IsWalkable && !board[x, y + 1].IsOccupied) || !show)
                 {
-                    board[x, y + 1].IsHighlighted = show;
+                    board[x, y + 1].HlState = show ? HighlightState.MOVE : HighlightState.NONE;
                     toggleMoveRange(show, x, y + 1, remMove - 1);
                 }
             }
@@ -671,10 +681,45 @@ namespace JSA_Game.Maps
         /// <param name="show">Boolean determining whether to select or deselect targets</param>
         /// <param name="pos">Position of the selected unit</param>
         /// <param name="range">Attack range of the unit's action</param>
-        public void scanForTargets(Boolean show, Vector2 pos, int range)
+        //public void scanForTargets(Boolean show, Vector2 pos, int range)
+        //{
+        //    targetList.Clear();
+        //    board[(int)pos.X, (int)pos.Y].IsSelected = show;
+        //    scanForTargets(show, (int)pos.X, (int)pos.Y, range, HighlightState.ACTION);
+        //}
+
+        /// <summary>
+        /// Scan current location for attackable targets.
+        /// </summary>
+        /// <param name="show">Boolean determining whether to select or deselect targets</param>
+        /// <param name="pos">Position of the selected unit</param>
+        /// <param name="range">Attack range of the unit's action</param>
+        /// <param name="showAoe">Shows the aoe range</param>
+        public void scanForTargets(Boolean show, Vector2 pos, int range, bool isAoe)
         {
-            board[(int)pos.X, (int)pos.Y].IsSelected = show;
-            scanForTargets(show, (int)pos.X, (int)pos.Y, range);
+            int x = (int)pos.X;
+            int y = (int)pos.Y;
+            HighlightState hlState = HighlightState.ACTION;
+            targetList.Clear();
+            //If aoe, show red. else show orange
+            if (isAoe)
+            {
+                hlState = HighlightState.AOE;
+                if (board[x,y].Occupant != null)
+                {
+                    if (board[x, y].Occupant.IsEnemy)
+                    {
+                        targetList.Add(board[x, y].Occupant);
+                    }
+                }
+            }
+           
+            board[x, y].IsSelected = show;
+            if (board[x, y].IsWalkable)
+            {
+                board[x, y].HlState = show ? hlState : HighlightState.NONE;
+            }
+            scanForTargets(show, x,y, range, hlState);
         }
 
         /// <summary>
@@ -683,52 +728,93 @@ namespace JSA_Game.Maps
         /// <param name="show">Boolean determining whether to show or hide the range</param>
         /// <param name="x">X position of the selected unit</param>
         /// <param name="y">Y position of the selected unit</param>
-        /// <param name="remMove">Remaining attack range of the unit's action</param>
-        private void scanForTargets(Boolean show, int x, int y, int remRange)
+        /// <param name="remRange">Remaining attack range of the unit's action</param>
+        /// <param name="hlState">Highlight state to change tile into/hide</param>
+        private void scanForTargets(Boolean show, int x, int y, int remRange, HighlightState hlState)
         {
             if (remRange <= 0) return;
             if (x > 0)
             {
+                if (board[x - 1, y].IsWalkable)
+                {
+                    board[x - 1, y].HlState = show ? hlState : HighlightState.NONE;
+                }
                 if ((show && board[x - 1, y].Occupant != null) || !show)
                 {
                     board[x - 1, y].IsSelected = show;
+                    if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x-1,y)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x - 1, y].Occupant);
+                    }
+                    
                 }
                 if (board[x - 1, y].IsAttackThroughable)
                 {
-                    scanForTargets(show, x - 1, y, remRange - 1);
+                    scanForTargets(show, x - 1, y, remRange - 1, hlState);
                 }
             }
             if (x < boardWidth - 1)
             {
+                if (board[x + 1, y].IsWalkable)
+                {
+                     board[x + 1, y].HlState = show ? hlState : HighlightState.NONE;
+                }
                 if ((show && board[x + 1, y].Occupant != null) || !show)
                 {
                     board[x + 1, y].IsSelected = show;
+                    if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x + 1, y].Occupant);
+                    }
+                   
                 }
                 if (board[x + 1, y].IsAttackThroughable)
                 {
-                    scanForTargets(show, x + 1, y, remRange - 1);
+                    scanForTargets(show, x + 1, y, remRange - 1, hlState);
                 }
             }
             if (y > 0)
             {
+                if (board[x, y - 1].IsWalkable)
+                { 
+                    board[x, y - 1].HlState = show ? hlState : HighlightState.NONE;
+                }
                 if ((show && board[x, y - 1].Occupant != null) || !show)
                 {
                     board[x, y - 1].IsSelected = show;
+                    if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x, y - 1].Occupant);
+                    }
+                  
                 }
                 if (board[x, y - 1].IsAttackThroughable)
                 {
-                    scanForTargets(show, x, y - 1, remRange - 1);
+                    scanForTargets(show, x, y - 1, remRange - 1, hlState);
                 }
             }
             if (y < boardHeight - 1)
             {
+                if (board[x, y + 1].IsWalkable)
+                {
+                    board[x, y + 1].HlState = show ? hlState : HighlightState.NONE;
+                }
                 if ((show && board[x, y + 1].Occupant != null) || !show)
                 {
                     board[x, y + 1].IsSelected = show;
+                    if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy && 
+                        calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x, y + 1].Occupant);
+                    }
+                    
                 }
                 if (board[x, y + 1].IsAttackThroughable)
                 {
-                    scanForTargets(show, x, y + 1, remRange - 1);
+                    scanForTargets(show, x, y + 1, remRange - 1, hlState);
                 }
             }
         }
@@ -761,7 +847,7 @@ namespace JSA_Game.Maps
                 }
             }
             c.ActionDisabled = true;
-            scanForTargets(false, currPos, action.Range);
+           // scanForTargets(false, currPos, action.Range);
 
             //Check for win
             if (t.IsEnemy && eUnits.Count <= 0)
@@ -789,9 +875,11 @@ namespace JSA_Game.Maps
             tileImages[1] = content.Load<Texture2D>("water");
             tileImages[2] = content.Load<Texture2D>("stone_wall");
             utilityImages[0] = content.Load<Texture2D>("no_highlight");
-            utilityImages[1] = content.Load<Texture2D>("blue_highlight");
-            utilityImages[2] = content.Load<Texture2D>("target_square");
+            utilityImages[1] = content.Load<Texture2D>("target_square");
 
+            highlightImages[0] = content.Load<Texture2D>("blue_highlight");
+            highlightImages[1] = content.Load<Texture2D>("orange_highlight");
+            highlightImages[2] = content.Load<Texture2D>("red_highlight");
             foreach (Character c in pUnits)
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
@@ -925,11 +1013,24 @@ namespace JSA_Game.Maps
                     spriteBatch.Draw(land, new Rectangle(MAP_START_W + TILE_SIZE * (i-showStartX), MAP_START_H + TILE_SIZE * (j-showStartY), TILE_SIZE, TILE_SIZE), Color.White);
 
 
-                    //Draws a semi-transparent tile to show available spaces for movement/attacking
-                    if (board[i, j].IsHighlighted)
+                    //Draws a semi-transparent tile to show available spaces for movement/attacking/aoe
+                    if (board[i, j].HlState == HighlightState.MOVE)
                     {
-                        spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                        spriteBatch.Draw(highlightImages[0], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
                     }
+                    else if(board[i, j].HlState == HighlightState.ACTION)
+                    {
+                        spriteBatch.Draw(highlightImages[1], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+                    else if (board[i, j].HlState == HighlightState.AOE)
+                    {
+                        spriteBatch.Draw(highlightImages[2], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    }
+
+                    //if (board[i, j].IsHighlighted)
+                    //{
+                    //    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    //}
 
                     if (board[i, j].Occupant != null)
                     {
@@ -940,7 +1041,7 @@ namespace JSA_Game.Maps
                         //Draw box around character if selected
                         if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
                         {
-                            spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                            spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
                         }
                     }
 
@@ -950,7 +1051,7 @@ namespace JSA_Game.Maps
             //Draws a box around a selected tile
             if (board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected)
             {
-                spriteBatch.Draw(utilityImages[2], new Rectangle(MAP_START_W + TILE_SIZE * ((int)selectedPos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)selectedPos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)selectedPos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)selectedPos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
             }
 
             //Draw cursor on top of board.
@@ -1063,6 +1164,16 @@ namespace JSA_Game.Maps
         {
             get { return selectedAction; }
             set { selectedAction = value; }
+        }
+        public Battle_Controller.Action PrevselectedAction
+        {
+            get { return prevSelectedAction; }
+            set { prevSelectedAction = value; }
+        }
+        public HashSet<Character> TargetList
+        {
+            get { return targetList; }
+            set { targetList = value; }
         }
     }
 }

@@ -67,6 +67,7 @@ namespace JSA_Game.Battle_Controller
             this.powerMultipler = 1.0;
             this.cost = 0;
             this.range = 1;
+            this.aoeRange = 0;
             this.sound = "sword_attack";
         }
 
@@ -144,10 +145,12 @@ namespace JSA_Game.Battle_Controller
             set { aoeRange = value; }
         }
 
+
         public String Sound
         {
             get { return sound; }
             set { sound = value; }
         }
+
     }
 }

@@ -316,6 +316,24 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\sword_attack.xnb</Output>
       <Time>2014-11-17T11:57:35.7149933-05:00</Time>
     </Item>
+    <Item>
+      <Source>red_highlight.png</Source>
+      <Name>red_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\red_highlight.xnb</Output>
+      <Time>2014-11-19T16:07:59.3918453-05:00</Time>
+    </Item>
+    <Item>
+      <Source>orange_highlight.png</Source>
+      <Name>orange_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\orange_highlight.xnb</Output>
+      <Time>2014-11-19T16:07:59.3918453-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID Null="true" />
