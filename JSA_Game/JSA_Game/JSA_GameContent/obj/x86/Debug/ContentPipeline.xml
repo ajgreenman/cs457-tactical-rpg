@@ -341,7 +341,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2014-11-17T22:57:06.1564579-05:00</Time>
+      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
     </Item>
     <Item>
       <Source>blank.png</Source>
@@ -350,7 +350,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-11-17T22:57:41.7385869-05:00</Time>
+      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
     </Item>
     <Item>
       <Source>smallMenufont.spritefont</Source>
@@ -359,7 +359,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
-      <Time>2014-11-18T18:31:16.8971427-05:00</Time>
+      <Time>2014-11-19T16:12:49.2071964-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

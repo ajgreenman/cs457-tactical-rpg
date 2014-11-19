@@ -15,9 +15,9 @@ namespace JSA_Game.Battle_Controller.StatEffect
         private StatType[] affectedStats;
         private int[] amount;
         private string image;
-        private Color colorOverlay;
+        private bool friendly;
 
-        public StatusEffect(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, Color overlay)
+        public StatusEffect(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, bool friendly)
         {
             this.name = name;
             description = descrip;
@@ -25,7 +25,7 @@ namespace JSA_Game.Battle_Controller.StatEffect
             affectedStats = affected;
             this.amount = amount;
             image = img;
-            colorOverlay = overlay;
+            this.friendly = friendly;
         }
 
 
@@ -62,11 +62,10 @@ namespace JSA_Game.Battle_Controller.StatEffect
             set { image = value; }
 
         }
-        public Color ColorOverlay
+        public bool Friendly
         {
-            get { return colorOverlay; }
-            set { colorOverlay = value; }
-
+            get { return friendly; }
+            set { friendly = value; }
         }
     }
 }

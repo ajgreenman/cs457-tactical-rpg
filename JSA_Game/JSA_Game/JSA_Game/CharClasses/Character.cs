@@ -90,6 +90,32 @@ namespace JSA_Game
             return charLevel; 
         }
 
+        private int calculateStatusEffect(StatType type)
+        {
+            int amount = 0;
+            foreach (Status currentStatus in status)
+            {
+                if (currentStatus != null)
+                {
+                    for (int i = 0; i < currentStatus.AffectedStats.Length; i++)
+                    {
+                        if (type == currentStatus.AffectedStats[i])
+                        {
+                            if (currentStatus.Friendly)
+                            {
+                                amount += currentStatus.Amount[i];
+                            }
+                            else
+                            {
+                                amount -= currentStatus.Amount[i];
+                            }
+                        }
+                    }
+                }
+            }
+            return amount;
+        }
+
         //Character stats
         private int maxHP;
 
@@ -111,7 +137,7 @@ namespace JSA_Game
 
         public int CurrHp
         {
-            get { return currHp; }
+            get { if(currHp < 0) return 0; return currHp; }
             set { currHp = value; }
         }
 
@@ -119,7 +145,7 @@ namespace JSA_Game
 
         public int CurrMp
         {
-            get { return currMp; }
+            get { if (currMp < 0) return 0; return currMp; }
             set { currMp = value; }
         }
 
@@ -127,7 +153,8 @@ namespace JSA_Game
 
         public int Strength
         {
-            get { return strength + Weapon.Strength; }
+            get { return (strength + Weapon.Strength + calculateStatusEffect(StatType.Strength)) < 0 ?
+                0 : strength + Weapon.Strength + calculateStatusEffect(StatType.Strength); }
             set { strength = value; }
         }
 
@@ -135,7 +162,8 @@ namespace JSA_Game
 
         public int Armor
         {
-            get { return armor + Protection.Armor; }
+            get { return (armor + Protection.Armor + calculateStatusEffect(StatType.Armor)) < 0 ?
+                0 : armor + Protection.Armor + calculateStatusEffect(StatType.Armor); }
             set { armor = value; }
         }
 
@@ -143,7 +171,9 @@ namespace JSA_Game
 
         public int Accuracy
         {
-            get { return accuracy + Weapon.Accuracy; }
+            get { return (accuracy + Weapon.Accuracy + calculateStatusEffect(StatType.Accuracy)) < 0 ?
+                0 : accuracy + Weapon.Accuracy + calculateStatusEffect(StatType.Accuracy);
+            }
             set { accuracy = value; }
         }
 
@@ -151,7 +181,9 @@ namespace JSA_Game
 
         public int Dodge
         {
-            get { return dodge + Protection.Dodge; }
+            get { return (dodge + Protection.Dodge + calculateStatusEffect(StatType.Dodge)) < 0 ?
+                0 : dodge + Protection.Dodge + calculateStatusEffect(StatType.Dodge);
+            }
             set { dodge = value; }
         }
 
@@ -159,7 +191,8 @@ namespace JSA_Game
 
         public int Magic
         {
-            get { return magic + Weapon.Magic; }
+            get { return (magic + Weapon.Magic + calculateStatusEffect(StatType.Magic)) < 0 ?
+                0 : magic + Weapon.Magic + calculateStatusEffect(StatType.Magic); }
             set { magic = value; }
         }
 
@@ -167,7 +200,8 @@ namespace JSA_Game
 
         public int Resist
         {
-            get { return resist + Protection.Resist; }
+            get { return (resist + Protection.Resist + calculateStatusEffect(StatType.Resist)) < 0 ?
+                0 : resist + Protection.Resist + calculateStatusEffect(StatType.Resist); }
             set { resist = value; }
         }
 
