@@ -24,7 +24,51 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action is valid, false otherwise.</returns>
         public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
-            return action.Range >= calculateDistance(userPosition, targetPosition);
+            return hasEnough(action, user) && (action.Range >= calculateDistance(userPosition, targetPosition));
+        }
+
+        private static Boolean hasEnough(Action action, Character user)
+        {
+            foreach (StatType type in action.StatCost)
+            {
+                switch (type)
+                {
+                    case StatType.Accuracy:
+                        if (user.Accuracy < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Armor:
+                        if (user.Armor < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Dodge:
+                        if (user.Dodge < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Hp:
+                        if (user.CurrHp < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Magic:
+                        if (user.Magic < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Mp:
+                        if (user.CurrMp < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Resist:
+                        if (user.Resist < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Strength:
+                        if (user.Strength < action.Cost)
+                            return false;
+                        break;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -36,7 +80,6 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
-            Console.WriteLine(action.Name);
             if (target == null)
             {
                 return false;
@@ -59,7 +102,6 @@ namespace JSA_Game.Battle_Controller
 
         public static Boolean performAction(Action action, Character user, Character[] targets)
         {
-            Console.WriteLine(action.Name);
             Boolean ret_val = false;
             foreach (Character target in targets)
             {
@@ -212,6 +254,20 @@ namespace JSA_Game.Battle_Controller
             if (target.CurrHp <= 0)
             {
                 LevelUpManager.KillingBlow(user, target);
+            }
+            else
+            {
+                if (action.ActionEffect != null)
+                {
+                    if (action.ActionEffect.Friendly)
+                    {
+                        target.Status[0] = action.ActionEffect;
+                    }
+                    else
+                    {
+                        target.Status[1] = action.ActionEffect;
+                    }
+                }
             }
         }
 

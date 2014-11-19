@@ -65,9 +65,9 @@ namespace JSA_Game
 
 
             levels = new ArrayList();
+            levels.Add(new Level("Arena"));
             levels.Add(new Level("JSAtestlevel"));
             levels.Add(new Level("Coast"));
-            levels.Add(new Level("Arena"));
             
             
             //Set first level
@@ -180,6 +180,7 @@ namespace JSA_Game
         }
 
         public static void PlaySound(String sound) {
+            Console.WriteLine(sound);
             switch (sound)
             {
                 case "bow_attack":
