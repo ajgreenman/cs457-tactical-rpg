@@ -177,12 +177,12 @@ namespace JSA_Game.HUD
                 if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.actionDisplay; }
 
                 //Ability 4
-                if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D4))
+                if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
                 {
                    Selected.setAction(PerformedType.Ability, 3); 
                 }
                 //Ability 3
-                if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D4))
                 {
                     Selected.setAction(PerformedType.Ability, 2); 
                 }
