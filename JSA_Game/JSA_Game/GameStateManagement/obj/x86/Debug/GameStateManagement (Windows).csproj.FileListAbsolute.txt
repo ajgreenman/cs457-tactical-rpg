@@ -1,0 +1,11 @@
+C:\Users\Scott Bell\Desktop\GSMSample_4_0_Mango\GameStateManagementSample\GameStateManagement\bin\x86\Debug\GameStateManagement.dll
+C:\Users\Scott Bell\Desktop\GSMSample_4_0_Mango\GameStateManagementSample\GameStateManagement\bin\x86\Debug\GameStateManagement.pdb
+C:\Users\Scott Bell\Desktop\GSMSample_4_0_Mango\GameStateManagementSample\GameStateManagement\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Scott Bell\Desktop\GSMSample_4_0_Mango\GameStateManagementSample\GameStateManagement\obj\x86\Debug\GameStateManagement.dll
+C:\Users\Scott Bell\Desktop\GSMSample_4_0_Mango\GameStateManagementSample\GameStateManagement\obj\x86\Debug\GameStateManagement.pdb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\bin\x86\Debug\GameStateManagement.dll
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\bin\x86\Debug\GameStateManagement.pdb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\obj\x86\Debug\GameStateManagement (Windows).csprojResolveAssemblyReference.cache
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\obj\x86\Debug\GameStateManagement.dll
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\GameStateManagement\obj\x86\Debug\GameStateManagement.pdb

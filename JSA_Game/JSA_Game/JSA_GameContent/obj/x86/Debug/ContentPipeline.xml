@@ -334,6 +334,33 @@
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
       <Time>2014-11-17T18:43:38.7768626-05:00</Time>
     </Item>
+    <Item>
+      <Source>menufont.spritefont</Source>
+      <Name>menufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2014-11-17T22:57:06.1564579-05:00</Time>
+    </Item>
+    <Item>
+      <Source>blank.png</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-11-17T22:57:41.7385869-05:00</Time>
+    </Item>
+    <Item>
+      <Source>smallMenufont.spritefont</Source>
+      <Name>smallMenufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
+      <Time>2014-11-18T18:31:16.8971427-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

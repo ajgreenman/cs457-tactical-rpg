@@ -35,3 +35,6 @@ Content\Audio\bow_attack.xnb
 Content\Audio\multishot.xnb
 Content\Audio\shock_spell.xnb
 Content\Audio\swoosh.xnb
+Content\menufont.xnb
+Content\blank.xnb
+Content\smallMenufont.xnb

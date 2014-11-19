@@ -60,6 +60,10 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GameStateManagement, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\GameStateManagement\bin\x86\Debug\GameStateManagement.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -158,6 +162,18 @@
     <Compile Include="Maps\Tiles\Tile.cs" />
     <Compile Include="Items\Protection.cs" />
     <Compile Include="Items\Weapon.cs" />
+    <Compile Include="Screens\Level\GameOverScreen.cs" />
+    <Compile Include="Screens\Level\LevelScreen.cs" />
+    <Compile Include="Screens\MainMenu\MainMenuBackgroundScreen.cs" />
+    <Compile Include="Screens\MainMenu\MainMenuScreen.cs" />
+    <Compile Include="Screens\PauseMenuScreen.cs" />
+    <Compile Include="Screens\Town\TownBackgroundScreen.cs" />
+    <Compile Include="Screens\Util\MenuEntry.cs" />
+    <Compile Include="Screens\Util\MenuScreen.cs" />
+    <Compile Include="Screens\Util\MessageBoxScreen.cs" />
+    <Compile Include="Screens\Util\PlayerIndexEventArgs.cs" />
+    <Compile Include="Screens\Util\ScreenFactory.cs" />
+    <Compile Include="Screens\Town\TownScreen.cs" />
     <Compile Include="Story\Player.cs" />
     <Compile Include="Story\Screen.cs" />
     <Compile Include="Story\ScreenManager.cs" />
