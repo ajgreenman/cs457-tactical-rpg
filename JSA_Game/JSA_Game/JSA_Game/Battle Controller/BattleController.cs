@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Battle_Controller.StatEffect;
 using JSA_Game.CharClasses;
+using JSA_Game.Maps;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -155,7 +156,7 @@ namespace JSA_Game.Battle_Controller
         {
             calculateUserCost(action, user);
             calculateTargetEffect(action, user, target);
-        }
+        }   
 
         /// <summary>
         /// Calculates the cost of an action on the user.
@@ -207,7 +208,6 @@ namespace JSA_Game.Battle_Controller
         /// <param name="action">Action to be performed.</param>
         /// <param name="user">User performing the action.</param>
         /// <param name="target">Target character.</param>
-        
         private static void calculateTargetEffect(Action action, Character user, Character target)
         {
             double amount = 0;
@@ -266,6 +266,38 @@ namespace JSA_Game.Battle_Controller
                     else
                     {
                         target.Status[1] = action.ActionEffect;
+                    }
+                }
+            }
+        }
+
+        public static void newTurn(Level level)
+        {
+            level.Turn++;
+            foreach (Character c in level.PUnits)
+            {
+                for(int i = 0; i < c.Status.Length; i++)
+                {
+                    if (c.Status[i] != null)
+                    {
+                        if (level.Turn >= c.Status[i].Expiration)
+                        {
+                            c.Status[i] = null;
+                        }
+                    }
+                }
+            }
+
+            foreach (Character c in level.EUnits)
+            {
+                for (int i = 0; i < c.Status.Length; i++)
+                {
+                    if (c.Status[i] != null)
+                    {
+                        if (level.Turn >= c.Status[i].Expiration)
+                        {
+                            c.Status[i] = null;
+                        }
                     }
                 }
             }

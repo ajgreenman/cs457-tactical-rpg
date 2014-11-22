@@ -28,7 +28,7 @@ namespace JSA_Game.Maps
         public const int TILE_SIZE = 50;
 
         int numTilesShowing;
-        const int DEFAULT_NUM_TILES_SHOWING = 10;
+        const int DEFAULT_NUM_TILES_SHOWING = 10; 
 
         //Draw related variables
         int showStartX, showStartY;
@@ -41,6 +41,8 @@ namespace JSA_Game.Maps
         int boardWidth, boardHeight;
         int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
         private Boolean buttonPressed;
+
+        int turn;
 
         private Tile[,] board;
 
@@ -247,6 +249,7 @@ namespace JSA_Game.Maps
             state = LevelState.CursorSelection;
             playerTurn = TurnState.Player;
             winState = WinLossState.InProgess;
+            turn = 0;
 
             showStartX = 0;
             showStartY = 0;
@@ -974,6 +977,7 @@ namespace JSA_Game.Maps
                     c.ActionDisabled = false;
                 }
                 System.Diagnostics.Debug.Print("Player's turn");
+                Battle_Controller.BattleController.newTurn(this);
 
                 //Check for loss
                 if (pUnits.Count <= 0)
@@ -1174,6 +1178,11 @@ namespace JSA_Game.Maps
         {
             get { return targetList; }
             set { targetList = value; }
+        }
+        public int Turn
+        {
+            get { return turn; }
+            set { turn = value; }
         }
     }
 }

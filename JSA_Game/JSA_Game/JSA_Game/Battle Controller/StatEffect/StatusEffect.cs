@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Battle_Controller;
+using JSA_Game.Maps;
 
 namespace JSA_Game.Battle_Controller.StatEffect
 {
@@ -12,16 +13,18 @@ namespace JSA_Game.Battle_Controller.StatEffect
         private string name;
         private string description;
         private int duration;
+        private int expiration;
         private StatType[] affectedStats;
         private int[] amount;
         private string image;
         private bool friendly;
 
-        public StatusEffect(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, bool friendly)
+        public StatusEffect(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly)
         {
             this.name = name;
             description = descrip;
             duration = dur;
+            this.expiration = dur + level.Turn;
             affectedStats = affected;
             this.amount = amount;
             image = img;
@@ -44,6 +47,11 @@ namespace JSA_Game.Battle_Controller.StatEffect
         {
             get { return duration; }
             set { duration = value; }
+        }
+        public int Expiration
+        {
+            get { return expiration; }
+            set { expiration = value; }
         }
         public StatType[] AffectedStats
         {

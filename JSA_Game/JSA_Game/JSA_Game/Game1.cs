@@ -9,9 +9,11 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameStateManagement;
 
 using JSA_Game.CharClasses;
 using JSA_Game.Maps;
+using JSA_Game.Screens;
 
 namespace JSA_Game
 {
@@ -21,16 +23,24 @@ namespace JSA_Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         //Constants
+        private const int LEVEL_COUNT = 3;
 
         //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        //Screen Manager
+        ScreenManager screenManager;
+        ScreenFactory screenFactory;
+        static SpriteFont smallMenuFont;
+
         //List of levels
-        ArrayList levels;
+        private static string[] levels;
+        private static int currentLevel;
+        //public static ArrayList levels;
 
         //Current level
-        Level currLevel;
+        //Level currLevel;
 
         //List of player characters
         ArrayList playerChars;
@@ -52,6 +62,17 @@ namespace JSA_Game
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
+            //Create screen factory and add to Services
+            screenFactory = new ScreenFactory();
+            Services.AddService(typeof(IScreenFactory), screenFactory);
+
+            //Create the screen manager
+            screenManager = new ScreenManager(this);
+            Components.Add(screenManager);
+
+            AddInitialScreens();
+
+
             //Idea: In warrior, mage, etc. constructors, get rid of Level parameter
             //In character class, add initializeChar() method
             //This method will initialize enemy AI and maybe other things.
@@ -59,15 +80,21 @@ namespace JSA_Game
             //they're on since they will be stored in a list in this class.
             playerChars = new ArrayList();
 
+            levels = new string[LEVEL_COUNT];
 
-            levels = new ArrayList();
-            levels.Add(new Level("JSAtestlevel"));
-            levels.Add(new Level("Coast"));
-            levels.Add(new Level("Arena"));
+          //  levels = new ArrayList();
+           // levels.Add("JSAtestlevel");
+           // levels.Add("Coast");
+           // levels.Add("Arena");
+
+            currentLevel = 0;
+            levels[0] = "JSAtestlevel";
+            levels[1] = "Coast";
+            levels[2] = "Arena";
             
             
             //Set first level
-            currLevel = (Level) levels[0];
+            //currLevel = (Level) levels[0];
 
 
             Content.RootDirectory = "Content";
@@ -81,6 +108,15 @@ namespace JSA_Game
             swoosh = Content.Load<SoundEffect>("Audio\\swoosh");
             sword_attack = Content.Load<SoundEffect>("Audio\\sword_attack");
         }
+
+        private void AddInitialScreens()
+        {
+            // Activate the first screens.
+            screenManager.AddScreen(new MainMenuBackgroundScreen(), null);
+            screenManager.AddScreen(new MainMenuScreen(), null);
+
+        }
+
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -103,9 +139,10 @@ namespace JSA_Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            smallMenuFont = Content.Load<SpriteFont>("smallMenufont");
 
             //Load level content
-            currLevel.loadContent(Content);
+            //currLevel.loadContent(Content);
 
         }
 
@@ -132,6 +169,7 @@ namespace JSA_Game
 
             // TODO: Add your update logic here
 
+            /*
             //Update level
             if (currLevel.WinState == WinLossState.InProgess)
             {
@@ -152,7 +190,7 @@ namespace JSA_Game
             {
                 //Lost
             }
-
+            */
             base.Update(gameTime);
         }
 
@@ -167,13 +205,14 @@ namespace JSA_Game
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-
+            /*
             currLevel.draw(spriteBatch);
-
+            */
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
 
         public static void PlaySound(String sound) {
             Console.WriteLine(sound);
@@ -202,5 +241,27 @@ namespace JSA_Game
                     break;
             }
         }
+        
+
+        public static string getNextLevelName()
+        {
+            
+            string name = "";
+            if(levels.Length >  currentLevel)
+                name = levels[currentLevel];
+            currentLevel++;
+            return name;
+        }
+
+        public static SpriteFont getSmallFont()
+        {
+            return smallMenuFont;
+        }
+
+        public static void resetLevels()
+        {
+            currentLevel = 0;
+        }
+    
     }
 }
