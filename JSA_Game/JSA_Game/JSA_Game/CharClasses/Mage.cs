@@ -43,7 +43,7 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionSlow = new Battle_Controller.Action("Slow", "Slows the enemy, lowering dodge and movement.",
                 new Status("Slow", "Slowed, lowering dodge and movement.", 2, level, new StatType[] { StatType.Movement, StatType.Dodge },
-                    new int[] {2, 4}, "", false),
+                    new int[] { 2, 4 }, "", false, false),
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "swoosh");
             Actions[2] = actionSlow;
 

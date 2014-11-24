@@ -81,22 +81,31 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
-            if (target == null)
+            if (action.Name != "Defend")
             {
-                return false;
-            }
+                if (target == null)
+                {
+                    return false;
+                }
 
-            if(!didActionHit(action, user, target))
+                if (!didActionHit(action, user, target))
+                {
+                    return false;
+                }
+
+                calculateAction(action, user, target);
+
+                if (!action.Aoe)
+                {
+                    Game1.PlaySound(action.Sound);
+                }
+            }
+            else
             {
-                return false;
+                user.Armor += 4;
+                user.Resist += 4;
             }
             
-            calculateAction(action, user, target);
-
-            if (!action.Aoe)
-            {
-                Game1.PlaySound(action.Sound);
-            }
 
             return true;
         }

@@ -29,6 +29,7 @@ namespace JSA_Game
 
         // Actions
         private Battle_Controller.Action attack;
+        private Battle_Controller.Action defend;
         private Battle_Controller.Action[] actions;
 
         private Boolean isEnemy;
@@ -47,6 +48,12 @@ namespace JSA_Game
 
         //Image
         String texture;
+
+        int currDamage;
+        int currHealing; 
+        bool miss;
+        bool didDefend;
+        bool set;
         
 
         public Character(int startingLevel = 1)
@@ -72,9 +79,9 @@ namespace JSA_Game
 
             status = new Status[2];
 
-
-            attack = new Battle_Controller.Action();   // Default attack action.
-            actions = new Battle_Controller.Action[4]; // Default number of possible actions.
+            attack = new Battle_Controller.Action();     // Default attack action.
+            defend = new Battle_Controller.Action(true); // Default defend action.
+            actions = new Battle_Controller.Action[4];   // Default number of possible actions.
 
             movement = STANDARD_STAT;
             charLevel = startingLevel;
@@ -83,6 +90,52 @@ namespace JSA_Game
             moveDisabled = false;
             actionDisabled = false;
             pos = new Vector2(-1, -1);
+
+            currDamage = -1;
+            currHealing = -1;
+            miss = false;
+            didDefend = false;
+            set = false;
+        }
+
+        public Character(String name, int maxHp, int maxMp, int currHp, int currMp,
+            int strength, int armor, int accuracy, int dodge, int magic, int resist,
+            Items.Weapon weapon, Items.Protection protection, Items.Consumable[] inventory, Status[] status,
+            Battle_Controller.Action attack, Battle_Controller.Action[] actions, Battle_Controller.Action defend, 
+            int movement, int charLevel, bool isEnemy, bool moveDisabled, bool actionDisabled,
+            Vector2 pos, String texture, iAI ai, int currDamage, int currHealing, bool miss, bool set, bool didDefend)
+        {
+            this.name = name;
+            this.maxHP = maxHp;
+            this.maxMP = maxMp;
+            this.currHp = currHp;
+            this.currMp = currMp;
+            this.strength = strength;
+            this.armor = armor;
+            this.accuracy = accuracy;
+            this.dodge = dodge;
+            this.magic = magic;
+            this.resist = resist;
+            this.weapon = weapon;
+            this.protection = protection;
+            this.inventory = inventory;
+            this.status = status;
+            this.attack = attack;
+            this.actions = actions;
+            this.defend = defend;
+            this.movement = movement;
+            this.charLevel = charLevel;
+            this.isEnemy = isEnemy;
+            this.moveDisabled = moveDisabled;
+            this.actionDisabled = actionDisabled;
+            this.pos = pos;
+            this.texture = texture;
+            this.ai = ai;
+            this.currDamage = currDamage;
+            this.currHealing = currHealing;
+            this.miss = miss;
+            this.set = set;
+            this.didDefend = didDefend;
         }
 
         public int yieldExp()
@@ -321,6 +374,42 @@ namespace JSA_Game
         {
             get { return className; }
             set { className = value; }
+        }
+
+        public Battle_Controller.Action Defend
+        {
+            get { return defend; }
+            set { defend = value; }
+        }
+
+        public int CurrDamage
+        {
+            get { return currDamage; }
+            set { currDamage = value; }
+        }
+
+        public int CurrHealing
+        {
+            get { return currHealing; }
+            set { currHealing = value; }
+        }
+
+        public Boolean Miss
+        {
+            get { return miss; }
+            set { miss = value; }
+        }
+
+        public Boolean Set
+        {
+            get { return set; }
+            set { set = value; }
+        }
+
+        public Boolean DidDefend
+        {
+            get { return didDefend; }
+            set { didDefend = value; }
         }
     }
 }

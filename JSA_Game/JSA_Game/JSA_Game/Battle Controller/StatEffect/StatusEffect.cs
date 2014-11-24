@@ -18,8 +18,9 @@ namespace JSA_Game.Battle_Controller.StatEffect
         private int[] amount;
         private string image;
         private bool friendly;
+        private bool turnByTurn;
 
-        public StatusEffect(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly)
+        public StatusEffect(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn)
         {
             this.name = name;
             description = descrip;
@@ -29,6 +30,7 @@ namespace JSA_Game.Battle_Controller.StatEffect
             this.amount = amount;
             image = img;
             this.friendly = friendly;
+            this.turnByTurn = turnByTurn;
         }
 
 
@@ -74,6 +76,11 @@ namespace JSA_Game.Battle_Controller.StatEffect
         {
             get { return friendly; }
             set { friendly = value; }
+        }
+        public bool TurnByTurn
+        {
+            get { return turnByTurn; }
+            set { turnByTurn = value; }
         }
     }
 }

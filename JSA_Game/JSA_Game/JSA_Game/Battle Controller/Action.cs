@@ -71,6 +71,26 @@ namespace JSA_Game.Battle_Controller
             this.sound = "sword_attack";
         }
 
+        public Action(Boolean defend)
+        {
+            if (defend)
+            {
+                this.name = "Defend";
+                this.description = "Defend yourself from enemy attacks.";
+                this.actionEffect = null;
+                this.statCost = new StatType[] { StatType.Hp };
+                this.type = ActionType.Physical;
+                this.ignoreEnemyStats = false;
+                this.friendly = true;
+                this.aoe = false;
+                this.powerMultipler = 1.0;
+                this.cost = 0;
+                this.range = 0;
+                this.aoeRange = 0;
+                this.sound = "swoosh";
+            }
+        }
+
         // GETTERS AND SETTERS
 
         public String Name

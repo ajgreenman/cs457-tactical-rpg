@@ -37,7 +37,7 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionShield = new Battle_Controller.Action("Shield", "Shield a friendly unit.",
                 new Status("Shielded", "Shielded from enemy attacks.", 3, level, new StatType[] { StatType.Armor, StatType.Resist },
-                    new int[] {5, 5}, "", true),
+                    new int[] { 5, 5 }, "", true, false),
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 4, 5, 0, "swoosh");
             Actions[1] = actionShield;
 
@@ -47,8 +47,8 @@ namespace JSA_Game.CharClasses
             Actions[2] = actionJudgment;
 
             Battle_Controller.Action actionBless = new Battle_Controller.Action("Bless", "Bless a friendly unit.",
-                new Status("Blessed", "Blessed by the gods.", 3, level, 
-                    new StatType[] {StatType.Accuracy, StatType.Movement}, new int[] {5, 2}, "", true),
+                new Status("Blessed", "Blessed by the gods.", 3, level,
+                    new StatType[] { StatType.Accuracy, StatType.Movement }, new int[] { 5, 2 }, "", true, false),
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 4, 5, 0, "swoosh");
             Actions[3] = actionBless;
         }

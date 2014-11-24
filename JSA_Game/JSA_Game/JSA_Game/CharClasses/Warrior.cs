@@ -35,14 +35,14 @@ namespace JSA_Game.CharClasses
             Battle_Controller.Action actionCripple =
                 new Battle_Controller.Action("Cripple", "Cripple the target, lowering dodge and movement. Ignores enemy stats.",
                     new Status("Cripple", "Cripple the target, lowering dodge and movement.  Ignores enemy stats.", 2, level, 
-                        new StatType[] {StatType.Dodge,StatType.Movement},new int[] {4,2},"enemy", false),
+                        new StatType[] {StatType.Dodge,StatType.Movement},new int[] {4,2},"enemy", false, false),
                     new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 0.5, 0, 1, 0, "sword_attack");
             Actions[0] = actionCripple;
 
             Battle_Controller.Action actionBattleCry =
                 new Battle_Controller.Action("Battle Cry", "Lowers enemy accuracy, strength, and magic.",
-                    new Status("Fright", "Put fear into the enemy, lowering accuracy, strength, and magic.", 2, level, 
-                        new StatType[] {StatType.Accuracy, StatType.Strength, StatType.Magic}, new int[] {3, 2, 2}, "", false),
+                    new Status("Fright", "Put fear into the enemy, lowering accuracy, strength, and magic.", 2, level,
+                        new StatType[] { StatType.Accuracy, StatType.Strength, StatType.Magic }, new int[] { 3, 2, 2 }, "", false, false),
                     new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 2, 0, 3, "swoosh");
             Actions[1] = actionBattleCry;
 
@@ -54,8 +54,8 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionRage =
                 new Battle_Controller.Action("Rage", "Go into a range, increasing strength but lowering accuracy.",
-                    new Status("Enraged", "Blinded by rage, increasing strength but lowering accuracy.", 2, level, 
-                        new StatType[] { StatType.Strength, StatType.Accuracy }, new int[] {5, -5}, "", true),
+                    new Status("Enraged", "Blinded by rage, increasing strength but lowering accuracy.", 2, level,
+                        new StatType[] { StatType.Strength, StatType.Accuracy }, new int[] { 5, -5 }, "", true, false),
                     new StatType[] { StatType.Hp }, ActionType.Physical, false, true, false, 1.0, 4, 0, 0, "swoosh");
             Actions[3] = actionRage;
         }
