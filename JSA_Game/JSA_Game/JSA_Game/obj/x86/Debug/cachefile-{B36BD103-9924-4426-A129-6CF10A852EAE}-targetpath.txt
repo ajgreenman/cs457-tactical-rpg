@@ -38,3 +38,4 @@ Content\Audio\swoosh.xnb
 Content\menufont.xnb
 Content\blank.xnb
 Content\smallMenufont.xnb
+Content\town.xnb

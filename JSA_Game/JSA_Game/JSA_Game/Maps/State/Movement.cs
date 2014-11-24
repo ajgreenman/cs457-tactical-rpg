@@ -31,7 +31,7 @@ namespace JSA_Game.Maps.State
                 {
                     level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled = true;
                     Vector2 destination = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
-                    level.moveUnit(level.SelectedPos, destination, false, false);      
+                    level.moveUnit(gameTime, level.SelectedPos, destination, false, false);      
                     level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
                 }
                 level.SelectedPos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);

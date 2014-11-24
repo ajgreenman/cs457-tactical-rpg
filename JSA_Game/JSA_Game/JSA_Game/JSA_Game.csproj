@@ -142,7 +142,6 @@
     <Compile Include="Items\Consumable.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Maps\State\ActionState.cs" />
-    <Compile Include="Maps\State\Enumerated\GameState.cs" />
     <Compile Include="Maps\State\Enumerated\HighlightState.cs" />
     <Compile Include="Maps\State\Enumerated\PerformedType.cs" />
     <Compile Include="Maps\State\Enumerated\TurnState.cs" />
@@ -162,11 +161,14 @@
     <Compile Include="Maps\Tiles\Tile.cs" />
     <Compile Include="Items\Protection.cs" />
     <Compile Include="Items\Weapon.cs" />
+    <Compile Include="Screens\Character\CharacterBackgroundScreen.cs" />
+    <Compile Include="Screens\Character\CharacterScreen.cs" />
     <Compile Include="Screens\Level\GameOverScreen.cs" />
     <Compile Include="Screens\Level\LevelScreen.cs" />
     <Compile Include="Screens\MainMenu\MainMenuBackgroundScreen.cs" />
     <Compile Include="Screens\MainMenu\MainMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
+    <Compile Include="Screens\Town\TavernScreen.cs" />
     <Compile Include="Screens\Town\TownBackgroundScreen.cs" />
     <Compile Include="Screens\Util\MenuEntry.cs" />
     <Compile Include="Screens\Util\MenuScreen.cs" />

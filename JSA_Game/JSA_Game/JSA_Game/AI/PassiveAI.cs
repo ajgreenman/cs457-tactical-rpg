@@ -24,7 +24,7 @@ namespace JSA_Game.AI
             targetPos = new Vector2(-1, -1);
         }
 
-        public void move()
+        public void move(GameTime gameTime)
         {
         }
 

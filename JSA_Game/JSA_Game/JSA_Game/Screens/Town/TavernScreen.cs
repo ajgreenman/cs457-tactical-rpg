@@ -5,19 +5,21 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
 
 namespace JSA_Game.Screens
 {
-    class TownBackgroundScreen : GameScreen
+    class TavernScreen : GameScreen
     {
+        
         ContentManager content;
         Texture2D backgroundTexture;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public TownBackgroundScreen()
+        public TavernScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -34,7 +36,7 @@ namespace JSA_Game.Screens
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-                backgroundTexture = content.Load<Texture2D>("town");
+                backgroundTexture = content.Load<Texture2D>("grass_tile");
             }
         }
 
@@ -75,7 +77,9 @@ namespace JSA_Game.Screens
 
             spriteBatch.End();
         }
+
+
+
+
     }
 }
- 
-

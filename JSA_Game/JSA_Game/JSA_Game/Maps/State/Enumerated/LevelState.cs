@@ -4,5 +4,5 @@
     Selected,
     Movement,
     Action,
-    ActionSelect
+    Animating
 }
