@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JSA_Game.Maps;
 using JSA_Game.AI;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game.CharClasses
 {
@@ -48,7 +49,8 @@ namespace JSA_Game.CharClasses
             Actions[2] = actionMultishot;
 
             Battle_Controller.Action actionFireArrow = new Battle_Controller.Action("Fire Arrow", "Shoot a flaming arrow.",
-                null, // Add a burn status?
+                new Status("Burn", "Burnt, taking damage each turn.", 4, level,
+                    new StatType[] { StatType.Hp }, new int[] { 3 }, "", false, true),
                 new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.2, 4, 5, 0, "bow_attack");
             Actions[3] = actionFireArrow;
 

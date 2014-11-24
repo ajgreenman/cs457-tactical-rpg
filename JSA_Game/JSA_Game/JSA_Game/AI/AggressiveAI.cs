@@ -62,6 +62,7 @@ namespace JSA_Game.AI
                 }
             }
         }
+
         public Level CurrLevel
         {
             get { return currLevel; }

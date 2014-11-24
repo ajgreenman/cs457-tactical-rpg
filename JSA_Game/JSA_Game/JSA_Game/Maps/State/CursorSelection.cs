@@ -70,6 +70,7 @@ namespace JSA_Game.Maps.State
             //End turn
             else if (keyboard.IsKeyDown(Keys.E) && !level.ButtonPressed)
             {
+                level.Turn++;
                 level.PlayerTurn = TurnState.Enemy;
                 System.Diagnostics.Debug.Print("Enemy's turn");
             }

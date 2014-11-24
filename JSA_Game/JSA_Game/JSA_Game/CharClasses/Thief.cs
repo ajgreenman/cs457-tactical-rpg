@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JSA_Game.Maps;
 using JSA_Game.AI;
+using JSA_Game.Battle_Controller.StatEffect;
 
 namespace JSA_Game.CharClasses
 {
@@ -45,7 +46,7 @@ namespace JSA_Game.CharClasses
             Actions[2] = actionPrepare;
 
             Battle_Controller.Action actionPoisonedStrike = new Battle_Controller.Action("Poisoned Strike", "Attack with a poisoned weapon.",
-                null, // Poison effect.
+                new Status("Poison", "Poisons the target.", 3, level, new StatType[] { StatType.Hp }, new int[] { 2 }, "", false, true), // Poison effect.
                 new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.2, 4, 1, 0, "swoosh");
             Actions[3] = actionPoisonedStrike;
         }

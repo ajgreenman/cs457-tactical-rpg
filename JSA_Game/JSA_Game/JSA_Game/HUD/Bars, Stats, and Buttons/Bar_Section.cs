@@ -158,7 +158,7 @@ namespace JSA_Game.HUD
             //If no Effect Present Reset
             if (c.Status[0] == null && c.Status[1] == null)
             {
-                healthColor = Color.White;
+                healthColor = Color.Red;
                 manaColor = Color.Blue;
             }
 
@@ -206,11 +206,11 @@ namespace JSA_Game.HUD
             spriteBatch.DrawString(experienceFont, "XP: " + targetCurrExperience, experiencef_pos, Color.White);
         
             //Health Draw
-            spriteBatch.Draw(healthBar, healthRec, Color.Red);
+            spriteBatch.Draw(healthBar, healthRec, healthColor);
             spriteBatch.DrawString(healthFont, "HP: " + targetCurrHealth + "/" + targetMaxHealth, healthf_pos, Color.White);
 
             //Mana Draw
-            spriteBatch.Draw(manaBar, manaRec, Color.Blue);
+            spriteBatch.Draw(manaBar, manaRec, manaColor);
             spriteBatch.DrawString(manaFont, "MP: " + targetCurrMana + "/" + targetMaxMana, manaf_pos, Color.White);
         }
     }

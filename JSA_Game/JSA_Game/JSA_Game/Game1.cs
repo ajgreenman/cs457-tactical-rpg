@@ -213,8 +213,9 @@ namespace JSA_Game
             base.Draw(gameTime);
         }
 
-        public static void PlaySound(String sound)
-        {
+
+        public static void PlaySound(String sound) {
+            Console.WriteLine(sound);
             switch (sound)
             {
                 case "bow_attack":

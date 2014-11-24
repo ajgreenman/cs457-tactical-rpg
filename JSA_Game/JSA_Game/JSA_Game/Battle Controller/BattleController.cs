@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using JSA_Game.Battle_Controller.StatEffect;
 using JSA_Game.CharClasses;
+using JSA_Game.Maps;
 
 namespace JSA_Game.Battle_Controller
 {
@@ -24,7 +25,51 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action is valid, false otherwise.</returns>
         public static Boolean isValidAction(Action action, Character user, Vector2 userPosition, Vector2 targetPosition)
         {
-            return action.Range + action.AoeRange >= calculateDistance(userPosition, targetPosition);
+            return hasEnough(action, user) && (action.Range + action.AoeRange >= calculateDistance(userPosition, targetPosition));
+        }
+
+        private static Boolean hasEnough(Action action, Character user)
+        {
+            foreach (StatType type in action.StatCost)
+            {
+                switch (type)
+                {
+                    case StatType.Accuracy:
+                        if (user.Accuracy < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Armor:
+                        if (user.Armor < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Dodge:
+                        if (user.Dodge < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Hp:
+                        if (user.CurrHp < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Magic:
+                        if (user.Magic < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Mp:
+                        if (user.CurrMp < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Resist:
+                        if (user.Resist < action.Cost)
+                            return false;
+                        break;
+                    case StatType.Strength:
+                        if (user.Strength < action.Cost)
+                            return false;
+                        break;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -36,30 +81,37 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
-            Console.WriteLine(action.Name);
-            if (target == null)
+            if (action.Name != "Defend")
             {
-                return false;
-            }
+                if (target == null)
+                {
+                    return false;
+                }
 
-            if(!didActionHit(action, user, target))
+                if (!didActionHit(action, user, target))
+                {
+                    return false;
+                }
+
+                calculateAction(action, user, target);
+
+                if (!action.Aoe)
+                {
+                    Game1.PlaySound(action.Sound);
+                }
+            }
+            else
             {
-                return false;
+                user.Armor += 4;
+                user.Resist += 4;
             }
             
-            calculateAction(action, user, target);
-
-            if (!action.Aoe)
-            {
-                Game1.PlaySound(action.Sound);
-            }
 
             return true;
         }
 
         public static Boolean performAction(Action action, Character user, Character[] targets)
         {
-            Console.WriteLine(action.Name);
             Boolean ret_val = false;
             foreach (Character target in targets)
             {
@@ -113,7 +165,7 @@ namespace JSA_Game.Battle_Controller
         {
             calculateUserCost(action, user);
             calculateTargetEffect(action, user, target);
-        }
+        }   
 
         /// <summary>
         /// Calculates the cost of an action on the user.
@@ -165,7 +217,6 @@ namespace JSA_Game.Battle_Controller
         /// <param name="action">Action to be performed.</param>
         /// <param name="user">User performing the action.</param>
         /// <param name="target">Target character.</param>
-        
         private static void calculateTargetEffect(Action action, Character user, Character target)
         {
             double amount = 0;
@@ -212,6 +263,210 @@ namespace JSA_Game.Battle_Controller
             if (target.CurrHp <= 0)
             {
                 LevelUpManager.KillingBlow(user, target);
+            }
+            else
+            {
+                if (action.ActionEffect != null)
+                {
+                    if (action.ActionEffect.Friendly)
+                    {
+                        target.Status[0] = action.ActionEffect;
+                    }
+                    else
+                    {
+                        target.Status[1] = action.ActionEffect;
+                    }
+                }
+            }
+        }
+
+        public static void newTurn(Level level)
+        {
+            level.Turn++;
+            foreach (Character c in level.PUnits)
+            {
+                for(int i = 0; i < c.Status.Length; i++)
+                {
+                    if (c.Status[i] != null)
+                    {
+                        if (c.Status[i].TurnByTurn)
+                        {
+                            if (c.Status[i].Friendly)
+                            {
+                                for(int j = 0; j < c.Status[i].AffectedStats.Length; j++)
+                                {
+                                    switch (c.Status[i].AffectedStats[j])
+                                    {
+                                        case StatType.Accuracy:
+                                            c.Accuracy += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Armor:
+                                            c.Armor += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Dodge:
+                                            c.Dodge += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Hp:
+                                            c.CurrHp += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Magic:
+                                            c.Magic += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Mp:
+                                            c.CurrMp += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Resist:
+                                            c.Resist += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Strength:
+                                            c.Strength += c.Status[i].Amount[j];
+                                            break;
+                                        default:
+                                            c.CurrHp += c.Status[i].Amount[j];
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int j = 0; j < c.Status[i].AffectedStats.Length; j++)
+                                {
+                                    switch (c.Status[i].AffectedStats[j])
+                                    {
+                                        case StatType.Accuracy:
+                                            c.Accuracy -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Armor:
+                                            c.Armor -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Dodge:
+                                            c.Dodge -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Hp:
+                                            c.CurrHp -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Magic:
+                                            c.Magic -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Mp:
+                                            c.CurrMp -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Resist:
+                                            c.Resist -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Strength:
+                                            c.Strength -= c.Status[i].Amount[j];
+                                            break;
+                                        default:
+                                            c.CurrHp -= c.Status[i].Amount[j];
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (level.Turn >= c.Status[i].Expiration)
+                        {
+                            c.Status[i] = null;
+                        }
+                    }
+                }
+            }
+
+            foreach (Character c in level.EUnits)
+            {
+                for (int i = 0; i < c.Status.Length; i++)
+                {
+                    if (c.Status[i] != null)
+                    {
+                        if (c.Status[i].TurnByTurn)
+                        {
+                            if (c.Status[i].Friendly)
+                            {
+                                for (int j = 0; j < c.Status[i].AffectedStats.Length; j++)
+                                {
+                                    switch (c.Status[i].AffectedStats[j])
+                                    {
+                                        case StatType.Accuracy:
+                                            c.Accuracy += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Armor:
+                                            c.Armor += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Dodge:
+                                            c.Dodge += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Hp:
+                                            c.CurrHp += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Magic:
+                                            c.Magic += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Mp:
+                                            c.CurrMp += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Resist:
+                                            c.Resist += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Strength:
+                                            c.Strength += c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Movement:
+                                            c.Movement += c.Status[i].Amount[j];
+                                            break;
+                                        default:
+                                            c.CurrHp += 0;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int j = 0; j < c.Status[i].AffectedStats.Length; j++)
+                                {
+                                    switch (c.Status[i].AffectedStats[j])
+                                    {
+                                        case StatType.Accuracy:
+                                            c.Accuracy -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Armor:
+                                            c.Armor -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Dodge:
+                                            c.Dodge -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Hp:
+                                            c.CurrHp -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Magic:
+                                            c.Magic -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Mp:
+                                            c.CurrMp -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Resist:
+                                            c.Resist -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Strength:
+                                            c.Strength -= c.Status[i].Amount[j];
+                                            break;
+                                        case StatType.Movement:
+                                            c.Movement -= c.Status[i].Amount[j];
+                                            break;
+                                        default:
+                                            c.CurrHp -= 0;
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (level.Turn >= c.Status[i].Expiration)
+                        {
+                            c.Status[i] = null;
+                        }
+                    }
+                }
             }
         }
 
