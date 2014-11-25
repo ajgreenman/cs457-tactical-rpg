@@ -143,7 +143,7 @@ namespace JSA_Game.HUD
                 if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.itemDisplay;}
 
                 //Action
-                if (keyboard.IsKeyDown(Keys.D2)) {bState = ButtonState.actionDisplay;}
+                if (keyboard.IsKeyDown(Keys.D2)) { bState = ButtonState.actionDisplay; }
         
                 //Move
                 if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Move, -1);}
@@ -151,7 +151,7 @@ namespace JSA_Game.HUD
 
             //Action Display
             if (bState == ButtonState.actionDisplay)
-            {
+            {     
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
 
@@ -162,10 +162,13 @@ namespace JSA_Game.HUD
                  }
  
                 //Ability
-                if(keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.abilityDisplay;}
+                 if (keyboard.IsKeyDown(Keys.D3)) { bState = ButtonState.abilityDisplay; }
 
-                //Defend
-                if(keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Defend, -1);}
+                if (keyboard.IsKeyUp(Keys.D2))
+                {
+                    //Defend
+                    if (keyboard.IsKeyDown(Keys.D2)) { Selected.setAction(PerformedType.Defend, -1); } 
+                }
 
                 //Attack
                 if(keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}
@@ -176,11 +179,15 @@ namespace JSA_Game.HUD
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.actionDisplay; }
 
-                //Ability 4
-                if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                if (keyboard.IsKeyUp(Keys.D3))
                 {
-                   Selected.setAction(PerformedType.Ability, 3); 
+                    //Ability 4
+                    if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                    {
+                        Selected.setAction(PerformedType.Ability, 3);
+                    }
                 }
+
                 //Ability 3
                 if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D4))
                 {
@@ -209,10 +216,13 @@ namespace JSA_Game.HUD
                     Selected.setAction(PerformedType.Item, 3); 
                 }
 
-                //Item 3
-                if (targetItem3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                if (keyboard.IsKeyUp(Keys.D3))
                 {
-                    Selected.setAction(PerformedType.Item, 2); 
+                    //Item 3
+                    if (targetItem3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                    {
+                        Selected.setAction(PerformedType.Item, 2);
+                    }
                 }
 
                 //Item 2

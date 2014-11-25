@@ -54,11 +54,13 @@ namespace JSA_Game.HUD
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
             buttonSection = new Button_Section();
-            comText = new CombatText();
+            comText = new CombatText(charList);
 
             //INIT Display Values
             hidden = true;
             hState = HUDState.showOriginal;
+
+            //INIT List of Characters
             this.charList = charList;
         }
 
@@ -80,7 +82,6 @@ namespace JSA_Game.HUD
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
             buttonSection.CharacterSelect(c);
-            comText.characterSelect(c);
             selectedChar = c;
         }
 
@@ -95,17 +96,19 @@ namespace JSA_Game.HUD
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
+            comText.Draw(spriteBatch);
+
             if (hidden)
             {
                 //Draws Bars and Buttons
-                if (hState == HUDState.showActions)
+                if (hState == HUDState.showActions && !selectedChar.IsEnemy)
                 {
                     barSection.Draw(spriteBatch);
                     buttonSection.Draw(spriteBatch);
                 }
 
                 //Draws Bars and Stat Section
-                if (hState == HUDState.showOriginal)
+                if (hState == HUDState.showOriginal || selectedChar.IsEnemy)
                 {
                     barSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);
