@@ -52,7 +52,7 @@ namespace JSA_Game.Maps
         private Cursor cursor;
        
         //Timing variables
-        private float moveDelay = 100;
+        private float cursorMoveDelay = 100;
         private float moveTimeElapsed;
        
         //Image Data Structures
@@ -81,7 +81,15 @@ namespace JSA_Game.Maps
         //Attack target list
         HashSet<Character> targetList;
        
+        //Animation variables
+        bool isAnimatingMove;
+        Vector2 moveAnimCurrPos;
+        Vector2 moveAnimDestPos;
+        Vector2 moveAnimFinalPos;
+        float moveAnimTimeElapsed;
+        float moveAnimDelay = 30;
 
+        public bool isAnimatingAttack;
 
         /// <summary>
         /// Generates a level from a given text file
@@ -90,6 +98,7 @@ namespace JSA_Game.Maps
         /// <param name="filename">Filename to read</param>
         public Level(string filename)
         {
+           
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
 
@@ -251,6 +260,8 @@ namespace JSA_Game.Maps
             winState = WinLossState.InProgess;
             turn = 0;
 
+            isAnimatingMove = false;
+            isAnimatingAttack = false;
             showStartX = 0;
             showStartY = 0;
             numTilesShowing = DEFAULT_NUM_TILES_SHOWING;
@@ -271,7 +282,7 @@ namespace JSA_Game.Maps
 
             selectedAction = null;
             targetList = new HashSet<Character>();
-            hud = new HUD_Controller();
+            hud = new HUD_Controller(pUnits);
 
         }
 
@@ -319,14 +330,14 @@ namespace JSA_Game.Maps
         /// <param name="endPos">Destination position for the unit</param>
         /// <param name="AImoved">If an AI called this function</param>
         /// <param name="moveIfInRange">If the AI only wants to move if the target is in range</param>
-        public void moveUnit(Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
+        public void moveUnit(GameTime gameTime, Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
             Stack path = findPath(startPos, endPos);
             //if path exists
             if (path.Count > 0)
             {
                 //If character will only move if a target is in range
-                if (!moveIfInRange || (moveIfInRange && path.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement+2))
+                if (!moveIfInRange || path.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement+2)
                 {
                     int remMovement;
                     Character unit;
@@ -356,18 +367,63 @@ namespace JSA_Game.Maps
                         int yPos = (int)pos.Y;
                         //Character c;
                         Vector2 next;
-
                         next = (Vector2)path.Pop();
-                        board[(int)next.X, (int)next.Y].Occupant = board[(int)pos.X, (int)pos.Y].Occupant;
-                        board[(int)pos.X, (int)pos.Y].Occupant = null;
+                        if (path.Count == stop || remMovement == 1)
+                        {
+                            moveAnimFinalPos = next;
+                        }
 
-                        board[(int)pos.X, (int)pos.Y].IsOccupied = false;
-                        board[(int)next.X, (int)next.Y].IsOccupied = true;
+                        moveAnimCurrPos = pos;
+                        moveAnimDestPos = next;
+                        isAnimatingMove = true;
+                        System.Diagnostics.Debug.Print("Animating Movement...");
+                        animateMove(gameTime);
                         pos = next;
                         remMovement--;
                     }
                     unit.Pos = pos;
                 }
+            }
+        }
+
+        //yuck.... Possibly try using another thread, forcing the main game to wait
+        //   for the animation to complete.
+        private void animateMove(GameTime gameTime)
+        {
+            moveAnimTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (moveAnimTimeElapsed >= moveAnimDelay)
+            //{
+                //Move the character image a little
+                //char dir = '0';
+                //if (moveAnimDestPos.X < moveAnimCurrPos.X)
+                //    dir = 'l';
+                //else if (moveAnimDestPos.X > moveAnimCurrPos.X)
+                //    dir = 'r';
+                //else if (moveAnimDestPos.Y < moveAnimCurrPos.Y)
+                //    dir = 'u';
+                //else if (moveAnimDestPos.Y > moveAnimCurrPos.Y)
+                //    dir = 'd';
+
+                if (moveAnimDestPos.X < moveAnimCurrPos.X)
+                {
+
+                }
+
+                moveAnimTimeElapsed = 0;
+           // }
+                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].Occupant = board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant;
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = null;
+
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = false;
+                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].IsOccupied = true;
+           if (moveAnimDestPos.Equals(moveAnimFinalPos))
+            {
+
+
+
+                isAnimatingMove = false;
+                System.Diagnostics.Debug.Print("Destination Reached");
+                moveAnimFinalPos = new Vector2(-1, -1);
             }
         }
 
@@ -943,32 +999,43 @@ namespace JSA_Game.Maps
                 //Prevents holding a button to continuously activate events
                 if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
                 {
-                    moveTimeElapsed = moveDelay-20;
+                    moveTimeElapsed = cursorMoveDelay - 20;
                 }
-                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) || 
-                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) ||keyboard.IsKeyUp(Keys.F2) ||keyboard.IsKeyUp(Keys.F3))
+                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
+                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
                 {
                     buttonPressed = false;
                 }
                 if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
                     keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
-                    keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down) )
+                    keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
                 {
                     buttonPressed = true;
                 }
-                
+
             }
 
             //Enemy turn
             else
             {
 
-                //Each enemy turn
-                foreach (Character c in eUnits)
+                if (!isAnimatingMove)
                 {
-                    c.AI.move();
-                    c.AI.attack();
-                }
+                    //Each enemy turn
+                    foreach (Character c in eUnits)
+                    {
+                        c.AI.move(gameTime);
+                        c.AI.attack();
+                    }
+
+
+                    playerTurn = TurnState.Player;
+                    foreach (Character c in pUnits)
+                    {
+                        c.MoveDisabled = false;
+                        c.ActionDisabled = false;
+                    }
+                    System.Diagnostics.Debug.Print("Player's turn");
 
                 playerTurn = TurnState.Player;
                 foreach (Character c in pUnits)
@@ -979,11 +1046,13 @@ namespace JSA_Game.Maps
                 System.Diagnostics.Debug.Print("Player's turn");
                 Battle_Controller.BattleController.newTurn(this);
 
-                //Check for loss
-                if (pUnits.Count <= 0)
-                {
-                    System.Diagnostics.Debug.Print("Player Lost!");
-                    winState = WinLossState.Loss;
+
+                    //Check for loss
+                    if (pUnits.Count <= 0)
+                    {
+                        System.Diagnostics.Debug.Print("Player Lost!");
+                        winState = WinLossState.Loss;
+                    }
                 }
             }
             oldKeyboardState = keyboardState;
@@ -1036,22 +1105,44 @@ namespace JSA_Game.Maps
                     //    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * (i - showStartX), MAP_START_H + TILE_SIZE * (j - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
                     //}
 
-                    if (board[i, j].Occupant != null)
-                    {
-                        Character c = board[i, j].Occupant;
-                        String charTexture = board[i, j].Occupant.IsEnemy ? "enemy" + c.Texture : "player" + c.Texture;
-                        spriteBatch.Draw(characterImages[charTexture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    //if (board[i, j].Occupant != null)
+                    //{
+                    //    Character c = board[i, j].Occupant;
+                    //    String charTexture = board[i, j].Occupant.IsEnemy ? "enemy" + c.Texture : "player" + c.Texture;
+                    //    spriteBatch.Draw(characterImages[charTexture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
 
-                        //Draw box around character if selected
-                        if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
-                        {
-                            spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
-                        }
-                    }
+                    //    //Draw box around character if selected
+                    //    if (board[(int)c.Pos.X, (int)c.Pos.Y].IsSelected)
+                    //    {
+                    //        spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)c.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)c.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    //    }
+                    //}
 
                 }
             }
             
+            //Draw characters
+            //This is no longer done in the loop to allow the movement animation to work.
+            foreach (Character p in pUnits)
+            {
+                spriteBatch.Draw(characterImages["player" + p.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                //Draw box around character if selected
+                if (board[(int)p.Pos.X, (int)p.Pos.Y].IsSelected)
+                {
+                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                }
+            }
+            foreach(Character e in eUnits)
+            {
+                spriteBatch.Draw(characterImages["enemy" + e.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                //Draw box around character if selected
+                if (board[(int)e.Pos.X, (int)e.Pos.Y].IsSelected)
+                {
+                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                }
+            }
+
+
             //Draws a box around a selected tile
             if (board[(int)selectedPos.X, (int)selectedPos.Y].IsSelected)
             {
@@ -1121,8 +1212,8 @@ namespace JSA_Game.Maps
         }
         public float MoveDelay
         {
-            get { return moveDelay; }
-            set { moveDelay = value; }
+            get { return cursorMoveDelay; }
+            set { cursorMoveDelay = value; }
         }
         public float MoveTimeElapsed
         {

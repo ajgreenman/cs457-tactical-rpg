@@ -89,8 +89,6 @@ namespace JSA_Game.Screens
             {
                 selectedEntry++;
 
-               
-
                 if (selectedEntry >= menuEntries.Count)
                     selectedEntry = 0;
                 if (menuEntries[selectedEntry].Text.Equals(""))
@@ -136,12 +134,6 @@ namespace JSA_Game.Screens
             OnCancel(e.PlayerIndex);
         }
 
-
-
-
-      
-
-
         /// <summary>
         /// Allows the screen the chance to position the menu entries. By default
         /// all menu entries are lined up in a vertical list, centered on the screen.
@@ -164,7 +156,6 @@ namespace JSA_Game.Screens
             {
                 MenuEntry menuEntry = menuEntries[i];
                 
-                // each entry is to be centered horizontally
                 if (alignment.Equals("left"))
                     position.X = 10;
                 else if (alignment.Equals("center"))

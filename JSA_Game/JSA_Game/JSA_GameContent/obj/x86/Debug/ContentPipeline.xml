@@ -263,6 +263,24 @@
       <Time>2014-11-17T18:43:38.8236627-05:00</Time>
     </Item>
     <Item>
+      <Source>blank.png</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
+    </Item>
+    <Item>
+      <Source>town.jpg</Source>
+      <Name>town</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb</Output>
+      <Time>2014-11-24T18:02:19.2535969-05:00</Time>
+    </Item>
+    <Item>
       <Source>StatFont.spritefont</Source>
       <Name>StatFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -270,6 +288,24 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
       <Time>2014-10-20T16:08:14.1013542-04:00</Time>
+    </Item>
+    <Item>
+      <Source>menufont.spritefont</Source>
+      <Name>menufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
+    </Item>
+    <Item>
+      <Source>smallMenufont.spritefont</Source>
+      <Name>smallMenufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
+      <Time>2014-11-19T16:12:49.2071964-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\fire_spell.wav</Source>
@@ -333,33 +369,6 @@
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
       <Time>2014-11-17T18:43:38.7768626-05:00</Time>
-    </Item>
-    <Item>
-      <Source>menufont.spritefont</Source>
-      <Name>menufont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
-    </Item>
-    <Item>
-      <Source>blank.png</Source>
-      <Name>blank</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
-    </Item>
-    <Item>
-      <Source>smallMenufont.spritefont</Source>
-      <Name>smallMenufont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
-      <Time>2014-11-19T16:12:49.2071964-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

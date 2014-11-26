@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace JSA_Game.HUD
         Vector2 hudPos;
         Rectangle hudRec;
         Texture2D hudText;
+        ArrayList charList;
 
         //Assisting Objects
         Bar_Section barSection;
@@ -40,7 +42,7 @@ namespace JSA_Game.HUD
 
         private Character selectedChar;
 
-        public HUD_Controller()
+        public HUD_Controller(ArrayList charList)
         {
             //Init Graphic Size
             hudSize = new Vector2(500, 100);
@@ -57,6 +59,7 @@ namespace JSA_Game.HUD
             //INIT Display Values
             hidden = true;
             hState = HUDState.showOriginal;
+            this.charList = charList;
         }
 
         public void LoadContent(ContentManager Content)

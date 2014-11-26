@@ -25,7 +25,7 @@ namespace JSA_Game.AI
         }
 
         //Stationary AI doesn't move
-        public void move()
+        public void move(GameTime gameTime)
         {  
         }
 

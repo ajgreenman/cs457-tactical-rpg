@@ -25,7 +25,7 @@ namespace JSA_Game.AI
             targetPos = new Vector2(-1, -1);
         }
 
-        public void move()
+        public void move(GameTime gameTime)
         {
             //Picks closest target
             int dist;
@@ -45,7 +45,7 @@ namespace JSA_Game.AI
             //Move towards target if found
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                currLevel.moveUnit(character.Pos, targetPos, true, true);
+                currLevel.moveUnit(gameTime, character.Pos, targetPos, true, true);
             }
         }
 

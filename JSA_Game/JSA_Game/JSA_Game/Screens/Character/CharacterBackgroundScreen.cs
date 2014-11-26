@@ -9,7 +9,7 @@ using GameStateManagement;
 
 namespace JSA_Game.Screens
 {
-    class TownBackgroundScreen : GameScreen
+    class CharacterBackgroundScreen : GameScreen
     {
         ContentManager content;
         Texture2D backgroundTexture;
@@ -17,7 +17,7 @@ namespace JSA_Game.Screens
         /// <summary>
         /// Constructor.
         /// </summary>
-        public TownBackgroundScreen()
+        public CharacterBackgroundScreen()
         {
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -34,7 +34,7 @@ namespace JSA_Game.Screens
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-                backgroundTexture = content.Load<Texture2D>("town");
+                backgroundTexture = content.Load<Texture2D>("stone_wall");
             }
         }
 
@@ -77,5 +77,3 @@ namespace JSA_Game.Screens
         }
     }
 }
- 
-
