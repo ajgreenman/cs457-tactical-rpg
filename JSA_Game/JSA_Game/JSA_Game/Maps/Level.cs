@@ -1161,7 +1161,7 @@ namespace JSA_Game.Maps
 
         public static void KillUnit(Character c)
         {
-
+            Game1.PlaySound("death");
         }
 
         private bool CheckKey(Keys theKey)

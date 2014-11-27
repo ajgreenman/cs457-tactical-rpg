@@ -45,3 +45,10 @@ Content\Audio\town.xnb
 Content\Audio\cursor.xnb
 Content\Audio\wind.xnb
 Content\Audio\horn.xnb
+Content\Audio\death1.xnb
+Content\Audio\death2.xnb
+Content\Audio\death3.xnb
+Content\Audio\death4.xnb
+Content\Audio\death5.xnb
+Content\Audio\death6.xnb
+Content\Audio\miss.xnb

@@ -65,6 +65,20 @@ namespace JSA_Game
         private static SoundEffectInstance windInstance;
         private static SoundEffect horn;
         private static SoundEffectInstance hornInstance;
+        private static SoundEffect death1;
+        private static SoundEffectInstance death1Instance;
+        private static SoundEffect death2;
+        private static SoundEffectInstance death2Instance;
+        private static SoundEffect death3;
+        private static SoundEffectInstance death3Instance;
+        private static SoundEffect death4;
+        private static SoundEffectInstance death4Instance;
+        private static SoundEffect death5;
+        private static SoundEffectInstance death5Instance;
+        private static SoundEffect death6;
+        private static SoundEffectInstance death6Instance;
+        private static SoundEffect miss;
+        private static SoundEffect defend;
 
         public Game1()
         {
@@ -103,7 +117,27 @@ namespace JSA_Game
             windInstance.Volume = 0.3f;
             horn = Content.Load<SoundEffect>("Audio\\horn");
             hornInstance = horn.CreateInstance();
-            hornInstance.Volume = 0.4f;
+            hornInstance.Volume = 0.6f;
+            death1 = Content.Load<SoundEffect>("Audio\\death1");
+            death1Instance = death1.CreateInstance();
+            death1Instance.Volume = 0.6f;
+            death2 = Content.Load<SoundEffect>("Audio\\death2");
+            death2Instance = death2.CreateInstance();
+            death2Instance.Volume = 0.6f;
+            death3 = Content.Load<SoundEffect>("Audio\\death3");
+            death3Instance = death3.CreateInstance();
+            death3Instance.Volume = 0.6f;
+            death4 = Content.Load<SoundEffect>("Audio\\death4");
+            death4Instance = death4.CreateInstance();
+            death4Instance.Volume = 0.6f;
+            death5 = Content.Load<SoundEffect>("Audio\\death5");
+            death5Instance = death5.CreateInstance();
+            death5Instance.Volume = 0.6f;
+            death6 = Content.Load<SoundEffect>("Audio\\death6");
+            death6Instance = death6.CreateInstance();
+            death6Instance.Volume = 0.6f;
+            miss = Content.Load<SoundEffect>("Audio\\miss");
+            defend = Content.Load<SoundEffect>("Audio\\defend");
             //Create screen factory and add to Services
             screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);
@@ -297,6 +331,15 @@ namespace JSA_Game
                         townInstance.Play();
                     }
                     break;
+                case "death":
+                    PlayDeathSound();
+                    break;
+                case "miss":
+                    miss.Play();
+                    break;
+                case "defend":
+                    defend.Play();
+                    break;
             }
         }
 
@@ -335,6 +378,34 @@ namespace JSA_Game
                 {
                     windInstance.Play();
                 }
+            }
+        }
+
+        private static void PlayDeathSound()
+        {
+            Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            int rand = rng.Next(0, 6);
+
+            switch (rand)
+            {
+                case 0:
+                    death1Instance.Play();
+                    break;
+                case 1:
+                    death2Instance.Play();
+                    break;
+                case 2:
+                    death3Instance.Play();
+                    break;
+                case 3:
+                    death4Instance.Play();
+                    break;
+                case 4:
+                    death5Instance.Play();
+                    break;
+                case 5:
+                    death6Instance.Play();
+                    break;
             }
         }
         

@@ -81,6 +81,7 @@ namespace JSA_Game
 
             attack = new Battle_Controller.Action();     // Default attack action.
             defend = new Battle_Controller.Action(true); // Default defend action.
+            wait = new Battle_Controller.Action(false);  // Default wait action.
             actions = new Battle_Controller.Action[4];   // Default number of possible actions.
 
             movement = STANDARD_STAT;

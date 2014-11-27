@@ -81,7 +81,7 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
-            if (action.Name != "Defend")
+            if (action.Name != "Defend" || action.Name != "Rest")
             {
                 if (target == null)
                 {
@@ -91,6 +91,7 @@ namespace JSA_Game.Battle_Controller
                 if (!didActionHit(action, user, target))
                 {
                     floatingTextLogic("Miss", user, 0);
+                    Game1.PlaySound("miss");
                     return false;
                 }
 
@@ -103,9 +104,22 @@ namespace JSA_Game.Battle_Controller
             }
             else
             {
-                user.Armor += 4;
-                user.Resist += 4;
-                floatingTextLogic("Defend", user, 0);
+                if (action.Name == "Defend")
+                {
+                    user.Armor += 4;
+                    user.Resist += 4;
+                    Game1.PlaySound(action.Sound);
+                    floatingTextLogic("Defend", user, 0);
+                }
+                else
+                {
+                    int value = ((int)(user.MaxHP * .1));
+                    user.CurrHp += value;
+                    user.CurrMp += ((int)(user.MaxMP * .1));
+                    Game1.PlaySound(action.Sound);
+                    floatingTextLogic("Heal", user, value);
+                }
+                
             }
             
 
