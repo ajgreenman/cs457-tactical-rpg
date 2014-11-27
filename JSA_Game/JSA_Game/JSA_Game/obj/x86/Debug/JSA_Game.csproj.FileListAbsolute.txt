@@ -47,3 +47,9 @@ C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\
 C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.exe
 C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.pdb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\battle.xnb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\title.xnb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\town.xnb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\cursor.xnb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\wind.xnb
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\horn.xnb

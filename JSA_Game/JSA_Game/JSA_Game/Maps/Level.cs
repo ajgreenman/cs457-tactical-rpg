@@ -102,6 +102,8 @@ namespace JSA_Game.Maps
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
 
+            Game1.PlaySound("battle");
+
             // Read the file and read it line by line.
             StreamReader file = new StreamReader("Levels/" + filename + ".txt");
             while ((line = file.ReadLine()) != null)

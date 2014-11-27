@@ -53,6 +53,18 @@ namespace JSA_Game
         private static SoundEffect shock_spell;
         private static SoundEffect swoosh;
         private static SoundEffect sword_attack;
+        private static SoundEffect battle;
+        private static SoundEffect cursor;
+        private static SoundEffectInstance cursorInstance;
+        private static SoundEffectInstance battleInstance;
+        private static SoundEffect title;
+        private static SoundEffectInstance titleInstance;
+        private static SoundEffect town;
+        private static SoundEffectInstance townInstance;
+        private static SoundEffect wind;
+        private static SoundEffectInstance windInstance;
+        private static SoundEffect horn;
+        private static SoundEffectInstance hornInstance;
 
         public Game1()
         {
@@ -62,6 +74,36 @@ namespace JSA_Game
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
 
+            Content.RootDirectory = "Content";
+
+            // Load Sounds
+            bow_attack = Content.Load<SoundEffect>("Audio\\bow_attack");
+            fire_spell = Content.Load<SoundEffect>("Audio\\fire_spell");
+            ice_spell = Content.Load<SoundEffect>("Audio\\ice_spell");
+            multishot = Content.Load<SoundEffect>("Audio\\multishot");
+            shock_spell = Content.Load<SoundEffect>("Audio\\shock_spell");
+            swoosh = Content.Load<SoundEffect>("Audio\\swoosh");
+            sword_attack = Content.Load<SoundEffect>("Audio\\sword_attack");
+            cursor = Content.Load<SoundEffect>("Audio\\cursor");
+            cursorInstance = cursor.CreateInstance();
+            battle = Content.Load<SoundEffect>("Audio\\battle");
+            battleInstance = battle.CreateInstance();
+            battleInstance.Volume = 0.5f;
+            battleInstance.IsLooped = true;
+            title = Content.Load<SoundEffect>("Audio\\title");
+            titleInstance = title.CreateInstance();
+            titleInstance.Volume = 0.5f;
+            titleInstance.IsLooped = true;
+            town = Content.Load<SoundEffect>("Audio\\town");
+            townInstance = town.CreateInstance();
+            townInstance.Volume = 0.5f;
+            townInstance.IsLooped = true;
+            wind = Content.Load<SoundEffect>("Audio\\wind");
+            windInstance = wind.CreateInstance();
+            windInstance.Volume = 0.3f;
+            horn = Content.Load<SoundEffect>("Audio\\horn");
+            hornInstance = horn.CreateInstance();
+            hornInstance.Volume = 0.4f;
             //Create screen factory and add to Services
             screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);
@@ -97,16 +139,7 @@ namespace JSA_Game
             //currLevel = (Level) levels[0];
 
 
-            Content.RootDirectory = "Content";
-
-            // Load Sounds
-            bow_attack = Content.Load<SoundEffect>("Audio\\bow_attack");
-            fire_spell = Content.Load<SoundEffect>("Audio\\fire_spell");
-            ice_spell = Content.Load<SoundEffect>("Audio\\ice_spell");
-            multishot = Content.Load<SoundEffect>("Audio\\multishot");
-            shock_spell = Content.Load<SoundEffect>("Audio\\shock_spell");
-            swoosh = Content.Load<SoundEffect>("Audio\\swoosh");
-            sword_attack = Content.Load<SoundEffect>("Audio\\sword_attack");
+           
         }
 
         private void AddInitialScreens()
@@ -215,7 +248,6 @@ namespace JSA_Game
 
 
         public static void PlaySound(String sound) {
-            Console.WriteLine(sound);
             switch (sound)
             {
                 case "bow_attack":
@@ -239,6 +271,70 @@ namespace JSA_Game
                 case "sword_attack":
                     sword_attack.Play();
                     break;
+                case "cursor":
+                    PlayAmbientSounds();
+                    cursorInstance.Volume = 0.2f;
+                    cursorInstance.Play();
+                    break;
+                case "battle":
+                    StopSounds();
+                    if(battleInstance.State == SoundState.Stopped)
+                    {
+                        battleInstance.Play();
+                    }
+                    break;
+                case "title":
+                    StopSounds();
+                    if(titleInstance.State == SoundState.Stopped)
+                    {
+                        titleInstance.Play();
+                    }
+                    break;
+                case "town":
+                    StopSounds();
+                    if (townInstance.State == SoundState.Stopped)
+                    {
+                        townInstance.Play();
+                    }
+                    break;
+            }
+        }
+
+        private static void StopSounds()
+        {
+            if (battleInstance != null)
+            {
+                battleInstance.Stop();
+            }
+
+            if (titleInstance != null)
+            {
+                titleInstance.Stop();
+            }
+
+            if (townInstance != null)
+            {
+                townInstance.Stop();
+            }
+        }
+
+        private static void PlayAmbientSounds()
+        {
+            Random rng1 = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+            int rand1 = rng1.Next(0, 100);
+            if (rand1 >= 95)
+            {
+                // 5% of the time play one of these sound effects.
+                Random rng2 = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+                int rand2 = rng2.Next(0, 100);
+                if (rand2 % 2 == 0)
+                {
+                    hornInstance.Play();
+                }
+                else
+                {
+                    windInstance.Play();
+                }
             }
         }
         

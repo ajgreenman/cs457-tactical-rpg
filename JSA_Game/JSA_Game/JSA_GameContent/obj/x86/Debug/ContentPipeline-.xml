@@ -370,6 +370,60 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb</Output>
       <Time>2014-11-24T18:10:52.8139347-05:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\battle.wav</Source>
+      <Name>Audio\battle</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\battle.xnb</Output>
+      <Time>2014-11-26T14:00:56.8835432-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\title.wav</Source>
+      <Name>Audio\title</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\title.xnb</Output>
+      <Time>2014-11-26T15:03:57.3041745-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\town.wav</Source>
+      <Name>Audio\town</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\town.xnb</Output>
+      <Time>2014-11-26T15:10:29.1546775-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cursor.wav</Source>
+      <Name>Audio\cursor</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\cursor.xnb</Output>
+      <Time>2014-11-26T21:33:11.1265921-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\wind.wav</Source>
+      <Name>Audio\wind</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\wind.xnb</Output>
+      <Time>2014-11-26T21:44:49.5769977-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\horn.wav</Source>
+      <Name>Audio\horn</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\horn.xnb</Output>
+      <Time>2014-11-26T21:49:35.614342-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID Null="true" />

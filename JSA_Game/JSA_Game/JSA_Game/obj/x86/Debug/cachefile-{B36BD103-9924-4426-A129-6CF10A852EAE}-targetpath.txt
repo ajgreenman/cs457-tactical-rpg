@@ -39,3 +39,9 @@ Content\blank.xnb
 Content\menufont.xnb
 Content\smallMenufont.xnb
 Content\town.xnb
+Content\Audio\battle.xnb
+Content\Audio\title.xnb
+Content\Audio\town.xnb
+Content\Audio\cursor.xnb
+Content\Audio\wind.xnb
+Content\Audio\horn.xnb
