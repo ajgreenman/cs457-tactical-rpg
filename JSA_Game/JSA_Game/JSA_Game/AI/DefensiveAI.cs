@@ -13,6 +13,8 @@ namespace JSA_Game.AI
     class DefensiveAI : iAI
     {
         private Level currLevel;
+        private Boolean friendly;
+        private const int FRIENDLY_CHANCE = 80;
         
         Character character;
         Vector2 targetPos;
@@ -23,6 +25,7 @@ namespace JSA_Game.AI
             character = c;
             currLevel = currentLevel;
             targetPos = new Vector2(-1, -1);
+            performFriendly();
         }
 
         public void move(GameTime gameTime)
@@ -31,7 +34,15 @@ namespace JSA_Game.AI
             int dist;
             int shortestDist = 64;
             targetPos = new Vector2(-1, -1);
-            ArrayList targetList = currLevel.PUnits.Contains(character) ? currLevel.EUnits : currLevel.PUnits;
+            ArrayList targetList;
+            if (friendly)
+            {
+                targetList = getFriendlyTargets();
+            }
+            else
+            {
+                targetList = getEnemyTargets();
+            }
             foreach (Character t in targetList)
             {
                 dist = currLevel.calcDist(character.Pos, t.Pos);
@@ -50,7 +61,7 @@ namespace JSA_Game.AI
         }
 
 
-        public void attack()
+        public void action()
         {
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
@@ -65,6 +76,57 @@ namespace JSA_Game.AI
         {
             get { return currLevel; }
             set { currLevel = value; }
+        }
+
+        private void performFriendly()
+        {
+            if (!hasFriendlyMove())
+            {
+                friendly = false;
+                return;
+            }
+
+            Random rand = new Random();
+            int value = rand.Next(0, 100);
+
+            friendly = value <= FRIENDLY_CHANCE;
+        }
+
+        private ArrayList getFriendlyTargets()
+        {
+            if (character.IsEnemy)
+            {
+                return currLevel.EUnits;
+            }
+            else
+            {
+                return currLevel.PUnits;
+            }
+        }
+
+        private ArrayList getEnemyTargets()
+        {
+            if (character.IsEnemy)
+            {
+                return currLevel.PUnits;
+            }
+            else
+            {
+                return currLevel.EUnits;
+            }
+        }
+
+        private Boolean hasFriendlyMove()
+        {
+            foreach (Battle_Controller.Action action in character.Actions)
+            {
+                if (action.Friendly)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

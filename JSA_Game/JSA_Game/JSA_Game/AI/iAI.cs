@@ -10,6 +10,6 @@ namespace JSA_Game.AI
     interface iAI
     {
         void move(GameTime gameTime);
-        void attack();
+        void action();
     }
 }

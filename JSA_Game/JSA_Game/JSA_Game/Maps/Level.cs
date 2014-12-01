@@ -1027,7 +1027,7 @@ namespace JSA_Game.Maps
                     foreach (Character c in eUnits)
                     {
                         c.AI.move(gameTime);
-                        c.AI.attack();
+                        c.AI.action();
                     }
 
 

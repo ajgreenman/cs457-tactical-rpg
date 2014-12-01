@@ -15,9 +15,9 @@ namespace JSA_Game
         protected String name = "Character";
 
         //Default Stats
-        protected const int STRONG_HPMP = 20;
-        protected const int STANDARD_HPMP = 15;
-        protected const int WEAK_HPMP = 10;
+        protected const int STRONG_HPMP = 25;
+        protected const int STANDARD_HPMP = 20;
+        protected const int WEAK_HPMP = 15;
         protected const int STRONG_STAT = 10;
         protected const int STANDARD_STAT = 5;
         protected const int WEAK_STAT = 2;
@@ -30,6 +30,7 @@ namespace JSA_Game
         // Actions
         private Battle_Controller.Action attack;
         private Battle_Controller.Action defend;
+        private Battle_Controller.Action wait;
         private Battle_Controller.Action[] actions;
 
         private Boolean isEnemy;
