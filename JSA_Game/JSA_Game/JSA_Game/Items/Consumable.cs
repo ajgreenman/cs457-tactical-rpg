@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
-    class Consumable : Item
+    public class Consumable : Item
     {
         private int uses;
         private Battle_Controller.Action action;

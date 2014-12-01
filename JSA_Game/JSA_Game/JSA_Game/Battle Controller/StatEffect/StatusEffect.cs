@@ -8,7 +8,7 @@ using JSA_Game.Maps;
 
 namespace JSA_Game.Battle_Controller.StatEffect
 {
-    abstract class StatusEffect
+    public abstract class StatusEffect
     {
         private string name;
         private string description;
@@ -25,7 +25,10 @@ namespace JSA_Game.Battle_Controller.StatEffect
             this.name = name;
             description = descrip;
             duration = dur;
-            this.expiration = dur + level.Turn;
+            if (level != null)
+            {
+                this.expiration = dur + level.Turn;
+            }
             affectedStats = affected;
             this.amount = amount;
             image = img;

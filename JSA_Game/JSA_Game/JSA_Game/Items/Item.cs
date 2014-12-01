@@ -5,7 +5,7 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
-    abstract class Item
+    public abstract class Item
     {
         protected String name;
         protected int worth;

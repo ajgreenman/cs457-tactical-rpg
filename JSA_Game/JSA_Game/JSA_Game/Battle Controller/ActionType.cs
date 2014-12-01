@@ -1,4 +1,4 @@
-﻿enum ActionType
+﻿public enum ActionType
 {
     Physical,
     Spell

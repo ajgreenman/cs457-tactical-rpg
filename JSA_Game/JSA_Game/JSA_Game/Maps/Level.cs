@@ -20,7 +20,7 @@ using JSA_Game.Maps.Tiles;
 
 namespace JSA_Game.Maps
 {
-    class Level
+    public class Level
     {
         const int TILE_IMAGE_COUNT = 3;
         const int UTILITY_IMAGE_COUNT = 2;
@@ -90,6 +90,8 @@ namespace JSA_Game.Maps
         float moveAnimDelay = 30;
 
         public bool isAnimatingAttack;
+
+
 
         /// <summary>
         /// Generates a level from a given text file
@@ -193,7 +195,6 @@ namespace JSA_Game.Maps
                     //Split string starting after identifying character and colon.
                     string[] param = line.Substring(2).Split(',');
                     int x, y;
-                    //width
                     x = Convert.ToInt32(param[0]);
                     y = Convert.ToInt32(param[1]);
 
@@ -209,23 +210,26 @@ namespace JSA_Game.Maps
                     {
                         c = new Archer(this, 1);
                     }
+
+                    //level
+                    LevelUpManager.LevelUpCharacter(c, Convert.ToInt32(param[3]));
                     //More
 
 
                     //Setting AI
-                    if (param[3].Equals("Aggressive"))
+                    if (param[4].Equals("Aggressive"))
                     {
                         c.AI = new AggressiveAI(c, this);
                     }
-                    else if (param[3].Equals("Defensive"))
+                    else if (param[4].Equals("Defensive"))
                     {
                         c.AI = new DefensiveAI(c, this);
                     }
-                    else if (param[3].Equals("Stationary"))
+                    else if (param[4].Equals("Stationary"))
                     {
                         c.AI = new StationaryAI(c, this);
                     }
-                    //More
+                    
 
                     addUnit(allyFlag, c, new Vector2(x, y));
                 }
@@ -986,8 +990,9 @@ namespace JSA_Game.Maps
                 else if (state == LevelState.Action)
                     ActionState.update(this, gameTime);
 
+              
 
-
+                
                 hud.Hidden = state != LevelState.CursorSelection;
                 if (hud.Hidden)
                 {

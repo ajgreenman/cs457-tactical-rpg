@@ -7,7 +7,7 @@ using JSA_Game.Maps;
 
 namespace JSA_Game.AI
 {
-    interface iAI
+    public interface iAI
     {
         void move(GameTime gameTime);
         void attack();

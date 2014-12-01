@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
+
 
 namespace JSA_Game.Screens
 {
     class TownScreen : MenuScreen
     {
+        //Saving variables
+        IAsyncResult result;
+        Object stateObj;
+        bool gameSaveRequested = false;
 
         public TownScreen()
             : base("Town", false, "left", 250, 20, Color.Black)
@@ -19,6 +26,7 @@ namespace JSA_Game.Screens
             MenuEntry placeHolderEntry = new MenuEntry("");
             MenuEntry manageCharactersMenuEntry = new MenuEntry("Characters");
             MenuEntry itemsMenuEntry = new MenuEntry("Items");
+            MenuEntry saveGameMenuEntry = new MenuEntry("Save Game");
             MenuEntry continueMenuEntry = new MenuEntry("Continue\nAdventure");
 
             //Menu event handlers
@@ -27,6 +35,7 @@ namespace JSA_Game.Screens
             churchMenuEntry.Selected += churchMenuEntrySelected;
             manageCharactersMenuEntry.Selected += manageCharactersEntrySelected;
             continueMenuEntry.Selected += continueMenuEntrySelected;
+            saveGameMenuEntry.Selected += saveGameEntrySelected;
 
             //Add entries to menu
             MenuEntries.Add(armoryMenuEntry);
@@ -38,6 +47,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(itemsMenuEntry);
 
             MenuEntries.Add(placeHolderEntry);
+            MenuEntries.Add(saveGameMenuEntry);
             MenuEntries.Add(continueMenuEntry);
         }
 
@@ -72,6 +82,14 @@ namespace JSA_Game.Screens
                 ScreenManager.AddScreen(new CharacterBackgroundScreen(), e.PlayerIndex);
                 ScreenManager.AddScreen(new CharacterScreen(), e.PlayerIndex);
             }
+
+        private void saveGameEntrySelected(object sender, PlayerIndexEventArgs e)
+            {
+                ScreenManager.AddScreen(new SaveGameBackgroundScreen(), e.PlayerIndex);
+                ScreenManager.AddScreen(new SaveGameScreen(), e.PlayerIndex);
+                
+            }
+          
 
             private void continueMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {

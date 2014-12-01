@@ -14,21 +14,18 @@
 /	Format: g:<x value>,<y value>,<land type>
 /
 / 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.)
-/	Format: p:<x value>,<y value>,<character class>
+/	Format: p:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
 / 'e' denotes an enemy unit: Needs the class and location (later will add level, equip, etc.)
-/	Format: e:<x value>,<y value>,<character class>
+/	Format: e:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
 
 / Level name: testLevel
 
-<<<<<<< HEAD
-i:10,10,3,3
-=======
-i:15,15,1,1
->>>>>>> 978fdf7a511afa3aed2ad94e8a845911fa79847b
-G:plains
 
+i:15,15,1,1
+
+G:plains
 
 
 g:1-3,4-5,water
@@ -49,16 +46,7 @@ g:5,13-14,stone_wall
 g:7,6-9,stone_wall
 
 
+p:0,0,Warrior,4,Aggressive
 
+e:8,8,Mage,2,Aggressive
 
-<<<<<<< HEAD
-p:0,0,Warrior,Aggressive
-p:0,1,Archer,Aggressive
-p:0,2,Mage,Aggressive
-e:9,7,Mage,Aggressive
-e:9,8,Warrior,Aggressive
-e:9,9,Archer,Aggressive
-=======
-p:12,1,Archer,Aggressive
-e:0,1,Mage,Aggressive
->>>>>>> 978fdf7a511afa3aed2ad94e8a845911fa79847b

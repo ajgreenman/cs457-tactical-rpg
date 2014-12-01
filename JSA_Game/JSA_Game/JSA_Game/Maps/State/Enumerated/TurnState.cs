@@ -1,4 +1,4 @@
-﻿enum TurnState
+﻿public enum TurnState
 {
     Player,
     Enemy

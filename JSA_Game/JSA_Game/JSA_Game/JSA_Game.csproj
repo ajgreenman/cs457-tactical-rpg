@@ -168,6 +168,9 @@
     <Compile Include="Screens\MainMenu\MainMenuBackgroundScreen.cs" />
     <Compile Include="Screens\MainMenu\MainMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />
+    <Compile Include="Screens\SaveLoad\SaveGameBackgroundScreen.cs" />
+    <Compile Include="Screens\SaveLoad\SaveGameData.cs" />
+    <Compile Include="Screens\SaveLoad\SaveGameScreen.cs" />
     <Compile Include="Screens\Town\TavernScreen.cs" />
     <Compile Include="Screens\Town\TownBackgroundScreen.cs" />
     <Compile Include="Screens\Util\MenuEntry.cs" />
