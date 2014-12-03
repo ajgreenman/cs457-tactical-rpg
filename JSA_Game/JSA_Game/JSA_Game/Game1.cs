@@ -83,6 +83,7 @@ namespace JSA_Game
             // Also, need a way to keep track of a character's AI option.  Need to
             // reinitialize the right one at the start of each level.  String would work.
             playerChars.Add(new Thief(null));
+            playerChars.Add(new Cleric(null));
 
             levels = new string[LEVEL_COUNT];
 
@@ -260,6 +261,10 @@ namespace JSA_Game
         {
             return currentLevel;
         }
+        public static void setCurrLevelNum(int levelNum)
+        {
+            currentLevel = levelNum;
+        }
 
         public static SpriteFont getSmallFont()
         {
@@ -274,6 +279,10 @@ namespace JSA_Game
         public static ArrayList getPlayerChars()
         {
             return playerChars;
+        }
+        public static void setPlayerChars(ArrayList chars)
+        {
+            playerChars = chars;
         }
     
     }

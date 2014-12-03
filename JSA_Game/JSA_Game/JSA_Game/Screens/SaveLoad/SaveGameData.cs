@@ -9,11 +9,15 @@ namespace JSA_Game.Screens
     public class SaveGameData
     {
         //For saving/loading
-        public string charName;
+        //public string charName;
         //public Character character;
         //public ArrayList playerChars;
         //public ArrayList inventory;
-        public int levelProgess;
+
+        
+        public CharacterSaveData[] characters = new CharacterSaveData[10];
+        //public CharacterSaveData character;
+        public int levelProgress;
         public int money;
     }
 }

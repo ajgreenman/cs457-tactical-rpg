@@ -5,6 +5,7 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
+    [Serializable]
     public abstract class Item
     {
         protected String name;

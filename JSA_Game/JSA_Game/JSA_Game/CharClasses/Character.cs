@@ -10,7 +10,6 @@ using JSA_Game.CharClasses;
 
 namespace JSA_Game
 {
-    [Serializable]
     public class Character
     {
         protected String name = "Character";

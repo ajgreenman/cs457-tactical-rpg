@@ -18,7 +18,6 @@ namespace JSA_Game.Screens
     {
         //Saving variables
         IAsyncResult result;
-        Object stateObj;
         bool gameSaveRequested = false;
 
         public SaveGameScreen()
@@ -106,13 +105,48 @@ namespace JSA_Game.Screens
         private void doSaveGame(StorageDevice device, int slotNum)
         {
             SaveGameData data = new SaveGameData();
+            ArrayList charList = Game1.getPlayerChars();
+            CharacterSaveData[] playerChars = new CharacterSaveData[charList.Count];
+            int i = 0;
+            foreach (Character c in charList)
+            {
+                System.Diagnostics.Debug.Print("Converting a " + c.ClassName + " into saved data");
+                CharacterSaveData charData = new CharacterSaveData();
+                charData.name = c.Name;
+                charData.className = c.ClassName;
+                charData.maxHP = c.MaxHP;
+                charData.maxMP = c.MaxMP;
+                charData.strength = c.Strength;
+                charData.accuracy = c.Accuracy;
+                charData.armor = c.Armor;
+                charData.dodge = c.Dodge;
+                charData.magic = c.Magic;
+                charData.resist = c.Resist;
+                charData.movement = c.Movement;
+                charData.level = c.Level;
+                charData.currExp = c.CurrExp;
+                charData.weapon = c.Weapon;
+                charData.protection = c.Protection;
 
-            Character c = (Character)Game1.getPlayerChars()[0];
-            data.charName = c.Name;
+                for (int j = 0; j < c.Inventory.Length; j++ )
+                {
+                    if (c.Inventory[j] == null) break;
+                    ConsumableSaveData consData = new ConsumableSaveData();
+                    consData.itemName = c.Inventory[j].Name;
+                    charData.inventory[j] = consData;
+                    
+                }
+                
+
+                playerChars[i] = charData;
+                i++;
+            }
+
             //data.character = c;
             //data.playerChars = Game1.getPlayerChars();
             //data.inventory = 
-            data.levelProgess = Game1.getCurrLevelNum();
+            data.characters = playerChars;
+            data.levelProgress = Game1.getCurrLevelNum();
             data.money = 5;  //Change later of course
 
             // Open a storage container.
@@ -136,8 +170,13 @@ namespace JSA_Game.Screens
             // Create the file.
             Stream stream = container.CreateFile(filename);
 
+            //Add extra types SaveGameData uses
+            Type[] extraTypes = new Type[2];
+            extraTypes[0] = typeof(CharacterSaveData);
+            extraTypes[1] = typeof(ConsumableSaveData);
+
             // Convert the object to XML data and put it in the stream.
-            XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData));
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveGameData), extraTypes);
             serializer.Serialize(stream, data);
 
             // Close the file.
@@ -187,9 +226,15 @@ namespace JSA_Game.Screens
             container.Dispose();
 
             // Report the data to the console.
-            System.Diagnostics.Debug.Print("Character name:     " + data.charName);
+            //System.Diagnostics.Debug.Print("Character name:     " + data.charName);
             //System.Diagnostics.Debug.Print("Character level:     " + data.character.Level);
-            System.Diagnostics.Debug.Print("Level:    " + data.levelProgess);
+            for (int i = 0; i < data.characters.Length; i++)
+            {
+                CharacterSaveData charData = data.characters[i];
+                System.Diagnostics.Debug.Print("Character Class:    " + charData.className);
+                System.Diagnostics.Debug.Print("Character Accuracy:    " + charData.accuracy);
+            }
+            System.Diagnostics.Debug.Print("Level:    " + data.levelProgress);
             System.Diagnostics.Debug.Print("Money: " + data.money);
         }
 
