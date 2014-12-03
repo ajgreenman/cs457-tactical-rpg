@@ -892,6 +892,11 @@ namespace JSA_Game.Maps
                 if (!BattleController.performAction(action, c, t))
                     System.Diagnostics.Debug.Print("Missed!");
                 System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+                c.ActionDisabled = true;
+            }
+            else
+            {
+                c.ActionDisabled = false;
             }
 
             if (t.CurrHp < 1)
@@ -907,7 +912,6 @@ namespace JSA_Game.Maps
                     pUnits.Remove(t);
                 }
             }
-            c.ActionDisabled = true;
            // scanForTargets(false, currPos, action.Range);
 
             //Check for win

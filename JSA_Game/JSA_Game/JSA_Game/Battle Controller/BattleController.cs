@@ -121,7 +121,6 @@ namespace JSA_Game.Battle_Controller
                 }
                 
             }
-            
 
             return true;
         }

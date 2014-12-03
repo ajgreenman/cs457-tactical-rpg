@@ -30,7 +30,7 @@ namespace JSA_Game
         // Actions
         private Battle_Controller.Action attack;
         private Battle_Controller.Action defend;
-        private Battle_Controller.Action wait;
+        private Battle_Controller.Action rest;
         private Battle_Controller.Action[] actions;
 
         private Boolean isEnemy;
@@ -82,7 +82,7 @@ namespace JSA_Game
 
             attack = new Battle_Controller.Action();     // Default attack action.
             defend = new Battle_Controller.Action(true); // Default defend action.
-            wait = new Battle_Controller.Action(false);  // Default wait action.
+            rest = new Battle_Controller.Action(false);  // Default rest action.
             actions = new Battle_Controller.Action[4];   // Default number of possible actions.
 
             movement = STANDARD_STAT;
