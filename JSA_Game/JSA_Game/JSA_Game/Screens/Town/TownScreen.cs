@@ -11,10 +11,6 @@ namespace JSA_Game.Screens
 {
     class TownScreen : MenuScreen
     {
-        //Saving variables
-        IAsyncResult result;
-        Object stateObj;
-        bool gameSaveRequested = false;
 
         public TownScreen()
             : base("Town", false, "left", 250, 20, Color.Black)

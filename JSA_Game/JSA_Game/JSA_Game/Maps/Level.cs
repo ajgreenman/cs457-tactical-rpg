@@ -201,19 +201,17 @@ namespace JSA_Game.Maps
 
                     if(param[2].Equals("Warrior"))
                     {
-                        c = new Warrior(this, 1);
+                        c = new Warrior(this, Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Mage"))
                     {
-                        c = new Mage(this, 1);
+                        c = new Mage(this, Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        c = new Archer(this, 1);
+                        c = new Archer(this, Convert.ToInt32(param[3]));
                     }
 
-                    //level
-                    LevelUpManager.LevelUpCharacter(c, Convert.ToInt32(param[3]));
                     //More
 
 
