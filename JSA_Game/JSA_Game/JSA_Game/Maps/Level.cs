@@ -105,6 +105,8 @@ namespace JSA_Game.Maps
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
 
+            Game1.PlaySound("battle");
+
             // Read the file and read it line by line.
             StreamReader file = new StreamReader("Levels/" + filename + ".txt");
             while ((line = file.ReadLine()) != null)
@@ -893,6 +895,11 @@ namespace JSA_Game.Maps
                 if (!BattleController.performAction(action, c, t))
                     System.Diagnostics.Debug.Print("Missed!");
                 System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+                c.ActionDisabled = true;
+            }
+            else
+            {
+                c.ActionDisabled = false;
             }
 
             if (t.CurrHp < 1)
@@ -908,7 +915,6 @@ namespace JSA_Game.Maps
                     pUnits.Remove(t);
                 }
             }
-            c.ActionDisabled = true;
            // scanForTargets(false, currPos, action.Range);
 
             //Check for win
@@ -1036,7 +1042,7 @@ namespace JSA_Game.Maps
                     foreach (Character c in eUnits)
                     {
                         c.AI.move(gameTime);
-                        c.AI.attack();
+                        c.AI.action();
                     }
 
 
@@ -1171,7 +1177,7 @@ namespace JSA_Game.Maps
 
         public static void KillUnit(Character c)
         {
-
+            Game1.PlaySound("death");
         }
 
         private bool CheckKey(Keys theKey)

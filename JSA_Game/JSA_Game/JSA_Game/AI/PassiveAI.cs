@@ -29,7 +29,7 @@ namespace JSA_Game.AI
         }
 
 
-        public void attack()
+        public void action()
         {
         }
         public Level CurrLevel

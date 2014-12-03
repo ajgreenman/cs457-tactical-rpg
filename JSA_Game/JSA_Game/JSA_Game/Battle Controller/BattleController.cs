@@ -81,7 +81,7 @@ namespace JSA_Game.Battle_Controller
         /// <returns>True if the action was successful (didn't miss), false otherwise.</returns>
         public static Boolean performAction(Action action, Character user, Character target)
         {
-            if (action.Name != "Defend")
+            if (action.Name != "Defend" || action.Name != "Rest")
             {
                 if (target == null)
                 {
@@ -90,6 +90,8 @@ namespace JSA_Game.Battle_Controller
 
                 if (!didActionHit(action, user, target))
                 {
+                    floatingTextLogic("Miss", user, 0);
+                    Game1.PlaySound("miss");
                     return false;
                 }
 
@@ -102,10 +104,23 @@ namespace JSA_Game.Battle_Controller
             }
             else
             {
-                user.Armor += 4;
-                user.Resist += 4;
+                if (action.Name == "Defend")
+                {
+                    user.Armor += 4;
+                    user.Resist += 4;
+                    Game1.PlaySound(action.Sound);
+                    floatingTextLogic("Defend", user, 0);
+                }
+                else
+                {
+                    int value = ((int)(user.MaxHP * .1));
+                    user.CurrHp += value;
+                    user.CurrMp += ((int)(user.MaxMP * .1));
+                    Game1.PlaySound(action.Sound);
+                    floatingTextLogic("Heal", user, value);
+                }
+                
             }
-            
 
             return true;
         }
@@ -258,7 +273,17 @@ namespace JSA_Game.Battle_Controller
                 amount += BASE_SPELL;
             }
 
-            target.CurrHp -= calculateActionAmount(user, action, amount);
+            int value = calculateActionAmount(user, action, amount);
+            target.CurrHp -= value;
+
+            if (action.Friendly)
+            {
+                floatingTextLogic("Heal", user, value);
+            }
+            else
+            {
+                floatingTextLogic("Attack", user, value);
+            }
 
             if (target.CurrHp <= 0)
             {
@@ -513,5 +538,39 @@ namespace JSA_Game.Battle_Controller
 
             return false;
         }
+        private static void floatingTextLogic(String actionType, Character user, int amount)
+        {
+            switch (actionType)
+            {
+                case "Defend":
+                    user.CurrDamage = -1;
+                    user.CurrHealing = -1;
+                    user.Miss = false;
+                    user.DidDefend = true;
+                    break;
+                case "Attack":
+                    user.CurrDamage = amount;
+                    user.CurrHealing = -1;
+                    user.Miss = false;
+                    user.DidDefend = false;
+                    break;
+                case "Heal":
+                    user.CurrDamage = -1;
+                    user.CurrHealing = amount;
+                    user.Miss = false;
+                    user.DidDefend = false;
+                    break;
+                case "Miss":
+                    user.CurrDamage = -1;
+                    user.CurrHealing = -1;
+                    user.Miss = true;
+                    user.DidDefend = false;
+                    break;
+            }
+
+            user.Set = true;
+        }
     }
 }
+
+

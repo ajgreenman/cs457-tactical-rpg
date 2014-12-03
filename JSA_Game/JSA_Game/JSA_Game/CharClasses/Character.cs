@@ -15,9 +15,9 @@ namespace JSA_Game
         protected String name = "Character";
 
         //Default Stats
-        protected const int STRONG_HPMP = 20;
-        protected const int STANDARD_HPMP = 15;
-        protected const int WEAK_HPMP = 10;
+        protected const int STRONG_HPMP = 25;
+        protected const int STANDARD_HPMP = 20;
+        protected const int WEAK_HPMP = 15;
         protected const int STRONG_STAT = 10;
         protected const int STANDARD_STAT = 5;
         protected const int WEAK_STAT = 2;
@@ -30,6 +30,7 @@ namespace JSA_Game
         // Actions
         private Battle_Controller.Action attack;
         private Battle_Controller.Action defend;
+        private Battle_Controller.Action rest;
         private Battle_Controller.Action[] actions;
 
         private Boolean isEnemy;
@@ -44,6 +45,12 @@ namespace JSA_Game
         private Vector2 pos;
 
         //AI
+        private string aiType;
+        public string AiType
+        {
+            get { return aiType; }
+            set { aiType = value; }
+        }
         private iAI ai;
 
         //Image
@@ -81,6 +88,7 @@ namespace JSA_Game
 
             attack = new Battle_Controller.Action();     // Default attack action.
             defend = new Battle_Controller.Action(true); // Default defend action.
+            rest = new Battle_Controller.Action(false);  // Default rest action.
             actions = new Battle_Controller.Action[4];   // Default number of possible actions.
 
             movement = STANDARD_STAT;
@@ -96,46 +104,6 @@ namespace JSA_Game
             miss = false;
             didDefend = false;
             set = false;
-        }
-
-        public Character(String name, int maxHp, int maxMp, int currHp, int currMp,
-            int strength, int armor, int accuracy, int dodge, int magic, int resist,
-            Items.Weapon weapon, Items.Protection protection, Items.Consumable[] inventory, Status[] status,
-            Battle_Controller.Action attack, Battle_Controller.Action[] actions, Battle_Controller.Action defend, 
-            int movement, int charLevel, bool isEnemy, bool moveDisabled, bool actionDisabled,
-            Vector2 pos, String texture, iAI ai, int currDamage, int currHealing, bool miss, bool set, bool didDefend)
-        {
-            this.name = name;
-            this.maxHP = maxHp;
-            this.maxMP = maxMp;
-            this.currHp = currHp;
-            this.currMp = currMp;
-            this.strength = strength;
-            this.armor = armor;
-            this.accuracy = accuracy;
-            this.dodge = dodge;
-            this.magic = magic;
-            this.resist = resist;
-            this.weapon = weapon;
-            this.protection = protection;
-            this.inventory = inventory;
-            this.status = status;
-            this.attack = attack;
-            this.actions = actions;
-            this.defend = defend;
-            this.movement = movement;
-            this.charLevel = charLevel;
-            this.isEnemy = isEnemy;
-            this.moveDisabled = moveDisabled;
-            this.actionDisabled = actionDisabled;
-            this.pos = pos;
-            this.texture = texture;
-            this.ai = ai;
-            this.currDamage = currDamage;
-            this.currHealing = currHealing;
-            this.miss = miss;
-            this.set = set;
-            this.didDefend = didDefend;
         }
 
         public int yieldExp()
