@@ -73,6 +73,7 @@ namespace JSA_Game.HUD
             statSection.LoadContent(Content);
             effectSection.LoadContent(Content);
             buttonSection.LoadContent(Content);
+            comText.LoadContent(Content);
         }
 
         public void characterSelect(Character c)
