@@ -95,6 +95,7 @@ namespace JSA_Game.Battle_Controller
                     return false;
                 }
 
+                Console.WriteLine(action.Name);
                 calculateAction(action, user, target);
 
                 if (!action.Aoe)
