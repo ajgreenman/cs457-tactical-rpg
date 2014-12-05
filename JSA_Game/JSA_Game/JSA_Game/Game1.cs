@@ -158,8 +158,8 @@ namespace JSA_Game
             // a level as a parameter.  This will be set when a level initializes.
             // Also, need a way to keep track of a character's AI option.  Need to
             // reinitialize the right one at the start of each level.  String would work.
-            playerChars.Add(new Thief(null));
-            playerChars.Add(new Cleric(null));
+            playerChars.Add(new Warrior(null));
+            playerChars.Add(new Mage(null));
 
             levels = new string[LEVEL_COUNT];
 

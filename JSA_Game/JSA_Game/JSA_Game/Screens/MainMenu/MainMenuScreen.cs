@@ -35,7 +35,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(newGameMenuEntry);
             MenuEntries.Add(loadGameMenuEntry);
             MenuEntries.Add(exitMenuEntry);
-            MenuEntries.Add(testMenuEntry);
+            //MenuEntries.Add(testMenuEntry);
 
             // Sound
             Game1.PlaySound("title");
@@ -53,6 +53,11 @@ namespace JSA_Game.Screens
 
             //First Level
             ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName()), e.PlayerIndex);
+
+            //With loading screen
+            //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+            //    new LevelScreen(Game1.getNextLevelName()));
+
 
             //ScreenManager.AddScreen(new TownBackgroundScreen(), null);
            // ScreenManager.AddScreen(new TownScreen(), null);

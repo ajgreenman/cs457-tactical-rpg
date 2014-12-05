@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -56,6 +56,8 @@ namespace JSA_Game.Screens
             {
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+                //Thread.Sleep(10000);
 
                 ScreenManager.Game.ResetElapsedTime();
                 currLevel.loadContent(content);

@@ -88,6 +88,7 @@ namespace JSA_Game.Screens
 
             if ((gameSaveRequested) && (result.IsCompleted))
             {
+                gameSaveRequested = false;
                 StorageDevice device = StorageDevice.EndShowSelector(result);
                 if (device != null && device.IsConnected)
                 {
@@ -150,7 +151,7 @@ namespace JSA_Game.Screens
             data.money = 5;  //Change later of course
 
             // Open a storage container.
-            IAsyncResult result = device.BeginOpenContainer("JSA_Game", null, null);
+            IAsyncResult result = device.BeginOpenContainer("JSA_Game_Saves", null, null);
 
             // Wait for the WaitHandle to become signaled.
             result.AsyncWaitHandle.WaitOne();

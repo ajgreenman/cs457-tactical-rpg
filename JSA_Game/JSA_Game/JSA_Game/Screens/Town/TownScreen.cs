@@ -61,10 +61,10 @@ namespace JSA_Game.Screens
 
             private void tavernMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-               // const string message = "Tavern currently unavailable.";
-               // MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
-               // ScreenManager.AddScreen(tavernMessageBox, null);
-                ScreenManager.AddScreen(new TavernScreen(), e.PlayerIndex);
+                const string message = "Tavern currently unavailable.";
+                MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
+                ScreenManager.AddScreen(tavernMessageBox, null);
+               // ScreenManager.AddScreen(new TavernScreen(), e.PlayerIndex);
 
             }
 
@@ -84,8 +84,7 @@ namespace JSA_Game.Screens
         private void saveGameEntrySelected(object sender, PlayerIndexEventArgs e)
             {
                 ScreenManager.AddScreen(new SaveGameBackgroundScreen(), e.PlayerIndex);
-                ScreenManager.AddScreen(new SaveGameScreen(), e.PlayerIndex);
-                
+                ScreenManager.AddScreen(new SaveGameScreen(), e.PlayerIndex);         
             }
           
 

@@ -176,6 +176,7 @@
     <Compile Include="Screens\SaveLoad\SaveGameScreen.cs" />
     <Compile Include="Screens\Town\TavernScreen.cs" />
     <Compile Include="Screens\Town\TownBackgroundScreen.cs" />
+    <Compile Include="Screens\Util\LoadingScreen.cs" />
     <Compile Include="Screens\Util\MenuEntry.cs" />
     <Compile Include="Screens\Util\MenuScreen.cs" />
     <Compile Include="Screens\Util\MessageBoxScreen.cs" />
