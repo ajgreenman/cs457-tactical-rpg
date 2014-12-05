@@ -20,7 +20,7 @@ using JSA_Game.Maps.Tiles;
 
 namespace JSA_Game.Maps
 {
-    class Level
+    public class Level
     {
         const int TILE_IMAGE_COUNT = 3;
         const int UTILITY_IMAGE_COUNT = 2;
@@ -86,10 +86,13 @@ namespace JSA_Game.Maps
         Vector2 moveAnimCurrPos;
         Vector2 moveAnimDestPos;
         Vector2 moveAnimFinalPos;
+        Stack moveAnimPath;
         float moveAnimTimeElapsed;
         float moveAnimDelay = 30;
 
         public bool isAnimatingAttack;
+
+
 
         /// <summary>
         /// Generates a level from a given text file
@@ -101,6 +104,8 @@ namespace JSA_Game.Maps
            
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
+
+            Game1.PlaySound("battle");
 
             // Read the file and read it line by line.
             StreamReader file = new StreamReader("Levels/" + filename + ".txt");
@@ -193,39 +198,39 @@ namespace JSA_Game.Maps
                     //Split string starting after identifying character and colon.
                     string[] param = line.Substring(2).Split(',');
                     int x, y;
-                    //width
                     x = Convert.ToInt32(param[0]);
                     y = Convert.ToInt32(param[1]);
 
                     if(param[2].Equals("Warrior"))
                     {
-                        c = new Warrior(this, 1);
+                        c = new Warrior(this, Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Mage"))
                     {
-                        c = new Mage(this, 1);
+                        c = new Mage(this, Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        c = new Archer(this, 1);
+                        c = new Archer(this, Convert.ToInt32(param[3]));
                     }
+
                     //More
 
 
                     //Setting AI
-                    if (param[3].Equals("Aggressive"))
+                    if (param[4].Equals("Aggressive"))
                     {
                         c.AI = new AggressiveAI(c, this);
                     }
-                    else if (param[3].Equals("Defensive"))
+                    else if (param[4].Equals("Defensive"))
                     {
                         c.AI = new DefensiveAI(c, this);
                     }
-                    else if (param[3].Equals("Stationary"))
+                    else if (param[4].Equals("Stationary"))
                     {
                         c.AI = new StationaryAI(c, this);
                     }
-                    //More
+                    
 
                     addUnit(allyFlag, c, new Vector2(x, y));
                 }
@@ -332,12 +337,12 @@ namespace JSA_Game.Maps
         /// <param name="moveIfInRange">If the AI only wants to move if the target is in range</param>
         public void moveUnit(GameTime gameTime, Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
-            Stack path = findPath(startPos, endPos);
+            moveAnimPath = findPath(startPos, endPos);
             //if path exists
-            if (path.Count > 0)
+            if (moveAnimPath.Count > 0)
             {
                 //If character will only move if a target is in range
-                if (!moveIfInRange || path.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement+2)
+                if (!moveIfInRange || moveAnimPath.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement + 2)
                 {
                     int remMovement;
                     Character unit;
@@ -360,15 +365,15 @@ namespace JSA_Game.Maps
                     }
 
                     //Starting position
-                    Vector2 pos = (Vector2)path.Pop();
-                    while (remMovement > 0 && path.Count > stop)
+                    Vector2 pos = (Vector2)moveAnimPath.Pop();
+                    while (remMovement > 0 && moveAnimPath.Count > stop)
                     {
                         int xPos = (int)pos.X;
                         int yPos = (int)pos.Y;
                         //Character c;
                         Vector2 next;
-                        next = (Vector2)path.Pop();
-                        if (path.Count == stop || remMovement == 1)
+                        next = (Vector2)moveAnimPath.Pop();
+                        if (moveAnimPath.Count == stop || remMovement == 1)
                         {
                             moveAnimFinalPos = next;
                         }
@@ -376,7 +381,7 @@ namespace JSA_Game.Maps
                         moveAnimCurrPos = pos;
                         moveAnimDestPos = next;
                         isAnimatingMove = true;
-                        System.Diagnostics.Debug.Print("Animating Movement...");
+                       // System.Diagnostics.Debug.Print("Animating Movement...");
                         animateMove(gameTime);
                         pos = next;
                         remMovement--;
@@ -422,7 +427,7 @@ namespace JSA_Game.Maps
 
 
                 isAnimatingMove = false;
-                System.Diagnostics.Debug.Print("Destination Reached");
+               // System.Diagnostics.Debug.Print("Destination Reached");
                 moveAnimFinalPos = new Vector2(-1, -1);
             }
         }
@@ -890,6 +895,11 @@ namespace JSA_Game.Maps
                 if (!BattleController.performAction(action, c, t))
                     System.Diagnostics.Debug.Print("Missed!");
                 System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+                c.ActionDisabled = true;
+            }
+            else
+            {
+                c.ActionDisabled = false;
             }
 
             if (t.CurrHp < 1)
@@ -905,7 +915,6 @@ namespace JSA_Game.Maps
                     pUnits.Remove(t);
                 }
             }
-            c.ActionDisabled = true;
            // scanForTargets(false, currPos, action.Range);
 
             //Check for win
@@ -969,63 +978,71 @@ namespace JSA_Game.Maps
         /// <param name="gameTime">GameTime sent from main class</param>
         public void update(GameTime gameTime)
         {
-            keyboardState = Keyboard.GetState();
-            KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-
-            //Animate cursor
-            cursor.animate(gameTime);
-
-            if (playerTurn == TurnState.Player)
+            if (isAnimatingMove)
             {
-                if (state == LevelState.CursorSelection)
-                    CursorSelection.update(this, gameTime);
-                else if (state == LevelState.Selected)
-                    Selected.update(this, gameTime);
-                else if (state == LevelState.Movement)
-                    Movement.update(this, gameTime);
-                else if (state == LevelState.Action)
-                    ActionState.update(this, gameTime);
-
-
-
-                hud.Hidden = state != LevelState.CursorSelection;
-                if (hud.Hidden)
-                {
-                    hud.ButtonSelect(keyboard);
-                }
-                moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-
-                //Prevents holding a button to continuously activate events
-                if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
-                {
-                    moveTimeElapsed = cursorMoveDelay - 20;
-                }
-                if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
-                    keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
-                {
-                    buttonPressed = false;
-                }
-                if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
-                    keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
-                    keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
-                {
-                    buttonPressed = true;
-                }
-
+                //Continue to animate
             }
+            //otherwise listen for input
 
-            //Enemy turn
             else
             {
+                keyboardState = Keyboard.GetState();
+                KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
 
-                if (!isAnimatingMove)
+                //Animate cursor
+                cursor.animate(gameTime);
+
+                if (playerTurn == TurnState.Player)
                 {
+                    if (state == LevelState.CursorSelection)
+                        CursorSelection.update(this, gameTime);
+                    else if (state == LevelState.Selected)
+                        Selected.update(this, gameTime);
+                    else if (state == LevelState.Movement)
+                        Movement.update(this, gameTime);
+                    else if (state == LevelState.Action)
+                        ActionState.update(this, gameTime);
+
+
+
+
+                    hud.Hidden = state != LevelState.CursorSelection;
+                    if (hud.Hidden)
+                    {
+                        hud.ButtonSelect(keyboard);
+                    }
+                    moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+
+                    //Prevents holding a button to continuously activate events
+                    if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
+                    {
+                        moveTimeElapsed = cursorMoveDelay - 20;
+                    }
+                    if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
+                        keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
+                    {
+                        buttonPressed = false;
+                    }
+                    if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
+                        keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
+                        keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
+                    {
+                        buttonPressed = true;
+                    }
+
+                }
+
+                //Enemy turn
+                else
+                {
+
+
                     //Each enemy turn
                     foreach (Character c in eUnits)
                     {
                         c.AI.move(gameTime);
-                        c.AI.attack();
+                        c.AI.action();
                     }
 
 
@@ -1037,14 +1054,14 @@ namespace JSA_Game.Maps
                     }
                     System.Diagnostics.Debug.Print("Player's turn");
 
-                playerTurn = TurnState.Player;
-                foreach (Character c in pUnits)
-                {
-                    c.MoveDisabled = false;
-                    c.ActionDisabled = false;
-                }
-                System.Diagnostics.Debug.Print("Player's turn");
-                Battle_Controller.BattleController.newTurn(this);
+                    playerTurn = TurnState.Player;
+                    foreach (Character c in pUnits)
+                    {
+                        c.MoveDisabled = false;
+                        c.ActionDisabled = false;
+                    }
+                    System.Diagnostics.Debug.Print("Player's turn");
+                    Battle_Controller.BattleController.newTurn(this);
 
 
                     //Check for loss
@@ -1054,8 +1071,9 @@ namespace JSA_Game.Maps
                         winState = WinLossState.Loss;
                     }
                 }
+
+                oldKeyboardState = keyboardState;
             }
-            oldKeyboardState = keyboardState;
         }
         
 
@@ -1159,7 +1177,7 @@ namespace JSA_Game.Maps
 
         public static void KillUnit(Character c)
         {
-
+            Game1.PlaySound("death");
         }
 
         private bool CheckKey(Keys theKey)

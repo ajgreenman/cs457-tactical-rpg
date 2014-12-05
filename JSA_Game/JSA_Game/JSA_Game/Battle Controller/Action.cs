@@ -8,7 +8,8 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace JSA_Game.Battle_Controller
 {
-    class Action
+    [Serializable]
+    public class Action
     {
         private String name, description;
         private StatType[] statCost;
@@ -87,7 +88,24 @@ namespace JSA_Game.Battle_Controller
                 this.cost = 0;
                 this.range = 0;
                 this.aoeRange = 0;
-                this.sound = "swoosh";
+                this.sound = "defend";
+            }
+            else
+            {
+                // Rest
+                this.name = "Rest";
+                this.description = "Rest for a turn, gaining a small amount of health.";
+                this.actionEffect = null;
+                this.statCost = new StatType[] { StatType.Hp };
+                this.type = ActionType.Spell;
+                this.ignoreEnemyStats = false;
+                this.friendly = true;
+                this.aoe = false;
+                this.powerMultipler = 1.0;
+                this.cost = 0;
+                this.range = 0;
+                this.aoeRange = 0;
+                this.sound = "rest";
             }
         }
 

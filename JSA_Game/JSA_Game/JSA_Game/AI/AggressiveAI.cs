@@ -51,7 +51,7 @@ namespace JSA_Game.AI
         }
 
 
-        public void attack()
+        public void action()
         {
 
             if (!targetPos.Equals(new Vector2(-1, -1)))
@@ -68,5 +68,6 @@ namespace JSA_Game.AI
             get { return currLevel; }
             set { currLevel = value; }
         }
+
     }
 }

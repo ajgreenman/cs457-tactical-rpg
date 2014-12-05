@@ -16,7 +16,8 @@ namespace JSA_Game.CharClasses
             Texture = "Mage";
             name = "Mage";
             className = "Mage";
-            AI = new AggressiveAI(this, level);
+            //AI = new AggressiveAI(this, level);
+            AiType = "Aggressive";
 
             MaxHP = STANDARD_HPMP;
             MaxMP = STRONG_HPMP;
@@ -32,7 +33,7 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionFireball = new Battle_Controller.Action("Fireball", "Blast the enemy with a raging fireball.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "fire_spell");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 4, 5, 0, "fire_spell");
             Actions[0] = actionFireball;
 
             Battle_Controller.Action actionShock = new Battle_Controller.Action("Shock",
@@ -44,7 +45,7 @@ namespace JSA_Game.CharClasses
             Battle_Controller.Action actionSlow = new Battle_Controller.Action("Slow", "Slows the enemy, lowering dodge and movement.",
                 new Status("Slow", "Slowed, lowering dodge and movement.", 2, level, new StatType[] { StatType.Movement, StatType.Dodge },
                     new int[] { 2, 4 }, "", false, false),
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 3, 5, 0, "swoosh");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 4, 5, 0, "swoosh");
             Actions[2] = actionSlow;
 
             Battle_Controller.Action actionIceBolt = new Battle_Controller.Action("Ice Bolt", "Shoot a frosty bolt of ice at the enemy. May freeze the enemy",

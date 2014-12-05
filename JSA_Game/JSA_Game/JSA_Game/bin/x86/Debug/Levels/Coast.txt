@@ -11,8 +11,8 @@ g:3-6,6,water
 
 
 
-p:0,3,Warrior,Aggressive
-p:0,6,Archer,Stationary
+p:0,3,Warrior,4,Aggressive
+p:0,6,Archer,4,Stationary
 
-e:7,4,Warrior,Aggressive
-e:9,5,Mage,Defensive
+e:7,4,Warrior,3,Aggressive
+e:9,5,Mage,3,Defensive

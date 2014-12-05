@@ -50,7 +50,7 @@ namespace JSA_Game.CharClasses
 
         private static int getExpPerLevel(int level)
         {
-            int[] values = {0, 2, 6, 14, 30, 62, 126, 254, 510};
+            int[] values = {0, 2, 6, 14, 30, 62, 126, 254, 510, 1022, 2046};
 
             return values[level];
         }

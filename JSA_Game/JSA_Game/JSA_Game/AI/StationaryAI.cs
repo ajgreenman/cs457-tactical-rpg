@@ -30,7 +30,7 @@ namespace JSA_Game.AI
         }
 
         //Attack only targets in range
-        public void attack()
+        public void action()
         {
             //Find target
             int dist;

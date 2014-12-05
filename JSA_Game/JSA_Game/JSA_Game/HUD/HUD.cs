@@ -13,7 +13,7 @@ using System.Diagnostics;
 
 namespace JSA_Game.HUD
 {
-    class HUD_Controller
+    public class HUD_Controller
     {
         //HUD Graphic 
         Vector2 hudSize;

@@ -1,4 +1,4 @@
-﻿enum WinLossState
+﻿public enum WinLossState
 {
     Win,
     InProgess,

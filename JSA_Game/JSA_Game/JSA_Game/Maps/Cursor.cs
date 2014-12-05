@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace JSA_Game.Maps
 {
-    class Cursor
+    public class Cursor
     {
 
         //Texture2D cursor;
@@ -181,21 +181,25 @@ namespace JSA_Game.Maps
             //{
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
+                    Game1.PlaySound("cursor");
                     cursorPos.X--;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != width - 1)
                 {
+                    Game1.PlaySound("cursor");
                     cursorPos.X++;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Up) && cursorPos.Y != 0)
                 {
+                    Game1.PlaySound("cursor");
                     cursorPos.Y--;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != height - 1)
                 {
+                    Game1.PlaySound("cursor");
                     cursorPos.Y++;
                     return true;
                 }
@@ -210,6 +214,10 @@ namespace JSA_Game.Maps
         /// <param name="dir">Direction to move the cursor: l = left, r = right, u = up, d = down</param>
         public void moveCursorDir(char dir)
         {
+            if (dir != '0')
+            {
+                Game1.PlaySound("cursor");
+            }
             switch(dir)
             {
                 case 'l': cursorPos.X--; break;

@@ -308,6 +308,15 @@
       <Time>2014-12-03T22:00:43.248678-05:00</Time>
     </Item>
     <Item>
+      <Source>FloatingFont.spritefont</Source>
+      <Name>FloatingFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb</Output>
+      <Time>2014-12-05T16:09:36.5013841-05:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\fire_spell.wav</Source>
       <Name>Audio\fire_spell</Name>
       <Importer>WavImporter</Importer>
@@ -371,13 +380,130 @@
       <Time>2014-11-17T12:04:14.5104864-05:00</Time>
     </Item>
     <Item>
-      <Source>FloatingFont.spritefont</Source>
-      <Name>FloatingFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
+      <Source>Audio\battle.wav</Source>
+      <Name>Audio\battle</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb</Output>
-      <Time>2014-12-05T14:12:14.9558161-05:00</Time>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\battle.xnb</Output>
+      <Time>2014-12-05T16:09:50.2921729-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\title.wav</Source>
+      <Name>Audio\title</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\title.xnb</Output>
+      <Time>2014-12-05T16:09:50.4071794-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\town.wav</Source>
+      <Name>Audio\town</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\town.xnb</Output>
+      <Time>2014-12-05T16:09:50.6121912-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cursor.wav</Source>
+      <Name>Audio\cursor</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\cursor.xnb</Output>
+      <Time>2014-12-05T16:09:50.2961731-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\wind.wav</Source>
+      <Name>Audio\wind</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\wind.xnb</Output>
+      <Time>2014-12-05T16:09:50.6291921-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\horn.wav</Source>
+      <Name>Audio\horn</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\horn.xnb</Output>
+      <Time>2014-12-05T16:09:50.3441758-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death1.wav</Source>
+      <Name>Audio\death1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death1.xnb</Output>
+      <Time>2014-12-05T16:09:50.2991733-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death2.wav</Source>
+      <Name>Audio\death2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death2.xnb</Output>
+      <Time>2014-12-05T16:09:50.3041736-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death3.wav</Source>
+      <Name>Audio\death3</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death3.xnb</Output>
+      <Time>2014-12-05T16:09:50.3101739-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death4.wav</Source>
+      <Name>Audio\death4</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death4.xnb</Output>
+      <Time>2014-12-05T16:09:50.3171743-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death5.wav</Source>
+      <Name>Audio\death5</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death5.xnb</Output>
+      <Time>2014-12-05T16:09:50.3201745-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\death6.wav</Source>
+      <Name>Audio\death6</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death6.xnb</Output>
+      <Time>2014-12-05T16:09:50.3241747-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\miss.wav</Source>
+      <Name>Audio\miss</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\miss.xnb</Output>
+      <Time>2014-12-05T16:09:50.347176-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\defend.wav</Source>
+      <Name>Audio\defend</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\defend.xnb</Output>
+      <Time>2014-12-05T16:09:50.329175-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

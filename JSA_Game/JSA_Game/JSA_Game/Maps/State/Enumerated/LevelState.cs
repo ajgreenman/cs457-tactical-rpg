@@ -1,4 +1,4 @@
-﻿enum LevelState
+﻿public enum LevelState
 {
     CursorSelection,
     Selected,

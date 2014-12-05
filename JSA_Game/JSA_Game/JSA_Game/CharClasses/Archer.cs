@@ -13,7 +13,8 @@ namespace JSA_Game.CharClasses
         public Archer(Level level, int startingLevel)
         {
             charLevel = 1;
-            AI = new AggressiveAI(this, level);
+            //AI = new AggressiveAI(this, level);
+            AiType = "Aggressive";
             Texture = "Archer";
             name = "Archer";
             className = "Archer";
@@ -35,12 +36,12 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 3, 8, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 5, 8, 0, "bow_attack");
             Actions[0] = actionLongshot;
 
             Battle_Controller.Action actionSnipe = new Battle_Controller.Action("Snipe", "A powerful attack. Ignores enemy stats.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 5, 5, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 7, 5, 0, "bow_attack");
             Actions[1] = actionSnipe;
 
             Battle_Controller.Action actionMultishot = new Battle_Controller.Action("Multishot", "Shoot multiple targets.",

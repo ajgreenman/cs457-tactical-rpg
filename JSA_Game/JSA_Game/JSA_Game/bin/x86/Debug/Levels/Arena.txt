@@ -43,10 +43,10 @@ g:5,5,water
 
 
 
-p:2,3,Warrior,Aggressive
-p:2,5,Mage,Defensive
-p:2,7,Archer,Stationary
+p:2,3,Warrior,4,Aggressive
+p:2,5,Mage,4,Defensive
+p:2,7,Archer,4,Stationary
 
-e:7,3,Warrior,Aggressive
-e:7,5,Mage,Defensive
-e:7,7,Archer,Stationary
+e:7,3,Warrior,3,Aggressive
+e:7,5,Mage,3,Defensive
+e:7,7,Archer,3,Stationary
