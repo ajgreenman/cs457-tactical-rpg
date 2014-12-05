@@ -128,15 +128,6 @@
       <Time>2014-10-24T15:09:57.7866072-04:00</Time>
     </Item>
     <Item>
-      <Source>StatFont.spritefont</Source>
-      <Name>StatFont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
-      <Time>2014-10-15T19:53:50.2740735-04:00</Time>
-    </Item>
-    <Item>
       <Source>cursorBLAnim.png</Source>
       <Name>cursorBLAnim</Name>
       <Importer>TextureImporter</Importer>
@@ -254,6 +245,96 @@
       <Time>2014-11-06T11:59:07.3747821-05:00</Time>
     </Item>
     <Item>
+      <Source>red_highlight.png</Source>
+      <Name>red_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\red_highlight.xnb</Output>
+      <Time>2014-11-21T21:46:02.5887553-05:00</Time>
+    </Item>
+    <Item>
+      <Source>orange_highlight.png</Source>
+      <Name>orange_highlight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\orange_highlight.xnb</Output>
+      <Time>2014-11-21T21:46:02.5877551-05:00</Time>
+    </Item>
+    <Item>
+      <Source>blank.png</Source>
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
+      <Time>2014-11-21T21:46:02.5827518-05:00</Time>
+    </Item>
+    <Item>
+      <Source>town.jpg</Source>
+      <Name>town</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb</Output>
+      <Time>2014-12-03T16:55:00.7590669-05:00</Time>
+    </Item>
+    <Item>
+      <Source>StatFont.spritefont</Source>
+      <Name>StatFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
+      <Time>2014-10-15T19:53:50.2740735-04:00</Time>
+    </Item>
+    <Item>
+      <Source>menufont.spritefont</Source>
+      <Name>menufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
+      <Time>2014-11-21T21:46:02.5827518-05:00</Time>
+    </Item>
+    <Item>
+      <Source>smallMenufont.spritefont</Source>
+      <Name>smallMenufont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
+      <Time>2014-11-21T21:46:02.5887553-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\fire_spell.wav</Source>
+      <Name>Audio\fire_spell</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\fire_spell.xnb</Output>
+      <Time>2014-11-17T11:57:35.6993704-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\ice_spell.wav</Source>
+      <Name>Audio\ice_spell</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\ice_spell.xnb</Output>
+      <Time>2014-11-17T11:57:35.6993704-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\sword_attack.wav</Source>
+      <Name>Audio\sword_attack</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\sword_attack.xnb</Output>
+      <Time>2014-11-17T11:57:35.7149933-05:00</Time>
+    </Item>
+    <Item>
       <Source>Audio\bow_attack.wav</Source>
       <Name>Audio\bow_attack</Name>
       <Importer>WavImporter</Importer>
@@ -288,87 +369,6 @@
       <Options>None</Options>
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
       <Time>2014-11-15T13:50:28.8484482-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\fire_spell.wav</Source>
-      <Name>Audio\fire_spell</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\fire_spell.xnb</Output>
-      <Time>2014-11-17T11:57:35.6993704-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\ice_spell.wav</Source>
-      <Name>Audio\ice_spell</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\ice_spell.xnb</Output>
-      <Time>2014-11-17T11:57:35.6993704-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\sword_attack.wav</Source>
-      <Name>Audio\sword_attack</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\sword_attack.xnb</Output>
-      <Time>2014-11-17T11:57:35.7149933-05:00</Time>
-    </Item>
-    <Item>
-      <Source>red_highlight.png</Source>
-      <Name>red_highlight</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\red_highlight.xnb</Output>
-      <Time>2014-11-21T21:46:02.5887553-05:00</Time>
-    </Item>
-    <Item>
-      <Source>orange_highlight.png</Source>
-      <Name>orange_highlight</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\orange_highlight.xnb</Output>
-      <Time>2014-11-21T21:46:02.5877551-05:00</Time>
-    </Item>
-    <Item>
-      <Source>blank.png</Source>
-      <Name>blank</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-11-21T21:46:02.5827518-05:00</Time>
-    </Item>
-    <Item>
-      <Source>menufont.spritefont</Source>
-      <Name>menufont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2014-11-21T21:46:02.5827518-05:00</Time>
-    </Item>
-    <Item>
-      <Source>smallMenufont.spritefont</Source>
-      <Name>smallMenufont</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
-      <Time>2014-11-21T21:46:02.5887553-05:00</Time>
-    </Item>
-    <Item>
-      <Source>town.jpg</Source>
-      <Name>town</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb</Output>
-      <Time>2014-12-03T16:55:00.7590669-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\battle.wav</Source>
