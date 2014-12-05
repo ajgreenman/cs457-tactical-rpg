@@ -15,7 +15,8 @@ namespace JSA_Game.CharClasses
         public Warrior(Level level, int startingLevel = 1)
         {
             charLevel = 1;
-            AI = new AggressiveAI(this, level);
+            //AI = new AggressiveAI(this, level);
+            AiType = "Aggressive";
             Texture = "Warrior";
             name = "Warrior";
             className = "Warrior";

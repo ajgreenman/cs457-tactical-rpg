@@ -10,7 +10,7 @@ using JSA_Game.CharClasses;
 
 namespace JSA_Game
 {
-    class Character
+    public class Character
     {
         protected String name = "Character";
 
@@ -45,6 +45,12 @@ namespace JSA_Game
         private Vector2 pos;
 
         //AI
+        private string aiType;
+        public string AiType
+        {
+            get { return aiType; }
+            set { aiType = value; }
+        }
         private iAI ai;
 
         //Image
@@ -98,46 +104,6 @@ namespace JSA_Game
             miss = false;
             didDefend = false;
             set = false;
-        }
-
-        public Character(String name, int maxHp, int maxMp, int currHp, int currMp,
-            int strength, int armor, int accuracy, int dodge, int magic, int resist,
-            Items.Weapon weapon, Items.Protection protection, Items.Consumable[] inventory, Status[] status,
-            Battle_Controller.Action attack, Battle_Controller.Action[] actions, Battle_Controller.Action defend, 
-            int movement, int charLevel, bool isEnemy, bool moveDisabled, bool actionDisabled,
-            Vector2 pos, String texture, iAI ai, int currDamage, int currHealing, bool miss, bool set, bool didDefend)
-        {
-            this.name = name;
-            this.maxHP = maxHp;
-            this.maxMP = maxMp;
-            this.currHp = currHp;
-            this.currMp = currMp;
-            this.strength = strength;
-            this.armor = armor;
-            this.accuracy = accuracy;
-            this.dodge = dodge;
-            this.magic = magic;
-            this.resist = resist;
-            this.weapon = weapon;
-            this.protection = protection;
-            this.inventory = inventory;
-            this.status = status;
-            this.attack = attack;
-            this.actions = actions;
-            this.defend = defend;
-            this.movement = movement;
-            this.charLevel = charLevel;
-            this.isEnemy = isEnemy;
-            this.moveDisabled = moveDisabled;
-            this.actionDisabled = actionDisabled;
-            this.pos = pos;
-            this.texture = texture;
-            this.ai = ai;
-            this.currDamage = currDamage;
-            this.currHealing = currHealing;
-            this.miss = miss;
-            this.set = set;
-            this.didDefend = didDefend;
         }
 
         public int yieldExp()

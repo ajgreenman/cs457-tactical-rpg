@@ -5,11 +5,16 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
-    class Consumable : Item
+    [Serializable]
+    public class Consumable : Item
     {
         private int uses;
         private Battle_Controller.Action action;
 
+        public Consumable()
+            :base("noName", 0)
+        {
+        }
         public Consumable(String name, int worth, int uses, Battle_Controller.Action action) :
             base(name, worth)
         {

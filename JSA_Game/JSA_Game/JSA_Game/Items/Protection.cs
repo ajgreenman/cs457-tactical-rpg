@@ -5,7 +5,8 @@ using System.Text;
 
 namespace JSA_Game.Items
 {
-    class Protection : Item
+    [Serializable]
+    public class Protection : Item
     {
         protected int armor;
         protected int dodge;

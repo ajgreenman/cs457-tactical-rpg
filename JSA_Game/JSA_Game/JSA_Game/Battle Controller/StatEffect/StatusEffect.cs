@@ -8,7 +8,7 @@ using JSA_Game.Maps;
 
 namespace JSA_Game.Battle_Controller.StatEffect
 {
-    abstract class StatusEffect
+    public abstract class StatusEffect
     {
         private string name;
         private string description;
@@ -30,8 +30,6 @@ namespace JSA_Game.Battle_Controller.StatEffect
             this.friendly = friendly;
             this.turnByTurn = turnByTurn;
         }
-
-
 
         public string Name
         {

@@ -13,8 +13,6 @@ namespace JSA_Game.Screens
     /// </summary>
     class PauseMenuScreen : MenuScreen
     {
-        #region Initialization
-
 
         /// <summary>
         /// Constructor.
@@ -24,25 +22,22 @@ namespace JSA_Game.Screens
         {
             // Create our menu entries.
             MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
+            MenuEntry toTownMenuEntry = new MenuEntry("To Town (Cheat)");
             MenuEntry nextLevelMenuEntry = new MenuEntry("Next Level (Cheat)");
             MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
 
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
+            toTownMenuEntry.Selected += toTownMenuEntrySelected;
             nextLevelMenuEntry.Selected += nextLevelMenuEntrySelected;
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
             // Add entries to the menu.
             MenuEntries.Add(resumeGameMenuEntry);
+            MenuEntries.Add(toTownMenuEntry);
             MenuEntries.Add(nextLevelMenuEntry);
             MenuEntries.Add(quitGameMenuEntry);
         }
-
-
-        #endregion
-
-        #region Handle Input
-
 
         /// <summary>
         /// Event handler for when the Quit Game menu entry is selected.
@@ -58,6 +53,14 @@ namespace JSA_Game.Screens
             ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
         }
 
+        void toTownMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.AddScreen(new TownBackgroundScreen(), e.PlayerIndex);
+            ScreenManager.AddScreen(new TownScreen(), e.PlayerIndex);
+        }
+        
+
+
         void nextLevelMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             string levelName = Game1.getNextLevelName();
@@ -70,9 +73,7 @@ namespace JSA_Game.Screens
             }
             else
             {
-                //ScreenManager.AddScreen(new LevelScreen(levelName), e.PlayerIndex);
-                ScreenManager.AddScreen(new TownBackgroundScreen(), e.PlayerIndex);
-                ScreenManager.AddScreen(new TownScreen(), e.PlayerIndex);
+                ScreenManager.AddScreen(new LevelScreen(levelName), e.PlayerIndex);
             }
 
         }
@@ -91,7 +92,5 @@ namespace JSA_Game.Screens
             ScreenManager.AddScreen(new MainMenuScreen(), null);
         }
 
-
-        #endregion
     }
 }

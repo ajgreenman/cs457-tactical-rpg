@@ -64,7 +64,7 @@ namespace JSA_Game.Screens
         /// </summary>
         void loadGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-           // ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
+            ScreenManager.AddScreen(new LoadGameScreen(), e.PlayerIndex);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace JSA_Game.Maps
 {
-    class Cursor
+    public class Cursor
     {
 
         //Texture2D cursor;

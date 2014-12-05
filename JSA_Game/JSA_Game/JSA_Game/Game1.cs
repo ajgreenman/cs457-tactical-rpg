@@ -43,7 +43,7 @@ namespace JSA_Game
         //Level currLevel;
 
         //List of player characters
-        ArrayList playerChars;
+        private static ArrayList playerChars;
 
         // Audio
         private static SoundEffect bow_attack;
@@ -80,6 +80,7 @@ namespace JSA_Game
         private static SoundEffect miss;
         private static SoundEffect defend;
 
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -87,6 +88,7 @@ namespace JSA_Game
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 500;
             this.IsMouseVisible = true;
+            this.Components.Add(new GamerServicesComponent(this));
 
             Content.RootDirectory = "Content";
 
@@ -149,12 +151,15 @@ namespace JSA_Game
             AddInitialScreens();
 
 
-            //Idea: In warrior, mage, etc. constructors, get rid of Level parameter
-            //In character class, add initializeChar() method
-            //This method will initialize enemy AI and maybe other things.
-            //This is so the created characters don't have to be sent the level
-            //they're on since they will be stored in a list in this class.
             playerChars = new ArrayList();
+
+            //Let's add a character!
+            //So, change constructor in character classes to no longer take
+            // a level as a parameter.  This will be set when a level initializes.
+            // Also, need a way to keep track of a character's AI option.  Need to
+            // reinitialize the right one at the start of each level.  String would work.
+            playerChars.Add(new Thief(null));
+            playerChars.Add(new Cleric(null));
 
             levels = new string[LEVEL_COUNT];
 
@@ -419,6 +424,14 @@ namespace JSA_Game
             currentLevel++;
             return name;
         }
+        public static int getCurrLevelNum()
+        {
+            return currentLevel;
+        }
+        public static void setCurrLevelNum(int levelNum)
+        {
+            currentLevel = levelNum;
+        }
 
         public static SpriteFont getSmallFont()
         {
@@ -428,6 +441,15 @@ namespace JSA_Game
         public static void resetLevels()
         {
             currentLevel = 0;
+        }
+
+        public static ArrayList getPlayerChars()
+        {
+            return playerChars;
+        }
+        public static void setPlayerChars(ArrayList chars)
+        {
+            playerChars = chars;
         }
     
     }

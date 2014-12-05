@@ -68,5 +68,6 @@ namespace JSA_Game.AI
             get { return currLevel; }
             set { currLevel = value; }
         }
+
     }
 }

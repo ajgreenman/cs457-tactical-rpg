@@ -1,4 +1,4 @@
-﻿enum StatType
+﻿public enum StatType
 {
     Hp,
     Mp,

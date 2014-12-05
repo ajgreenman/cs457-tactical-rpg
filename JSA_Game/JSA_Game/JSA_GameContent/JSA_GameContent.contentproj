@@ -307,6 +307,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FloatingFont.spritefont">
+      <Name>FloatingFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <Compile Include="Audio\battle.wav">
       <Name>battle</Name>
       <Importer>WavImporter</Importer>

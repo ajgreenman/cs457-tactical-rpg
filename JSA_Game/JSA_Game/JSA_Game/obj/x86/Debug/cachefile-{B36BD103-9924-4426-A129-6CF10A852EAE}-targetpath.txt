@@ -32,6 +32,7 @@ Content\town.xnb
 Content\StatFont.xnb
 Content\menufont.xnb
 Content\smallMenufont.xnb
+Content\FloatingFont.xnb
 Content\Audio\fire_spell.xnb
 Content\Audio\ice_spell.xnb
 Content\Audio\sword_attack.xnb

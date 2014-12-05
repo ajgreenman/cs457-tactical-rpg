@@ -1,4 +1,4 @@
-﻿enum HighlightState
+﻿public enum HighlightState
 {   
     NONE,
     MOVE,

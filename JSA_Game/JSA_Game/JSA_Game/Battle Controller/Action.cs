@@ -8,7 +8,8 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace JSA_Game.Battle_Controller
 {
-    class Action
+    [Serializable]
+    public class Action
     {
         private String name, description;
         private StatType[] statCost;

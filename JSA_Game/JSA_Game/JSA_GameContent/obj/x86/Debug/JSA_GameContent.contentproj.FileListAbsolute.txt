@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\JSA_GameContent.contentprojResolveAssemblyReference.cache
+=======
+C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\JSA_GameContent.contentprojResolveAssemblyReference.cache
+>>>>>>> ff79719282a505ec12704b55a530d7eee846fbcf
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_GameContent\obj\x86\Debug\JSA_GameContent.contentprojResolveAssemblyReference.cache

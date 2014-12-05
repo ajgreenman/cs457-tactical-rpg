@@ -7,7 +7,7 @@ using JSA_Game.Maps.State;
 
 namespace JSA_Game.Maps.Tiles
 {
-    class Tile
+    public class Tile
     {
         
 
