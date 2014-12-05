@@ -287,7 +287,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb</Output>
-      <Time>2014-10-26T20:36:05.7412231-04:00</Time>
+      <Time>2014-12-03T22:00:43.2066756-05:00</Time>
     </Item>
     <Item>
       <Source>menufont.spritefont</Source>
@@ -296,7 +296,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2014-11-25T11:49:52.7828753-05:00</Time>
+      <Time>2014-12-03T22:00:43.2236766-05:00</Time>
     </Item>
     <Item>
       <Source>smallMenufont.spritefont</Source>
@@ -305,7 +305,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
-      <Time>2014-11-25T11:49:52.8058767-05:00</Time>
+      <Time>2014-12-03T22:00:43.248678-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\fire_spell.wav</Source>
@@ -369,6 +369,15 @@
       <Options>None</Options>
       <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
       <Time>2014-11-17T12:04:14.5104864-05:00</Time>
+    </Item>
+    <Item>
+      <Source>FloatingFont.spritefont</Source>
+      <Name>FloatingFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Jesse Greenert\Documents\School\Fall 2014\Computer Science Project\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb</Output>
+      <Time>2014-12-05T14:12:14.9558161-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections;
+using System.Threading;
 
 namespace JSA_Game.HUD
 {
@@ -28,35 +29,25 @@ namespace JSA_Game.HUD
 
         public void LoadContent(ContentManager Content)
         {
-            floatingText = Content.Load<SpriteFont>("StatFont");
+            floatingText = Content.Load<SpriteFont>("FloatingFont");
         }
 
         public void GetDrawPosition(Character c)
         {
-            //if (c.Pos.X < 10)
-            //{
-            //    floatingPos.X
-            //}
-
             if (c.Pos.X > 490)
             {
-                floatingPos.X = c.Pos.X - 30;
+                floatingPos.X = c.Pos.X - 50;
             }
 
             else
             {
-                floatingPos.X = c.Pos.X + 30;
+                floatingPos.X = c.Pos.X + 50;
             }
 
             if (c.Pos.Y < 10)
             {
                 floatingPos.Y = c.Pos.Y + 10;
             }
-
-            //else if (c.Pos.Y > 590)
-            //{
-            //    floatingPos.Y = c.Pos.Y - 10;
-            //}
 
             else
             {
@@ -67,7 +58,7 @@ namespace JSA_Game.HUD
 
         public void ResetCharacterList()
         {
-
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
