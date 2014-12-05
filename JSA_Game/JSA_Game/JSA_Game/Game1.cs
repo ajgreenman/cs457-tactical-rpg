@@ -23,7 +23,7 @@ namespace JSA_Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         //Constants
-        private const int LEVEL_COUNT = 3;
+        private const int LEVEL_COUNT = 5;
 
         //Game Variables
         GraphicsDeviceManager graphics;
@@ -172,6 +172,8 @@ namespace JSA_Game
             levels[0] = "JSAtestlevel";
             levels[1] = "Coast";
             levels[2] = "Arena";
+            levels[3] = "Battlefield";
+            levels[4] = "Rush";
             
             
             //Set first level
