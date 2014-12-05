@@ -20,15 +20,11 @@ namespace JSA_Game.Battle_Controller.StatEffect
         private bool friendly;
         private bool turnByTurn;
 
-        public StatusEffect(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn)
+        public StatusEffect(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn)
         {
             this.name = name;
             description = descrip;
             duration = dur;
-            if (level != null)
-            {
-                this.expiration = dur + level.Turn;
-            }
             affectedStats = affected;
             this.amount = amount;
             image = img;
