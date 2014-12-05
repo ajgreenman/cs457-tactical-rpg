@@ -314,6 +314,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     if (c.Status[i] != null)
                     {
+                        c.Status[i].Duration--;
                         if (c.Status[i].TurnByTurn)
                         {
                             if (c.Status[i].Friendly)
@@ -390,7 +391,7 @@ namespace JSA_Game.Battle_Controller
                             }
                         }
 
-                        if (level.Turn >= c.Status[i].Expiration)
+                        if (c.Status[i].Duration < 0)
                         {
                             c.Status[i] = null;
                         }
@@ -404,6 +405,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     if (c.Status[i] != null)
                     {
+                        c.Status[i].Duration--;
                         if (c.Status[i].TurnByTurn)
                         {
                             if (c.Status[i].Friendly)
@@ -486,7 +488,7 @@ namespace JSA_Game.Battle_Controller
                             }
                         }
 
-                        if (level.Turn >= c.Status[i].Expiration)
+                        if (c.Status[i].Duration < 0)
                         {
                             c.Status[i] = null;
                         }

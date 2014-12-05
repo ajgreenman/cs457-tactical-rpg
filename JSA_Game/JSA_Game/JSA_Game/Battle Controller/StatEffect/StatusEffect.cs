@@ -13,19 +13,17 @@ namespace JSA_Game.Battle_Controller.StatEffect
         private string name;
         private string description;
         private int duration;
-        private int expiration;
         private StatType[] affectedStats;
         private int[] amount;
         private string image;
         private bool friendly;
         private bool turnByTurn;
 
-        public StatusEffect(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn)
+        public StatusEffect(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn)
         {
             this.name = name;
             description = descrip;
             duration = dur;
-            this.expiration = dur + level.Turn;
             affectedStats = affected;
             this.amount = amount;
             image = img;
@@ -49,11 +47,6 @@ namespace JSA_Game.Battle_Controller.StatEffect
         {
             get { return duration; }
             set { duration = value; }
-        }
-        public int Expiration
-        {
-            get { return expiration; }
-            set { expiration = value; }
         }
         public StatType[] AffectedStats
         {

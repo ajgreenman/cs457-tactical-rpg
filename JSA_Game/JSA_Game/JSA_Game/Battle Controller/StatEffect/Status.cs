@@ -9,8 +9,8 @@ namespace JSA_Game.Battle_Controller.StatEffect
 {
     class Status : StatusEffect
     {
-        public Status(string name, string descrip, int dur, Level level, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn) :
-            base(name, descrip, dur, level,  affected, amount, img, friendly, turnByTurn)
+        public Status(string name, string descrip, int dur, StatType[] affected, int[] amount, string img, bool friendly, bool turnByTurn) :
+            base(name, descrip, dur,  affected, amount, img, friendly, turnByTurn)
         {
 
         }
