@@ -275,14 +275,15 @@ namespace JSA_Game.Battle_Controller
             }
 
             int value = calculateActionAmount(user, action, amount);
-            target.CurrHp -= value;
 
             if (action.Friendly)
             {
+                target.CurrHp += value;
                 floatingTextLogic("Heal", user, value);
             }
             else
             {
+                target.CurrHp -= value;
                 floatingTextLogic("Attack", user, value);
             }
 
