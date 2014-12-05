@@ -377,7 +377,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\battle.xnb</Output>
-      <Time>2014-12-03T16:58:47.4655624-05:00</Time>
+      <Time>2014-12-05T00:08:06.7317304-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\title.wav</Source>
@@ -386,7 +386,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\title.xnb</Output>
-      <Time>2014-12-03T16:58:47.8885866-05:00</Time>
+      <Time>2014-12-05T00:08:08.1988143-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\town.wav</Source>
@@ -395,7 +395,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\town.xnb</Output>
-      <Time>2014-12-03T16:58:48.5926269-05:00</Time>
+      <Time>2014-12-05T00:08:11.1519832-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\cursor.wav</Source>
@@ -404,7 +404,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\cursor.xnb</Output>
-      <Time>2014-12-03T16:58:47.4785632-05:00</Time>
+      <Time>2014-12-05T00:08:06.7447311-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\wind.wav</Source>
@@ -413,7 +413,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\wind.xnb</Output>
-      <Time>2014-12-03T16:58:48.6546304-05:00</Time>
+      <Time>2014-12-05T00:08:11.2299877-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\horn.wav</Source>
@@ -422,7 +422,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\horn.xnb</Output>
-      <Time>2014-12-03T16:58:47.6665739-05:00</Time>
+      <Time>2014-12-05T00:08:07.1707555-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death1.wav</Source>
@@ -431,7 +431,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death1.xnb</Output>
-      <Time>2014-12-03T16:58:47.492564-05:00</Time>
+      <Time>2014-12-05T00:08:06.7757329-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death2.wav</Source>
@@ -440,7 +440,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death2.xnb</Output>
-      <Time>2014-12-03T16:58:47.5215656-05:00</Time>
+      <Time>2014-12-05T00:08:06.7977342-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death3.wav</Source>
@@ -449,7 +449,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death3.xnb</Output>
-      <Time>2014-12-03T16:58:47.5465671-05:00</Time>
+      <Time>2014-12-05T00:08:06.8757386-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death4.wav</Source>
@@ -458,7 +458,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death4.xnb</Output>
-      <Time>2014-12-03T16:58:47.5725686-05:00</Time>
+      <Time>2014-12-05T00:08:06.9237414-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death5.wav</Source>
@@ -467,7 +467,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death5.xnb</Output>
-      <Time>2014-12-03T16:58:47.5835692-05:00</Time>
+      <Time>2014-12-05T00:08:06.9387422-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death6.wav</Source>
@@ -476,7 +476,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death6.xnb</Output>
-      <Time>2014-12-03T16:58:47.5955699-05:00</Time>
+      <Time>2014-12-05T00:08:06.9477427-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\miss.wav</Source>
@@ -485,7 +485,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\miss.xnb</Output>
-      <Time>2014-12-03T16:58:47.6755744-05:00</Time>
+      <Time>2014-12-05T00:08:07.1807561-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\defend.wav</Source>
@@ -494,7 +494,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\defend.xnb</Output>
-      <Time>2014-12-03T16:58:47.615571-05:00</Time>
+      <Time>2014-12-05T00:08:06.9977456-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

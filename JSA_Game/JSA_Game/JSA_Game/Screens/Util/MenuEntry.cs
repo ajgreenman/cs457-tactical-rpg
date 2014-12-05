@@ -29,7 +29,6 @@ namespace JSA_Game.Screens
         }
 
 
-
         //Method for raising the Selected event
         protected internal virtual void OnSelectEntry(PlayerIndex playerIndex)
         {
@@ -78,7 +77,6 @@ namespace JSA_Game.Screens
                 font = Game1.getSmallFont();
             else
                 font = screenManager.Font;
-             
 
             Vector2 origin = new Vector2(0, font.LineSpacing / 2);
             spriteBatch.DrawString(font, text, position, color, 0,

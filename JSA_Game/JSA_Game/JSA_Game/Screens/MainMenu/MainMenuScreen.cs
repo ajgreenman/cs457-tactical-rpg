@@ -35,7 +35,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(newGameMenuEntry);
             MenuEntries.Add(loadGameMenuEntry);
             MenuEntries.Add(exitMenuEntry);
-            //MenuEntries.Add(testMenuEntry);
+            MenuEntries.Add(testMenuEntry);
 
             // Sound
             Game1.PlaySound("title");
@@ -56,7 +56,7 @@ namespace JSA_Game.Screens
 
             //With loading screen
             //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
-            //    new LevelScreen(Game1.getNextLevelName()));
+                //new LevelScreen(Game1.getNextLevelName()));
 
 
             //ScreenManager.AddScreen(new TownBackgroundScreen(), null);
@@ -104,13 +104,21 @@ namespace JSA_Game.Screens
         /// </summary>
         void TestMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            const string message = "It's a test message box!";
+            //const string message = "It's a test message box!";
 
-            MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message, false);
+            //MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message, false);
 
             //No extra events - just closes
 
-            ScreenManager.AddScreen(confirmExitMessageBox, null);
+            //ScreenManager.AddScreen(confirmExitMessageBox, null);
+
+            List<JSA_Game.Character> testCharList = new List<JSA_Game.Character>();
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+
+            ScreenManager.AddScreen(new CharacterListScreen(testCharList), e.PlayerIndex);
+           
         }
 
 

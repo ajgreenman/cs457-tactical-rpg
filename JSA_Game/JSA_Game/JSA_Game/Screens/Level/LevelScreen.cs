@@ -34,6 +34,7 @@ namespace JSA_Game.Screens
         /// </summary>
         public LevelScreen(string levelName)
         {
+            
             TransitionOnTime = TimeSpan.FromSeconds(0.25);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
 
@@ -57,7 +58,7 @@ namespace JSA_Game.Screens
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-                //Thread.Sleep(10000);
+                //Thread.Sleep(5000);
 
                 ScreenManager.Game.ResetElapsedTime();
                 currLevel.loadContent(content);

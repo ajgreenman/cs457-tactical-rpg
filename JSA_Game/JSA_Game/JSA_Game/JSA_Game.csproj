@@ -162,6 +162,7 @@
     <Compile Include="Items\Protection.cs" />
     <Compile Include="Items\Weapon.cs" />
     <Compile Include="Screens\Character\CharacterBackgroundScreen.cs" />
+    <Compile Include="Screens\Character\CharacterListScreen.cs" />
     <Compile Include="Screens\Character\CharacterScreen.cs" />
     <Compile Include="Screens\Level\GameOverScreen.cs" />
     <Compile Include="Screens\Level\LevelScreen.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Screens\SaveLoad\SaveGameScreen.cs" />
     <Compile Include="Screens\Town\TavernScreen.cs" />
     <Compile Include="Screens\Town\TownBackgroundScreen.cs" />
+    <Compile Include="Screens\Util\CharacterEntry.cs" />
     <Compile Include="Screens\Util\LoadingScreen.cs" />
     <Compile Include="Screens\Util\MenuEntry.cs" />
     <Compile Include="Screens\Util\MenuScreen.cs" />
