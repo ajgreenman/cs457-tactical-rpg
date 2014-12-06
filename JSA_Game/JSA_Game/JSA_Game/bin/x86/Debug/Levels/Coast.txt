@@ -1,6 +1,6 @@
 / Level name: Coast
 
-i:10,10,2,2
+i:10,10,2,2,0,0
 G:plains
 
 

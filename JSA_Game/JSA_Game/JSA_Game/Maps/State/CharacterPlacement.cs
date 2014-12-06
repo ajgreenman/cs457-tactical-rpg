@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,9 +15,9 @@ using JSA_Game.Maps;
 
 namespace JSA_Game.Maps.State
 {
-    class ActionState
+    class CharacterPlacement
     {
-        public static void update(Level level, GameTime gameTime)
+    public static void update(Level level, GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
             Vector2 cursorPos = new Vector2(level.Cursor.CursorPos.X+level.ShowStartX, level.Cursor.CursorPos.Y+level.ShowStartY);

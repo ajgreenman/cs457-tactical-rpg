@@ -1,6 +1,6 @@
 / Level name: Arena
 
-i:10,10,3,3
+i:10,10,3,3,0,0
 G:plains
 
 g:2,0,stone_wall

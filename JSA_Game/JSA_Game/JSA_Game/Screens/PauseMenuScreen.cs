@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
 
 namespace JSA_Game.Screens
@@ -13,6 +14,9 @@ namespace JSA_Game.Screens
     /// </summary>
     class PauseMenuScreen : MenuScreen
     {
+
+        InputAction escape;
+
 
         /// <summary>
         /// Constructor.
@@ -37,6 +41,20 @@ namespace JSA_Game.Screens
             MenuEntries.Add(toTownMenuEntry);
             MenuEntries.Add(nextLevelMenuEntry);
             MenuEntries.Add(quitGameMenuEntry);
+
+            escape = new InputAction(null, new Keys[] { Keys.Escape }, true);
+        }
+
+        public override void HandleInput(GameTime gameTime, InputState input)
+        {
+            base.HandleInput(gameTime, input);
+            PlayerIndex playerIndex;
+            if (escape.Evaluate(input, ControllingPlayer, out playerIndex))
+            {
+                ExitScreen();
+            }
+
+
         }
 
         /// <summary>

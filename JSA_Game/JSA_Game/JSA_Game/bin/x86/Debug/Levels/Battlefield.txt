@@ -1,6 +1,6 @@
 / Level name: Battlefield
 
-i:35,35,10,10
+i:35,35,10,10,0,0
 G:plains
 
 g:6,0-3,water

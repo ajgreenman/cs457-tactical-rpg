@@ -116,8 +116,17 @@ namespace JSA_Game.Screens
             testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
             testCharList.Add(new JSA_Game.CharClasses.Mage(null));
             testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null,3));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
 
-            ScreenManager.AddScreen(new CharacterListScreen(testCharList), e.PlayerIndex);
+            ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, testCharList, "right"), e.PlayerIndex);
            
         }
 

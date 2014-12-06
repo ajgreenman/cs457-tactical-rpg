@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\bar_base.xnb</Output>
-      <Time>2014-11-05T16:35:46.021423-05:00</Time>
+      <Time>2014-12-05T17:41:17.6631331-05:00</Time>
     </Item>
     <Item>
       <Source>brown-rectangle.jpg</Source>
@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\brown-rectangle.xnb</Output>
-      <Time>2014-11-05T16:35:46.021423-05:00</Time>
+      <Time>2014-12-05T17:41:17.7567333-05:00</Time>
     </Item>
     <Item>
       <Source>Border.png</Source>
@@ -98,7 +98,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\target_square.xnb</Output>
-      <Time>2014-10-20T16:08:14.3509547-04:00</Time>
+      <Time>2014-12-05T17:41:18.3183343-05:00</Time>
     </Item>
     <Item>
       <Source>itemButton.png</Source>
@@ -107,7 +107,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.9103566-04:00</Time>
+      <Time>2014-12-05T17:41:18.0999339-05:00</Time>
     </Item>
     <Item>
       <Source>waitButton.png</Source>
@@ -116,7 +116,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\waitButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.9259566-04:00</Time>
+      <Time>2014-12-05T17:41:18.5055346-05:00</Time>
     </Item>
     <Item>
       <Source>attackButton.png</Source>
@@ -125,7 +125,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\attackButton.xnb</Output>
-      <Time>2014-10-24T17:25:27.8947566-04:00</Time>
+      <Time>2014-12-05T17:41:17.6631331-05:00</Time>
     </Item>
     <Item>
       <Source>cursorBLAnim.png</Source>
@@ -134,7 +134,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBLAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.1740432-04:00</Time>
+      <Time>2014-12-05T17:41:17.8503335-05:00</Time>
     </Item>
     <Item>
       <Source>cursorTLAnim.png</Source>
@@ -143,7 +143,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTLAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.2052432-04:00</Time>
+      <Time>2014-12-05T17:41:17.9127336-05:00</Time>
     </Item>
     <Item>
       <Source>cursorBRAnim.png</Source>
@@ -152,7 +152,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorBRAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.1896432-04:00</Time>
+      <Time>2014-12-05T17:41:17.8815335-05:00</Time>
     </Item>
     <Item>
       <Source>cursorTRAnim.png</Source>
@@ -161,7 +161,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\cursorTRAnim.xnb</Output>
-      <Time>2014-10-24T16:44:14.2208432-04:00</Time>
+      <Time>2014-12-05T17:41:17.9907337-05:00</Time>
     </Item>
     <Item>
       <Source>enemyArcher.png</Source>
@@ -170,7 +170,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyArcher.xnb</Output>
-      <Time>2014-10-24T16:44:14.2520433-04:00</Time>
+      <Time>2014-12-05T17:41:18.0219338-05:00</Time>
     </Item>
     <Item>
       <Source>enemyMage.png</Source>
@@ -179,7 +179,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyMage.xnb</Output>
-      <Time>2014-10-24T16:44:14.2676433-04:00</Time>
+      <Time>2014-12-05T17:41:18.0531338-05:00</Time>
     </Item>
     <Item>
       <Source>enemyWarrior.png</Source>
@@ -188,7 +188,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\enemyWarrior.xnb</Output>
-      <Time>2014-10-24T16:44:14.2988434-04:00</Time>
+      <Time>2014-12-05T17:41:18.0843339-05:00</Time>
     </Item>
     <Item>
       <Source>playerArcher.png</Source>
@@ -197,7 +197,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerArcher.xnb</Output>
-      <Time>2014-10-24T16:44:14.3768435-04:00</Time>
+      <Time>2014-12-05T17:41:18.177934-05:00</Time>
     </Item>
     <Item>
       <Source>playerMage.png</Source>
@@ -206,7 +206,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerMage.xnb</Output>
-      <Time>2014-10-24T16:44:14.4080436-04:00</Time>
+      <Time>2014-12-05T17:41:18.2091341-05:00</Time>
     </Item>
     <Item>
       <Source>playerWarrior.png</Source>
@@ -215,7 +215,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\playerWarrior.xnb</Output>
-      <Time>2014-10-24T16:44:14.4236436-04:00</Time>
+      <Time>2014-12-05T17:41:18.2559342-05:00</Time>
     </Item>
     <Item>
       <Source>actionButton.png</Source>
@@ -224,7 +224,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\actionButton.xnb</Output>
-      <Time>2014-11-05T16:35:46.021423-05:00</Time>
+      <Time>2014-12-05T17:41:17.6319331-05:00</Time>
     </Item>
     <Item>
       <Source>abilityButton.png</Source>
@@ -233,7 +233,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\abilityButton.xnb</Output>
-      <Time>2014-11-17T18:43:38.7924626-05:00</Time>
+      <Time>2014-12-05T17:41:17.600733-05:00</Time>
     </Item>
     <Item>
       <Source>exertButton.png</Source>
@@ -242,7 +242,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\exertButton.xnb</Output>
-      <Time>2014-11-17T18:43:38.7924626-05:00</Time>
+      <Time>2014-12-05T17:41:18.0843339-05:00</Time>
     </Item>
     <Item>
       <Source>red_highlight.png</Source>
@@ -251,7 +251,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\red_highlight.xnb</Output>
-      <Time>2014-11-17T18:43:38.8236627-05:00</Time>
+      <Time>2014-12-05T17:41:18.2871342-05:00</Time>
     </Item>
     <Item>
       <Source>orange_highlight.png</Source>
@@ -260,7 +260,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\orange_highlight.xnb</Output>
-      <Time>2014-11-17T18:43:38.8236627-05:00</Time>
+      <Time>2014-12-05T17:41:18.131134-05:00</Time>
     </Item>
     <Item>
       <Source>blank.png</Source>
@@ -269,7 +269,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb</Output>
-      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
+      <Time>2014-12-05T17:41:17.6787332-05:00</Time>
     </Item>
     <Item>
       <Source>town.jpg</Source>
@@ -278,7 +278,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb</Output>
-      <Time>2014-11-24T18:02:19.2535969-05:00</Time>
+      <Time>2014-12-05T17:41:18.4431345-05:00</Time>
     </Item>
     <Item>
       <Source>StatFont.spritefont</Source>
@@ -296,7 +296,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb</Output>
-      <Time>2014-11-19T16:12:49.1915963-05:00</Time>
+      <Time>2014-12-05T17:41:18.1155339-05:00</Time>
     </Item>
     <Item>
       <Source>smallMenufont.spritefont</Source>
@@ -305,7 +305,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb</Output>
-      <Time>2014-11-19T16:12:49.2071964-05:00</Time>
+      <Time>2014-12-05T17:41:18.3027343-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\fire_spell.wav</Source>
@@ -314,7 +314,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\fire_spell.xnb</Output>
-      <Time>2014-11-17T18:43:38.7456625-05:00</Time>
+      <Time>2014-12-05T17:41:14.1511269-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\ice_spell.wav</Source>
@@ -323,7 +323,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\ice_spell.xnb</Output>
-      <Time>2014-11-17T18:43:38.7612626-05:00</Time>
+      <Time>2014-12-05T17:41:14.3695272-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\sword_attack.wav</Source>
@@ -332,7 +332,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\sword_attack.xnb</Output>
-      <Time>2014-11-17T18:43:38.7768626-05:00</Time>
+      <Time>2014-12-05T17:41:14.4163273-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\bow_attack.wav</Source>
@@ -341,7 +341,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\bow_attack.xnb</Output>
-      <Time>2014-11-17T18:43:38.7456625-05:00</Time>
+      <Time>2014-12-05T17:41:13.9171265-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\multishot.wav</Source>
@@ -350,7 +350,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\multishot.xnb</Output>
-      <Time>2014-11-17T18:43:38.7768626-05:00</Time>
+      <Time>2014-12-05T17:41:14.4007273-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\shock_spell.wav</Source>
@@ -359,7 +359,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\shock_spell.xnb</Output>
-      <Time>2014-11-17T18:43:38.7768626-05:00</Time>
+      <Time>2014-12-05T17:41:14.4007273-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\swoosh.wav</Source>
@@ -368,7 +368,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\swoosh.xnb</Output>
-      <Time>2014-11-17T18:43:38.7768626-05:00</Time>
+      <Time>2014-12-05T17:41:14.4007273-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\battle.wav</Source>
@@ -377,7 +377,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\battle.xnb</Output>
-      <Time>2014-12-05T00:08:06.7317304-05:00</Time>
+      <Time>2014-12-05T17:41:13.8703264-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\title.wav</Source>
@@ -386,7 +386,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\title.xnb</Output>
-      <Time>2014-12-05T00:08:08.1988143-05:00</Time>
+      <Time>2014-12-05T17:41:15.1027285-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\town.wav</Source>
@@ -395,7 +395,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\town.xnb</Output>
-      <Time>2014-12-05T00:08:11.1519832-05:00</Time>
+      <Time>2014-12-05T17:41:17.4915328-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\cursor.wav</Source>
@@ -404,7 +404,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\cursor.xnb</Output>
-      <Time>2014-12-05T00:08:06.7447311-05:00</Time>
+      <Time>2014-12-05T17:41:13.9327265-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\wind.wav</Source>
@@ -413,7 +413,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\wind.xnb</Output>
-      <Time>2014-12-05T00:08:11.2299877-05:00</Time>
+      <Time>2014-12-05T17:41:17.5539329-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\horn.wav</Source>
@@ -422,7 +422,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\horn.xnb</Output>
-      <Time>2014-12-05T00:08:07.1707555-05:00</Time>
+      <Time>2014-12-05T17:41:14.3383272-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death1.wav</Source>
@@ -431,7 +431,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death1.xnb</Output>
-      <Time>2014-12-05T00:08:06.7757329-05:00</Time>
+      <Time>2014-12-05T17:41:13.9483265-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death2.wav</Source>
@@ -440,7 +440,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death2.xnb</Output>
-      <Time>2014-12-05T00:08:06.7977342-05:00</Time>
+      <Time>2014-12-05T17:41:13.9639265-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death3.wav</Source>
@@ -449,7 +449,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death3.xnb</Output>
-      <Time>2014-12-05T00:08:06.8757386-05:00</Time>
+      <Time>2014-12-05T17:41:14.0419267-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death4.wav</Source>
@@ -458,7 +458,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death4.xnb</Output>
-      <Time>2014-12-05T00:08:06.9237414-05:00</Time>
+      <Time>2014-12-05T17:41:14.0731267-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death5.wav</Source>
@@ -467,7 +467,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death5.xnb</Output>
-      <Time>2014-12-05T00:08:06.9387422-05:00</Time>
+      <Time>2014-12-05T17:41:14.0887268-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\death6.wav</Source>
@@ -476,7 +476,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\death6.xnb</Output>
-      <Time>2014-12-05T00:08:06.9477427-05:00</Time>
+      <Time>2014-12-05T17:41:14.0887268-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\miss.wav</Source>
@@ -485,7 +485,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\miss.xnb</Output>
-      <Time>2014-12-05T00:08:07.1807561-05:00</Time>
+      <Time>2014-12-05T17:41:14.3851273-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\defend.wav</Source>
@@ -494,7 +494,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\defend.xnb</Output>
-      <Time>2014-12-05T00:08:06.9977456-05:00</Time>
+      <Time>2014-12-05T17:41:14.1199268-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

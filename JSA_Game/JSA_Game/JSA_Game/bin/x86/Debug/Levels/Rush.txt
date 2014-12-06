@@ -1,6 +1,6 @@
 / Level name: Rush
 
-i:20,20,4,24
+i:20,20,4,24,6,6
 
 G:plains
 

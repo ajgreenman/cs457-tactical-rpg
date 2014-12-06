@@ -130,6 +130,8 @@ namespace JSA_Game.Maps
                     boardHeight = Convert.ToInt32(param[1]);
                     maxPlayerUnits = Convert.ToInt32(param[2]);
                     MaxEnemyUnits = Convert.ToInt32(param[3]);
+                    showStartX = Convert.ToInt32(param[4]);
+                    showStartY = Convert.ToInt32(param[5]);
 
                     board = new Tile[boardWidth, boardHeight];
                     initialize();
@@ -267,8 +269,8 @@ namespace JSA_Game.Maps
 
             isAnimatingMove = false;
             isAnimatingAttack = false;
-            showStartX = 0;
-            showStartY = 0;
+           // showStartX = 0;
+           // showStartY = 0;
             numTilesShowing = DEFAULT_NUM_TILES_SHOWING;
 
             playerUnitCount = 0;
@@ -1002,6 +1004,8 @@ namespace JSA_Game.Maps
                         Movement.update(this, gameTime);
                     else if (state == LevelState.Action)
                         ActionState.update(this, gameTime);
+                    else if (state == LevelState.Placement)
+                        CharacterPlacement.update(this, gameTime);
 
 
 

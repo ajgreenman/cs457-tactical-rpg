@@ -12,23 +12,30 @@ namespace JSA_Game.Screens
 {
     class CharacterListScreen : GameScreen
     {
+        const int MAX_SHOWING = 10;
+
         List<CharacterEntry> charEntries = new List<CharacterEntry>();
         int selectedEntry = 0;
 
         int startY = 100;
+        string alignment;
 
         InputAction menuUp;
         InputAction menuDown;
         InputAction menuSelect;
         InputAction menuCancel;
 
-        public CharacterListScreen(List<Character> charList)
+        int highestEntryLength = 0;
+        int showStartIndex = 0;
+
+        public CharacterListScreen(GraphicsDevice gDevice, List<Character> charList, string alignment)
         {
             foreach (Character c in charList)
             {
-                charEntries.Add(new CharacterEntry(c));
+                charEntries.Add(new CharacterEntry(gDevice, c));
             }
 
+            this.alignment = alignment;
             IsPopup = true;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
@@ -40,6 +47,8 @@ namespace JSA_Game.Screens
             menuCancel = new InputAction(null, new Keys[] { Keys.X }, true);
         }
 
+
+
         public override void HandleInput(GameTime gameTime, InputState input)
         {
             PlayerIndex playerIndex;
@@ -49,7 +58,15 @@ namespace JSA_Game.Screens
             {
                 selectedEntry--;
                 if (selectedEntry < 0)
+                {
                     selectedEntry = charEntries.Count - 1;
+                    if (selectedEntry > MAX_SHOWING - 1)
+                    {
+                        showStartIndex = selectedEntry - MAX_SHOWING + 1;
+                    }  
+                }
+                if (selectedEntry < showStartIndex)
+                    showStartIndex--;
             }
 
             // Move to the next menu entry?
@@ -57,7 +74,12 @@ namespace JSA_Game.Screens
             {
                 selectedEntry++;
                 if (selectedEntry >= charEntries.Count)
+                {
                     selectedEntry = 0;
+                    showStartIndex = 0;
+                }
+                else if (selectedEntry > showStartIndex + MAX_SHOWING - 1)
+                    showStartIndex++;
             }
 
             if (menuSelect.Evaluate(input, ControllingPlayer, out playerIndex))
@@ -97,7 +119,7 @@ namespace JSA_Game.Screens
         /// Allows the screen the chance to position the menu entries. By default
         /// all menu entries are lined up in a vertical list, centered on the screen.
         /// </summary>
-        protected virtual void UpdateCharEntryLocations()
+        protected virtual void UpdateCharEntryLocations(SpriteFont font)
         {
             // Make the menu slide into place during transitions, using a
             // power curve to make things look more interesting (this makes
@@ -105,16 +127,29 @@ namespace JSA_Game.Screens
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
             // start at Y = 175; each X value is generated per entry
-            Vector2 position = new Vector2(0f, startY);
+            Vector2 position = new Vector2(0, startY);
 
-
-
-
-            // update each menu entry's location in turn
+            //Find longest entry so boxes are same size
             for (int i = 0; i < charEntries.Count; i++)
             {
+                int entryLength = (int)font.MeasureString(charEntries[i].Text).X;
+                if (entryLength > highestEntryLength)
+                {
+                    highestEntryLength = entryLength;
+                }
+            }
+
+            // update each menu entry's location in turn
+            for (int i = showStartIndex; i < showStartIndex + MAX_SHOWING; i++)
+            {
+                if (i >= charEntries.Count) break;
                 CharacterEntry charEntry = charEntries[i];
-                //position.X = ScreenManager.GraphicsDevice.Viewport.Width - charEntry.GetWidth(this) - 10;
+                if(alignment.ToLower().Equals("left"))
+                    position.X = 0;
+                else if(alignment.ToLower().Equals("center"))
+                    position.X = (ScreenManager.GraphicsDevice.Viewport.Width-highestEntryLength)/2;
+                else if(alignment.ToLower().Equals("right"))
+                    position.X = ScreenManager.GraphicsDevice.Viewport.Width - highestEntryLength - 15;
 
                 if (ScreenState == ScreenState.TransitionOn)
                     position.X -= transitionOffset * 256;
@@ -153,29 +188,21 @@ namespace JSA_Game.Screens
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // make sure our entries are in the right place before we draw them
-            UpdateCharEntryLocations();
 
             GraphicsDevice graphics = ScreenManager.GraphicsDevice;
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
-            //Find longest entry so boxes are same size
-            int highestEntryLength = 0;
-            for (int i = 0; i < charEntries.Count; i++)
-            {
-                int entryLength = (int)font.MeasureString(charEntries[i].Text).X;
-                if (entryLength> highestEntryLength)
-                {
-                    highestEntryLength = entryLength;
-                }
-            }
+            // make sure our entries are in the right place before we draw them
+            UpdateCharEntryLocations(font);
+
 
             spriteBatch.Begin();
 
             // Draw each menu entry in turn.
-            for (int i = 0; i < charEntries.Count; i++)
+            for (int i = showStartIndex; i < showStartIndex + MAX_SHOWING; i++)
             {
+                if (i >= charEntries.Count) break;
                 CharacterEntry charEntry = charEntries[i];
 
                 bool isSelected = IsActive && (i == selectedEntry);

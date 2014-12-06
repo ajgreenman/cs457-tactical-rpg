@@ -154,26 +154,18 @@ namespace JSA_Game
             playerChars = new ArrayList();
 
             //Let's add a character!
-            //So, change constructor in character classes to no longer take
-            // a level as a parameter.  This will be set when a level initializes.
-            // Also, need a way to keep track of a character's AI option.  Need to
-            // reinitialize the right one at the start of each level.  String would work.
             playerChars.Add(new Warrior(null));
             playerChars.Add(new Mage(null));
+            playerChars.Add(new Archer(null, 1));
 
             levels = new string[LEVEL_COUNT];
-
-          //  levels = new ArrayList();
-           // levels.Add("JSAtestlevel");
-           // levels.Add("Coast");
-           // levels.Add("Arena");
 
             currentLevel = 0;
             levels[0] = "JSAtestlevel";
             levels[1] = "Coast";
             levels[2] = "Arena";
             levels[3] = "Battlefield";
-            levels[4] = "Rush";
+            levels[0] = "Rush";
             
             
             //Set first level
@@ -453,6 +445,6 @@ namespace JSA_Game
         {
             playerChars = chars;
         }
-    
+
     }
 }
