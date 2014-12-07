@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameStateManagement;
 using JSA_Game.AI;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
@@ -93,13 +94,18 @@ namespace JSA_Game.Maps
         public bool isAnimatingAttack;
 
 
+        //Unit placement variables
+        ScreenManager screenManager;
+        int numPlaceableSpaces;
+
+
 
         /// <summary>
         /// Generates a level from a given text file
         /// //Folder for files is located at \JSA_Game\bin\x86\Debug\Levels
         /// </summary>
         /// <param name="filename">Filename to read</param>
-        public Level(string filename)
+        public Level(string filename, ScreenManager sm)
         {
            
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
@@ -126,12 +132,14 @@ namespace JSA_Game.Maps
                     //Split string starting after identifying character and colon.
                     string[] param = line.Substring(2).Split(',');
 
-                    boardWidth = Convert.ToInt32(param[0]);
-                    boardHeight = Convert.ToInt32(param[1]);
-                    maxPlayerUnits = Convert.ToInt32(param[2]);
-                    MaxEnemyUnits = Convert.ToInt32(param[3]);
-                    showStartX = Convert.ToInt32(param[4]);
-                    showStartY = Convert.ToInt32(param[5]);
+                    int i = 0;
+                    boardWidth = Convert.ToInt32(param[i++]);
+                    boardHeight = Convert.ToInt32(param[i++]);
+                    maxPlayerUnits = Convert.ToInt32(param[i++]);
+                    numPlaceableSpaces = Convert.ToInt32(param[i++]);
+                    MaxEnemyUnits = Convert.ToInt32(param[i++]);
+                    showStartX = Convert.ToInt32(param[i++]);
+                    showStartY = Convert.ToInt32(param[i++]);
 
                     board = new Tile[boardWidth, boardHeight];
                     initialize();
@@ -190,6 +198,50 @@ namespace JSA_Game.Maps
                     
                 }
 
+                else if (line[0] == 'o')
+                {
+                    System.Diagnostics.Debug.Print("Unit placeable: " + line);
+
+                    //Split string starting after identifying character and colon.
+                    string[] param = line.Substring(2).Split(',');
+                    int xStartLoop = 0, xEndLoop = 0;
+                    int yStartLoop = 0, yEndLoop = 0;
+                    if (param[0].Contains('-'))
+                    {
+                        string[] bounds = param[0].Split('-');
+                        xStartLoop = Convert.ToInt32(bounds[0]);
+                        xEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        xStartLoop = Convert.ToInt32(param[0]);
+                        xEndLoop = xStartLoop;
+                    }
+                    if (param[1].Contains('-'))
+                    {
+                        string[] bounds = param[1].Split('-');
+                        yStartLoop = Convert.ToInt32(bounds[0]);
+                        yEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        yStartLoop = Convert.ToInt32(param[1]);
+                        yEndLoop = yStartLoop;
+                    }
+
+                    for (int i = xStartLoop; i < xEndLoop + 1; i++)
+                    {
+                        for (int j = yStartLoop; j < yEndLoop + 1; j++)
+                        {
+                            board[i, j].HlState = HighlightState.MOVE;
+                        }
+                    }
+
+
+                }
+
+
+
                 //Placing units
                 else if (line[0] == 'p' || line[0] == 'e')
                 {
@@ -239,6 +291,8 @@ namespace JSA_Game.Maps
 
             }
                 file.Close();
+
+                screenManager = sm;
                 
         }
 
@@ -262,7 +316,8 @@ namespace JSA_Game.Maps
         /// </summary>
         private void initialize()
         {
-            state = LevelState.CursorSelection;
+            //state = LevelState.CursorSelection;
+            state = LevelState.Placement;
             playerTurn = TurnState.Player;
             winState = WinLossState.InProgess;
             turn = 0;
@@ -305,6 +360,17 @@ namespace JSA_Game.Maps
             int xPos = (int)pos.X;
             int yPos = (int)pos.Y;
             unit.IsEnemy = allyFlag == 1 ? false : true;
+            
+            if (!unit.IsEnemy && pUnits.Contains(unit))
+            {
+                System.Diagnostics.Debug.Print("Duplicate found");
+                board[(int)unit.Pos.X, (int)unit.Pos.Y].Occupant = null;
+                board[(int)unit.Pos.X, (int)unit.Pos.Y].IsOccupied = false;
+                pUnits.Remove(unit);
+                playerUnitCount--;
+
+            }
+
             if (!unit.IsEnemy && playerUnitCount != maxPlayerUnits)
             {
                 playerUnitCount++;
@@ -326,6 +392,7 @@ namespace JSA_Game.Maps
             {
                 System.Diagnostics.Debug.Print("Level.addUnit() : Not enough space in level to place unit.");
             }
+            System.Diagnostics.Debug.Print("" + PUnits.Count);
         }
 
 
@@ -950,7 +1017,7 @@ namespace JSA_Game.Maps
             highlightImages[0] = content.Load<Texture2D>("blue_highlight");
             highlightImages[1] = content.Load<Texture2D>("orange_highlight");
             highlightImages[2] = content.Load<Texture2D>("red_highlight");
-            foreach (Character c in pUnits)
+            foreach (Character c in Game1.getPlayerChars())
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
                 if (!characterImages.ContainsKey("player" + c.Texture))
@@ -996,6 +1063,7 @@ namespace JSA_Game.Maps
 
                 if (playerTurn == TurnState.Player)
                 {
+
                     if (state == LevelState.CursorSelection)
                         CursorSelection.update(this, gameTime);
                     else if (state == LevelState.Selected)
@@ -1005,12 +1073,12 @@ namespace JSA_Game.Maps
                     else if (state == LevelState.Action)
                         ActionState.update(this, gameTime);
                     else if (state == LevelState.Placement)
-                        CharacterPlacement.update(this, gameTime);
+                        CharacterPlacement.update(this, screenManager, gameTime);
 
 
 
 
-                    hud.Hidden = state != LevelState.CursorSelection;
+                    hud.Hidden = state != LevelState.CursorSelection && state != LevelState.Placement;
                     if (hud.Hidden)
                     {
                         hud.ButtonSelect(keyboard);
@@ -1296,6 +1364,16 @@ namespace JSA_Game.Maps
         {
             get { return turn; }
             set { turn = value; }
+        }
+        public int PlayerUnitCount
+        {
+            get { return playerUnitCount; }
+            set { playerUnitCount = value; }
+        }
+        public int NumPlaceableSpaces
+        {
+            get { return numPlaceableSpaces; }
+            set { numPlaceableSpaces = value; }
         }
     }
 }

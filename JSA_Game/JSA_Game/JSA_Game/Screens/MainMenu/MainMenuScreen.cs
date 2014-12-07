@@ -52,7 +52,7 @@ namespace JSA_Game.Screens
         {
 
             //First Level
-            ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName()), e.PlayerIndex);
+            ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName(), ScreenManager), e.PlayerIndex);
 
             //With loading screen
             //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
@@ -113,7 +113,10 @@ namespace JSA_Game.Screens
             //ScreenManager.AddScreen(confirmExitMessageBox, null);
 
             List<JSA_Game.Character> testCharList = new List<JSA_Game.Character>();
-            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            Character c = new JSA_Game.CharClasses.Warrior(null);
+            c.Name = "Jimmy";
+            testCharList.Add(c);
+
             testCharList.Add(new JSA_Game.CharClasses.Mage(null));
             testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
             testCharList.Add(new JSA_Game.CharClasses.Warrior(null,3));
@@ -126,7 +129,7 @@ namespace JSA_Game.Screens
             testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
             testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
 
-            ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, testCharList, "right"), e.PlayerIndex);
+            ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, testCharList, "right", null, new Vector2(0,0)), e.PlayerIndex);
            
         }
 

@@ -32,7 +32,7 @@ namespace JSA_Game.Screens
         /// <summary>
         /// Constructor.
         /// </summary>
-        public LevelScreen(string levelName)
+        public LevelScreen(string levelName, ScreenManager screenManager)
         {
             
             TransitionOnTime = TimeSpan.FromSeconds(0.25);
@@ -44,7 +44,7 @@ namespace JSA_Game.Screens
                 new Keys[] { Keys.Escape },
                 true);
 
-            currLevel = new Level(levelName);
+            currLevel = new Level(levelName, screenManager);
         }
 
 

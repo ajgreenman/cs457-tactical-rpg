@@ -146,7 +146,7 @@ namespace JSA_Game.Screens
             System.Diagnostics.Debug.Print("Money: " + data.money);
 
             //Woohoo! Now for something useful
-            ArrayList loadedChars = new ArrayList();
+            List<Character> loadedChars = new List<Character>();
             for (int k = 0; k < data.characters.Length; k++) 
             {
                 CharacterSaveData charData = data.characters[k];

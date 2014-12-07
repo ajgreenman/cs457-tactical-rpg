@@ -106,7 +106,7 @@ namespace JSA_Game.Screens
         private void doSaveGame(StorageDevice device, int slotNum)
         {
             SaveGameData data = new SaveGameData();
-            ArrayList charList = Game1.getPlayerChars();
+            List<Character> charList = Game1.getPlayerChars();
             CharacterSaveData[] playerChars = new CharacterSaveData[charList.Count];
             int i = 0;
             foreach (Character c in charList)

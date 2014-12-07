@@ -53,7 +53,7 @@ namespace JSA_Game.Maps.State
                     if (level.SelectedAction.Aoe) //If the action is an aoe action
                     {
                         //Clear old aoe range
-                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange+1, true);
+                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange+3, true);
 
                         level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false);
                         //Show new aoe range

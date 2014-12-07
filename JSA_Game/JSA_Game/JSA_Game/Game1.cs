@@ -23,7 +23,7 @@ namespace JSA_Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         //Constants
-        private const int LEVEL_COUNT = 5;
+        private const int LEVEL_COUNT = 6;
 
         //Game Variables
         GraphicsDeviceManager graphics;
@@ -43,7 +43,7 @@ namespace JSA_Game
         //Level currLevel;
 
         //List of player characters
-        private static ArrayList playerChars;
+        private static List<Character> playerChars;
 
         // Audio
         private static SoundEffect bow_attack;
@@ -151,7 +151,7 @@ namespace JSA_Game
             AddInitialScreens();
 
 
-            playerChars = new ArrayList();
+            playerChars = new List<Character>();
 
             //Let's add a character!
             playerChars.Add(new Warrior(null));
@@ -159,13 +159,15 @@ namespace JSA_Game
             playerChars.Add(new Archer(null, 1));
 
             levels = new string[LEVEL_COUNT];
-
             currentLevel = 0;
-            levels[0] = "JSAtestlevel";
-            levels[1] = "Coast";
-            levels[2] = "Arena";
-            levels[3] = "Battlefield";
-            levels[0] = "Rush";
+
+            int i = 0;
+            levels[i++] = "ArenaTest";
+            levels[i++] = "JSAtestlevel";
+            levels[i++] = "Coast";
+            levels[i++] = "Arena";
+            levels[i++] = "Battlefield";
+            levels[i++] = "Rush";
             
             
             //Set first level
@@ -437,11 +439,11 @@ namespace JSA_Game
             currentLevel = 0;
         }
 
-        public static ArrayList getPlayerChars()
+        public static List<Character> getPlayerChars()
         {
             return playerChars;
         }
-        public static void setPlayerChars(ArrayList chars)
+        public static void setPlayerChars(List<Character> chars)
         {
             playerChars = chars;
         }

@@ -99,7 +99,7 @@ namespace JSA_Game.Screens
                     ScreenManager.AddScreen(noMoreLevelsMessageBox, null);
                 }
                 else
-                    ScreenManager.AddScreen(new LevelScreen(levelName), e.PlayerIndex);
+                    ScreenManager.AddScreen(new LevelScreen(levelName, ScreenManager), e.PlayerIndex);
 
             }
         

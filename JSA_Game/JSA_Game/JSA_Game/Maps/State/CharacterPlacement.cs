@@ -10,19 +10,21 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameStateManagement;
 using JSA_Game.Battle_Controller;
 using JSA_Game.Maps;
+using JSA_Game.Screens;
 
 namespace JSA_Game.Maps.State
 {
     class CharacterPlacement
     {
-    public static void update(Level level, GameTime gameTime)
+        public static void update(Level level, ScreenManager screenManager,GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-            Vector2 cursorPos = new Vector2(level.Cursor.CursorPos.X+level.ShowStartX, level.Cursor.CursorPos.Y+level.ShowStartY);
+            Vector2 cursorPos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
 
-            if (level.MoveTimeElapsed >= level.MoveDelay)   // A unit is selected
+            if (level.MoveTimeElapsed >= level.MoveDelay)
             {
                 //Scroll board if necessary
                 if (keyboard.IsKeyDown(Keys.Left) && level.Cursor.CursorPos.X == 1 && level.ShowStartX != 0)
@@ -44,86 +46,44 @@ namespace JSA_Game.Maps.State
                 else if ((keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
                     && level.Cursor.CursorPos.X != level.ShowStartX + level.NumTilesShowing && level.Cursor.CursorPos.Y != level.ShowStartY + level.NumTilesShowing)
                 {
-                    //Listen for input to move cursor.  If it moved, update aoe range if present
-                   
+                    //Listen for input to move cursor
+                    level.Cursor.moveCursor(gameTime);
                 }
-                if (level.Cursor.moveCursor(gameTime) && level.SelectedAction != null)
-                {
 
-                    if (level.SelectedAction.Aoe) //If the action is an aoe action
-                    {
-                        //Clear old aoe range
-                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange+1, true);
-
-                        level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false);
-                        //Show new aoe range
-                        //System.Diagnostics.Debug.Print("Showing aoe range");
-                        level.scanForTargets(true, cursorPos, level.SelectedAction.AoeRange, true);
-                    }
-                }
                 level.MoveTimeElapsed = 0;
             }
 
-            //Confirm attack
-            if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
+            int x = (int)level.Cursor.CursorPos.X + level.ShowStartX;
+            int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
+
+            if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed && level.Board[x,y].Occupant == null)
             {
-                int x = (int)cursorPos.X;
-                int y = (int)cursorPos.Y;
-
+                //Selecting a highlighted space. 
                 
-
-                if (level.Board[x, y].Occupant != null)
+                if (level.Board[x, y].HlState == HighlightState.MOVE)
                 {
-                    if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected)
-                    {
-                        level.TargetList.Add(level.Board[x, y].Occupant);
-                    }
-
-                }
-
-                if (level.TargetList.Count > 0 && level.calcDist(cursorPos, level.SelectedPos) <= level.SelectedAction.Range)
-                {
-                    System.Diagnostics.Debug.Print("Num targets: " + level.TargetList.Count);
-                    //Here apply attack to all aoe targets
-                    Character[] targetList = new Character[level.TargetList.Count];
-
-                    int count = 0;
-                    foreach (Character c in level.TargetList)
-                    {
-                        targetList[count] = c;
-                        count++;
-                    }
-
-                    for (int i = 0; i < level.TargetList.Count; i++)
-                    {
-                        Character c = targetList[i];
-
-                       // System.Diagnostics.Debug.Print("Target pos is " + c.Pos.X + ", " + c.Pos.Y);
-                        level.attackTarget(level.SelectedPos, c.Pos, level.SelectedAction);
-                    }
-
-                    //if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected)
-                    //{
-
-
-                    //    //JSA_Game.Battle_Controller.Action action = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
-                    //    level.attackTarget(level.SelectedPos, new Vector2(x, y), level.SelectedAction);
-
-                        
-                   // }
-                    
-                    level.State = LevelState.CursorSelection;
-                    level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
-                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
+                    screenManager.AddScreen(new CharacterListScreen(screenManager.GraphicsDevice, Game1.getPlayerChars(), "right", level, new Vector2(x,y)), null);
+                    //System.Diagnostics.Debug.Print("Placement state character Class: " + selectedChar.ClassName);
+                    //level.State = LevelState.CursorSelection;
                 }
             }
-            else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
+            if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
-                level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
-                if (level.SelectedAction != null)
+                //Selecting a highlighted space. 
+               // int x = (int)level.Cursor.CursorPos.X + level.ShowStartX;
+               // int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
+                if (level.Board[x, y].Occupant != null)
                 {
-                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
+                    System.Diagnostics.Debug.Print("" + level.PUnits.Count);
+                    level.PUnits.Remove(level.Board[x, y].Occupant);
+                    System.Diagnostics.Debug.Print("" + level.PUnits.Count);
+                    level.Board[x, y].Occupant = null;
+                    level.Board[x, y].IsOccupied = false;
+                    level.PlayerUnitCount--;
+                    System.Diagnostics.Debug.Print("Placement state: Removing unit");
+
+                    //System.Diagnostics.Debug.Print("Placement state character Class: " + selectedChar.ClassName);
+                    //level.State = LevelState.CursorSelection;
                 }
             }
         }

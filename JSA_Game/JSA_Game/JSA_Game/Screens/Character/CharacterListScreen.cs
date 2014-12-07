@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
-using JSA_Game.CharClasses;
+using JSA_Game.Maps;
 
 namespace JSA_Game.Screens
 {
@@ -28,7 +28,11 @@ namespace JSA_Game.Screens
         int highestEntryLength = 0;
         int showStartIndex = 0;
 
-        public CharacterListScreen(GraphicsDevice gDevice, List<Character> charList, string alignment)
+        //Reference to the level
+        Level level;
+        Vector2 positionToPlace;
+
+        public CharacterListScreen(GraphicsDevice gDevice, List<Character> charList, string alignment, Level level, Vector2 pos)
         {
             foreach (Character c in charList)
             {
@@ -45,6 +49,9 @@ namespace JSA_Game.Screens
             menuDown = new InputAction(null, new Keys[] { Keys.Down }, true);
             menuSelect = new InputAction(null, new Keys[] { Keys.Z }, true);
             menuCancel = new InputAction(null, new Keys[] { Keys.X }, true);
+
+            this.level = level;
+            positionToPlace = pos;
         }
 
 
@@ -95,7 +102,36 @@ namespace JSA_Game.Screens
         protected virtual void OnSelectEntry(int entryIndex, PlayerIndex playerIndex)
         {
             charEntries[entryIndex].OnSelectEntry(playerIndex);
+           // level.SelectedChar = Game1.getPlayerChars()[entryIndex];
+            //level.IsCharSelected = true;
+            level.addUnit(1, Game1.getPlayerChars()[entryIndex], positionToPlace);
+            System.Diagnostics.Debug.Print("Character Class: " + Game1.getPlayerChars()[entryIndex].ClassName);
+            if (level.NumPlaceableSpaces == level.PUnits.Count  || Game1.getPlayerChars().Count == level.PUnits.Count)
+            {
+                string message = "Start level?";
+                MessageBoxScreen confirmStartMessageBox = new MessageBoxScreen(message, true);
+
+                confirmStartMessageBox.Accepted += ConfirmStartMessageBoxAccepted;
+
+                ScreenManager.AddScreen(confirmStartMessageBox, null);
+            }
+
+            ExitScreen();
         }
+
+
+        void ConfirmStartMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        {
+            for (int i = 0; i < level.BoardWidth; i++)
+            {
+                for (int j = 0; j < level.BoardHeight; j++)
+                {
+                    level.Board[i, j].HlState = HighlightState.NONE;
+                }
+            }
+            level.State = LevelState.CursorSelection;
+        }
+
 
 
         /// <summary>
