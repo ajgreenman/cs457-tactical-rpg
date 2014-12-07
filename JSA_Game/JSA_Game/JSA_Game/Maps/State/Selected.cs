@@ -71,7 +71,6 @@ namespace JSA_Game.Maps.State
                     if (!c.ActionDisabled)
                     {                      
                         lvl.SelectedAction = c.Actions[index];
-                        Console.WriteLine(c.Actions[index].Name);
 
                         if (lvl.PrevselectedAction != null)
                         {

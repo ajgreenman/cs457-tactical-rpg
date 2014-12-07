@@ -181,7 +181,6 @@ namespace JSA_Game.HUD
                     //Ability 4
                     if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
                     {
-                        Console.WriteLine("What");
                         Selected.setAction(PerformedType.Ability, 3);
                     }
 

@@ -57,7 +57,7 @@ namespace JSA_Game.CharClasses
                 new Battle_Controller.Action("Rage", "Go into a range, increasing strength but lowering accuracy.",
                     new Status("Enraged", "Blinded by rage, increasing strength but lowering accuracy.", 2,
                         new StatType[] { StatType.Strength, StatType.Accuracy }, new int[] { 5, -5 }, "", true, false),
-                    new StatType[] { StatType.Hp }, ActionType.Physical, false, true, false, 1.0, 3, 0, 0, "swoosh");
+                    new StatType[] { StatType.Mp }, ActionType.Physical, false, true, false, 1.0, 3, 0, 0, "swoosh");
             Actions[3] = actionRage;
         }
 
