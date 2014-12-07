@@ -89,7 +89,7 @@ namespace JSA_Game
            // levels.Add("Arena");
 
             currentLevel = 0;
-            levels[0] = "JSAtestlevel";
+            levels[0] = "DefensiveAITest";
             levels[1] = "Coast";
             levels[2] = "Arena";
             

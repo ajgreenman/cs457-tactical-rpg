@@ -33,9 +33,6 @@ namespace JSA_Game.AI
         {
             switch (character.ClassName)
             {
-                case "Cleric":
-                    clericMove(gameTime);
-                    break;
                 default:
                     generalMove(gameTime);
                     break;
@@ -76,6 +73,10 @@ namespace JSA_Game.AI
 
         private void clericMove(GameTime gameTime)
         {
+            int dist;
+            int shortestDist = 64;
+            targetPos = new Vector2(-1 - 1);
+            ArrayList targetList = getFriendlyTargets();
 
         }
 

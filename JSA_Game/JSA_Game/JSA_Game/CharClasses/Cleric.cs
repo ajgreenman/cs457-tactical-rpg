@@ -14,7 +14,7 @@ namespace JSA_Game.CharClasses
         {
             charLevel = 1;
             AI = new AggressiveAI(this, level);
-            Texture = "Cleric";
+            Texture = "Mage";
             name = "Cleric";
             className = "Cleric";
 

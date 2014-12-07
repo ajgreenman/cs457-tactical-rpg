@@ -213,6 +213,10 @@ namespace JSA_Game.Maps
                     {
                         c = new Archer(this, Convert.ToInt32(param[3]));
                     }
+                    else if (param[2].Equals("Cleric"))
+                    {
+                        c = new Cleric(this, Convert.ToInt32(param[3]));
+                    }
 
                     //More
 
@@ -975,7 +979,7 @@ namespace JSA_Game.Maps
             foreach (Character c in pUnits)
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
-                if (!characterImages.ContainsKey(c.Texture))
+                if (!characterImages.ContainsKey("player" + c.Texture))
                 {
                     characterImages.Add("player" + c.Texture, content.Load<Texture2D>("player" + c.Texture));
 
@@ -985,7 +989,7 @@ namespace JSA_Game.Maps
             foreach (Character c in eUnits)
             {
                 System.Diagnostics.Debug.Print("Created an enemy unit");
-                if (!characterImages.ContainsKey(c.Texture))
+                if (!characterImages.ContainsKey("enemy" + c.Texture))
                 {
                     characterImages.Add("enemy" + c.Texture, content.Load<Texture2D>("enemy" + c.Texture));
                 }
