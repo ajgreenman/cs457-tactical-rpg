@@ -29,10 +29,17 @@ Content\red_highlight.xnb
 Content\orange_highlight.xnb
 Content\blank.xnb
 Content\town.xnb
+Content\scroll.xnb
+Content\steel.xnb
+Content\statBackground.xnb
+Content\barBackground.xnb
+Content\itemPouch.xnb
+Content\wood Background.xnb
 Content\StatFont.xnb
 Content\menufont.xnb
 Content\smallMenufont.xnb
 Content\FloatingFont.xnb
+Content\AbilityFont.xnb
 Content\Audio\fire_spell.xnb
 Content\Audio\ice_spell.xnb
 Content\Audio\sword_attack.xnb

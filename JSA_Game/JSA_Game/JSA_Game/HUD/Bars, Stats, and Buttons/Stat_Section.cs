@@ -29,6 +29,12 @@ namespace JSA_Game.HUD
         const int ACC_POSy = 560;
         const int LVL_POSy = 580;
 
+        //Stat Background
+        Texture2D statBackground;
+        Rectangle backgroundRec;
+        Vector2 backgroundSize;
+        Vector2 backgroundPos;
+
         //Vector2 Objects
         Vector2 stat_pos; 
         Vector2 str_pos;
@@ -88,6 +94,11 @@ namespace JSA_Game.HUD
             resColor = Color.White; 
             dodColor = Color.White; 
             accColor = Color.White;
+
+            //Initializing Stat Background
+            backgroundSize = new Vector2(345, 500);
+            backgroundPos = new Vector2(155, 500);
+            backgroundRec = new Rectangle((int)backgroundPos.X, (int)backgroundPos.Y, (int)backgroundSize.X, (int)backgroundSize.Y);
         }
 
         //Getting Character Values
@@ -281,11 +292,18 @@ namespace JSA_Game.HUD
             fDodge = Content.Load<SpriteFont>("StatFont");
             fAccuracy = Content.Load<SpriteFont>("StatFont");
             flvl = Content.Load<SpriteFont>("StatFont");
+
+            //Background Load
+            statBackground = Content.Load<Texture2D>("statBackground");
         }
 
         //Drawing Stat Fonts and Effect Fonts
         public void Draw(SpriteBatch spriteBatch)
         {
+            //Background Draw
+            spriteBatch.Draw(statBackground, backgroundRec, Color.White);
+
+            //Stat Draw
             spriteBatch.DrawString(fStatHeader, "Stats", stat_pos, Color.White);
             spriteBatch.DrawString(fStrength, "STR: " + targetStrength, str_pos, strColor);
             spriteBatch.DrawString(fArmor, "ARM: " + targetArmor, armr_pos, armrColor);

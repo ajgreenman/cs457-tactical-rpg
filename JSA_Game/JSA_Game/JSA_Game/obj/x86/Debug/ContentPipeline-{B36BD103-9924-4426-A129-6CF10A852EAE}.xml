@@ -281,6 +281,60 @@
       <Time>2014-12-03T16:55:00.7590669-05:00</Time>
     </Item>
     <Item>
+      <Source>scroll.png</Source>
+      <Name>scroll</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\scroll.xnb</Output>
+      <Time>2014-12-07T18:01:22.258871-05:00</Time>
+    </Item>
+    <Item>
+      <Source>steel.png</Source>
+      <Name>steel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\steel.xnb</Output>
+      <Time>2014-12-07T18:01:22.2638748-05:00</Time>
+    </Item>
+    <Item>
+      <Source>statBackground.jpg</Source>
+      <Name>statBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\statBackground.xnb</Output>
+      <Time>2014-12-07T18:01:22.2628718-05:00</Time>
+    </Item>
+    <Item>
+      <Source>barBackground.jpg</Source>
+      <Name>barBackground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\barBackground.xnb</Output>
+      <Time>2014-12-07T18:01:22.2528656-05:00</Time>
+    </Item>
+    <Item>
+      <Source>itemPouch.png</Source>
+      <Name>itemPouch</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemPouch.xnb</Output>
+      <Time>2014-12-07T18:01:22.2548693-05:00</Time>
+    </Item>
+    <Item>
+      <Source>wood Background.jpg</Source>
+      <Name>wood Background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\wood Background.xnb</Output>
+      <Time>2014-12-07T18:01:22.2698787-05:00</Time>
+    </Item>
+    <Item>
       <Source>StatFont.spritefont</Source>
       <Name>StatFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -315,6 +369,15 @@
       <Options>None</Options>
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb</Output>
       <Time>2014-12-05T17:13:48.497233-05:00</Time>
+    </Item>
+    <Item>
+      <Source>AbilityFont.spritefont</Source>
+      <Name>AbilityFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\AbilityFont.xnb</Output>
+      <Time>2014-12-07T18:01:22.2508638-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\fire_spell.wav</Source>
