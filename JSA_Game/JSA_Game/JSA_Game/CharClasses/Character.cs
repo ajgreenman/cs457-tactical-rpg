@@ -158,7 +158,7 @@ namespace JSA_Game
 
         public int CurrHp
         {
-            get { if(currHp < 0) return 0; return currHp; }
+            get { if (currHp < 0) currHp = 0; if (currHp >= maxHP) currHp = maxHP; return currHp; }
             set { currHp = value; }
         }
 
@@ -166,7 +166,7 @@ namespace JSA_Game
 
         public int CurrMp
         {
-            get { if (currMp < 0) return 0; return currMp; }
+            get { if (currMp < 0) currMp = 0; if (currMp > maxMP) currMp = maxMP; return currMp; }
             set { currMp = value; }
         }
 

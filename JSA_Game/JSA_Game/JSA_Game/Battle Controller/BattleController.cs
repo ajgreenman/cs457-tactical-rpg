@@ -505,10 +505,10 @@ namespace JSA_Game.Battle_Controller
             {
                 value = 1;
             }
-            double amount = value * user.Level;
+            double amount = value;
 
             Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-            int rand = rng.Next((int)amount - (3), (int)amount + (3));
+            int rand = rng.Next((int) amount - (2 * user.Level), (int) amount + (2 * user.Level));
             amount = rand;
 
             if (amount <= 0)
@@ -542,6 +542,7 @@ namespace JSA_Game.Battle_Controller
 
             return false;
         }
+
         private static void floatingTextLogic(String actionType, Character user, int amount)
         {
             switch (actionType)

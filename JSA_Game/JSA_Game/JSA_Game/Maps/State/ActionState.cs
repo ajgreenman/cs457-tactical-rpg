@@ -53,12 +53,12 @@ namespace JSA_Game.Maps.State
                     if (level.SelectedAction.Aoe) //If the action is an aoe action
                     {
                         //Clear old aoe range
-                        level.scanForTargets(false, oldPos, level.SelectedAction.AoeRange, true);
+                        level.scanForTargets(false, oldPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
 
-                        level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false);
+                        level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
                         //Show new aoe range
                         //System.Diagnostics.Debug.Print("Showing aoe range");
-                         level.scanForTargets(true, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
+                        level.scanForTargets(true, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                     }
                 }
                 level.MoveTimeElapsed = 0;
@@ -74,11 +74,14 @@ namespace JSA_Game.Maps.State
 
                 if (level.Board[x, y].Occupant != null)
                 {
-                    if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected)
+                    if (level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected && !level.SelectedAction.Friendly)
                     {
                         level.TargetList.Add(level.Board[x, y].Occupant);
                     }
-
+                    if (!level.Board[x, y].Occupant.IsEnemy && level.Board[x, y].IsSelected && level.SelectedAction.Friendly)
+                    {
+                        level.TargetList.Add(level.Board[x, y].Occupant);
+                    }
                 }
 
                 if (level.TargetList.Count > 0 && level.calcDist(level.Cursor.CursorPos, level.SelectedPos) <= level.SelectedAction.Range)
@@ -113,17 +116,17 @@ namespace JSA_Game.Maps.State
                    // }
                     
                     level.State = LevelState.CursorSelection;
-                    level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
-                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
+                    level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
+                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                 }
             }
             else if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
                 level.State = LevelState.CursorSelection;
-                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false);
+                level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
                 if (level.SelectedAction != null)
                 {
-                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true);
+                    level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                 }
             }
         }

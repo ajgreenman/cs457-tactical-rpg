@@ -44,7 +44,7 @@ namespace JSA_Game.CharClasses
                 new Battle_Controller.Action("Battle Cry", "Lowers enemy accuracy, strength, and magic.",
                     new Status("Fright", "Put fear into the enemy, lowering accuracy, strength, and magic.", 2,
                         new StatType[] { StatType.Accuracy, StatType.Strength, StatType.Magic }, new int[] { 3, 2, 2 }, "", false, false),
-                    new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 4, 0, 3, "swoosh");
+                    new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, 1.0, 4, 0, 3, "swoosh");
             Actions[1] = actionBattleCry;
 
             Battle_Controller.Action actionPowerfulStrike =

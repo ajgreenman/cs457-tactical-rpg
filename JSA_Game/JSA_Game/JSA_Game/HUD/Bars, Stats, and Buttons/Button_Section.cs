@@ -178,15 +178,12 @@ namespace JSA_Game.HUD
             {
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.actionDisplay; }
-
-                if (keyboard.IsKeyUp(Keys.D3))
-                {
                     //Ability 4
                     if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
                     {
+                        Console.WriteLine("What");
                         Selected.setAction(PerformedType.Ability, 3);
                     }
-                }
 
                 //Ability 3
                 if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D4))
