@@ -76,6 +76,14 @@ namespace JSA_Game.HUD
             comText.LoadContent(Content);
         }
 
+        public void Update(GameTime gameTime)
+        {
+            foreach(Character element in charList)
+            {
+                if (element.Set) { comText.Update(gameTime); }
+            }
+        }
+
         public void characterSelect(Character c)
         {
             //Updating Bars, Buttons, and Stat/Effect Section
