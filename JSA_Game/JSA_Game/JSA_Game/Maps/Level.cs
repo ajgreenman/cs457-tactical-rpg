@@ -105,7 +105,7 @@ namespace JSA_Game.Maps
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
 
-            Game1.PlaySound("battle");
+            Sound.PlaySound("battle");
 
             // Read the file and read it line by line.
             StreamReader file = new StreamReader("Levels/" + filename + ".txt");
@@ -1201,7 +1201,7 @@ namespace JSA_Game.Maps
 
         public static void KillUnit(Character c)
         {
-            Game1.PlaySound("death");
+            Sound.PlaySound("death");
         }
 
         private bool CheckKey(Keys theKey)

@@ -72,6 +72,13 @@ namespace JSA_Game.Battle_Controller
             return true;
         }
 
+        public static Boolean performItem(Character user, Character target, int index)
+        {
+            Action action = user.Inventory[index].Action;
+            user.Inventory[index] = null;
+            return performAction(action, user, target);
+        }
+
         /// <summary>
         /// Attempts to perform an action on a single target. Assumes that the action has already been checked to be valid.
         /// </summary>
@@ -91,7 +98,7 @@ namespace JSA_Game.Battle_Controller
                 if (!didActionHit(action, user, target))
                 {
                     floatingTextLogic("Miss", user, 0);
-                    Game1.PlaySound("miss");
+                    Sound.PlaySound("miss");
                     return false;
                 }
 
@@ -100,7 +107,7 @@ namespace JSA_Game.Battle_Controller
 
                 if (!action.Aoe)
                 {
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                 }
             }
             else
@@ -109,7 +116,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     user.Armor += 4;
                     user.Resist += 4;
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                     floatingTextLogic("Defend", user, 0);
                 }
                 else
@@ -117,7 +124,7 @@ namespace JSA_Game.Battle_Controller
                     int value = ((int)(user.MaxHP * .1));
                     user.CurrHp += value;
                     user.CurrMp += ((int)(user.MaxMP * .1));
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                     floatingTextLogic("Heal", user, value);
                 }
 
@@ -137,7 +144,7 @@ namespace JSA_Game.Battle_Controller
                 }
             }
 
-            Game1.PlaySound(action.Sound);
+            Sound.PlaySound(action.Sound);
 
             return ret_val;
         }
