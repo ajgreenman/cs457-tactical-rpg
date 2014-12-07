@@ -1,0 +1,13 @@
+/ Level name: DefensiveAITest
+
+i:10,10,1,6
+G:plains
+
+p:0,0,Cleric,4,Aggresive
+
+e:6,4,Warrior,1,Aggressive
+e:6,5,Warrior,1,Aggressive
+e:6,6,Warrior,1,Aggressive
+e:6,7,Warrior,1,Aggressive
+e:6,8,Warrior,1,Aggressive
+e:8,6,Cleric,8,Defensive

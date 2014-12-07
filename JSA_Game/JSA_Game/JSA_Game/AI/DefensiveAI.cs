@@ -25,10 +25,24 @@ namespace JSA_Game.AI
             character = c;
             currLevel = currentLevel;
             targetPos = new Vector2(-1, -1);
+            Console.WriteLine(character.ClassName);
             performFriendly();
         }
 
         public void move(GameTime gameTime)
+        {
+            switch (character.ClassName)
+            {
+                case "Cleric":
+                    clericMove(gameTime);
+                    break;
+                default:
+                    generalMove(gameTime);
+                    break;
+            }
+        }
+
+        private void generalMove(GameTime gameTime)
         {
             //Picks closest target
             int dist;
@@ -60,6 +74,10 @@ namespace JSA_Game.AI
             }
         }
 
+        private void clericMove(GameTime gameTime)
+        {
+
+        }
 
         public void action()
         {
