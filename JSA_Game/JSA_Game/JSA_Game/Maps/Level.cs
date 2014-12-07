@@ -1005,7 +1005,7 @@ namespace JSA_Game.Maps
 
 
 
-
+                    hud.Update(gameTime);
                     hud.Hidden = state != LevelState.CursorSelection;
                     if (hud.Hidden)
                     {
@@ -1036,8 +1036,6 @@ namespace JSA_Game.Maps
                 //Enemy turn
                 else
                 {
-
-
                     //Each enemy turn
                     foreach (Character c in eUnits)
                     {
