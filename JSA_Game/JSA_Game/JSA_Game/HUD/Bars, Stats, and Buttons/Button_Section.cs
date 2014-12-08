@@ -57,7 +57,7 @@ namespace JSA_Game.HUD
         public const string defend = "Defend";
         public const string items = "Items";
         public const string exert = "Exert";
-        public const string wait = "Wait";
+        public const string wait = "Rest";
         public const string move = "Move";
         public const string actions = "Actions";
         public const string abilities = "Abilities";
