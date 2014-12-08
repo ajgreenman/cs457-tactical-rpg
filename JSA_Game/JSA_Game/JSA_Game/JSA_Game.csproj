@@ -141,6 +141,7 @@
     <Compile Include="HUD\HUD.cs" />
     <Compile Include="Items\Consumable.cs" />
     <Compile Include="Items\Item.cs" />
+    <Compile Include="Maps\AStar.cs" />
     <Compile Include="Maps\State\ActionState.cs" />
     <Compile Include="Maps\State\CharacterPlacement.cs" />
     <Compile Include="Maps\State\Enumerated\HighlightState.cs" />

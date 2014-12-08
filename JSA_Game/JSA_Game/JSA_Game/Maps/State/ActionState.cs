@@ -49,11 +49,11 @@ namespace JSA_Game.Maps.State
                 }
                 if (level.Cursor.moveCursor(gameTime) && level.SelectedAction != null)
                 {
-
+                    cursorPos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
                     if (level.SelectedAction.Aoe) //If the action is an aoe action
                     {
                         //Clear old aoe range
-                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange+3, true);
+                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange + 1, true);
 
                         level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false);
                         //Show new aoe range
@@ -81,7 +81,7 @@ namespace JSA_Game.Maps.State
 
                 }
 
-                if (level.TargetList.Count > 0 && level.calcDist(cursorPos, level.SelectedPos) <= level.SelectedAction.Range)
+                if (level.TargetList.Count > 0 && AStar.calcDist(cursorPos, level.SelectedPos) <= level.SelectedAction.Range)
                 {
                     System.Diagnostics.Debug.Print("Num targets: " + level.TargetList.Count);
                     //Here apply attack to all aoe targets

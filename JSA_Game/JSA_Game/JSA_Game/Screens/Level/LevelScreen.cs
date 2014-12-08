@@ -26,6 +26,7 @@ namespace JSA_Game.Screens
         float pauseAlpha;
 
         InputAction pauseAction;
+        InputAction startAction;
 
         Level currLevel;
 
@@ -37,11 +38,15 @@ namespace JSA_Game.Screens
             
             TransitionOnTime = TimeSpan.FromSeconds(0.25);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-            //Basic inputs: select and cancel (Z and X)
+            
+            //Basic inputs: excape and Z
             pauseAction = new InputAction(
-                new Buttons[] { Buttons.Start, Buttons.Back },
+                null,
                 new Keys[] { Keys.Escape },
+                true);
+            startAction = new InputAction(
+                null,
+                new Keys[] { Keys.Z },
                 true);
 
             currLevel = new Level(levelName, screenManager);
@@ -153,8 +158,34 @@ namespace JSA_Game.Screens
             {
                 ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
             }
+            else if (startAction.Evaluate(input, ControllingPlayer, out player))
+            {
+                int x = (int)currLevel.Cursor.CursorPos.X + currLevel.ShowStartX;
+                int y = (int)currLevel.Cursor.CursorPos.Y + currLevel.ShowStartY;
+                if (currLevel.State == LevelState.Placement && currLevel.Board[x, y].HlState != HighlightState.MOVE && currLevel.PUnits.Count > 0)
+                {
+                    string message = "Start level?";
+                    MessageBoxScreen confirmStartMessageBox = new MessageBoxScreen(message, true);
+
+                    confirmStartMessageBox.Accepted += ConfirmStartMessageBoxAccepted;
+
+
+                    ScreenManager.AddScreen(confirmStartMessageBox, null);
+                }
+            }
         }
 
+        void ConfirmStartMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        {
+            for (int i = 0; i < currLevel.BoardWidth; i++)
+            {
+                for (int j = 0; j < currLevel.BoardHeight; j++)
+                {
+                    currLevel.Board[i, j].HlState = HighlightState.NONE;
+                }
+            }
+            currLevel.State = LevelState.CursorSelection;
+        }
 
         /// <summary>
         /// Draws the gameplay screen.

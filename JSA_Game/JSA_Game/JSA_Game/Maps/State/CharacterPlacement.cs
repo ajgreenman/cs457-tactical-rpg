@@ -59,13 +59,14 @@ namespace JSA_Game.Maps.State
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed && level.Board[x,y].Occupant == null)
             {
                 //Selecting a highlighted space. 
-                
+
                 if (level.Board[x, y].HlState == HighlightState.MOVE)
                 {
-                    screenManager.AddScreen(new CharacterListScreen(screenManager.GraphicsDevice, Game1.getPlayerChars(), "right", level, new Vector2(x,y)), null);
+                    screenManager.AddScreen(new CharacterListScreen(screenManager.GraphicsDevice, Game1.getPlayerChars(), "right", level, new Vector2(x, y)), null);
                     //System.Diagnostics.Debug.Print("Placement state character Class: " + selectedChar.ClassName);
                     //level.State = LevelState.CursorSelection;
                 }
+                
             }
             if (keyboard.IsKeyDown(Keys.X) && !level.ButtonPressed)
             {
@@ -74,9 +75,7 @@ namespace JSA_Game.Maps.State
                // int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
                 if (level.Board[x, y].Occupant != null)
                 {
-                    System.Diagnostics.Debug.Print("" + level.PUnits.Count);
                     level.PUnits.Remove(level.Board[x, y].Occupant);
-                    System.Diagnostics.Debug.Print("" + level.PUnits.Count);
                     level.Board[x, y].Occupant = null;
                     level.Board[x, y].IsOccupied = false;
                     level.PlayerUnitCount--;
@@ -87,5 +86,9 @@ namespace JSA_Game.Maps.State
                 }
             }
         }
+
+        
+
+
     }
 }

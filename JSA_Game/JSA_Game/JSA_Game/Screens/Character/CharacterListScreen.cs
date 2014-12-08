@@ -106,6 +106,7 @@ namespace JSA_Game.Screens
             //level.IsCharSelected = true;
             level.addUnit(1, Game1.getPlayerChars()[entryIndex], positionToPlace);
             System.Diagnostics.Debug.Print("Character Class: " + Game1.getPlayerChars()[entryIndex].ClassName);
+
             if (level.NumPlaceableSpaces == level.PUnits.Count  || Game1.getPlayerChars().Count == level.PUnits.Count)
             {
                 string message = "Start level?";

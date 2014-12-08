@@ -13,10 +13,13 @@
 / 'g' denotes position-specific geography: landType at a given position on the board.
 /	Format: g:<x value>,<y value>,<land type>
 /
-/ 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.)
+/ 'o' denotes a position where a player character can be placed.  (optional)
+/	Format: o:<x value>,<y value>
+
+/ 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.) (optional)
 /	Format: p:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
-/ 'e' denotes an enemy unit: Needs the class and location (later will add level, equip, etc.)
+/ 'e' denotes an enemy unit: Needs the class and location (later will add level, equipment, etc.)
 /	Format: e:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
 
