@@ -46,7 +46,9 @@ namespace JSA_Game.HUD
         public void characterSelect(Character c)
         {
             if (c.Status[0] != null) { targetBuff = c.Status[0].Name; }
+            else { targetBuff = "None"; }
             if (c.Status[1] != null) { targetDBuff = c.Status[1].Name; }
+            else { targetDBuff = "None"; }
         }
 
         public void LoadContent(ContentManager Content)

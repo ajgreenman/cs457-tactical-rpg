@@ -54,11 +54,13 @@ namespace JSA_Game.HUD
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
             buttonSection = new Button_Section();
-            comText = new CombatText();
+            comText = new CombatText(charList);
 
             //INIT Display Values
             hidden = true;
             hState = HUDState.showOriginal;
+
+            //INIT List of Characters
             this.charList = charList;
         }
 
@@ -71,6 +73,15 @@ namespace JSA_Game.HUD
             statSection.LoadContent(Content);
             effectSection.LoadContent(Content);
             buttonSection.LoadContent(Content);
+            comText.LoadContent(Content);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            foreach(Character element in charList)
+            {
+                if (element.Set) { comText.Update(gameTime); }
+            }
         }
 
         public void characterSelect(Character c)
@@ -80,7 +91,6 @@ namespace JSA_Game.HUD
             statSection.characterSelect(c);
             effectSection.characterSelect(c);
             buttonSection.CharacterSelect(c);
-            comText.characterSelect(c);
             selectedChar = c;
         }
 
@@ -95,17 +105,19 @@ namespace JSA_Game.HUD
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(hudText, hudRec, Color.MidnightBlue);
+            comText.Draw(spriteBatch);
+
             if (hidden)
             {
                 //Draws Bars and Buttons
-                if (hState == HUDState.showActions)
+                if (hState == HUDState.showActions && !selectedChar.IsEnemy)
                 {
                     barSection.Draw(spriteBatch);
                     buttonSection.Draw(spriteBatch);
                 }
 
                 //Draws Bars and Stat Section
-                if (hState == HUDState.showOriginal)
+                if (hState == HUDState.showOriginal || selectedChar.IsEnemy)
                 {
                     barSection.Draw(spriteBatch);
                     statSection.Draw(spriteBatch);

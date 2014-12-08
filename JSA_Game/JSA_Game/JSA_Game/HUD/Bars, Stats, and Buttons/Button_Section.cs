@@ -13,6 +13,13 @@ namespace JSA_Game.HUD
 {
     class Button_Section
     {
+        //Button Background
+        public Texture2D abilityBackground;
+        public Texture2D itemBackground;
+        public Rectangle backgroundRectangle;
+        public Vector2 backgroundPosition;
+        public Vector2 backgroundSize;
+
         //Button Image
         public Texture2D Button1Text;
         public Texture2D Button2Text;
@@ -115,6 +122,11 @@ namespace JSA_Game.HUD
             Button4Col = new Color(255, 255, 255, 255);
             font4pos.X = Button4Pos.X + 5;
             font4pos.Y = Button4Pos.Y + 3;
+
+            //Button Background
+            backgroundSize = new Vector2(360, 100);
+            backgroundPosition = new Vector2(145, 500);
+            backgroundRectangle = new Rectangle((int)backgroundPosition.X, (int)backgroundPosition.Y, (int)backgroundSize.X, (int)backgroundSize.Y);
         }
 
         public void CharacterSelect(Character c)
@@ -143,7 +155,7 @@ namespace JSA_Game.HUD
                 if (keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.itemDisplay;}
 
                 //Action
-                if (keyboard.IsKeyDown(Keys.D2)) {bState = ButtonState.actionDisplay;}
+                if (keyboard.IsKeyDown(Keys.D2)) { bState = ButtonState.actionDisplay; }
         
                 //Move
                 if (keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Move, -1);}
@@ -151,7 +163,7 @@ namespace JSA_Game.HUD
 
             //Action Display
             if (bState == ButtonState.actionDisplay)
-            {
+            {     
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) {bState = ButtonState.startDisplay;}
 
@@ -162,10 +174,13 @@ namespace JSA_Game.HUD
                  }
  
                 //Ability
-                if(keyboard.IsKeyDown(Keys.D3)) {bState = ButtonState.abilityDisplay;}
+                 if (keyboard.IsKeyDown(Keys.D3)) { bState = ButtonState.abilityDisplay; }
 
-                //Defend
-                if(keyboard.IsKeyDown(Keys.D2)) {Selected.setAction(PerformedType.Defend, -1);}
+                if (keyboard.IsKeyUp(Keys.D2))
+                {
+                    //Defend
+                    if (keyboard.IsKeyDown(Keys.D2)) { Selected.setAction(PerformedType.Defend, -1); } 
+                }
 
                 //Attack
                 if(keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}
@@ -175,12 +190,12 @@ namespace JSA_Game.HUD
             {
                 //Go Back a State
                 if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.actionDisplay; }
+                    //Ability 4
+                    if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                    {
+                        Selected.setAction(PerformedType.Ability, 3);
+                    }
 
-                //Ability 4
-                if (targetAbility4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
-                {
-                   Selected.setAction(PerformedType.Ability, 3); 
-                }
                 //Ability 3
                 if (targetAbility3 != "Empty" && keyboard.IsKeyDown(Keys.D4))
                 {
@@ -204,15 +219,18 @@ namespace JSA_Game.HUD
                 if (keyboard.IsKeyDown(Keys.Q)) { bState = ButtonState.startDisplay; }
 
                 //Item 4
-                if (targetItem4 != "Empty" && keyboard.IsKeyDown(Keys.D4))
+                if (targetItem4 != "Empty" && keyboard.IsKeyDown(Keys.D3))
                 {
                     Selected.setAction(PerformedType.Item, 3); 
                 }
 
-                //Item 3
-                if (targetItem3 != "Empty" && keyboard.IsKeyDown(Keys.D3))
+                if (keyboard.IsKeyUp(Keys.D3))
                 {
-                    Selected.setAction(PerformedType.Item, 2); 
+                    //Item 3
+                    if (targetItem3 != "Empty" && keyboard.IsKeyDown(Keys.D4))
+                    {
+                        Selected.setAction(PerformedType.Item, 2);
+                    }
                 }
 
                 //Item 2
@@ -231,11 +249,14 @@ namespace JSA_Game.HUD
 
         public void LoadContent(ContentManager Content)
         {
-                Button1Text = Content.Load<Texture2D>("bar_base");
-                Button2Text = Content.Load<Texture2D>("bar_base");
-                Button3Text = Content.Load<Texture2D>("bar_base");
-                Button4Text = Content.Load<Texture2D>("bar_base");
-                defaultFont = Content.Load<SpriteFont>("StatFont");
+                Button1Text = Content.Load<Texture2D>("wood Background");
+                Button2Text = Content.Load<Texture2D>("wood Background");
+                Button3Text = Content.Load<Texture2D>("wood Background");
+                Button4Text = Content.Load<Texture2D>("wood Background");
+                defaultFont = Content.Load<SpriteFont>("AbilityFont");
+
+                abilityBackground = Content.Load<Texture2D>("scroll");
+                itemBackground = Content.Load<Texture2D>("itemPouch");
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -246,10 +267,10 @@ namespace JSA_Game.HUD
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
                 spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
                 spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.DrawString(defaultFont, wait, font1pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, items, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, move, font3pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, actions, font4pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, wait, font1pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, items, font2pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, move, font3pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, actions, font4pos, Color.Black);
             }
 
             if (bState == ButtonState.actionDisplay)
@@ -258,18 +279,15 @@ namespace JSA_Game.HUD
                 spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
                 spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
                 spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.DrawString(defaultFont, exert, font1pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, abilities, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, attack, font3pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, defend, font4pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, exert, font1pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, abilities, font2pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, attack, font3pos, Color.Black);
+                spriteBatch.DrawString(defaultFont, defend, font4pos, Color.Black);
             }
 
             if (bState == ButtonState.abilityDisplay)
             {
-                spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
-                spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
-                spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
-                spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
+                spriteBatch.Draw(abilityBackground, backgroundRectangle, Color.Wheat); 
                 spriteBatch.DrawString(defaultFont, targetAbility3, font1pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, targetAbility4, font2pos, Color.Blue);
                 spriteBatch.DrawString(defaultFont, targetAbility1, font3pos, Color.Blue);
@@ -278,14 +296,11 @@ namespace JSA_Game.HUD
 
             if (bState == ButtonState.itemDisplay)
             {
-                spriteBatch.Draw(Button1Text, Button1Rec, Button1Col);
-                spriteBatch.Draw(Button2Text, Button2Rec, Button2Col);
-                spriteBatch.Draw(Button3Text, Button3Rec, Button3Col);
-                spriteBatch.Draw(Button4Text, Button4Rec, Button4Col);
-                spriteBatch.DrawString(defaultFont, targetItem1, font1pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetItem2, font2pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetItem3, font3pos, Color.Blue);
-                spriteBatch.DrawString(defaultFont, targetItem4, font4pos, Color.Blue);
+                spriteBatch.Draw(itemBackground, backgroundRectangle, Color.Wheat); 
+                spriteBatch.DrawString(defaultFont, targetItem3, font1pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetItem4, font2pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetItem1, font3pos, Color.Blue);
+                spriteBatch.DrawString(defaultFont, targetItem2, font4pos, Color.Blue);
             }
         }
     }

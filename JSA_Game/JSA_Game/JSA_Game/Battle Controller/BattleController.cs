@@ -72,6 +72,13 @@ namespace JSA_Game.Battle_Controller
             return true;
         }
 
+        public static Boolean performItem(Character user, Character target, int index)
+        {
+            Action action = user.Inventory[index].Action;
+            user.Inventory[index] = null;
+            return performAction(action, user, target);
+        }
+
         /// <summary>
         /// Attempts to perform an action on a single target. Assumes that the action has already been checked to be valid.
         /// </summary>
@@ -91,15 +98,16 @@ namespace JSA_Game.Battle_Controller
                 if (!didActionHit(action, user, target))
                 {
                     floatingTextLogic("Miss", user, 0);
-                    Game1.PlaySound("miss");
+                    Sound.PlaySound("miss");
                     return false;
                 }
 
+                Console.WriteLine(action.Name);
                 calculateAction(action, user, target);
 
                 if (!action.Aoe)
                 {
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                 }
             }
             else
@@ -108,7 +116,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     user.Armor += 4;
                     user.Resist += 4;
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                     floatingTextLogic("Defend", user, 0);
                 }
                 else
@@ -116,10 +124,10 @@ namespace JSA_Game.Battle_Controller
                     int value = ((int)(user.MaxHP * .1));
                     user.CurrHp += value;
                     user.CurrMp += ((int)(user.MaxMP * .1));
-                    Game1.PlaySound(action.Sound);
+                    Sound.PlaySound(action.Sound);
                     floatingTextLogic("Heal", user, value);
                 }
-                
+
             }
 
             return true;
@@ -136,7 +144,7 @@ namespace JSA_Game.Battle_Controller
                 }
             }
 
-            Game1.PlaySound(action.Sound);
+            Sound.PlaySound(action.Sound);
 
             return ret_val;
         }
@@ -180,7 +188,7 @@ namespace JSA_Game.Battle_Controller
         {
             calculateUserCost(action, user);
             calculateTargetEffect(action, user, target);
-        }   
+        }
 
         /// <summary>
         /// Calculates the cost of an action on the user.
@@ -264,7 +272,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     amount = (user.Magic / 2) - (target.Resist);
                 }
-                
+
                 if (amount < 0)
                 {
                     amount = 0;
@@ -274,14 +282,21 @@ namespace JSA_Game.Battle_Controller
             }
 
             int value = calculateActionAmount(user, action, amount);
-            target.CurrHp -= value;
+
+            if (!action.Dmg)
+            {
+                value = 0;
+            }
 
             if (action.Friendly)
             {
+                
+                target.CurrHp += value;
                 floatingTextLogic("Heal", user, value);
             }
             else
             {
+                target.CurrHp -= value;
                 floatingTextLogic("Attack", user, value);
             }
 
@@ -310,15 +325,16 @@ namespace JSA_Game.Battle_Controller
             level.Turn++;
             foreach (Character c in level.PUnits)
             {
-                for(int i = 0; i < c.Status.Length; i++)
+                for (int i = 0; i < c.Status.Length; i++)
                 {
                     if (c.Status[i] != null)
                     {
+                        c.Status[i].Duration--;
                         if (c.Status[i].TurnByTurn)
                         {
                             if (c.Status[i].Friendly)
                             {
-                                for(int j = 0; j < c.Status[i].AffectedStats.Length; j++)
+                                for (int j = 0; j < c.Status[i].AffectedStats.Length; j++)
                                 {
                                     switch (c.Status[i].AffectedStats[j])
                                     {
@@ -390,7 +406,7 @@ namespace JSA_Game.Battle_Controller
                             }
                         }
 
-                        if (level.Turn >= c.Status[i].Expiration)
+                        if (c.Status[i].Duration < 0)
                         {
                             c.Status[i] = null;
                         }
@@ -404,6 +420,7 @@ namespace JSA_Game.Battle_Controller
                 {
                     if (c.Status[i] != null)
                     {
+                        c.Status[i].Duration--;
                         if (c.Status[i].TurnByTurn)
                         {
                             if (c.Status[i].Friendly)
@@ -486,7 +503,7 @@ namespace JSA_Game.Battle_Controller
                             }
                         }
 
-                        if (level.Turn >= c.Status[i].Expiration)
+                        if (c.Status[i].Duration < 0)
                         {
                             c.Status[i] = null;
                         }
@@ -501,12 +518,12 @@ namespace JSA_Game.Battle_Controller
             {
                 value = 1;
             }
-            double amount = value * user.Level;
+            double amount = value;
 
             Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
-            int rand = rng.Next((int) amount - (3), (int) amount + (3));
+            int rand = rng.Next((int) amount - (2 * user.Level), (int) amount + (2 * user.Level));
             amount = rand;
-            
+
             if (amount <= 0)
             {
                 amount = 1;
@@ -523,7 +540,7 @@ namespace JSA_Game.Battle_Controller
 
             Console.WriteLine(user.ClassName + " attack hit for " + amount + " damage.");
 
-            return (int) amount;
+            return (int)amount;
         }
 
         private static Boolean criticalHit()
@@ -538,6 +555,7 @@ namespace JSA_Game.Battle_Controller
 
             return false;
         }
+
         private static void floatingTextLogic(String actionType, Character user, int amount)
         {
             switch (actionType)
@@ -572,5 +590,4 @@ namespace JSA_Game.Battle_Controller
         }
     }
 }
-
 

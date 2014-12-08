@@ -43,7 +43,7 @@ namespace JSA_Game.Maps.State
             {
                 //Scan and mark potential targets
                 lvl.SelectedAction = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;
-                level.scanForTargets(true, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack.Range, false);
+                level.scanForTargets(true, level.SelectedPos, level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack.Range, false, lvl.SelectedAction.Friendly);
                 level.State = LevelState.Action;
             }
 
@@ -62,7 +62,7 @@ namespace JSA_Game.Maps.State
                     if (!c.ActionDisabled)
                     {
                         lvl.SelectedAction = c.Attack;
-                        lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range, false);
+                        lvl.scanForTargets(true, lvl.SelectedPos, c.Attack.Range, false, lvl.SelectedAction.Friendly);
                         lvl.State = LevelState.Action;
                         
                     }
@@ -76,28 +76,30 @@ namespace JSA_Game.Maps.State
                         {
                             if (!lvl.PrevselectedAction.Name.Equals(lvl.SelectedAction))
                             {
-                                lvl.scanForTargets(false, lvl.SelectedPos, lvl.PrevselectedAction.Range, false);
+                                lvl.scanForTargets(false, lvl.SelectedPos, lvl.PrevselectedAction.Range, false, lvl.SelectedAction.Friendly);
                             }
                         }
 
 
-                        lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range, false);
+                        lvl.scanForTargets(true, lvl.SelectedPos, c.Actions[index].Range, false, lvl.SelectedAction.Friendly);
                        // System.Diagnostics.Debug.Print("Action selected was " + lvl.SelectedAction.Name);
                         if (lvl.SelectedAction.Aoe) //If the action is an aoe action
                         {
                             //Show aoe range
-                            lvl.scanForTargets(true, lvl.SelectedPos, lvl.SelectedAction.AoeRange, true);
+                            lvl.scanForTargets(true, lvl.SelectedPos, lvl.SelectedAction.AoeRange, true, lvl.SelectedAction.Friendly);
                         }
                         lvl.State = LevelState.Action;
                         lvl.PrevselectedAction = new Battle_Controller.Action(lvl.SelectedAction.Name, lvl.SelectedAction.Description, lvl.SelectedAction.ActionEffect,
                             lvl.SelectedAction.StatCost, lvl.SelectedAction.Type, lvl.SelectedAction.IgnoreEnemyStats, lvl.SelectedAction.Friendly, lvl.SelectedAction.Aoe,
-                            lvl.SelectedAction.PowerMultiplier, lvl.SelectedAction.Cost, lvl.SelectedAction.Range, lvl.SelectedAction.AoeRange, lvl.SelectedAction.Sound);
+                            lvl.SelectedAction.PowerMultiplier, lvl.SelectedAction.Cost, lvl.SelectedAction.Range, lvl.SelectedAction.AoeRange, lvl.SelectedAction.Sound, lvl.SelectedAction.Dmg);
                         
                     }
                     break;
                  case PerformedType.Item:
+                    lvl.ItemIndex = index;
                     lvl.SelectedAction = c.Inventory[index].Action;
-                    lvl.scanForTargets(true, lvl.SelectedPos, c.Inventory[index].Action.Range, false);
+                    lvl.scanForTargets(true, lvl.SelectedPos, c.Inventory[index].Action.Range, false, lvl.SelectedAction.Friendly);
+                    lvl.State = LevelState.Action;
                     break;
 
                  case PerformedType.Move:

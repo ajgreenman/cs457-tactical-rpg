@@ -14,7 +14,7 @@ namespace JSA_Game.CharClasses
         {
             charLevel = 1;
             AI = new AggressiveAI(this, level);
-            Texture = "player";
+            Texture = "Mage";
             name = "Cleric";
             className = "Cleric";
 
@@ -32,24 +32,24 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionHeal = new Battle_Controller.Action("Heal", "Heal a friendly unit.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 4, 5, 0, "swoosh");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 4, 5, 0, "swoosh", true);
             Actions[0] = actionHeal;
 
             Battle_Controller.Action actionShield = new Battle_Controller.Action("Shield", "Shield a friendly unit.",
-                new Status("Shielded", "Shielded from enemy attacks.", 3, level, new StatType[] { StatType.Armor, StatType.Resist },
+                new Status("Shielded", "Shielded from enemy attacks.", 3, new StatType[] { StatType.Armor, StatType.Resist },
                     new int[] { 5, 5 }, "", true, false),
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 5, 5, 0, "swoosh");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 5, 5, 0, "swoosh", false);
             Actions[1] = actionShield;
 
             Battle_Controller.Action actionJudgment = new Battle_Controller.Action("Judgment", "Smite the enemy.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 6, 5, 0, "swoosh");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.0, 6, 5, 0, "swoosh", true);
             Actions[2] = actionJudgment;
 
             Battle_Controller.Action actionBless = new Battle_Controller.Action("Bless", "Bless a friendly unit.",
-                new Status("Blessed", "Blessed by the gods.", 3, level,
+                new Status("Blessed", "Blessed by the gods.", 3,
                     new StatType[] { StatType.Accuracy, StatType.Movement }, new int[] { 5, 2 }, "", true, false),
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 5, 5, 0, "swoosh");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, true, false, 1.0, 5, 5, 0, "swoosh", false);
             Actions[3] = actionBless;
         }
     }

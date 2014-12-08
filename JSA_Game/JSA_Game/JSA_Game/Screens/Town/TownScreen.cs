@@ -46,7 +46,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(saveGameMenuEntry);
             MenuEntries.Add(continueMenuEntry);
 
-            Game1.PlaySound("town");
+            Sound.PlaySound("town");
         }
 
 

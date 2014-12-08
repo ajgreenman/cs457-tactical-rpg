@@ -15,7 +15,7 @@ namespace JSA_Game.Battle_Controller
         private StatType[] statCost;
         private Status actionEffect;
         private ActionType type;
-        private Boolean ignoreEnemyStats, friendly, aoe;
+        private Boolean ignoreEnemyStats, friendly, aoe, dmg;
         private int cost, range, aoeRange;
         private double powerMultipler;
         private String sound;
@@ -35,7 +35,8 @@ namespace JSA_Game.Battle_Controller
         /// <param name="cost">How much of the type statCost that this move takes to perform.</param>
         /// <param name="range">Range of the action.</param>
         public Action(String name, String description, Status actionEffect, StatType[] statCost, ActionType type,
-            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range, int aoeRange, String sound)
+            Boolean ignoreEnemyStats, Boolean friendly, Boolean aoe, double powerMultiplier, int cost, int range,
+            int aoeRange, String sound, Boolean dmg)
         {
             this.name = name;
             this.description = description;
@@ -50,6 +51,7 @@ namespace JSA_Game.Battle_Controller
             this.range = range;
             this.aoeRange = aoeRange;
             this.sound = sound;
+            this.dmg = dmg;
         }
 
         /// <summary>
@@ -70,6 +72,7 @@ namespace JSA_Game.Battle_Controller
             this.range = 1;
             this.aoeRange = 0;
             this.sound = "sword_attack";
+            this.dmg = true;
         }
 
         public Action(Boolean defend)
@@ -89,6 +92,7 @@ namespace JSA_Game.Battle_Controller
                 this.range = 0;
                 this.aoeRange = 0;
                 this.sound = "defend";
+                this.dmg = false;
             }
             else
             {
@@ -106,6 +110,7 @@ namespace JSA_Game.Battle_Controller
                 this.range = 0;
                 this.aoeRange = 0;
                 this.sound = "rest";
+                this.dmg = true;
             }
         }
 
@@ -190,5 +195,10 @@ namespace JSA_Game.Battle_Controller
             set { sound = value; }
         }
 
+        public Boolean Dmg
+        {
+            get { return dmg; }
+            set { dmg = value; }
+        }
     }
 }

@@ -32,27 +32,27 @@ namespace JSA_Game.CharClasses
             LevelUpManager.LevelUpCharacter(this, startingLevel);
 
             Attack = new Battle_Controller.Action("Attack", "A standard ranged attack.", null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 0, 5, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 0, 5, 0, "bow_attack", true);
 
             Battle_Controller.Action actionLongshot = new Battle_Controller.Action("Longshot", "A long ranged shot.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 5, 8, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 5, 8, 0, "bow_attack", true);
             Actions[0] = actionLongshot;
 
             Battle_Controller.Action actionSnipe = new Battle_Controller.Action("Snipe", "A powerful attack. Ignores enemy stats.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 7, 5, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 1.1, 7, 5, 0, "bow_attack", true);
             Actions[1] = actionSnipe;
 
             Battle_Controller.Action actionMultishot = new Battle_Controller.Action("Multishot", "Shoot multiple targets.",
                 null,
-                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, .6, 4, 5, 2, "multishot");
+                new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, .6, 4, 5, 2, "multishot", true);
             Actions[2] = actionMultishot;
 
             Battle_Controller.Action actionFireArrow = new Battle_Controller.Action("Fire Arrow", "Shoot a flaming arrow.",
-                new Status("Burn", "Burnt, taking damage each turn.", 6, level,
+                new Status("Burn", "Burnt, taking damage each turn.", 6,
                     new StatType[] { StatType.Hp }, new int[] { 3 }, "", false, true),
-                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.2, 4, 5, 0, "bow_attack");
+                new StatType[] { StatType.Mp }, ActionType.Spell, false, false, false, 1.2, 4, 5, 0, "bow_attack", true);
             Actions[3] = actionFireArrow;
 
             Weapon = new Items.Weapon("Wooden Bow", 2, 2, 2, 2);

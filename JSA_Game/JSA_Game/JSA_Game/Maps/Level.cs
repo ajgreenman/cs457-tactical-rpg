@@ -35,6 +35,7 @@ namespace JSA_Game.Maps
         int showStartX, showStartY;
         public const int MAP_START_H = 0;
         public const int MAP_START_W = 0;
+        private int itemIndex;
 
         KeyboardState keyboardState;
         KeyboardState oldKeyboardState;
@@ -111,8 +112,9 @@ namespace JSA_Game.Maps
            
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
+            itemIndex = -1;
 
-            Game1.PlaySound("battle");
+            Sound.PlaySound("battle");
 
             // Read the file and read it line by line.
             StreamReader file = new StreamReader("Levels/" + filename + ".txt");
@@ -272,6 +274,10 @@ namespace JSA_Game.Maps
                     else if (param[2].Equals("Archer"))
                     {
                         c = new Archer(this, Convert.ToInt32(param[3]));
+                    }
+                    else if (param[2].Equals("Cleric"))
+                    {
+                        c = new Cleric(this, Convert.ToInt32(param[3]));
                     }
 
                     //More
@@ -605,7 +611,7 @@ namespace JSA_Game.Maps
         /// <param name="pos">Position of the selected unit</param>
         /// <param name="range">Attack range of the unit's action</param>
         /// <param name="showAoe">Shows the aoe range</param>
-        public void scanForTargets(Boolean show, Vector2 pos, int range, bool isAoe)
+        public void scanForTargets(Boolean show, Vector2 pos, int range, bool isAoe, bool friendly)
         {
             int x = (int)pos.X;
             int y = (int)pos.Y;
@@ -617,7 +623,11 @@ namespace JSA_Game.Maps
                 hlState = HighlightState.AOE;
                 if (board[x,y].Occupant != null)
                 {
-                    if (board[x, y].Occupant.IsEnemy)
+                    if (board[x, y].Occupant.IsEnemy && !selectedAction.Friendly)
+                    {
+                        targetList.Add(board[x, y].Occupant);
+                    }
+                    if (!board[x, y].Occupant.IsEnemy && selectedAction.Friendly)
                     {
                         targetList.Add(board[x, y].Occupant);
                     }
@@ -629,7 +639,7 @@ namespace JSA_Game.Maps
             {
                 board[x, y].HlState = show ? hlState : HighlightState.NONE;
             }
-            scanForTargets(show, x,y, range, hlState);
+            scanForTargets(show, x,y, range, hlState, friendly);
         }
 
         /// <summary>
@@ -640,7 +650,7 @@ namespace JSA_Game.Maps
         /// <param name="y">Y position of the selected unit</param>
         /// <param name="remRange">Remaining attack range of the unit's action</param>
         /// <param name="hlState">Highlight state to change tile into/hide</param>
-        private void scanForTargets(Boolean show, int x, int y, int remRange, HighlightState hlState)
+        private void scanForTargets(Boolean show, int x, int y, int remRange, HighlightState hlState, bool friendly)
         {
             if (remRange <= 0) return;
             if (x > 0)
@@ -652,7 +662,12 @@ namespace JSA_Game.Maps
                 if ((show && board[x - 1, y].Occupant != null) || !show)
                 {
                     board[x - 1, y].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy &&
+                    if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy && !friendly &&
+                        AStar.calcDist(selectedPos, new Vector2(x-1,y)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x - 1, y].Occupant);
+                    }
+                    if (show && hlState == HighlightState.AOE && !board[x - 1, y].Occupant.IsEnemy && friendly &&
                         AStar.calcDist(selectedPos, new Vector2(x - 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x - 1, y].Occupant);
@@ -661,7 +676,7 @@ namespace JSA_Game.Maps
                 }
                 if (board[x - 1, y].IsAttackThroughable || !show)
                 {
-                    scanForTargets(show, x - 1, y, remRange - 1, hlState);
+                    scanForTargets(show, x - 1, y, remRange - 1, hlState, friendly);
                 }
             }
             if (x < boardWidth - 1)
@@ -673,7 +688,13 @@ namespace JSA_Game.Maps
                 if ((show && board[x + 1, y].Occupant != null) || !show)
                 {
                     board[x + 1, y].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy && 
+
+                    if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy && !friendly &&
+                        AStar.calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x + 1, y].Occupant);
+                    }
+                    if (show && hlState == HighlightState.AOE && !board[x + 1, y].Occupant.IsEnemy && friendly &&
                         AStar.calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x + 1, y].Occupant);
@@ -682,7 +703,7 @@ namespace JSA_Game.Maps
                 }
                 if (board[x + 1, y].IsAttackThroughable || !show)
                 {
-                    scanForTargets(show, x + 1, y, remRange - 1, hlState);
+                    scanForTargets(show, x + 1, y, remRange - 1, hlState, friendly);
                 }
             }
             if (y > 0)
@@ -694,8 +715,14 @@ namespace JSA_Game.Maps
                 if ((show && board[x, y - 1].Occupant != null) || !show)
                 {
                     board[x, y - 1].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy &&
+                    if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy && !friendly &&
                         AStar.calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x, y - 1].Occupant);
+                    }
+                    if (show && hlState == HighlightState.AOE && !board[x, y - 1].Occupant.IsEnemy && friendly &&
+                        AStar.calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+
                     {
                         targetList.Add(board[x, y - 1].Occupant);
                     }
@@ -703,7 +730,7 @@ namespace JSA_Game.Maps
                 }
                 if (board[x, y - 1].IsAttackThroughable || !show)
                 {
-                    scanForTargets(show, x, y - 1, remRange - 1, hlState);
+                    scanForTargets(show, x, y - 1, remRange - 1, hlState, friendly);
                 }
             }
             if (y < boardHeight - 1)
@@ -715,8 +742,14 @@ namespace JSA_Game.Maps
                 if ((show && board[x, y + 1].Occupant != null) || !show)
                 {
                     board[x, y + 1].IsSelected = show;
-                    if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy &&
+                    if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy && !friendly &&
                         AStar.calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                    {
+                        targetList.Add(board[x, y + 1].Occupant);
+                    }
+                    if (show && hlState == HighlightState.AOE && !board[x, y + 1].Occupant.IsEnemy && friendly &&
+                        AStar.calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+
                     {
                         targetList.Add(board[x, y + 1].Occupant);
                     }
@@ -724,7 +757,7 @@ namespace JSA_Game.Maps
                 }
                 if (board[x, y + 1].IsAttackThroughable || !show)
                 {
-                    scanForTargets(show, x, y + 1, remRange - 1, hlState);
+                    scanForTargets(show, x, y + 1, remRange - 1, hlState, friendly);
                 }
             }
         }
@@ -734,19 +767,29 @@ namespace JSA_Game.Maps
         {
             Character c = board[(int)currPos.X, (int)currPos.Y].Occupant;
             Character t = board[(int)targetPos.X, (int)targetPos.Y].Occupant;
+            System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
+                if (itemIndex != -1)
+                {
+                
+                    if (!BattleController.performItem(c, t, itemIndex))
+                        System.Diagnostics.Debug.Print("Missed!");
+                    itemIndex = -1;
+                }
+                else {
+                    if (BattleController.isValidAction(action, c, currPos, targetPos))
+                    {
+                        if (!BattleController.performAction(action, c, t))
+                            System.Diagnostics.Debug.Print("Missed!");
 
-            if (BattleController.isValidAction(action, c, currPos, targetPos))
-            {
-                System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
-                if (!BattleController.performAction(action, c, t))
-                    System.Diagnostics.Debug.Print("Missed!");
-                System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
-                c.ActionDisabled = true;
-            }
-            else
-            {
-                c.ActionDisabled = false;
-            }
+                        System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+                        c.ActionDisabled = true;
+                    }
+                    else
+                    {
+                        c.ActionDisabled = false;
+                    }
+                }
+            
 
             if (t.CurrHp < 1)
             {
@@ -855,6 +898,7 @@ namespace JSA_Game.Maps
 
 
 
+                    hud.Update(gameTime);
                     hud.Hidden = state != LevelState.CursorSelection && state != LevelState.Placement;
                     if (hud.Hidden)
                     {
@@ -885,8 +929,6 @@ namespace JSA_Game.Maps
                 //Enemy turn
                 else
                 {
-
-
                     //Each enemy turn
                     foreach (Character c in eUnits)
                     {
@@ -1026,7 +1068,7 @@ namespace JSA_Game.Maps
 
         public static void KillUnit(Character c)
         {
-            Game1.PlaySound("death");
+            Sound.PlaySound("death");
         }
 
         private bool CheckKey(Keys theKey)
@@ -1142,6 +1184,7 @@ namespace JSA_Game.Maps
             get { return turn; }
             set { turn = value; }
         }
+
         public int PlayerUnitCount
         {
             get { return playerUnitCount; }
@@ -1151,6 +1194,11 @@ namespace JSA_Game.Maps
         {
             get { return numPlaceableSpaces; }
             set { numPlaceableSpaces = value; }
+        }
+        public int ItemIndex
+        {
+            get { return itemIndex; }
+            set { itemIndex = value; }
         }
     }
 }

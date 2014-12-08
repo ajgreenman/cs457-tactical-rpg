@@ -38,7 +38,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(testMenuEntry);
 
             // Sound
-            Game1.PlaySound("title");
+            Sound.PlaySound("title");
         }
 
 

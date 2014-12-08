@@ -29,9 +29,17 @@ C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\orange_highlight.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\blank.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\town.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\scroll.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\steel.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\statBackground.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\barBackground.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemPouch.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\wood Background.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\StatFont.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\menufont.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\smallMenufont.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb
+C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\AbilityFont.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\fire_spell.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\ice_spell.xnb
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\sword_attack.xnb
@@ -61,4 +69,3 @@ C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.exe
 C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.pdb
-C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\obj\x86\Debug\JSA_Game.csprojResolveAssemblyReference.cache

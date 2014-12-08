@@ -13,6 +13,12 @@ namespace JSA_Game.HUD
         //Bar Size Macro
         const int BAR_SIZE = 125;
 
+        //Bar Background
+        Texture2D barBackground;
+        Rectangle backgroundRec;
+        Vector2 backgroundSize;
+        Vector2 backgroundPos;
+
         //Experience Bar Graphic
         Texture2D experienceBar;
         Vector2 experienceSize;
@@ -53,23 +59,28 @@ namespace JSA_Game.HUD
         {
             //Experience Bar INIT
             experienceSize = new Vector2(BAR_SIZE, 25);
-            experiencePos = new Vector2(30, 570);
+            experiencePos = new Vector2(15, 570);
             experienceRec = new Rectangle((int)experiencePos.X, (int)experiencePos.Y, (int)experienceSize.X, (int)experienceSize.Y);
-            experiencef_pos = new Vector2(55, 574);
+            experiencef_pos = new Vector2(40, 574);
             
             //Health Bar INIT
             healthSize = new Vector2(BAR_SIZE, 25);
-            healthPos = new Vector2(30, 507);
+            healthPos = new Vector2(15, 507);
             healthRec = new Rectangle((int)healthPos.X, (int)healthPos.Y, (int)healthSize.X, (int)healthSize.Y);
-            healthf_pos = new Vector2(55, 510);
+            healthf_pos = new Vector2(40, 510);
             healthColor = Color.Red;
 
             //Mana Bar INIT
             manaSize = new Vector2(BAR_SIZE, 25);
-            manaPos = new Vector2(30, 538);
+            manaPos = new Vector2(15, 538);
             manaRec = new Rectangle((int)manaPos.X, (int)manaPos.Y, (int)manaSize.X, (int)manaSize.Y);
-            manaf_pos = new Vector2(55, 542);
+            manaf_pos = new Vector2(40, 542);
             manaColor = Color.Blue;
+
+            //Bar Background INIT
+            backgroundSize = new Vector2(155, 500);
+            backgroundPos = new Vector2(0, 500);
+            backgroundRec = new Rectangle((int)backgroundPos.X, (int)backgroundPos.Y, (int)backgroundSize.X, (int)backgroundSize.Y);
         }
 
         public void characterSelect(Character c)
@@ -197,10 +208,16 @@ namespace JSA_Game.HUD
            //Mana Load
            manaBar = Content.Load<Texture2D>("bar_base");
            manaFont = Content.Load<SpriteFont>("StatFont");
+
+           //Background Load
+            barBackground = Content.Load<Texture2D>("barBackground");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //Background Draw
+            spriteBatch.Draw(barBackground, backgroundRec, Color.White);
+
             //Expereience Draw
             spriteBatch.Draw(experienceBar, experienceRec, Color.Green);
             spriteBatch.DrawString(experienceFont, "XP: " + targetCurrExperience, experiencef_pos, Color.White);

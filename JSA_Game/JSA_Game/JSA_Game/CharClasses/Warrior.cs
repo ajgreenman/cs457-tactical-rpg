@@ -35,29 +35,29 @@ namespace JSA_Game.CharClasses
 
             Battle_Controller.Action actionCripple =
                 new Battle_Controller.Action("Cripple", "Cripple the target, lowering dodge and movement. Ignores enemy stats.",
-                    new Status("Cripple", "Cripple the target, lowering dodge and movement.  Ignores enemy stats.", 2, level, 
+                    new Status("Cripple", "Cripple the target, lowering dodge and movement.  Ignores enemy stats.", 2, 
                         new StatType[] {StatType.Dodge,StatType.Movement},new int[] {4,2},"enemy", false, false),
-                    new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 0.5, 5, 1, 0, "sword_attack");
+                    new StatType[] { StatType.Mp }, ActionType.Physical, true, false, false, 0.5, 5, 1, 0, "sword_attack", true);
             Actions[0] = actionCripple;
 
             Battle_Controller.Action actionBattleCry =
                 new Battle_Controller.Action("Battle Cry", "Lowers enemy accuracy, strength, and magic.",
-                    new Status("Fright", "Put fear into the enemy, lowering accuracy, strength, and magic.", 2, level,
+                    new Status("Fright", "Put fear into the enemy, lowering accuracy, strength, and magic.", 2,
                         new StatType[] { StatType.Accuracy, StatType.Strength, StatType.Magic }, new int[] { 3, 2, 2 }, "", false, false),
-                    new StatType[] { StatType.Mp }, ActionType.Physical, false, false, false, 1.0, 4, 0, 3, "swoosh");
+                    new StatType[] { StatType.Mp }, ActionType.Physical, false, false, true, 1.0, 4, 0, 3, "swoosh", false);
             Actions[1] = actionBattleCry;
 
             Battle_Controller.Action actionPowerfulStrike =
                 new Battle_Controller.Action("Powerful Strike", "A powerful strike. Ignores enemy stats.",
                     null,
-                    new StatType[] { StatType.Hp, StatType.Mp }, ActionType.Physical, true, false, false, 1.5, 8, 1, 0, "multishot");
+                    new StatType[] { StatType.Hp, StatType.Mp }, ActionType.Physical, true, false, false, 1.5, 8, 1, 0, "multishot", true);
             Actions[2] = actionPowerfulStrike;
 
             Battle_Controller.Action actionRage =
                 new Battle_Controller.Action("Rage", "Go into a range, increasing strength but lowering accuracy.",
-                    new Status("Enraged", "Blinded by rage, increasing strength but lowering accuracy.", 2, level,
+                    new Status("Enraged", "Blinded by rage, increasing strength but lowering accuracy.", 2,
                         new StatType[] { StatType.Strength, StatType.Accuracy }, new int[] { 5, -5 }, "", true, false),
-                    new StatType[] { StatType.Hp }, ActionType.Physical, false, true, false, 1.0, 3, 0, 0, "swoosh");
+                    new StatType[] { StatType.Mp }, ActionType.Physical, false, true, false, 1.0, 3, 0, 0, "swoosh", false);
             Actions[3] = actionRage;
         }
 

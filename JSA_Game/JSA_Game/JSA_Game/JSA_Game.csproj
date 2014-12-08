@@ -187,6 +187,7 @@
     <Compile Include="Screens\Util\PlayerIndexEventArgs.cs" />
     <Compile Include="Screens\Util\ScreenFactory.cs" />
     <Compile Include="Screens\Town\TownScreen.cs" />
+    <Compile Include="Sound.cs" />
     <Compile Include="Story\Player.cs" />
     <Compile Include="Story\Screen.cs" />
     <Compile Include="Story\ScreenManager.cs" />

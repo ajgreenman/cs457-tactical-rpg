@@ -15,7 +15,7 @@ namespace JSA_Game.AI
         private Level currLevel;
         private Boolean friendly;
         private const int FRIENDLY_CHANCE = 80;
-        
+
         Character character;
         Vector2 targetPos;
 

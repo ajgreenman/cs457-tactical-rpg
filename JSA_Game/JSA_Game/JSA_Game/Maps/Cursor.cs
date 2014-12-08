@@ -181,25 +181,25 @@ namespace JSA_Game.Maps
             //{
                 if (Keyboard.GetState(PlayerIndex.One).IsKeyDown(Keys.Left) && cursorPos.X != 0)
                 {
-                    Game1.PlaySound("cursor");
+                    Sound.PlaySound("cursor");
                     cursorPos.X--;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Right) && cursorPos.X != width - 1)
                 {
-                    Game1.PlaySound("cursor");
+                    Sound.PlaySound("cursor");
                     cursorPos.X++;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Up) && cursorPos.Y != 0)
                 {
-                    Game1.PlaySound("cursor");
+                    Sound.PlaySound("cursor");
                     cursorPos.Y--;
                     return true;
                 }
                 else if (keyboard.IsKeyDown(Keys.Down) && cursorPos.Y != height - 1)
                 {
-                    Game1.PlaySound("cursor");
+                    Sound.PlaySound("cursor");
                     cursorPos.Y++;
                     return true;
                 }
@@ -216,7 +216,7 @@ namespace JSA_Game.Maps
         {
             if (dir != '0')
             {
-                Game1.PlaySound("cursor");
+                Sound.PlaySound("cursor");
             }
             switch(dir)
             {
