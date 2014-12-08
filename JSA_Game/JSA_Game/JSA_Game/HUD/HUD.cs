@@ -42,7 +42,7 @@ namespace JSA_Game.HUD
 
         private Character selectedChar;
 
-        public HUD_Controller(ArrayList charList)
+        public HUD_Controller()
         {
             //Init Graphic Size
             hudSize = new Vector2(500, 100);
@@ -54,14 +54,14 @@ namespace JSA_Game.HUD
             statSection = new Stat_Section();
             effectSection = new Effect_Section();
             buttonSection = new Button_Section();
-            comText = new CombatText(charList);
+            comText = new CombatText();
 
             //INIT Display Values
             hidden = true;
             hState = HUDState.showOriginal;
 
             //INIT List of Characters
-            this.charList = charList;
+            //this.charList = charList;
         }
 
         public void LoadContent(ContentManager Content)
@@ -78,9 +78,12 @@ namespace JSA_Game.HUD
 
         public void Update(GameTime gameTime)
         {
-            foreach(Character element in charList)
+            if (charList != null && charList.Count != 0)
             {
-                if (element.Set) { comText.Update(gameTime); }
+                foreach (Character element in charList)
+                {
+                    if (element.Set) { comText.Update(gameTime); }
+                }
             }
         }
 
@@ -92,6 +95,12 @@ namespace JSA_Game.HUD
             effectSection.characterSelect(c);
             buttonSection.CharacterSelect(c);
             selectedChar = c;
+        }
+
+        public void setTargetList(ArrayList list)
+        {
+            charList = list;
+            comText.setCharList(list);
         }
 
         public void ButtonSelect(KeyboardState keyboard)

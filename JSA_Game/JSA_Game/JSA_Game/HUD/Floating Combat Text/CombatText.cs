@@ -24,15 +24,14 @@ namespace JSA_Game.HUD
         //Draw Timer
         int offset = 0;
         int counter = 1;
-        int limit = 2;
+        int limit = 1;
         float countDuration = 1f;
         float currentTime = 0f;
-        bool stillDrawing = false;
+        bool stillDrawing = true;
 
-        public CombatText(ArrayList charList)
+        public CombatText()
         {
             floatingPos = new Vector2(0, 0);
-            this.charList = charList;
         }
 
         public void LoadContent(ContentManager Content)
@@ -45,77 +44,87 @@ namespace JSA_Game.HUD
             stillDrawing = true;
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
 
-            if (currentTime >= countDuration)
+            if (currentTime > countDuration)
             {
+                stillDrawing = true;
                 counter++;
                 currentTime -= countDuration;
             }
 
-            if (counter >= limit)
+            if (counter > limit)
             {
                 counter = 1;
                 stillDrawing = false;
+                currentTime = 0f;
             }
         }
 
 
         public void GetDrawPosition(Character c)
         {
-            floatingPos.X = c.Pos.X * 100;
-            floatingPos.Y = (c.Pos.Y *50) - 50 - offset;
+            floatingPos.X = c.Pos.X * 50;
+            floatingPos.Y = (c.Pos.Y * 50) - 50 - offset;
         }
 
-        public void ResetCharacterList(Character c) 
-        { 
+        public void setCharList(ArrayList list)
+        {
+            charList = list;
+        }
+        public void ResetCharacterList(Character c)
+        {
             c.Set = false;
             offset = 0;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Character currChar = new Character();
-
-            foreach (Character element in charList)
+            if (charList != null && charList.Count != 0)
             {
-                currChar = element;
+                Character currChar;
 
-                if (currChar.Set)
+                foreach (Character element in charList)
                 {
-                    Console.WriteLine(currChar.CurrDamage);
+                    currChar = element;
 
-                    if (currChar.DidDefend)
+                    if (currChar.Set)
                     {
-                        GetDrawPosition(currChar);
-                        spriteBatch.DrawString(floatingText, "Defend", floatingPos, Color.Silver);
-                        offset += 1;
-                        Console.WriteLine("Defend");
-                    }
+                        Console.WriteLine(currChar.CurrDamage);
 
-                    else if (currChar.Miss)
-                    {
-                        GetDrawPosition(currChar);
-                        spriteBatch.DrawString(floatingText, "Miss", floatingPos, Color.White);
-                        offset += 1;
-                        Console.WriteLine("Miss");
-                    }
+                        if (currChar.DidDefend)
+                        {
+                            GetDrawPosition(currChar);
+                            spriteBatch.DrawString(floatingText, "Defend", floatingPos, Color.Silver);
+                            offset += 1;
+                            Console.WriteLine("Defend");
+                        }
 
-                    else if (currChar.CurrDamage > -1)
-                    {
-                        GetDrawPosition(currChar);
-                        spriteBatch.DrawString(floatingText, currChar.CurrDamage + "", floatingPos, Color.Red);
-                        offset += 1;
-                        Console.WriteLine("Damage");
-                    }
+                        else if (currChar.Miss)
+                        {
+                            GetDrawPosition(currChar);
+                            spriteBatch.DrawString(floatingText, "Miss", floatingPos, Color.White);
+                            offset += 1;
+                            Console.WriteLine("Miss");
+                        }
 
-                    else if (currChar.CurrHealing > -1)
-                    {
-                        GetDrawPosition(currChar);
-                        spriteBatch.DrawString(floatingText, currChar.CurrHealing + "", floatingPos, Color.Green);
-                        offset += 1;
-                        Console.WriteLine("Healing");
+                        else if (currChar.CurrDamage > -1)
+                        {
+                            GetDrawPosition(currChar);
+                            spriteBatch.DrawString(floatingText, currChar.CurrDamage + "", floatingPos, Color.Red);
+                            offset += 1;
+                            Console.WriteLine("Damage");
+                        }
+
+                        else if (currChar.CurrHealing > -1)
+                        {
+                            GetDrawPosition(currChar);
+                            spriteBatch.DrawString(floatingText, currChar.CurrHealing + "", floatingPos, Color.Green);
+                            offset += 1;
+                            Console.WriteLine("Healing");
+                        }
+                        if (!stillDrawing) { ResetCharacterList(currChar); }
                     }
+                   
                 }
-                if (!stillDrawing) { ResetCharacterList(currChar); }
             }
         }
     }

@@ -287,7 +287,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\scroll.xnb</Output>
-      <Time>2014-12-07T19:49:03.98375-05:00</Time>
+      <Time>2014-12-07T20:05:22.085543-05:00</Time>
     </Item>
     <Item>
       <Source>steel.png</Source>
@@ -296,7 +296,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\steel.xnb</Output>
-      <Time>2014-12-07T19:49:03.9907504-05:00</Time>
+      <Time>2014-12-07T20:05:22.095543-05:00</Time>
     </Item>
     <Item>
       <Source>statBackground.jpg</Source>
@@ -305,7 +305,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\statBackground.xnb</Output>
-      <Time>2014-12-07T19:49:03.9877503-05:00</Time>
+      <Time>2014-12-07T20:05:22.095543-05:00</Time>
     </Item>
     <Item>
       <Source>barBackground.jpg</Source>
@@ -314,7 +314,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\barBackground.xnb</Output>
-      <Time>2014-12-07T19:49:03.9347472-05:00</Time>
+      <Time>2014-12-07T20:05:22.065543-05:00</Time>
     </Item>
     <Item>
       <Source>itemPouch.png</Source>
@@ -323,7 +323,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\itemPouch.xnb</Output>
-      <Time>2014-12-07T19:49:03.9447478-05:00</Time>
+      <Time>2014-12-07T20:05:22.065543-05:00</Time>
     </Item>
     <Item>
       <Source>wood Background.jpg</Source>
@@ -332,7 +332,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\wood Background.xnb</Output>
-      <Time>2014-12-07T19:49:04.0017511-05:00</Time>
+      <Time>2014-12-07T20:05:22.1055431-05:00</Time>
     </Item>
     <Item>
       <Source>StatFont.spritefont</Source>
@@ -368,7 +368,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\FloatingFont.xnb</Output>
-      <Time>2014-12-07T19:49:03.9237466-05:00</Time>
+      <Time>2014-12-08T15:48:15.5692016-05:00</Time>
     </Item>
     <Item>
       <Source>AbilityFont.spritefont</Source>
@@ -377,7 +377,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Scott Bell\Documents\GitHub\TacticalRPG\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\AbilityFont.xnb</Output>
-      <Time>2014-12-07T19:49:03.9217465-05:00</Time>
+      <Time>2014-12-07T20:05:22.055543-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\fire_spell.wav</Source>

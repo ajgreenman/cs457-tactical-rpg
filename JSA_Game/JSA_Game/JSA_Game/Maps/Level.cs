@@ -64,7 +64,7 @@ namespace JSA_Game.Maps
 
         //HUD
         private HUD_Controller hud;
-        
+        ArrayList allCharacters = new ArrayList();
 
         //State
         private LevelState state;
@@ -303,7 +303,16 @@ namespace JSA_Game.Maps
 
             }
                 file.Close();
+                foreach (Character p in pUnits)
+                {
+                    allCharacters.Add(p);
+                }
+                foreach (Character e in eUnits)
+                {
+                    allCharacters.Add(e);
+                }
 
+                hud.setTargetList(allCharacters);
                 screenManager = sm;
                 
         }
@@ -348,6 +357,7 @@ namespace JSA_Game.Maps
 
             pUnits = new ArrayList(maxPlayerUnits);
             eUnits = new ArrayList(MaxEnemyUnits);
+            targetList = new HashSet<Character>();
 
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
@@ -355,8 +365,8 @@ namespace JSA_Game.Maps
             highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
 
             selectedAction = null;
-            targetList = new HashSet<Character>();
-            hud = new HUD_Controller(pUnits);
+            
+            hud = new HUD_Controller();
 
         }
 
@@ -466,7 +476,9 @@ namespace JSA_Game.Maps
                         pos = next;
                         remMovement--;
                     }
+                    //board[(int)unit.Pos.X, (int)unit.Pos.Y].Occupant = null;
                     unit.Pos = pos;
+                    
                 }
             }
         }
@@ -759,6 +771,8 @@ namespace JSA_Game.Maps
                 {
                     scanForTargets(show, x, y + 1, remRange - 1, hlState, friendly);
                 }
+
+                
             }
         }
 
@@ -1199,6 +1213,11 @@ namespace JSA_Game.Maps
         {
             get { return itemIndex; }
             set { itemIndex = value; }
+        }
+        public ArrayList AllCharacters
+        {
+            get { return allCharacters; }
+            set { allCharacters = value; }
         }
     }
 }

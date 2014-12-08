@@ -97,7 +97,7 @@ namespace JSA_Game.Battle_Controller
 
                 if (!didActionHit(action, user, target))
                 {
-                    floatingTextLogic("Miss", user, 0);
+                    floatingTextLogic("Miss", target, 0);
                     Sound.PlaySound("miss");
                     return false;
                 }
@@ -125,7 +125,7 @@ namespace JSA_Game.Battle_Controller
                     user.CurrHp += value;
                     user.CurrMp += ((int)(user.MaxMP * .1));
                     Sound.PlaySound(action.Sound);
-                    floatingTextLogic("Heal", user, value);
+                    floatingTextLogic("Heal", target, value);
                 }
 
             }
@@ -292,12 +292,12 @@ namespace JSA_Game.Battle_Controller
             {
                 
                 target.CurrHp += value;
-                floatingTextLogic("Heal", user, value);
+                floatingTextLogic("Heal", target, value);
             }
             else
             {
                 target.CurrHp -= value;
-                floatingTextLogic("Attack", user, value);
+                floatingTextLogic("Attack", target, value);
             }
 
             if (target.CurrHp <= 0)
@@ -556,37 +556,37 @@ namespace JSA_Game.Battle_Controller
             return false;
         }
 
-        private static void floatingTextLogic(String actionType, Character user, int amount)
+        private static void floatingTextLogic(String actionType, Character target, int amount)
         {
             switch (actionType)
             {
                 case "Defend":
-                    user.CurrDamage = -1;
-                    user.CurrHealing = -1;
-                    user.Miss = false;
-                    user.DidDefend = true;
+                    target.CurrDamage = -1;
+                    target.CurrHealing = -1;
+                    target.Miss = false;
+                    target.DidDefend = true;
                     break;
                 case "Attack":
-                    user.CurrDamage = amount;
-                    user.CurrHealing = -1;
-                    user.Miss = false;
-                    user.DidDefend = false;
+                    target.CurrDamage = amount;
+                    target.CurrHealing = -1;
+                    target.Miss = false;
+                    target.DidDefend = false;
                     break;
                 case "Heal":
-                    user.CurrDamage = -1;
-                    user.CurrHealing = amount;
-                    user.Miss = false;
-                    user.DidDefend = false;
+                    target.CurrDamage = -1;
+                    target.CurrHealing = amount;
+                    target.Miss = false;
+                    target.DidDefend = false;
                     break;
                 case "Miss":
-                    user.CurrDamage = -1;
-                    user.CurrHealing = -1;
-                    user.Miss = true;
-                    user.DidDefend = false;
+                    target.CurrDamage = -1;
+                    target.CurrHealing = -1;
+                    target.Miss = true;
+                    target.DidDefend = false;
                     break;
             }
 
-            user.Set = true;
+            target.Set = true;
         }
     }
 }

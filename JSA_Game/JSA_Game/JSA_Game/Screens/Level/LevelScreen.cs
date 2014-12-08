@@ -184,6 +184,17 @@ namespace JSA_Game.Screens
                     currLevel.Board[i, j].HlState = HighlightState.NONE;
                 }
             }
+            foreach (Character p in currLevel.PUnits)
+            {
+                currLevel.AllCharacters.Add(p);
+            }
+            foreach (Character f in currLevel.EUnits)
+            {
+                currLevel.AllCharacters.Add(f);
+            }
+
+            currLevel.HUD.setTargetList(currLevel.AllCharacters);
+
             currLevel.State = LevelState.CursorSelection;
         }
 
