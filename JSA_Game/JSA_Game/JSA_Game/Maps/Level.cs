@@ -34,6 +34,7 @@ namespace JSA_Game.Maps
         int showStartX, showStartY;
         public const int MAP_START_H = 0;
         public const int MAP_START_W = 0;
+        private int itemIndex;
 
         KeyboardState keyboardState;
         KeyboardState oldKeyboardState;
@@ -104,6 +105,7 @@ namespace JSA_Game.Maps
            
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
+            itemIndex = -1;
 
             Sound.PlaySound("battle");
 
@@ -916,19 +918,29 @@ namespace JSA_Game.Maps
         {
             Character c = board[(int)currPos.X, (int)currPos.Y].Occupant;
             Character t = board[(int)targetPos.X, (int)targetPos.Y].Occupant;
+            System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
+                if (itemIndex != -1)
+                {
+                
+                    if (!BattleController.performItem(c, t, itemIndex))
+                        System.Diagnostics.Debug.Print("Missed!");
+                    itemIndex = -1;
+                }
+                else {
+                    if (BattleController.isValidAction(action, c, currPos, targetPos))
+                    {
+                        if (!BattleController.performAction(action, c, t))
+                            System.Diagnostics.Debug.Print("Missed!");
 
-            if (BattleController.isValidAction(action, c, currPos, targetPos))
-            {
-                System.Diagnostics.Debug.Print("Target HP is " + t.CurrHp);
-                if (!BattleController.performAction(action, c, t))
-                    System.Diagnostics.Debug.Print("Missed!");
-                System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
-                c.ActionDisabled = true;
-            }
-            else
-            {
-                c.ActionDisabled = false;
-            }
+                        System.Diagnostics.Debug.Print("Target HP now is " + t.CurrHp);
+                        c.ActionDisabled = true;
+                    }
+                    else
+                    {
+                        c.ActionDisabled = false;
+                    }
+                }
+            
 
             if (t.CurrHp < 1)
             {
@@ -1318,6 +1330,11 @@ namespace JSA_Game.Maps
         {
             get { return turn; }
             set { turn = value; }
+        }
+        public int ItemIndex
+        {
+            get { return itemIndex; }
+            set { itemIndex = value; }
         }
     }
 }

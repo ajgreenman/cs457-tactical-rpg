@@ -96,8 +96,10 @@ namespace JSA_Game.Maps.State
                     }
                     break;
                  case PerformedType.Item:
+                    lvl.ItemIndex = index;
                     lvl.SelectedAction = c.Inventory[index].Action;
                     lvl.scanForTargets(true, lvl.SelectedPos, c.Inventory[index].Action.Range, false, lvl.SelectedAction.Friendly);
+                    lvl.State = LevelState.Action;
                     break;
 
                  case PerformedType.Move:
