@@ -87,10 +87,14 @@ namespace JSA_Game.Maps
         bool isAnimatingMove;
         Vector2 moveAnimCurrPos;
         Vector2 moveAnimDestPos;
-        Vector2 moveAnimFinalPos;
         Stack moveAnimPath;
         float moveAnimTimeElapsed;
         float moveAnimDelay = 30;
+        int animRemainingCharMovement;
+        int animCharMoveStop;
+        Character animCurrentMovingChar;
+
+        int currEnemyActingIndex;
 
         public bool isAnimatingAttack;
 
@@ -345,6 +349,7 @@ namespace JSA_Game.Maps
 
             isAnimatingMove = false;
             isAnimatingAttack = false;
+            currEnemyActingIndex = 0;
            // showStartX = 0;
            // showStartY = 0;
             numTilesShowing = DEFAULT_NUM_TILES_SHOWING;
@@ -428,99 +433,90 @@ namespace JSA_Game.Maps
         public void moveUnit(GameTime gameTime, Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
             moveAnimPath = AStar.findPath(this, startPos, endPos);
-            //if path exists
-            if (moveAnimPath.Count > 0)
+            
+            //if path exists and is not of length 1, 2 for AI move (start is end)
+            int aiStopEarly = AImoved ? 1 : 0;
+            if (moveAnimPath.Count > 1 + aiStopEarly)
             {
                 //If character will only move if a target is in range
                 if (!moveIfInRange || moveAnimPath.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement + 2)
                 {
-                    int remMovement;
-                    Character unit;
+                    
+                    //Character unit;
                     //stop variable stops movement for enemy units 1 early since
                     //the postion of a computer's target is their actual position.
-                    int stop;
+                    
                     Boolean isEnemy = board[(int)startPos.X, (int)startPos.Y].Occupant.IsEnemy;
                     if (isEnemy)
                     {
-                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                        remMovement = unit.Movement;
-                        stop = 1;
+                        animCurrentMovingChar = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        animRemainingCharMovement = animCurrentMovingChar.Movement;
+                        animCharMoveStop = 1;
                     }
                     else
                     {
-
-                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                        remMovement = unit.Movement;
-                        stop = AImoved ? 1 : 0;
+                        animCurrentMovingChar = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        animRemainingCharMovement = animCurrentMovingChar.Movement;
+                        animCharMoveStop = AImoved ? 1 : 0;
                     }
 
-                    //Starting position
-                    Vector2 pos = (Vector2)moveAnimPath.Pop();
-                    while (remMovement > 0 && moveAnimPath.Count > stop)
-                    {
-                        int xPos = (int)pos.X;
-                        int yPos = (int)pos.Y;
-                        //Character c;
-                        Vector2 next;
-                        next = (Vector2)moveAnimPath.Pop();
-                        if (moveAnimPath.Count == stop || remMovement == 1)
-                        {
-                            moveAnimFinalPos = next;
-                        }
-
-                        moveAnimCurrPos = pos;
-                        moveAnimDestPos = next;
+                   // if (animCharMoveStop == 1)
+                    //{
                         isAnimatingMove = true;
-                       // System.Diagnostics.Debug.Print("Animating Movement...");
+
+                        //Starting position
+                        moveAnimCurrPos = (Vector2)moveAnimPath.Pop();
+                        board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = null;
+                        board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = false;
+                       // if (moveAnimPath.Count > 1)
+                       //     moveAnimDestPos = (Vector2)moveAnimPath.Pop();
+                        moveAnimDestPos = moveAnimCurrPos;
                         animateMove(gameTime);
-                        pos = next;
-                        remMovement--;
-                    }
-                    //board[(int)unit.Pos.X, (int)unit.Pos.Y].Occupant = null;
-                    unit.Pos = pos;
+                   // }
                     
                 }
             }
         }
 
-        //yuck.... Possibly try using another thread, forcing the main game to wait
-        //   for the animation to complete.
+        //
         private void animateMove(GameTime gameTime)
         {
-            moveAnimTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            //if (moveAnimTimeElapsed >= moveAnimDelay)
-            //{
-                //Move the character image a little
-                //char dir = '0';
-                //if (moveAnimDestPos.X < moveAnimCurrPos.X)
-                //    dir = 'l';
-                //else if (moveAnimDestPos.X > moveAnimCurrPos.X)
-                //    dir = 'r';
-                //else if (moveAnimDestPos.Y < moveAnimCurrPos.Y)
-                //    dir = 'u';
-                //else if (moveAnimDestPos.Y > moveAnimCurrPos.Y)
-                //    dir = 'd';
+            bool doneMoving = false;
+            while (animRemainingCharMovement > 0 && moveAnimPath.Count > animCharMoveStop)
+            {
+                
+                //int xPos = (int)moveAnimCurrPos.X;
+                //int yPos = (int)moveAnimCurrPos.Y;
 
-                if (moveAnimDestPos.X < moveAnimCurrPos.X)
+                //If character has moved to next space
+                if (moveAnimCurrPos.Equals(moveAnimDestPos))
                 {
+                    //get next positon
+                    moveAnimCurrPos = moveAnimDestPos;
+                    moveAnimDestPos = (Vector2)moveAnimPath.Pop();
+                    animRemainingCharMovement--;
+
+                    if (moveAnimPath.Count <= animCharMoveStop || animRemainingCharMovement == 1 + animCharMoveStop)
+                    {
+                        doneMoving = true;
+                    }
+                    
 
                 }
+                 System.Diagnostics.Debug.Print("Animating Movement...?");
+                 moveAnimCurrPos = moveAnimDestPos;
+                
+            }
+           
+            isAnimatingMove = false;
+            //animCurrentMovingChar.Pos = moveAnimCurrPos;
 
-                moveAnimTimeElapsed = 0;
-           // }
-                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].Occupant = board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant;
-                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = null;
-
-                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = false;
-                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].IsOccupied = true;
-           if (moveAnimDestPos.Equals(moveAnimFinalPos))
+            if (doneMoving)
             {
-
-
-
-                isAnimatingMove = false;
-               // System.Diagnostics.Debug.Print("Destination Reached");
-                moveAnimFinalPos = new Vector2(-1, -1);
+                System.Diagnostics.Debug.Print("Finished moving, setting position");
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = animCurrentMovingChar;
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = true;
+                animCurrentMovingChar.Pos = moveAnimCurrPos;
             }
         }
 
@@ -885,7 +881,8 @@ namespace JSA_Game.Maps
             {
                 //Continue to animate
             }
-            //otherwise listen for input
+
+            //otherwise listen for input/progress to next enemy's turn
 
             else
             {
@@ -944,37 +941,52 @@ namespace JSA_Game.Maps
                 else
                 {
                     //Each enemy turn
+                    /*
                     foreach (Character c in eUnits)
                     {
                         c.AI.move(gameTime);
                         c.AI.action();
                     }
-
-
-                    playerTurn = TurnState.Player;
-                    foreach (Character c in pUnits)
+                     * */
+                    if (currEnemyActingIndex != eUnits.Count)
                     {
-                        c.MoveDisabled = false;
-                        c.ActionDisabled = false;
-                    }
-                    System.Diagnostics.Debug.Print("Player's turn");
+                        Character enemy = (Character)eUnits[currEnemyActingIndex];
 
-                    playerTurn = TurnState.Player;
-                    foreach (Character c in pUnits)
+                        enemy.AI.move(gameTime);
+                        enemy.AI.action();
+
+                        //Check for loss
+                        if (pUnits.Count <= 0)
+                        {
+                            System.Diagnostics.Debug.Print("Player Lost!");
+                            winState = WinLossState.Loss;
+                        }
+
+                        currEnemyActingIndex++;
+
+                    }
+                        //End of enemy turn
+                    else
                     {
-                        c.MoveDisabled = false;
-                        c.ActionDisabled = false;
-                    }
-                    System.Diagnostics.Debug.Print("Player's turn");
-                    Battle_Controller.BattleController.newTurn(this);
+                        playerTurn = TurnState.Player;
+                        currEnemyActingIndex = 0;
+                        foreach (Character c in pUnits)
+                        {
+                            c.MoveDisabled = false;
+                            c.ActionDisabled = false;
+                        }
+                        System.Diagnostics.Debug.Print("Player's turn");
 
+                        playerTurn = TurnState.Player;
+                        foreach (Character c in pUnits)
+                        {
+                            c.MoveDisabled = false;
+                            c.ActionDisabled = false;
+                        }
+                        Battle_Controller.BattleController.newTurn(this);
 
-                    //Check for loss
-                    if (pUnits.Count <= 0)
-                    {
-                        System.Diagnostics.Debug.Print("Player Lost!");
-                        winState = WinLossState.Loss;
                     }
+                    
                 }
 
                 oldKeyboardState = keyboardState;
