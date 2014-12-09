@@ -88,11 +88,14 @@ namespace JSA_Game.Maps
         Vector2 moveAnimCurrPos;
         Vector2 moveAnimDestPos;
         Stack moveAnimPath;
-        float moveAnimTimeElapsed;
-        float moveAnimDelay = 30;
+        float moveAnimTimeElapsed = 0;
+        float moveAnimDelay = 0;
+        float moveFrames = 5f;
         int animRemainingCharMovement;
         int animCharMoveStop;
         Character animCurrentMovingChar;
+        char moveAnimCurrDir;
+        bool continueMoving = false;
 
         int currEnemyActingIndex;
 
@@ -433,7 +436,7 @@ namespace JSA_Game.Maps
         public void moveUnit(GameTime gameTime, Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
             moveAnimPath = AStar.findPath(this, startPos, endPos);
-            
+            board[(int)startPos.X, (int)startPos.Y].Occupant.MoveDisabled = true;
             //if path exists and is not of length 1, 2 for AI move (start is end)
             int aiStopEarly = AImoved ? 1 : 0;
             if (moveAnimPath.Count > 1 + aiStopEarly)
@@ -482,41 +485,78 @@ namespace JSA_Game.Maps
         private void animateMove(GameTime gameTime)
         {
             bool doneMoving = false;
-            while (animRemainingCharMovement > 0 && moveAnimPath.Count > animCharMoveStop)
+            if ((animRemainingCharMovement > 0 && moveAnimPath.Count > animCharMoveStop) || (continueMoving  && !doneMoving))
             {
                 
                 //int xPos = (int)moveAnimCurrPos.X;
                 //int yPos = (int)moveAnimCurrPos.Y;
 
-                //If character has moved to next space
-                if (moveAnimCurrPos.Equals(moveAnimDestPos))
+                //If character has moved to next space, take next destination from path.
+                //if (moveAnimCurrPos.Equals(moveAnimDestPos))
+                if (Math.Abs(moveAnimCurrPos.X - moveAnimDestPos.X) < 1 / (moveFrames + 7f) &&
+                    Math.Abs(moveAnimCurrPos.Y - moveAnimDestPos.Y) < 1 / (moveFrames + 7f))
                 {
                     //get next positon
                     moveAnimCurrPos = moveAnimDestPos;
                     moveAnimDestPos = (Vector2)moveAnimPath.Pop();
                     animRemainingCharMovement--;
-
-                    if (moveAnimPath.Count <= animCharMoveStop || animRemainingCharMovement == 1 + animCharMoveStop)
-                    {
-                        doneMoving = true;
-                    }
-                    
+                    continueMoving = true;
+                    //Determine the direction to begin moving
+                    if (moveAnimCurrPos.X - moveAnimDestPos.X > 0)
+                        moveAnimCurrDir = 'l';
+                    else if (moveAnimCurrPos.X - moveAnimDestPos.X < 0)
+                        moveAnimCurrDir = 'r';
+                    else if (moveAnimCurrPos.Y - moveAnimDestPos.Y > 0)
+                        moveAnimCurrDir = 'u';
+                    else if (moveAnimCurrPos.Y - moveAnimDestPos.Y < 0)
+                        moveAnimCurrDir = 'd';
 
                 }
-                 System.Diagnostics.Debug.Print("Animating Movement...?");
-                 moveAnimCurrPos = moveAnimDestPos;
+
+                moveAnimTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (moveAnimTimeElapsed >= moveAnimDelay){
+                    float moveAmount = 1 / moveFrames;
+                    switch (moveAnimCurrDir)
+                    {
+                        case 'l': moveAnimCurrPos.X -= moveAmount; break;
+                        case 'r': moveAnimCurrPos.X += moveAmount; break;
+                        case 'u': moveAnimCurrPos.Y -= moveAmount; break;
+                        case 'd': moveAnimCurrPos.Y += moveAmount; break; 
+                        
+
+                    }
+                    animCurrentMovingChar.Pos = moveAnimCurrPos;
+                    moveAnimTimeElapsed = 0;
+                 }
+                 //moveAnimCurrPos = moveAnimDestPos;
+                float diffX = Math.Abs(moveAnimCurrPos.X - moveAnimDestPos.X);
+                float diffY = Math.Abs(moveAnimCurrPos.Y - moveAnimDestPos.Y);
+                if ((diffX) < 1f / (moveFrames + 7f) &&
+                     (diffY) < 1f / (moveFrames + 7f))
+                 {
+                    continueMoving = false;
+                }
+                 
                 
             }
-           
-            isAnimatingMove = false;
-            //animCurrentMovingChar.Pos = moveAnimCurrPos;
+
+            if ((moveAnimPath.Count <= animCharMoveStop || animRemainingCharMovement <= 0) && !continueMoving)
+            {
+
+                doneMoving = true;
+            }
+
+            animCurrentMovingChar.Pos = moveAnimCurrPos;
 
             if (doneMoving)
             {
-                System.Diagnostics.Debug.Print("Finished moving, setting position");
+                moveAnimCurrPos.X = (float)Math.Round(moveAnimCurrPos.X);
+                moveAnimCurrPos.Y = (float)Math.Round(moveAnimCurrPos.Y);
                 board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = animCurrentMovingChar;
                 board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = true;
                 animCurrentMovingChar.Pos = moveAnimCurrPos;
+                
+                isAnimatingMove = false;
             }
         }
 
@@ -879,7 +919,7 @@ namespace JSA_Game.Maps
         {
             if (isAnimatingMove)
             {
-                //Continue to animate
+                animateMove(gameTime);
             }
 
             //otherwise listen for input/progress to next enemy's turn
@@ -952,17 +992,21 @@ namespace JSA_Game.Maps
                     {
                         Character enemy = (Character)eUnits[currEnemyActingIndex];
 
-                        enemy.AI.move(gameTime);
-                        enemy.AI.action();
-
-                        //Check for loss
-                        if (pUnits.Count <= 0)
+                        if (!enemy.MoveDisabled)
+                            enemy.AI.move(gameTime);
+                        else
                         {
-                            System.Diagnostics.Debug.Print("Player Lost!");
-                            winState = WinLossState.Loss;
-                        }
+                            enemy.AI.action();
 
-                        currEnemyActingIndex++;
+                            //Check for loss
+                            if (pUnits.Count <= 0)
+                            {
+                                System.Diagnostics.Debug.Print("Player Lost!");
+                                winState = WinLossState.Loss;
+                            }
+
+                            currEnemyActingIndex++;
+                        }
 
                     }
                         //End of enemy turn
@@ -978,7 +1022,7 @@ namespace JSA_Game.Maps
                         System.Diagnostics.Debug.Print("Player's turn");
 
                         playerTurn = TurnState.Player;
-                        foreach (Character c in pUnits)
+                        foreach (Character c in eUnits)
                         {
                             c.MoveDisabled = false;
                             c.ActionDisabled = false;
@@ -1060,20 +1104,20 @@ namespace JSA_Game.Maps
             //This is no longer done in the loop to allow the movement animation to work.
             foreach (Character p in pUnits)
             {
-                spriteBatch.Draw(characterImages["player" + p.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["player" + p.Texture], new Rectangle((int)(MAP_START_W + TILE_SIZE * (p.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (p.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)p.Pos.X, (int)p.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    spriteBatch.Draw(utilityImages[1], new Rectangle((int)(MAP_START_W + TILE_SIZE * (p.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (p.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
             foreach(Character e in eUnits)
             {
-                spriteBatch.Draw(characterImages["enemy" + e.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["enemy" + e.Texture], new Rectangle((int)(MAP_START_W + TILE_SIZE * (e.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (e.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)e.Pos.X, (int)e.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    spriteBatch.Draw(utilityImages[1], new Rectangle((int)(MAP_START_W + TILE_SIZE * (e.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (e.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
 
