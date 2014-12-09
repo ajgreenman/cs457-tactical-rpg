@@ -10,16 +10,19 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameStateManagement;
 using JSA_Game.Maps;
+using JSA_Game.Screens;
 
 namespace JSA_Game.Maps.State
 {
     static class CursorSelection
     {
 
-        public static void update(Level level, GameTime gameTime)
+        public static void update(Level level, ScreenManager screenManager, GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
+            
 
 
             if (level.MoveTimeElapsed >= level.MoveDelay) 
@@ -70,6 +73,7 @@ namespace JSA_Game.Maps.State
             //End turn
             else if (keyboard.IsKeyDown(Keys.E) && !level.ButtonPressed)
             {
+                screenManager.AddScreen(new TransitionScreen("Enemy Turn", Color.White), null);
                 level.Turn++;
                 level.PlayerTurn = TurnState.Enemy;
                 System.Diagnostics.Debug.Print("Enemy's turn");

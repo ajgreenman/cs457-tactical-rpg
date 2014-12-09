@@ -26,7 +26,8 @@ namespace JSA_Game.AI
 
         //Stationary AI doesn't move
         public void move(GameTime gameTime)
-        {  
+        {
+            character.MoveDisabled = true;
         }
 
         //Attack only targets in range

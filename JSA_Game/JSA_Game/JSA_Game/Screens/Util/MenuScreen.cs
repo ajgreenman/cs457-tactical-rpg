@@ -41,6 +41,12 @@ namespace JSA_Game.Screens
 
         }
 
+        public MenuScreen(string menuTitle, string alignment, int titleHeight, Color titleColor)
+            : this(menuTitle, true, "center", 175, titleHeight, titleColor)
+        {
+
+        }
+
         public MenuScreen(string menuTitle, bool isBackEnabled, string alignment, int listStartHeight, int titleHeight, 
             Color titleColor)
         {

@@ -58,6 +58,7 @@ namespace JSA_Game.AI
             {
                 currLevel.moveUnit(gameTime, character.Pos, targetPos, true, true);
             }
+            character.MoveDisabled = true;
         }
 
 

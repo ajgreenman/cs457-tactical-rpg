@@ -26,6 +26,7 @@ namespace JSA_Game.AI
 
         public void move(GameTime gameTime)
         {
+            character.MoveDisabled = true;
         }
 
 

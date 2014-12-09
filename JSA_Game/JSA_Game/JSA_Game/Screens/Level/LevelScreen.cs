@@ -196,6 +196,7 @@ namespace JSA_Game.Screens
             currLevel.HUD.setTargetList(currLevel.AllCharacters);
 
             currLevel.State = LevelState.CursorSelection;
+            ScreenManager.AddScreen(new TransitionScreen("Game Start", Color.White), null);
         }
 
         /// <summary>

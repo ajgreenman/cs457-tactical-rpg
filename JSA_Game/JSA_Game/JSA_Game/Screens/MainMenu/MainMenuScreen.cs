@@ -111,7 +111,7 @@ namespace JSA_Game.Screens
             //No extra events - just closes
 
             //ScreenManager.AddScreen(confirmExitMessageBox, null);
-
+            /*
             List<JSA_Game.Character> testCharList = new List<JSA_Game.Character>();
             Character c = new JSA_Game.CharClasses.Warrior(null);
             c.Name = "Jimmy";
@@ -130,6 +130,8 @@ namespace JSA_Game.Screens
             testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
 
             ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, testCharList, "right", null, new Vector2(0,0)), e.PlayerIndex);
+            */
+            ScreenManager.AddScreen(new TransitionScreen("Player Turn", Color.White), e.PlayerIndex);
            
         }
 

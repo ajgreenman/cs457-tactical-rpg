@@ -168,6 +168,7 @@
     <Compile Include="Screens\Character\CharacterScreen.cs" />
     <Compile Include="Screens\Level\GameOverScreen.cs" />
     <Compile Include="Screens\Level\LevelScreen.cs" />
+    <Compile Include="Screens\Level\TransitionScreen.cs" />
     <Compile Include="Screens\MainMenu\MainMenuBackgroundScreen.cs" />
     <Compile Include="Screens\MainMenu\MainMenuScreen.cs" />
     <Compile Include="Screens\PauseMenuScreen.cs" />

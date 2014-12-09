@@ -16,6 +16,7 @@ using JSA_Game.AI;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
 using JSA_Game.CharClasses;
+using JSA_Game.Screens;
 using JSA_Game.Maps.State;
 using JSA_Game.Maps.Tiles;
 
@@ -105,6 +106,7 @@ namespace JSA_Game.Maps
         //Unit placement variables
         bool placeableLevel = false;
         ScreenManager screenManager;
+        bool initialScreenShown = false;
         int numPlaceableSpaces;
 
 
@@ -120,6 +122,7 @@ namespace JSA_Game.Maps
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
             itemIndex = -1;
+            screenManager = sm;
 
             Sound.PlaySound("battle");
 
@@ -320,7 +323,7 @@ namespace JSA_Game.Maps
                 }
 
                 hud.setTargetList(allCharacters);
-                screenManager = sm;
+                
                 
         }
 
@@ -344,8 +347,8 @@ namespace JSA_Game.Maps
         /// </summary>
         private void initialize()
         {
-
             state = placeableLevel ? LevelState.Placement : LevelState.CursorSelection;
+
             playerTurn = TurnState.Player;
             winState = WinLossState.InProgess;
             turn = 0;
@@ -488,11 +491,7 @@ namespace JSA_Game.Maps
             if ((animRemainingCharMovement > 0 && moveAnimPath.Count > animCharMoveStop) || (continueMoving  && !doneMoving))
             {
                 
-                //int xPos = (int)moveAnimCurrPos.X;
-                //int yPos = (int)moveAnimCurrPos.Y;
-
                 //If character has moved to next space, take next destination from path.
-                //if (moveAnimCurrPos.Equals(moveAnimDestPos))
                 if (Math.Abs(moveAnimCurrPos.X - moveAnimDestPos.X) < 1 / (moveFrames + 7f) &&
                     Math.Abs(moveAnimCurrPos.Y - moveAnimDestPos.Y) < 1 / (moveFrames + 7f))
                 {
@@ -536,8 +535,7 @@ namespace JSA_Game.Maps
                  {
                     continueMoving = false;
                 }
-                 
-                
+
             }
 
             if ((moveAnimPath.Count <= animCharMoveStop || animRemainingCharMovement <= 0) && !continueMoving)
@@ -859,6 +857,7 @@ namespace JSA_Game.Maps
             //Check for win
             if (t.IsEnemy && eUnits.Count <= 0)
             {
+                screenManager.AddScreen(new TransitionScreen("Victory!", Color.White), null);
                 System.Diagnostics.Debug.Print("Player Won!");
                 winState = WinLossState.Win;
             }
@@ -932,49 +931,80 @@ namespace JSA_Game.Maps
                 //Animate cursor
                 cursor.animate(gameTime);
 
+                if (!initialScreenShown)
+                {
+                    if (placeableLevel)
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Unit Placement", Color.White), null);
+                    }
+                    else
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Game Start", Color.White), null);
+                    }
+                    initialScreenShown = true;
+                }
+
                 if (playerTurn == TurnState.Player)
                 {
-
-                    if (state == LevelState.CursorSelection)
-                        CursorSelection.update(this, gameTime);
-                    else if (state == LevelState.Selected)
-                        Selected.update(this, gameTime);
-                    else if (state == LevelState.Movement)
-                        Movement.update(this, gameTime);
-                    else if (state == LevelState.Action)
-                        ActionState.update(this, gameTime);
-                    else if (state == LevelState.Placement)
-                        CharacterPlacement.update(this, screenManager, gameTime);
-
-
-
-
-                    hud.Update(gameTime);
-                    hud.Hidden = state != LevelState.CursorSelection && state != LevelState.Placement;
-                    if (hud.Hidden)
+                    bool allCharsDisabled = true;
+                    foreach (Character c in pUnits)
                     {
-                        hud.ButtonSelect(keyboard);
-                    }
-                    moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-
-                    //Prevents holding a button to continuously activate events
-                    if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
-                    {
-                        moveTimeElapsed = cursorMoveDelay - 20;
-                    }
-                    if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
-                        keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
-                    {
-                        buttonPressed = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
-                        keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
-                        keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
-                    {
-                        buttonPressed = true;
+                        if (!c.MoveDisabled || !c.ActionDisabled)
+                            allCharsDisabled = false;
                     }
 
+                    //Automatically transition to enemy turn.
+                    if (allCharsDisabled && state != LevelState.Placement)
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Enemy Turn", Color.White), null);
+                        turn++;
+                        playerTurn = TurnState.Enemy;
+                        System.Diagnostics.Debug.Print("Enemy's turn");
+                    }
+                    else
+                    {
+
+                        if (state == LevelState.CursorSelection)
+                            CursorSelection.update(this, screenManager, gameTime);
+                        else if (state == LevelState.Selected)
+                            Selected.update(this, gameTime);
+                        else if (state == LevelState.Movement)
+                            Movement.update(this, gameTime);
+                        else if (state == LevelState.Action)
+                            ActionState.update(this, gameTime);
+                        else if (state == LevelState.Placement)
+                            CharacterPlacement.update(this, screenManager, gameTime);
+
+
+
+
+                        hud.Update(gameTime);
+                        hud.Hidden = state != LevelState.CursorSelection && state != LevelState.Placement;
+                        if (hud.Hidden)
+                        {
+                            hud.ButtonSelect(keyboard);
+                        }
+                        moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+
+                        //Prevents holding a button to continuously activate events
+                        if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
+                        {
+                            moveTimeElapsed = cursorMoveDelay - 20;
+                        }
+                        if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
+                            keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
+                        {
+                            buttonPressed = false;
+                        }
+                        if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
+                            keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
+                            keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
+                        {
+                            buttonPressed = true;
+                        }
+
+                    }
                 }
 
                 //Enemy turn
@@ -1009,9 +1039,11 @@ namespace JSA_Game.Maps
                         }
 
                     }
-                        //End of enemy turn
+                    //End of enemy turn
                     else
                     {
+                        screenManager.AddScreen(new TransitionScreen("Player Turn", Color.White), null);
+
                         playerTurn = TurnState.Player;
                         currEnemyActingIndex = 0;
                         foreach (Character c in pUnits)
@@ -1030,7 +1062,7 @@ namespace JSA_Game.Maps
                         Battle_Controller.BattleController.newTurn(this);
 
                     }
-                    
+
                 }
 
                 oldKeyboardState = keyboardState;
