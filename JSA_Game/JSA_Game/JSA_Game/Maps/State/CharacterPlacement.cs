@@ -76,8 +76,10 @@ namespace JSA_Game.Maps.State
                 if (level.Board[x, y].Occupant != null)
                 {
                     level.PUnits.Remove(level.Board[x, y].Occupant);
+                    level.Board[x, y].Occupant.IsPlaced = false;
                     level.Board[x, y].Occupant = null;
                     level.Board[x, y].IsOccupied = false;
+                    
                     level.PlayerUnitCount--;
                     System.Diagnostics.Debug.Print("Placement state: Removing unit");
 

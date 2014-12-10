@@ -106,7 +106,9 @@ namespace JSA_Game.Screens
                 charEntries[entryIndex].OnSelectEntry(playerIndex);
                 // level.SelectedChar = Game1.getPlayerChars()[entryIndex];
                 //level.IsCharSelected = true;
+                Game1.getPlayerChars()[entryIndex].IsPlaced = true;
                 level.addUnit(1, Game1.getPlayerChars()[entryIndex], positionToPlace);
+
                 System.Diagnostics.Debug.Print("Character Class: " + Game1.getPlayerChars()[entryIndex].ClassName);
 
                 if (Game1.getPlayerChars().Count == level.PUnits.Count - level.NumPreplacedUnits)
@@ -133,6 +135,8 @@ namespace JSA_Game.Screens
                     level.Board[i, j].HlState = HighlightState.NONE;
                 }
             }
+            foreach (Character p in level.PUnits)
+                p.IsPlaced = false;
             level.State = LevelState.CursorSelection;
         }
 

@@ -151,13 +151,25 @@ namespace JSA_Game.Screens
             {
                 CharacterSaveData charData = data.characters[k];
                 Character c = new Character();
-                if(charData.className.Equals("Thief"))
+                if (charData.className.Equals("Warrior"))
                 {
-                    c = new Thief(null);
+                    c = new Warrior(charData.level);
+                }
+                else if (charData.className.Equals("Mage"))
+                {
+                    c = new Mage(charData.level);
+                }
+                if (charData.className.Equals("Archer"))
+                {
+                    c = new Archer(charData.level);
+                }
+                else if(charData.className.Equals("Thief"))
+                {
+                    c = new Thief(charData.level);
                 }
                 else if (charData.className.Equals("Cleric"))
                 {
-                    c = new Cleric(null);
+                    c = new Cleric(charData.level);
                 }
 
                 c.Name = charData.name;

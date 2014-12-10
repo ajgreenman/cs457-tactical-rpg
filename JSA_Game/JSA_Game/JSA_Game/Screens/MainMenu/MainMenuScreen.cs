@@ -14,7 +14,7 @@ namespace JSA_Game.Screens
         /// Constructor fills in the menu contents.
         /// </summary>
         public MainMenuScreen()
-            : base("Main Menu")
+            : base("JSA")
         {
             // Create our menu entries.
             MenuEntry newGameMenuEntry = new MenuEntry("New Game");
@@ -35,7 +35,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(newGameMenuEntry);
             MenuEntries.Add(loadGameMenuEntry);
             MenuEntries.Add(exitMenuEntry);
-            MenuEntries.Add(testMenuEntry);
+            //MenuEntries.Add(testMenuEntry);
 
             // Sound
             Sound.PlaySound("title");

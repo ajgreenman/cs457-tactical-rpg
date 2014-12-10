@@ -19,6 +19,7 @@ namespace JSA_Game.HUD
         const int DOD_POSx = 175;
         const int ACC_POSx = 265;
         const int LVL_POSx = 225;
+        const int NAME_POSx = 320;
 
         const int STAT_POSy = 502;
         const int STR_POSy= 520;
@@ -28,6 +29,7 @@ namespace JSA_Game.HUD
         const int DOD_POSy = 560;
         const int ACC_POSy = 560;
         const int LVL_POSy = 580;
+        const int NAME_POSy = 580;
 
         //Stat Background
         Texture2D statBackground;
@@ -44,6 +46,7 @@ namespace JSA_Game.HUD
         Vector2 dod_pos;
         Vector2 acc_pos;
         Vector2 lvl_pos;
+        Vector2 name_pos;
 
         //Stat Fonts
         SpriteFont fStatHeader;
@@ -72,6 +75,7 @@ namespace JSA_Game.HUD
         int targetAccuracy;
         int targetDodge;
         int targetlvl;
+        string name;
 
         //Constructor
         public Stat_Section()
@@ -85,6 +89,7 @@ namespace JSA_Game.HUD
             dod_pos = new Vector2(DOD_POSx, DOD_POSy);
             acc_pos = new Vector2(ACC_POSx, ACC_POSy);
             lvl_pos = new Vector2(LVL_POSx, LVL_POSy);
+            name_pos = new Vector2(NAME_POSx, NAME_POSy);
 
             //Initializing Stat Colors
             strColor = Color.White;
@@ -111,6 +116,7 @@ namespace JSA_Game.HUD
             targetAccuracy = c.Accuracy;
             targetDodge = c.Dodge;
             targetlvl = c.Level;
+            name = c.Name;
 
 
             /*
@@ -312,6 +318,7 @@ namespace JSA_Game.HUD
             spriteBatch.DrawString(fDodge, "DOD: " + targetDodge, dod_pos, dodColor);
             spriteBatch.DrawString(fAccuracy, "ACC: " + targetAccuracy, acc_pos, accColor);
             spriteBatch.DrawString(flvl, "LVL: " + targetlvl, lvl_pos, Color.White);
+            spriteBatch.DrawString(flvl, "Name: " + name, name_pos, Color.White);
         }
     }
 }

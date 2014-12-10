@@ -10,7 +10,7 @@ namespace JSA_Game.CharClasses
 {
     class Mage : Character
     {
-        public Mage(Level level, int startingLevel = 1)
+        public Mage(int startingLevel = 1)
         {
             charLevel = 1;
             Texture = "Mage";

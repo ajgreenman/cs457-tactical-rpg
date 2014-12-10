@@ -40,6 +40,7 @@ namespace JSA_Game
         private int movement;
         protected int charLevel;
         private int currExp;
+        Boolean isPlaced;
 
         //Position
         private Vector2 pos;
@@ -83,7 +84,7 @@ namespace JSA_Game
                 new Battle_Controller.Action("Weak Potion", "A simple potion of healing.", null, new StatType[] {StatType.Mp},
                     ActionType.Spell, false, true, false, 1.0, 0, 5, 0, "swoosh", true));
             inventory[0] = potion;
-
+            isPlaced = false;
             status = new Status[2];
 
             attack = new Battle_Controller.Action();     // Default attack action.
@@ -384,6 +385,11 @@ namespace JSA_Game
         {
             get { return didDefend; }
             set { didDefend = value; }
+        }
+        public bool IsPlaced
+        {
+            get { return isPlaced; }
+            set { isPlaced = value; }
         }
     }
 }

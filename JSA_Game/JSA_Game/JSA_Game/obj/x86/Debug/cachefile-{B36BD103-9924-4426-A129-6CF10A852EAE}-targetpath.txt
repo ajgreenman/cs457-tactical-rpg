@@ -35,6 +35,7 @@ Content\statBackground.xnb
 Content\barBackground.xnb
 Content\itemPouch.xnb
 Content\wood Background.xnb
+Content\Saveload.xnb
 Content\StatFont.xnb
 Content\menufont.xnb
 Content\smallMenufont.xnb

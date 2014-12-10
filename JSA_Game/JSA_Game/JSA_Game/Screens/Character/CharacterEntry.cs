@@ -14,9 +14,9 @@ namespace JSA_Game.Screens
     {
         string text;
         string charName, className, charLevel;
+        Character c;
         Texture2D charImage;
-        
-        float selectionFade;
+       
         Vector2 position;
         public event EventHandler<PlayerIndexEventArgs> Selected;
 
@@ -26,6 +26,7 @@ namespace JSA_Game.Screens
             charName = c.Name;
             className = c.ClassName;
             charLevel =  "Lv " + c.Level;
+            this.c = c;
 
             charImage = Texture2D.FromStream(graphicsDevice,
                      File.OpenRead("..\\..\\..\\..\\JSA_GameContent\\player" + className + ".png"));
@@ -47,6 +48,8 @@ namespace JSA_Game.Screens
 
             // Draw the selected entry in yellow, otherwise white.
             Color color = isSelected ? Color.Yellow : Color.White;
+            if (c.IsPlaced && !isSelected)
+                color = Color.OrangeRed;
 
             // Modify the alpha to fade text out during transitions.
             color *= screen.TransitionAlpha;
