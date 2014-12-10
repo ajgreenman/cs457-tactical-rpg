@@ -140,5 +140,10 @@ namespace JSA_Game.HUD
             get { return hidden; }
             set { hidden = value; }
         }
+        public Boolean Hid
+        {
+            get { return hidden; }
+            set { hidden = value; }
+        }
     }
 }

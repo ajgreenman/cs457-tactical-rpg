@@ -116,6 +116,7 @@ namespace JSA_Game.Maps.State
                    // }
                     
                     level.State = LevelState.CursorSelection;
+                    //level.HUD.
                     level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
                     level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                 }
