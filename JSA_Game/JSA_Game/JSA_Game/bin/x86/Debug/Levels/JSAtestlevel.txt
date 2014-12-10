@@ -5,7 +5,8 @@
 
 / '/' denotes a comment
 / 'i' denotes inital parameters: board width, board height, number of player units, and number of enemy units.
-/	Format: i:<width>,<height>,<player units>,<enemy units>
+/	Format: i:<width>,<height>,<pre-placed player units>,<amount of squares for unit placement (optional),
+/                         <enemy units>,<camera start x>,<camera start y>
 /
 / 'G' denotes primary geography: The Tile landType for all tiles
 /	Format: G:<land type>
@@ -13,17 +14,20 @@
 / 'g' denotes position-specific geography: landType at a given position on the board.
 /	Format: g:<x value>,<y value>,<land type>
 /
-/ 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.)
+/ 'o' denotes a position where a player character can be placed.  (optional)
+/	Format: o:<x value>,<y value>
+
+/ 'p' denotes a player unit: Needs the class and location (later will add level, equipment, etc.) (optional)
 /	Format: p:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
-/ 'e' denotes an enemy unit: Needs the class and location (later will add level, equip, etc.)
+/ 'e' denotes an enemy unit: Needs the class and location (later will add level, equipment, etc.)
 /	Format: e:<x value>,<y value>,<character class>,<level #>,<AI type>
 /
 
 / Level name: testLevel
 
 
-i:15,15,1,1
+i:15,15,1,1,0,0
 
 G:plains
 
@@ -46,7 +50,7 @@ g:5,13-14,stone_wall
 g:7,6-9,stone_wall
 
 
-p:0,0,Warrior,4,Aggressive
+p:0,0,Warrior,1,Aggressive
 
-e:8,8,Mage,2,Aggressive
+e:8,8,Mage,1,Aggressive
 

@@ -59,7 +59,7 @@ namespace JSA_Game.AI
             }
             foreach (Character t in targetList)
             {
-                dist = currLevel.calcDist(character.Pos, t.Pos);
+                dist = Maps.AStar.calcDist(character.Pos, t.Pos);
                 if (dist < shortestDist && dist <= character.Movement)
                 {
                     shortestDist = dist;
@@ -84,7 +84,7 @@ namespace JSA_Game.AI
             {
                 if ((c.CurrHp / (float)c.MaxHP) * 100 < 50.0)
                 {
-                    dist = currLevel.calcDist(character.Pos, c.Pos);
+                    dist = Maps.AStar.calcDist(character.Pos, c.Pos);
                     Console.WriteLine("Dist: " + dist);
                     if (dist < shortestDist && dist <= character.Movement + character.Actions[0].Range)
                     {
@@ -106,7 +106,7 @@ namespace JSA_Game.AI
         {
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                if (currLevel.calcDist(character.Pos, targetPos) <= character.Actions[0].Range)
+                if (Maps.AStar.calcDist(character.Pos, targetPos) <= character.Actions[0].Range)
                 {
                     currLevel.attackTarget(character.Pos, targetPos, character.Actions[0]);
                     Console.WriteLine("Healed!");

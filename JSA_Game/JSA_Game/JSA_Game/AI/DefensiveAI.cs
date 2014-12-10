@@ -45,7 +45,7 @@ namespace JSA_Game.AI
             }
             foreach (Character t in targetList)
             {
-                dist = currLevel.calcDist(character.Pos, t.Pos);
+                dist = AStar.calcDist(character.Pos, t.Pos);
                 if (dist < shortestDist && dist <= character.Movement)
                 {
                     shortestDist = dist;
@@ -58,6 +58,7 @@ namespace JSA_Game.AI
             {
                 currLevel.moveUnit(gameTime, character.Pos, targetPos, true, true);
             }
+            character.MoveDisabled = true;
         }
 
 
@@ -65,7 +66,7 @@ namespace JSA_Game.AI
         {
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
+                if (AStar.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
                     performMove(character, targetPos);
                 }
@@ -87,7 +88,7 @@ namespace JSA_Game.AI
                         Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
                         int rand = rng.Next(0, count);
 
-                        if (currLevel.calcDist(character.Pos, targetPos) <= character.Actions[rand].Range)
+                        if (Maps.AStar.calcDist(character.Pos, targetPos) <= character.Actions[rand].Range)
                         {
                             Console.WriteLine("AggresiveAI move: " + character.Actions[rand].Name);
                             currLevel.attackTarget(character.Pos, targetPos, character.Actions[rand]);

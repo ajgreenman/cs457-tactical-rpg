@@ -1,6 +1,6 @@
 / Level name: Arena
 
-i:10,10,3,3,0,0
+i:10,10,0,5,3,0,0
 G:plains
 
 g:2,0,stone_wall
@@ -41,11 +41,11 @@ g:4,5,water
 g:5,4,water
 g:5,5,water
 
+/ Player placement temp variable o
 
 
-p:2,3,Warrior,4,Aggressive
-p:2,5,Mage,4,Defensive
-p:2,7,Archer,4,Stationary
+o:2,3-7
+
 
 e:7,3,Warrior,3,Aggressive
 e:7,5,Mage,3,Defensive

@@ -308,13 +308,13 @@ namespace JSA_Game.CharClasses
             switch (rand)
             {
                 case 1:
-                    amount = 1;
+                    amount = 3;
                     break;
                 case 2:
-                    amount = 2;
+                    amount = 5;
                     break;
                 default:
-                    amount = 1;
+                    amount = 3;
                     break;
             }
 
@@ -331,22 +331,22 @@ namespace JSA_Game.CharClasses
             switch (rand)
             {
                 case 0:
-                    amount = 0;
-                    break;
-                case 1:
-                    amount = 1;
-                    break;
-                case 2:
-                    amount = 1;
-                    break;
-                case 3:
-                    amount = 2;
-                    break;
-                case 4:
                     amount = 3;
                     break;
+                case 1:
+                    amount = 5;
+                    break;
+                case 2:
+                    amount = 6;
+                    break;
+                case 3:
+                    amount = 7;
+                    break;
+                case 4:
+                    amount = 10;
+                    break;
                 default:
-                    amount = 2;
+                    amount = 5;
                     break;
             }
 
@@ -363,22 +363,22 @@ namespace JSA_Game.CharClasses
             switch (rand)
             {
                 case 0:
-                    amount = 0;
-                    break;
-                case 1:
-                    amount = 1;
-                    break;
-                case 2:
-                    amount = 2;
-                    break;
-                case 3:
-                    amount = 3;
-                    break;
-                case 4:
                     amount = 4;
                     break;
+                case 1:
+                    amount = 6;
+                    break;
+                case 2:
+                    amount = 8;
+                    break;
+                case 3:
+                    amount = 10;
+                    break;
+                case 4:
+                    amount = 12;
+                    break;
                 default:
-                    amount = 3;
+                    amount = 8;
                     break;
             }
             return amount;

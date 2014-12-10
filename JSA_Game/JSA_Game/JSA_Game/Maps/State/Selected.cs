@@ -28,7 +28,8 @@ namespace JSA_Game.Maps.State
                 level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].IsSelected = false;
             }
 
-            else if (keyboard.IsKeyDown(Keys.M) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled)
+            else if (keyboard.IsKeyDown(Keys.M) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.MoveDisabled
+                && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.IsEnemy)
             {
                 Vector2 sourcePos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
                 if (level.Board[(int)sourcePos.X, (int)sourcePos.Y].Occupant != null)
@@ -39,7 +40,8 @@ namespace JSA_Game.Maps.State
                 }
             }
 
-            else if (keyboard.IsKeyDown(Keys.A) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.ActionDisabled)
+            else if (keyboard.IsKeyDown(Keys.A) && !level.ButtonPressed && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.ActionDisabled
+                && !level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.IsEnemy)
             {
                 //Scan and mark potential targets
                 lvl.SelectedAction = level.Board[(int)level.SelectedPos.X, (int)level.SelectedPos.Y].Occupant.Attack;

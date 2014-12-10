@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,24 +26,31 @@ namespace JSA_Game.Screens
         float pauseAlpha;
 
         InputAction pauseAction;
+        InputAction startAction;
 
         Level currLevel;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public LevelScreen(string levelName)
+        public LevelScreen(string levelName, ScreenManager screenManager)
         {
+            
             TransitionOnTime = TimeSpan.FromSeconds(0.25);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
-
-            //Basic inputs: select and cancel (Z and X)
+            
+            //Basic inputs: excape and Z
             pauseAction = new InputAction(
-                new Buttons[] { Buttons.Start, Buttons.Back },
+                null,
                 new Keys[] { Keys.Escape },
                 true);
+            startAction = new InputAction(
+                null,
+                new Keys[] { Keys.Z },
+                true);
 
-            currLevel = new Level(levelName);
+            currLevel = new Level(levelName, screenManager);
+            currLevel.loadContent(Game1.getContent());
         }
 
 
@@ -56,6 +63,8 @@ namespace JSA_Game.Screens
             {
                 if (content == null)
                     content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+                //Thread.Sleep(5000);
 
                 ScreenManager.Game.ResetElapsedTime();
                 currLevel.loadContent(content);
@@ -148,10 +157,48 @@ namespace JSA_Game.Screens
             PlayerIndex player;
             if (pauseAction.Evaluate(input, ControllingPlayer, out player))
             {
-                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+                ScreenManager.AddScreen(new PauseMenuScreen(currLevel), ControllingPlayer);
+            }
+            else if (startAction.Evaluate(input, ControllingPlayer, out player))
+            {
+                int x = (int)currLevel.Cursor.CursorPos.X + currLevel.ShowStartX;
+                int y = (int)currLevel.Cursor.CursorPos.Y + currLevel.ShowStartY;
+                if (currLevel.State == LevelState.Placement && currLevel.Board[x, y].HlState != HighlightState.MOVE && currLevel.PUnits.Count > 0)
+                {
+                    string message = "Start level?";
+                    MessageBoxScreen confirmStartMessageBox = new MessageBoxScreen(message, true);
+
+                    confirmStartMessageBox.Accepted += ConfirmStartMessageBoxAccepted;
+
+
+                    ScreenManager.AddScreen(confirmStartMessageBox, null);
+                }
             }
         }
 
+        void ConfirmStartMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
+        {
+            for (int i = 0; i < currLevel.BoardWidth; i++)
+            {
+                for (int j = 0; j < currLevel.BoardHeight; j++)
+                {
+                    currLevel.Board[i, j].HlState = HighlightState.NONE;
+                }
+            }
+            foreach (Character p in currLevel.PUnits)
+            {
+                currLevel.AllCharacters.Add(p);
+            }
+            foreach (Character f in currLevel.EUnits)
+            {
+                currLevel.AllCharacters.Add(f);
+            }
+
+            currLevel.HUD.setTargetList(currLevel.AllCharacters);
+
+            currLevel.State = LevelState.CursorSelection;
+            ScreenManager.AddScreen(new TransitionScreen("Game Start", Color.White), null);
+        }
 
         /// <summary>
         /// Draws the gameplay screen.

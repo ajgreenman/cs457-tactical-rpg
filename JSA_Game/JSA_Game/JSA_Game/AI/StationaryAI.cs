@@ -26,7 +26,8 @@ namespace JSA_Game.AI
 
         //Stationary AI doesn't move
         public void move(GameTime gameTime)
-        {  
+        {
+            character.MoveDisabled = true;
         }
 
         //Attack only targets in range
@@ -39,7 +40,7 @@ namespace JSA_Game.AI
             ArrayList targetList = currLevel.PUnits.Contains(character) ? currLevel.EUnits : currLevel.PUnits;
             foreach (Character t in targetList)
             {
-                dist = currLevel.calcDist(character.Pos, t.Pos);
+                dist = AStar.calcDist(character.Pos, t.Pos);
                 if (dist < shortestDist)
                 {
                     shortestDist = dist;
@@ -50,7 +51,7 @@ namespace JSA_Game.AI
 
             if (!targetPos.Equals(new Vector2(-1, -1)))
             {
-                if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
+                if (AStar.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
                     currLevel.attackTarget(character.Pos, targetPos, character.Attack);
                 }

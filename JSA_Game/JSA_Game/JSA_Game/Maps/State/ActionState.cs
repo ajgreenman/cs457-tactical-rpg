@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,7 +20,7 @@ namespace JSA_Game.Maps.State
         public static void update(Level level, GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState(PlayerIndex.One);
-            Vector2 oldPos = new Vector2(level.Cursor.CursorPos.X, level.Cursor.CursorPos.Y);
+            Vector2 cursorPos = new Vector2(level.Cursor.CursorPos.X+level.ShowStartX, level.Cursor.CursorPos.Y+level.ShowStartY);
 
             if (level.MoveTimeElapsed >= level.MoveDelay)   // A unit is selected
             {
@@ -49,16 +49,16 @@ namespace JSA_Game.Maps.State
                 }
                 if (level.Cursor.moveCursor(gameTime) && level.SelectedAction != null)
                 {
-
+                    cursorPos = new Vector2(level.Cursor.CursorPos.X + level.ShowStartX, level.Cursor.CursorPos.Y + level.ShowStartY);
                     if (level.SelectedAction.Aoe) //If the action is an aoe action
                     {
                         //Clear old aoe range
-                        level.scanForTargets(false, oldPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
+                        level.scanForTargets(false, cursorPos, level.SelectedAction.AoeRange + 1, true, level.SelectedAction.Friendly);
 
                         level.scanForTargets(true, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
                         //Show new aoe range
                         //System.Diagnostics.Debug.Print("Showing aoe range");
-                        level.scanForTargets(true, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
+                        level.scanForTargets(true, cursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                     }
                 }
                 level.MoveTimeElapsed = 0;
@@ -67,8 +67,8 @@ namespace JSA_Game.Maps.State
             //Confirm attack
             if (keyboard.IsKeyDown(Keys.Z) && !level.ButtonPressed)
             {
-                int x = (int)level.Cursor.CursorPos.X + level.ShowStartX;
-                int y = (int)level.Cursor.CursorPos.Y + level.ShowStartY;
+                int x = (int)cursorPos.X;
+                int y = (int)cursorPos.Y;
 
                 
 
@@ -84,7 +84,7 @@ namespace JSA_Game.Maps.State
                     }
                 }
 
-                if (level.TargetList.Count > 0 && level.calcDist(level.Cursor.CursorPos, level.SelectedPos) <= level.SelectedAction.Range)
+                if (level.TargetList.Count > 0 && AStar.calcDist(cursorPos, level.SelectedPos) <= level.SelectedAction.Range)
                 {
                     System.Diagnostics.Debug.Print("Num targets: " + level.TargetList.Count);
                     //Here apply attack to all aoe targets
@@ -116,6 +116,7 @@ namespace JSA_Game.Maps.State
                    // }
                     
                     level.State = LevelState.CursorSelection;
+                    //level.HUD.
                     level.scanForTargets(false, level.SelectedPos, level.SelectedAction.Range, false, level.SelectedAction.Friendly);
                     level.scanForTargets(false, level.Cursor.CursorPos, level.SelectedAction.AoeRange, true, level.SelectedAction.Friendly);
                 }

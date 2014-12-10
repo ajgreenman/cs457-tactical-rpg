@@ -1,5 +1,6 @@
 ﻿public enum LevelState
 {
+    Placement,
     CursorSelection,
     Selected,
     Movement,

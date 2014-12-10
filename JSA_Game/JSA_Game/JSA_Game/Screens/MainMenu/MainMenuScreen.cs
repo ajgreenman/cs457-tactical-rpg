@@ -52,7 +52,12 @@ namespace JSA_Game.Screens
         {
 
             //First Level
-            ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName()), e.PlayerIndex);
+            ScreenManager.AddScreen(new LevelScreen(Game1.getNextLevelName(), ScreenManager), e.PlayerIndex);
+
+            //With loading screen
+            //LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                //new LevelScreen(Game1.getNextLevelName()));
+
 
             //ScreenManager.AddScreen(new TownBackgroundScreen(), null);
            // ScreenManager.AddScreen(new TownScreen(), null);
@@ -99,13 +104,35 @@ namespace JSA_Game.Screens
         /// </summary>
         void TestMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            const string message = "It's a test message box!";
+            //const string message = "It's a test message box!";
 
-            MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message, false);
+            //MessageBoxScreen confirmExitMessageBox = new MessageBoxScreen(message, false);
 
             //No extra events - just closes
 
-            ScreenManager.AddScreen(confirmExitMessageBox, null);
+            //ScreenManager.AddScreen(confirmExitMessageBox, null);
+            /*
+            List<JSA_Game.Character> testCharList = new List<JSA_Game.Character>();
+            Character c = new JSA_Game.CharClasses.Warrior(null);
+            c.Name = "Jimmy";
+            testCharList.Add(c);
+
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null,3));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null));
+            testCharList.Add(new JSA_Game.CharClasses.Mage(null, 2));
+            testCharList.Add(new JSA_Game.CharClasses.Warrior(null, 3));
+
+            ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, testCharList, "right", null, new Vector2(0,0)), e.PlayerIndex);
+            */
+            ScreenManager.AddScreen(new TransitionScreen("Player Turn", Color.White), e.PlayerIndex);
+           
         }
 
 

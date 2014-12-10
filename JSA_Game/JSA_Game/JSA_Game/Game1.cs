@@ -23,11 +23,12 @@ namespace JSA_Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         //Constants
-        private const int LEVEL_COUNT = 3;
+        private const int LEVEL_COUNT = 7;
 
         //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static ContentManager content;
 
         //Screen Manager
         ScreenManager screenManager;
@@ -43,7 +44,7 @@ namespace JSA_Game
         //Level currLevel;
 
         //List of player characters
-        private static ArrayList playerChars;
+        private static List<Character> playerChars;
 
         
 
@@ -57,9 +58,8 @@ namespace JSA_Game
             this.IsMouseVisible = true;
             this.Components.Add(new GamerServicesComponent(this));
             Content.RootDirectory = "Content";
-
             Sound sound = new Sound(Content);
-
+            content = Content;
             //Create screen factory and add to Services
             screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);
@@ -71,27 +71,27 @@ namespace JSA_Game
             AddInitialScreens();
 
 
-            playerChars = new ArrayList();
+            playerChars = new List<Character>();
 
             //Let's add a character!
-            //So, change constructor in character classes to no longer take
-            // a level as a parameter.  This will be set when a level initializes.
-            // Also, need a way to keep track of a character's AI option.  Need to
-            // reinitialize the right one at the start of each level.  String would work.
-            playerChars.Add(new Thief(null));
-            playerChars.Add(new Cleric(null));
+            playerChars.Add(new Warrior(null, 2));
+            //playerChars.Add(new Mage(null));
+           // playerChars.Add(new Archer(null, 1));
 
             levels = new string[LEVEL_COUNT];
-
-          //  levels = new ArrayList();
-           // levels.Add("JSAtestlevel");
-           // levels.Add("Coast");
-           // levels.Add("Arena");
-
             currentLevel = 0;
-            levels[0] = "DefensiveAITest";
-            levels[1] = "Coast";
-            levels[2] = "Arena";
+
+            int i = 0;
+            
+            levels[i++] = "JSAtestlevel";
+            levels[i++] = "NewAllies";
+            levels[i++] = "Coast";
+            levels[i++] = "ArenaTest";
+            //levels[i++] = "Arena";
+            levels[i++] = "Battlefield";
+            levels[i++] = "Rush";
+            levels[i++] = "DefensiveAITest";
+
             
             
             //Set first level
@@ -234,14 +234,25 @@ namespace JSA_Game
             currentLevel = 0;
         }
 
-        public static ArrayList getPlayerChars()
+        public static List<Character> getPlayerChars()
         {
             return playerChars;
         }
-        public static void setPlayerChars(ArrayList chars)
+        public static void setPlayerChars(List<Character> chars)
         {
             playerChars = chars;
         }
-    
+        public static void resetPlayerChars(ArrayList chars)
+        {
+            playerChars.Clear();
+            foreach (Character c in chars)
+            {
+                playerChars.Add(c);
+            }
+        }
+        public static ContentManager getContent()
+        {
+            return content;
+        }
     }
 }

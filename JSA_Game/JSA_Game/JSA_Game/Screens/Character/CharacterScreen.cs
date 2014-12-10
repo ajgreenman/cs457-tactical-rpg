@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using GameStateManagement;
 
 namespace JSA_Game.Screens
 {
@@ -10,7 +11,7 @@ namespace JSA_Game.Screens
     {
 
         public CharacterScreen()
-            : base("Town", false, "left", 250, 20, Color.Black)
+            : base("Character", false, "left", 250, 20, Color.Black)
         {
             //Menu entries
             MenuEntry talentsMenuEntry = new MenuEntry("Talents");
@@ -38,40 +39,33 @@ namespace JSA_Game.Screens
 
             private void talentsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-                const string message = "Armory currently unavailable.";
+                const string message = "Talents currently unavailable.";
                 MessageBoxScreen armoryMessageBox = new MessageBoxScreen(message, false);
                 ScreenManager.AddScreen(armoryMessageBox, null);
             }
 
             private void equipmentMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-               // const string message = "Tavern currently unavailable.";
-               // MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
-               // ScreenManager.AddScreen(tavernMessageBox, null);
-                ScreenManager.AddScreen(new TavernScreen(), e.PlayerIndex);
+                const string message = "Equipment currently unavailable.";
+                MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
+                ScreenManager.AddScreen(tavernMessageBox, null);
+              
 
             }
 
             private void itemsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-                const string message = "Church currently unavailable.";
+                const string message = "Items currently unavailable.";
                 MessageBoxScreen churchMessageBox = new MessageBoxScreen(message, false);
                 ScreenManager.AddScreen(churchMessageBox, null);
             }
 
             private void backMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-                string levelName = Game1.getNextLevelName();
-                if (levelName.Equals(""))
-                {
-                    //No more levels left
-                    const string message = "No more levels left";
-                    MessageBoxScreen noMoreLevelsMessageBox = new MessageBoxScreen(message, false);
-                    ScreenManager.AddScreen(noMoreLevelsMessageBox, null);
-                }
-                else
-                    ScreenManager.AddScreen(new LevelScreen(levelName), e.PlayerIndex);
-
+                foreach (GameScreen screen in ScreenManager.GetScreens())
+                    screen.ExitScreen();
+                ScreenManager.AddScreen(new TownBackgroundScreen(), null);
+                ScreenManager.AddScreen(new TownScreen(), null);
             }
     }
 }

@@ -1,6 +1,6 @@
 / Level name: DefensiveAITest
 
-i:10,10,1,6
+i:10,10,1,6,0,0
 G:plains
 
 p:0,0,Cleric,10,Aggresive

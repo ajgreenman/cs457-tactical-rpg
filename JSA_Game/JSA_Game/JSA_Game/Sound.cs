@@ -101,6 +101,7 @@ namespace JSA_Game
 
         public static void PlaySound(String sound)
         {
+            Console.WriteLine("Playing sound: " + sound);
             switch (sound)
             {
                 case "bow_attack":
@@ -131,8 +132,14 @@ namespace JSA_Game
                     break;
                 case "battle":
                     StopSounds();
+                    while (battleInstance.State != SoundState.Stopped)
+                    {
+                        battleInstance.Stop();
+                    }
+
                     if (battleInstance.State == SoundState.Stopped)
                     {
+                        Console.WriteLine("Lets go!");
                         battleInstance.Play();
                     }
                     break;
@@ -164,9 +171,12 @@ namespace JSA_Game
 
         private static void StopSounds()
         {
+            Console.WriteLine("Stopping all sounds!");
             if (battleInstance != null)
             {
+                Console.WriteLine("Stopping battle sound.");
                 battleInstance.Stop();
+                Console.WriteLine(battleInstance.State);
             }
 
             if (titleInstance != null)

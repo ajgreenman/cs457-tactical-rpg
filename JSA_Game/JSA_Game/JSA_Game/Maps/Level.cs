@@ -11,10 +11,12 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using GameStateManagement;
 using JSA_Game.AI;
 using JSA_Game.HUD;
 using JSA_Game.Battle_Controller;
 using JSA_Game.CharClasses;
+using JSA_Game.Screens;
 using JSA_Game.Maps.State;
 using JSA_Game.Maps.Tiles;
 
@@ -40,7 +42,7 @@ namespace JSA_Game.Maps
         KeyboardState oldKeyboardState;
 
         int boardWidth, boardHeight;
-        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
+        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount, numPreplacedUnits;
         private Boolean buttonPressed;
 
         int turn;
@@ -63,7 +65,7 @@ namespace JSA_Game.Maps
 
         //HUD
         private HUD_Controller hud;
-        
+        ArrayList allCharacters = new ArrayList();
 
         //State
         private LevelState state;
@@ -86,12 +88,26 @@ namespace JSA_Game.Maps
         bool isAnimatingMove;
         Vector2 moveAnimCurrPos;
         Vector2 moveAnimDestPos;
-        Vector2 moveAnimFinalPos;
         Stack moveAnimPath;
-        float moveAnimTimeElapsed;
-        float moveAnimDelay = 30;
+        float moveAnimTimeElapsed = 0;
+        float moveAnimDelay = 0;
+        float moveFrames = 5f;
+        int animRemainingCharMovement;
+        int animCharMoveStop;
+        Character animCurrentMovingChar;
+        char moveAnimCurrDir;
+        bool continueMoving = false;
+
+        int currEnemyActingIndex;
 
         public bool isAnimatingAttack;
+
+
+        //Unit placement variables
+        bool placeableLevel = false;
+        ScreenManager screenManager;
+        bool initialScreenShown = false;
+        int numPlaceableSpaces;
 
 
 
@@ -100,12 +116,13 @@ namespace JSA_Game.Maps
         /// //Folder for files is located at \JSA_Game\bin\x86\Debug\Levels
         /// </summary>
         /// <param name="filename">Filename to read</param>
-        public Level(string filename)
+        public Level(string filename, ScreenManager sm)
         {
            
             System.Diagnostics.Debug.Print("Generating level from file: " + filename);
             string line;
             itemIndex = -1;
+            screenManager = sm;
 
             Sound.PlaySound("battle");
 
@@ -128,10 +145,21 @@ namespace JSA_Game.Maps
                     //Split string starting after identifying character and colon.
                     string[] param = line.Substring(2).Split(',');
 
-                    boardWidth = Convert.ToInt32(param[0]);
-                    boardHeight = Convert.ToInt32(param[1]);
-                    maxPlayerUnits = Convert.ToInt32(param[2]);
-                    MaxEnemyUnits = Convert.ToInt32(param[3]);
+                    int i = 0;
+
+                    boardWidth = Convert.ToInt32(param[i++]);
+                    boardHeight = Convert.ToInt32(param[i++]);
+                    maxPlayerUnits = Convert.ToInt32(param[i++]);
+                    numPreplacedUnits = maxPlayerUnits;
+                    if (param.Length == 7)
+                    {
+                        numPlaceableSpaces = Convert.ToInt32(param[i++]);
+                        maxPlayerUnits = maxPlayerUnits + numPlaceableSpaces;
+                        placeableLevel = true;
+                    }
+                    MaxEnemyUnits = Convert.ToInt32(param[i++]);
+                    showStartX = Convert.ToInt32(param[i++]);
+                    showStartY = Convert.ToInt32(param[i++]);
 
                     board = new Tile[boardWidth, boardHeight];
                     initialize();
@@ -190,6 +218,50 @@ namespace JSA_Game.Maps
                     
                 }
 
+                else if (line[0] == 'o')
+                {
+                    System.Diagnostics.Debug.Print("Unit placeable: " + line);
+
+                    //Split string starting after identifying character and colon.
+                    string[] param = line.Substring(2).Split(',');
+                    int xStartLoop = 0, xEndLoop = 0;
+                    int yStartLoop = 0, yEndLoop = 0;
+                    if (param[0].Contains('-'))
+                    {
+                        string[] bounds = param[0].Split('-');
+                        xStartLoop = Convert.ToInt32(bounds[0]);
+                        xEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        xStartLoop = Convert.ToInt32(param[0]);
+                        xEndLoop = xStartLoop;
+                    }
+                    if (param[1].Contains('-'))
+                    {
+                        string[] bounds = param[1].Split('-');
+                        yStartLoop = Convert.ToInt32(bounds[0]);
+                        yEndLoop = Convert.ToInt32(bounds[1]);
+                    }
+                    else
+                    {
+                        yStartLoop = Convert.ToInt32(param[1]);
+                        yEndLoop = yStartLoop;
+                    }
+
+                    for (int i = xStartLoop; i < xEndLoop + 1; i++)
+                    {
+                        for (int j = yStartLoop; j < yEndLoop + 1; j++)
+                        {
+                            board[i, j].HlState = HighlightState.MOVE;
+                        }
+                    }
+
+
+                }
+
+
+
                 //Placing units
                 else if (line[0] == 'p' || line[0] == 'e')
                 {
@@ -247,6 +319,19 @@ namespace JSA_Game.Maps
 
             }
                 file.Close();
+                foreach (Character p in pUnits)
+                {
+                    allCharacters.Add(p);
+                }
+                foreach (Character e in eUnits)
+                {
+                    allCharacters.Add(e);
+                }
+
+                hud.setTargetList(allCharacters);
+
+                loadContent(Game1.getContent());
+                
                 
         }
 
@@ -270,15 +355,17 @@ namespace JSA_Game.Maps
         /// </summary>
         private void initialize()
         {
-            state = LevelState.CursorSelection;
+            state = placeableLevel ? LevelState.Placement : LevelState.CursorSelection;
+
             playerTurn = TurnState.Player;
             winState = WinLossState.InProgess;
             turn = 0;
 
             isAnimatingMove = false;
             isAnimatingAttack = false;
-            showStartX = 0;
-            showStartY = 0;
+            currEnemyActingIndex = 0;
+           // showStartX = 0;
+           // showStartY = 0;
             numTilesShowing = DEFAULT_NUM_TILES_SHOWING;
 
             playerUnitCount = 0;
@@ -289,6 +376,7 @@ namespace JSA_Game.Maps
 
             pUnits = new ArrayList(maxPlayerUnits);
             eUnits = new ArrayList(MaxEnemyUnits);
+            targetList = new HashSet<Character>();
 
             characterImages = new Dictionary<string, Texture2D>();
             tileImages = new Texture2D[TILE_IMAGE_COUNT];
@@ -296,8 +384,9 @@ namespace JSA_Game.Maps
             highlightImages = new Texture2D[HIGHLIGHT_IMAGE_COUNT];
 
             selectedAction = null;
-            targetList = new HashSet<Character>();
-            hud = new HUD_Controller(pUnits);
+            
+            hud = new HUD_Controller();
+            
 
         }
 
@@ -313,6 +402,17 @@ namespace JSA_Game.Maps
             int xPos = (int)pos.X;
             int yPos = (int)pos.Y;
             unit.IsEnemy = allyFlag == 1 ? false : true;
+            
+            if (!unit.IsEnemy && pUnits.Contains(unit))
+            {
+                System.Diagnostics.Debug.Print("Level.addUnit(): Duplicate found");
+                board[(int)unit.Pos.X, (int)unit.Pos.Y].Occupant = null;
+                board[(int)unit.Pos.X, (int)unit.Pos.Y].IsOccupied = false;
+                pUnits.Remove(unit);
+                playerUnitCount--;
+
+            }
+
             if (!unit.IsEnemy && playerUnitCount != maxPlayerUnits)
             {
                 playerUnitCount++;
@@ -347,327 +447,124 @@ namespace JSA_Game.Maps
         /// <param name="moveIfInRange">If the AI only wants to move if the target is in range</param>
         public void moveUnit(GameTime gameTime, Vector2 startPos, Vector2 endPos, Boolean AImoved, Boolean moveIfInRange)
         {
-            moveAnimPath = findPath(startPos, endPos);
-            //if path exists
-            if (moveAnimPath.Count > 0)
+            moveAnimPath = AStar.findPath(this, startPos, endPos);
+            board[(int)startPos.X, (int)startPos.Y].Occupant.MoveDisabled = true;
+            //if path exists and is not of length 1, 2 for AI move (start is end)
+            int aiStopEarly = AImoved ? 1 : 0;
+            if (moveAnimPath.Count > 1 + aiStopEarly)
             {
                 //If character will only move if a target is in range
                 if (!moveIfInRange || moveAnimPath.Count <= board[(int)startPos.X, (int)startPos.Y].Occupant.Movement + 2)
                 {
-                    int remMovement;
-                    Character unit;
+                    
+                    //Character unit;
                     //stop variable stops movement for enemy units 1 early since
                     //the postion of a computer's target is their actual position.
-                    int stop;
+                    
                     Boolean isEnemy = board[(int)startPos.X, (int)startPos.Y].Occupant.IsEnemy;
                     if (isEnemy)
                     {
-                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                        remMovement = unit.Movement;
-                        stop = 1;
+                        animCurrentMovingChar = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        animRemainingCharMovement = animCurrentMovingChar.Movement;
+                        animCharMoveStop = 1;
                     }
                     else
                     {
-
-                        unit = board[(int)startPos.X, (int)startPos.Y].Occupant;
-                        remMovement = unit.Movement;
-                        stop = AImoved ? 1 : 0;
+                        animCurrentMovingChar = board[(int)startPos.X, (int)startPos.Y].Occupant;
+                        animRemainingCharMovement = animCurrentMovingChar.Movement;
+                        animCharMoveStop = AImoved ? 1 : 0;
                     }
 
-                    //Starting position
-                    Vector2 pos = (Vector2)moveAnimPath.Pop();
-                    while (remMovement > 0 && moveAnimPath.Count > stop)
-                    {
-                        int xPos = (int)pos.X;
-                        int yPos = (int)pos.Y;
-                        //Character c;
-                        Vector2 next;
-                        next = (Vector2)moveAnimPath.Pop();
-                        if (moveAnimPath.Count == stop || remMovement == 1)
-                        {
-                            moveAnimFinalPos = next;
-                        }
-
-                        moveAnimCurrPos = pos;
-                        moveAnimDestPos = next;
+                   // if (animCharMoveStop == 1)
+                    //{
                         isAnimatingMove = true;
-                       // System.Diagnostics.Debug.Print("Animating Movement...");
+
+                        //Starting position
+                        moveAnimCurrPos = (Vector2)moveAnimPath.Pop();
+                        board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = null;
+                        board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = false;
+                       // if (moveAnimPath.Count > 1)
+                       //     moveAnimDestPos = (Vector2)moveAnimPath.Pop();
+                        moveAnimDestPos = moveAnimCurrPos;
                         animateMove(gameTime);
-                        pos = next;
-                        remMovement--;
-                    }
-                    unit.Pos = pos;
+                   // }
+                    
                 }
             }
         }
 
-        //yuck.... Possibly try using another thread, forcing the main game to wait
-        //   for the animation to complete.
+        //
         private void animateMove(GameTime gameTime)
         {
-            moveAnimTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            //if (moveAnimTimeElapsed >= moveAnimDelay)
-            //{
-                //Move the character image a little
-                //char dir = '0';
-                //if (moveAnimDestPos.X < moveAnimCurrPos.X)
-                //    dir = 'l';
-                //else if (moveAnimDestPos.X > moveAnimCurrPos.X)
-                //    dir = 'r';
-                //else if (moveAnimDestPos.Y < moveAnimCurrPos.Y)
-                //    dir = 'u';
-                //else if (moveAnimDestPos.Y > moveAnimCurrPos.Y)
-                //    dir = 'd';
-
-                if (moveAnimDestPos.X < moveAnimCurrPos.X)
+            bool doneMoving = false;
+            if ((animRemainingCharMovement > 0 && moveAnimPath.Count > animCharMoveStop) || (continueMoving  && !doneMoving))
+            {
+                
+                //If character has moved to next space, take next destination from path.
+                if (Math.Abs(moveAnimCurrPos.X - moveAnimDestPos.X) < 1 / (moveFrames + 7f) &&
+                    Math.Abs(moveAnimCurrPos.Y - moveAnimDestPos.Y) < 1 / (moveFrames + 7f))
                 {
+                    //get next positon
+                    moveAnimCurrPos = moveAnimDestPos;
+                    moveAnimDestPos = (Vector2)moveAnimPath.Pop();
+                    animRemainingCharMovement--;
+                    continueMoving = true;
+                    //Determine the direction to begin moving
+                    if (moveAnimCurrPos.X - moveAnimDestPos.X > 0)
+                        moveAnimCurrDir = 'l';
+                    else if (moveAnimCurrPos.X - moveAnimDestPos.X < 0)
+                        moveAnimCurrDir = 'r';
+                    else if (moveAnimCurrPos.Y - moveAnimDestPos.Y > 0)
+                        moveAnimCurrDir = 'u';
+                    else if (moveAnimCurrPos.Y - moveAnimDestPos.Y < 0)
+                        moveAnimCurrDir = 'd';
 
                 }
 
-                moveAnimTimeElapsed = 0;
-           // }
-                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].Occupant = board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant;
-                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = null;
+                moveAnimTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (moveAnimTimeElapsed >= moveAnimDelay){
+                    float moveAmount = 1 / moveFrames;
+                    switch (moveAnimCurrDir)
+                    {
+                        case 'l': moveAnimCurrPos.X -= moveAmount; break;
+                        case 'r': moveAnimCurrPos.X += moveAmount; break;
+                        case 'u': moveAnimCurrPos.Y -= moveAmount; break;
+                        case 'd': moveAnimCurrPos.Y += moveAmount; break; 
+                        
 
-                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = false;
-                board[(int)moveAnimDestPos.X, (int)moveAnimDestPos.Y].IsOccupied = true;
-           if (moveAnimDestPos.Equals(moveAnimFinalPos))
+                    }
+                    animCurrentMovingChar.Pos = moveAnimCurrPos;
+                    moveAnimTimeElapsed = 0;
+                 }
+                 //moveAnimCurrPos = moveAnimDestPos;
+                float diffX = Math.Abs(moveAnimCurrPos.X - moveAnimDestPos.X);
+                float diffY = Math.Abs(moveAnimCurrPos.Y - moveAnimDestPos.Y);
+                if ((diffX) < 1f / (moveFrames + 7f) &&
+                     (diffY) < 1f / (moveFrames + 7f))
+                 {
+                    continueMoving = false;
+                }
+
+            }
+
+            if ((moveAnimPath.Count <= animCharMoveStop || animRemainingCharMovement <= 0) && !continueMoving)
             {
 
+                doneMoving = true;
+            }
 
+            animCurrentMovingChar.Pos = moveAnimCurrPos;
 
+            if (doneMoving)
+            {
+                moveAnimCurrPos.X = (float)Math.Round(moveAnimCurrPos.X);
+                moveAnimCurrPos.Y = (float)Math.Round(moveAnimCurrPos.Y);
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].Occupant = animCurrentMovingChar;
+                board[(int)moveAnimCurrPos.X, (int)moveAnimCurrPos.Y].IsOccupied = true;
+                animCurrentMovingChar.Pos = moveAnimCurrPos;
+                
                 isAnimatingMove = false;
-               // System.Diagnostics.Debug.Print("Destination Reached");
-                moveAnimFinalPos = new Vector2(-1, -1);
             }
-        }
-
-
-        /// <summary>
-        /// Finds the shortest path between two positions using 
-        /// the A* pathfinding algorithm.
-        /// </summary>
-        /// <param name="startPos">Starting position</param>
-        /// <param name="endPos">Ending position</param>
-        /// <returns>A stack containing the path in Vector2 objects, beginning with the 1st step to take</returns>
-        public Stack findPath(Vector2 startPos, Vector2 endPos)
-        {
-            //Open list: potential tiles that are to be considered
-            //Add all options to the list, ignoring impassible tiles
-            ArrayList openList;
-            
-            //Once evaluated, drop from the list and add to closed list
-            ArrayList closedList;
-
-            //boolean to tell when destination is found
-            Boolean found = false;
-
-            //Maximum possible F score
-            int maxFScore = boardWidth * boardHeight + boardWidth + boardHeight;
-
-            openList = new ArrayList();
-            closedList = new ArrayList();
-
-            openList.Add(startPos);
-
-            //System.Diagnostics.Debug.Print("Moving from (" + startPos.X + ", " + startPos.Y
-              //  + ") to (" + endPos.X + ", " + endPos.Y + ")");
-           // int count = 1;
-            while (!found)
-            {
-                //System.Diagnostics.Debug.Print("Time # " + count + " going through");
-                //count++;
-
-                //Calculate F scores
-                //F = G + H where G is movement cost and H is heuristic score
-                //For this game, moving 1 tile will cost 1
-                //So G is 1 + the parent's G score
-                //The heuristic score is how far away the target is from the
-                //examined tile. Simply how many tiles it is ignoring impassible tiles
-
-                //Calculate
-                int x, y;
-                for (int i = 0; i < openList.Count; i++)
-                {
-                    Vector2 pos = (Vector2)openList[i];
-                    x = (int)pos.X;
-                    y = (int)pos.Y;
-                    //System.Diagnostics.Debug.Print("Looking at (" + x + ", " + y + ")");
-                    int h;
-
-                    if (board[x, y].PathParent != null)
-                    {
-                        board[x, y].GScore = board[(int)board[x, y].PathParent.X,(int)board[x, y].PathParent.Y].GScore + 1;
-                    }
-                    else
-                    {
-                        board[x, y].GScore = 1;
-                    }
-
-                    h = calcDist(pos, endPos);
-
-                    
-                    board[x, y].FScore = board[x, y].GScore + h;
-                    //System.Diagnostics.Debug.Print("G score is " + board[x, y].GScore);
-                    //System.Diagnostics.Debug.Print("H score is " + h);
-                    //System.Diagnostics.Debug.Print("F score is " + board[x, y].FScore);
-                }
-
-                //Choose the tile with the lowest F score in the open list
-                int lowestFIndex = maxFScore; 
-
-                for (int i = 0; i < openList.Count; i++)
-                {
-                    Vector2 pos = (Vector2)openList[i];
-                    x = (int)pos.X;
-                    y = (int)pos.Y;
-                    if (board[x, y].FScore < lowestFIndex)
-                    {
-                        lowestFIndex = i;
-                    }
-                }
-
-                //Save the position of best node 
-                //Drop from open list and add to closed list.
-                if (lowestFIndex == maxFScore)
-                {
-                    break;
-                }
-                Vector2 sPos = (Vector2)openList[lowestFIndex];
-
-                //Stop if endPos is the selected node
-                if (endPos.Equals(sPos))
-                {
-                    found = true; 
-                }
-                else
-                {
-                    closedList.Add(sPos);
-                    openList.Remove(sPos);
-
-                    //Scan tiles adjacent to selected tile
-                    //Ignore those that are occupied
-
-                    x = (int)sPos.X;
-                    y = (int)sPos.Y;
-                    Vector2 newTile = new Vector2(0, 0);
-                    Boolean newFound = false;
-                    ArrayList possibleNew = new ArrayList();
-
-                    //If left is open
-                    if ((x > 0 && board[x - 1, y].IsWalkable && !board[x - 1, y].IsOccupied) || (endPos.X == x - 1 && endPos.Y == y))
-                    {
-                        newTile = new Vector2(x - 1, y);
-                        possibleNew.Add(newTile);
-                        newFound = true;
-
-                    }
-
-                    //If right is open
-                    if ((x < boardWidth - 1 && board[x + 1, y].IsWalkable && !board[x + 1, y].IsOccupied) || (endPos.X == x + 1 && endPos.Y == y))
-                    {
-                        newTile = new Vector2(x + 1, y);
-                        possibleNew.Add(newTile);
-                        newFound = true;
-                    }
-
-                    //If up is open
-                    if ((y > 0 && board[x, y - 1].IsWalkable && !board[x, y - 1].IsOccupied) || (endPos.X == x && endPos.Y == y - 1))
-                    {
-                        newTile = new Vector2(x, y - 1);
-                        possibleNew.Add(newTile);
-                        newFound = true;
-                    }
-
-                    //If down is open
-                    if ((y < boardHeight - 1 && board[x, y + 1].IsWalkable && !board[x, y + 1].IsOccupied) || (endPos.X == x && endPos.Y == y + 1))
-                    {
-                        newTile = new Vector2(x, y + 1);
-                        possibleNew.Add(newTile);
-                        newFound = true;
-                    }
-
-                    //If squares to be added are found
-                    if (newFound)
-                    {
-                        //Check if new tile is in closed list (inefficient atm)
-                        ArrayList removeList = new ArrayList();
-                        //For each neighbor
-                        foreach (Vector2 v in possibleNew)
-                        {
-                            //Check closed list
-                            if(closedList.Contains(v))
-                            {
-                                foreach (Vector2 c in closedList)
-                                {
-                                    if (v.Equals(c))
-                                    {
-                                        //If current has lower G score
-                                        if (board[x, y].GScore < board[(int)v.X, (int)v.Y].GScore)
-                                        {
-                                            //Update neighbor with current, lower G score 
-                                            board[(int)v.X, (int)v.Y].GScore = board[x, y].GScore;
-
-                                            //change neighbor parent to current node
-                                            board[(int)v.X, (int)v.Y].PathParent = sPos;
-                                        }
-
-                                    }
-                                }
-                            }
-                                //Check open list
-                            else if(openList.Contains(v))
-                            {
-                                foreach (Vector2 c in openList)
-                                {
-                                    if (v.Equals(c))
-                                    {
-                                        //If current has lower G score
-                                        if (board[x, y].GScore < board[(int)v.X, (int)v.Y].GScore)
-                                        {
-                                            //Update neighbor with current, lower G score 
-                                            board[(int)v.X, (int)v.Y].GScore = board[x, y].GScore;
-
-                                            //change neighbor parent to current node
-                                            board[(int)v.X, (int)v.Y].PathParent = sPos;
-                                        }
-
-                                    }
-                                }
-                            }
-                            //Neighbor is not in open or closed list
-                            else
-                            {
-                                board[(int)v.X, (int)v.Y].PathParent = sPos;
-                                openList.Add(v);
-                            }
-                        }        
-                    }
-                }
-            }
-
-            //When endPos is found
-            //If no path is found, no move occurs
-            Stack path = new Stack();
-            if (found)
-            {
-                Vector2 lookingAt = endPos;
-                // System.Diagnostics.Debug.Print("Path Backwards is......");
-                while (!lookingAt.Equals(startPos))
-                {
-                    //System.Diagnostics.Debug.Print("(" + lookingAt.X + ", " + lookingAt.Y + ")");
-                    path.Push(lookingAt);
-                    lookingAt = board[(int)lookingAt.X, (int)lookingAt.Y].PathParent;
-                }
-                path.Push(startPos);
-            }
-            return path;
-        }
-
-        // Number of tiles from destination tile. H Score in A*
-        public int calcDist(Vector2 pos, Vector2 target)
-        {
-            return (int)(Math.Abs(pos.X - target.X) + Math.Abs(pos.Y - target.Y));
         }
 
 
@@ -821,18 +718,18 @@ namespace JSA_Game.Maps
                 {
                     board[x - 1, y].IsSelected = show;
                     if (show && hlState == HighlightState.AOE && board[x - 1, y].Occupant.IsEnemy && !friendly &&
-                        calcDist(selectedPos, new Vector2(x-1,y)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x-1,y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x - 1, y].Occupant);
                     }
                     if (show && hlState == HighlightState.AOE && !board[x - 1, y].Occupant.IsEnemy && friendly &&
-                        calcDist(selectedPos, new Vector2(x - 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x - 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x - 1, y].Occupant);
                     }
                     
                 }
-                if (board[x - 1, y].IsAttackThroughable)
+                if (board[x - 1, y].IsAttackThroughable || !show)
                 {
                     scanForTargets(show, x - 1, y, remRange - 1, hlState, friendly);
                 }
@@ -846,19 +743,20 @@ namespace JSA_Game.Maps
                 if ((show && board[x + 1, y].Occupant != null) || !show)
                 {
                     board[x + 1, y].IsSelected = show;
+
                     if (show && hlState == HighlightState.AOE && board[x + 1, y].Occupant.IsEnemy && !friendly &&
-                        calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x + 1, y].Occupant);
                     }
                     if (show && hlState == HighlightState.AOE && !board[x + 1, y].Occupant.IsEnemy && friendly &&
-                        calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x + 1, y)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x + 1, y].Occupant);
                     }
                    
                 }
-                if (board[x + 1, y].IsAttackThroughable)
+                if (board[x + 1, y].IsAttackThroughable || !show)
                 {
                     scanForTargets(show, x + 1, y, remRange - 1, hlState, friendly);
                 }
@@ -873,18 +771,19 @@ namespace JSA_Game.Maps
                 {
                     board[x, y - 1].IsSelected = show;
                     if (show && hlState == HighlightState.AOE && board[x, y - 1].Occupant.IsEnemy && !friendly &&
-                        calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x, y - 1].Occupant);
                     }
                     if (show && hlState == HighlightState.AOE && !board[x, y - 1].Occupant.IsEnemy && friendly &&
-                        calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x, y - 1)) <= selectedAction.Range + selectedAction.AoeRange)
+
                     {
                         targetList.Add(board[x, y - 1].Occupant);
                     }
                   
                 }
-                if (board[x, y - 1].IsAttackThroughable)
+                if (board[x, y - 1].IsAttackThroughable || !show)
                 {
                     scanForTargets(show, x, y - 1, remRange - 1, hlState, friendly);
                 }
@@ -899,21 +798,24 @@ namespace JSA_Game.Maps
                 {
                     board[x, y + 1].IsSelected = show;
                     if (show && hlState == HighlightState.AOE && board[x, y + 1].Occupant.IsEnemy && !friendly &&
-                        calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
                     {
                         targetList.Add(board[x, y + 1].Occupant);
                     }
                     if (show && hlState == HighlightState.AOE && !board[x, y + 1].Occupant.IsEnemy && friendly &&
-                        calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+                        AStar.calcDist(selectedPos, new Vector2(x, y + 1)) <= selectedAction.Range + selectedAction.AoeRange)
+
                     {
                         targetList.Add(board[x, y + 1].Occupant);
                     }
                     
                 }
-                if (board[x, y + 1].IsAttackThroughable)
+                if (board[x, y + 1].IsAttackThroughable || !show)
                 {
                     scanForTargets(show, x, y + 1, remRange - 1, hlState, friendly);
                 }
+
+                
             }
         }
 
@@ -964,7 +866,16 @@ namespace JSA_Game.Maps
             //Check for win
             if (t.IsEnemy && eUnits.Count <= 0)
             {
+                screenManager.AddScreen(new TransitionScreen("Victory!", Color.White), null);
                 System.Diagnostics.Debug.Print("Player Won!");
+                List<Character> newList = new List<Character>();
+                foreach (Character n in pUnits)
+                {
+                    //Heal all characters
+                    c.CurrHp = c.MaxHP;
+                    newList.Add(n);
+                }
+                Game1.setPlayerChars(newList);
                 winState = WinLossState.Win;
             }
             else if (!t.IsEnemy && pUnits.Count <= 0)
@@ -1002,6 +913,16 @@ namespace JSA_Game.Maps
                 }
             }
 
+            foreach (Character c in Game1.getPlayerChars())
+            {
+                System.Diagnostics.Debug.Print("Created a player unit");
+                if (!characterImages.ContainsKey("player" + c.Texture))
+                {
+                    characterImages.Add("player" + c.Texture, content.Load<Texture2D>("player" + c.Texture));
+
+                }
+            }
+
             foreach (Character c in eUnits)
             {
                 System.Diagnostics.Debug.Print("Created an enemy unit");
@@ -1024,9 +945,10 @@ namespace JSA_Game.Maps
         {
             if (isAnimatingMove)
             {
-                //Continue to animate
+                animateMove(gameTime);
             }
-            //otherwise listen for input
+
+            //otherwise listen for input/progress to next enemy's turn
 
             else
             {
@@ -1036,82 +958,138 @@ namespace JSA_Game.Maps
                 //Animate cursor
                 cursor.animate(gameTime);
 
+                if (!initialScreenShown)
+                {
+                    if (placeableLevel)
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Unit Placement", Color.White), null);
+                    }
+                    else
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Game Start", Color.White), null);
+                    }
+                    initialScreenShown = true;
+                }
+
                 if (playerTurn == TurnState.Player)
                 {
-                    if (state == LevelState.CursorSelection)
-                        CursorSelection.update(this, gameTime);
-                    else if (state == LevelState.Selected)
-                        Selected.update(this, gameTime);
-                    else if (state == LevelState.Movement)
-                        Movement.update(this, gameTime);
-                    else if (state == LevelState.Action)
-                        ActionState.update(this, gameTime);
-
-
-
-                    hud.Update(gameTime);
-                    hud.Hidden = state != LevelState.CursorSelection;
-                    if (hud.Hidden)
+                    bool allCharsDisabled = true;
+                    foreach (Character c in pUnits)
                     {
-                        hud.ButtonSelect(keyboard);
-                    }
-                    moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-
-                    //Prevents holding a button to continuously activate events
-                    if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
-                    {
-                        moveTimeElapsed = cursorMoveDelay - 20;
-                    }
-                    if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
-                        keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
-                    {
-                        buttonPressed = false;
-                    }
-                    if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
-                        keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
-                        keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
-                    {
-                        buttonPressed = true;
+                        if (!c.MoveDisabled || !c.ActionDisabled)
+                            allCharsDisabled = false;
                     }
 
+                    //Automatically transition to enemy turn.
+                    if (allCharsDisabled && state != LevelState.Placement)
+                    {
+                        screenManager.AddScreen(new TransitionScreen("Enemy Turn", Color.White), null);
+                        turn++;
+                        playerTurn = TurnState.Enemy;
+                        System.Diagnostics.Debug.Print("Enemy's turn");
+                    }
+                    else
+                    {
+
+                        if (state == LevelState.CursorSelection)
+                            CursorSelection.update(this, screenManager, gameTime);
+                        else if (state == LevelState.Selected)
+                            Selected.update(this, gameTime);
+                        else if (state == LevelState.Movement)
+                            Movement.update(this, gameTime);
+                        else if (state == LevelState.Action)
+                            ActionState.update(this, gameTime);
+                        else if (state == LevelState.Placement)
+                            CharacterPlacement.update(this, screenManager, gameTime);
+
+
+
+
+                        hud.Update(gameTime);
+                        hud.Hidden = state != LevelState.CursorSelection && state != LevelState.Placement;
+                        if (hud.Hidden)
+                        {
+                            hud.ButtonSelect(keyboard);
+                        }
+                        moveTimeElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+
+                        //Prevents holding a button to continuously activate events
+                        if (!buttonPressed && !(keyboard.IsKeyUp(Keys.Left) && keyboard.IsKeyUp(Keys.Right) && keyboard.IsKeyUp(Keys.Up) && keyboard.IsKeyUp(Keys.Down)))
+                        {
+                            moveTimeElapsed = cursorMoveDelay - 20;
+                        }
+                        if (keyboard.IsKeyUp(Keys.Z) || keyboard.IsKeyUp(Keys.X) || keyboard.IsKeyUp(Keys.K) || keyboard.IsKeyUp(Keys.M) ||
+                            keyboard.IsKeyUp(Keys.A) || keyboard.IsKeyUp(Keys.E) || keyboard.IsKeyUp(Keys.F1) || keyboard.IsKeyUp(Keys.F2) || keyboard.IsKeyUp(Keys.F3))
+                        {
+                            buttonPressed = false;
+                        }
+                        if (keyboard.IsKeyDown(Keys.Z) || keyboard.IsKeyDown(Keys.X) || keyboard.IsKeyDown(Keys.K) || keyboard.IsKeyDown(Keys.M) ||
+                            keyboard.IsKeyDown(Keys.A) || keyboard.IsKeyDown(Keys.E) || keyboard.IsKeyDown(Keys.F1) || keyboard.IsKeyDown(Keys.F2) || keyboard.IsKeyDown(Keys.F3) ||
+                            keyboard.IsKeyDown(Keys.Left) || keyboard.IsKeyDown(Keys.Right) || keyboard.IsKeyDown(Keys.Up) || keyboard.IsKeyDown(Keys.Down))
+                        {
+                            buttonPressed = true;
+                        }
+
+                    }
                 }
 
                 //Enemy turn
                 else
                 {
                     //Each enemy turn
+                    /*
                     foreach (Character c in eUnits)
                     {
                         c.AI.move(gameTime);
                         c.AI.action();
                     }
-
-
-                    playerTurn = TurnState.Player;
-                    foreach (Character c in pUnits)
+                     * */
+                    if (currEnemyActingIndex != eUnits.Count)
                     {
-                        c.MoveDisabled = false;
-                        c.ActionDisabled = false;
-                    }
-                    System.Diagnostics.Debug.Print("Player's turn");
+                        Character enemy = (Character)eUnits[currEnemyActingIndex];
 
-                    playerTurn = TurnState.Player;
-                    foreach (Character c in pUnits)
+                        if (!enemy.MoveDisabled)
+                            enemy.AI.move(gameTime);
+                        else
+                        {
+                            enemy.AI.action();
+
+                            //Check for loss
+                            if (pUnits.Count <= 0)
+                            {
+                                System.Diagnostics.Debug.Print("Player Lost!");
+                                winState = WinLossState.Loss;
+                            }
+
+                            currEnemyActingIndex++;
+                        }
+
+                    }
+                    //End of enemy turn
+                    else
                     {
-                        c.MoveDisabled = false;
-                        c.ActionDisabled = false;
-                    }
-                    System.Diagnostics.Debug.Print("Player's turn");
-                    Battle_Controller.BattleController.newTurn(this);
+                        screenManager.AddScreen(new TransitionScreen("Player Turn", Color.White), null);
 
+                        playerTurn = TurnState.Player;
+                        currEnemyActingIndex = 0;
+                        foreach (Character c in pUnits)
+                        {
+                            c.MoveDisabled = false;
+                            c.ActionDisabled = false;
+                        }
+                        System.Diagnostics.Debug.Print("Player's turn");
 
-                    //Check for loss
-                    if (pUnits.Count <= 0)
-                    {
-                        System.Diagnostics.Debug.Print("Player Lost!");
-                        winState = WinLossState.Loss;
+                        playerTurn = TurnState.Player;
+                        foreach (Character c in eUnits)
+                        {
+                            c.MoveDisabled = false;
+                            c.ActionDisabled = false;
+                        }
+                        Battle_Controller.BattleController.newTurn(this);
+
                     }
+
                 }
 
                 oldKeyboardState = keyboardState;
@@ -1185,20 +1163,20 @@ namespace JSA_Game.Maps
             //This is no longer done in the loop to allow the movement animation to work.
             foreach (Character p in pUnits)
             {
-                spriteBatch.Draw(characterImages["player" + p.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["player" + p.Texture], new Rectangle((int)(MAP_START_W + TILE_SIZE * (p.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (p.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)p.Pos.X, (int)p.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)p.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)p.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    spriteBatch.Draw(utilityImages[1], new Rectangle((int)(MAP_START_W + TILE_SIZE * (p.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (p.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
             foreach(Character e in eUnits)
             {
-                spriteBatch.Draw(characterImages["enemy" + e.Texture], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                spriteBatch.Draw(characterImages["enemy" + e.Texture], new Rectangle((int)(MAP_START_W + TILE_SIZE * (e.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (e.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 //Draw box around character if selected
                 if (board[(int)e.Pos.X, (int)e.Pos.Y].IsSelected)
                 {
-                    spriteBatch.Draw(utilityImages[1], new Rectangle(MAP_START_W + TILE_SIZE * ((int)e.Pos.X - showStartX), MAP_START_H + TILE_SIZE * ((int)e.Pos.Y - showStartY), TILE_SIZE, TILE_SIZE), Color.White);
+                    spriteBatch.Draw(utilityImages[1], new Rectangle((int)(MAP_START_W + TILE_SIZE * (e.Pos.X - (float)showStartX)), (int)(MAP_START_H + TILE_SIZE * (e.Pos.Y - (float)showStartY)), TILE_SIZE, TILE_SIZE), Color.White);
                 }
             }
 
@@ -1335,10 +1313,36 @@ namespace JSA_Game.Maps
             get { return turn; }
             set { turn = value; }
         }
+
+        public int PlayerUnitCount
+        {
+            get { return playerUnitCount; }
+            set { playerUnitCount = value; }
+        }
+        public int NumPlaceableSpaces
+        {
+            get { return numPlaceableSpaces; }
+            set { numPlaceableSpaces = value; }
+        }
         public int ItemIndex
         {
             get { return itemIndex; }
             set { itemIndex = value; }
+        }
+        public ArrayList AllCharacters
+        {
+            get { return allCharacters; }
+            set { allCharacters = value; }
+        }
+        public int MaxPlayerUnits
+        {
+            get { return maxPlayerUnits; }
+            set { maxPlayerUnits = value; }
+        }
+        public int NumPreplacedUnits
+        {
+            get { return numPreplacedUnits; }
+            set { numPreplacedUnits = value; }
         }
     }
 }

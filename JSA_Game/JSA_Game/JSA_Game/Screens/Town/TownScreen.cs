@@ -61,10 +61,10 @@ namespace JSA_Game.Screens
 
             private void tavernMenuEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-               // const string message = "Tavern currently unavailable.";
-               // MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
-               // ScreenManager.AddScreen(tavernMessageBox, null);
-                ScreenManager.AddScreen(new TavernScreen(), e.PlayerIndex);
+                const string message = "Tavern currently unavailable.";
+                MessageBoxScreen tavernMessageBox = new MessageBoxScreen(message, false);
+                ScreenManager.AddScreen(tavernMessageBox, null);
+               // ScreenManager.AddScreen(new TavernScreen(), e.PlayerIndex);
 
             }
 
@@ -77,15 +77,16 @@ namespace JSA_Game.Screens
 
             private void manageCharactersEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-                ScreenManager.AddScreen(new CharacterBackgroundScreen(), e.PlayerIndex);
-                ScreenManager.AddScreen(new CharacterScreen(), e.PlayerIndex);
+               // ScreenManager.AddScreen(new CharacterBackgroundScreen(), e.PlayerIndex);
+               // ScreenManager.AddScreen(new CharacterScreen(), e.PlayerIndex);
+                ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, Game1.getPlayerChars(),
+                    "right", null, new Vector2(0,0)), e.PlayerIndex);
             }
 
         private void saveGameEntrySelected(object sender, PlayerIndexEventArgs e)
             {
                 ScreenManager.AddScreen(new SaveGameBackgroundScreen(), e.PlayerIndex);
-                ScreenManager.AddScreen(new SaveGameScreen(), e.PlayerIndex);
-                
+                ScreenManager.AddScreen(new SaveGameScreen(), e.PlayerIndex);         
             }
           
 
@@ -100,7 +101,7 @@ namespace JSA_Game.Screens
                     ScreenManager.AddScreen(noMoreLevelsMessageBox, null);
                 }
                 else
-                    ScreenManager.AddScreen(new LevelScreen(levelName), e.PlayerIndex);
+                    ScreenManager.AddScreen(new LevelScreen(levelName, ScreenManager), e.PlayerIndex);
 
             }
         

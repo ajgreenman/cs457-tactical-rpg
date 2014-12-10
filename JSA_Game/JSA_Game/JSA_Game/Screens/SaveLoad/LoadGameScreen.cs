@@ -86,6 +86,7 @@ namespace JSA_Game.Screens
 
             if ((gameLoadRequested) && (result.IsCompleted))
             {
+                gameLoadRequested = false;
                 StorageDevice device = StorageDevice.EndShowSelector(result);
                 if (device != null && device.IsConnected)
                 {
@@ -99,7 +100,7 @@ namespace JSA_Game.Screens
         {
             System.Diagnostics.Debug.Print("Loading slot " + slotNum + ".");
             // Open a storage container.
-            IAsyncResult result = device.BeginOpenContainer("JSA_Game", null, null);
+            IAsyncResult result = device.BeginOpenContainer("JSA_Game_Saves", null, null);
 
             // Wait for the WaitHandle to become signaled.
             result.AsyncWaitHandle.WaitOne();
@@ -145,7 +146,7 @@ namespace JSA_Game.Screens
             System.Diagnostics.Debug.Print("Money: " + data.money);
 
             //Woohoo! Now for something useful
-            ArrayList loadedChars = new ArrayList();
+            List<Character> loadedChars = new List<Character>();
             for (int k = 0; k < data.characters.Length; k++) 
             {
                 CharacterSaveData charData = data.characters[k];

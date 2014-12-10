@@ -41,6 +41,12 @@ namespace JSA_Game.Screens
 
         }
 
+        public MenuScreen(string menuTitle, string alignment, int titleHeight, Color titleColor)
+            : this(menuTitle, true, "center", 175, titleHeight, titleColor)
+        {
+
+        }
+
         public MenuScreen(string menuTitle, bool isBackEnabled, string alignment, int listStartHeight, int titleHeight, 
             Color titleColor)
         {
@@ -145,7 +151,7 @@ namespace JSA_Game.Screens
             // the movement slow down as it nears the end).
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);
 
-            // start at Y = 175; each X value is generated per entry
+            // each X value is generated per entry
             Vector2 position = new Vector2(0f, startY);
 
             
