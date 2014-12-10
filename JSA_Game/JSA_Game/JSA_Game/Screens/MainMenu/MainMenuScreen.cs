@@ -14,7 +14,7 @@ namespace JSA_Game.Screens
         /// Constructor fills in the menu contents.
         /// </summary>
         public MainMenuScreen()
-            : base("Main Menu")
+            : base("JSA")
         {
             // Create our menu entries.
             MenuEntry newGameMenuEntry = new MenuEntry("New Game");

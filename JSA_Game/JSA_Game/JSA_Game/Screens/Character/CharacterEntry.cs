@@ -48,7 +48,7 @@ namespace JSA_Game.Screens
 
             // Draw the selected entry in yellow, otherwise white.
             Color color = isSelected ? Color.Yellow : Color.White;
-            if (c.IsPlaced)
+            if (c.IsPlaced && !isSelected)
                 color = Color.OrangeRed;
 
             // Modify the alpha to fade text out during transitions.
