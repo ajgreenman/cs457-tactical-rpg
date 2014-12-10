@@ -67,7 +67,32 @@ namespace JSA_Game.AI
             {
                 if (currLevel.calcDist(character.Pos, targetPos) <= character.Attack.Range)
                 {
-                    currLevel.attackTarget(character.Pos, targetPos, character.Attack);
+                    performMove(character, targetPos);
+                }
+                else
+                {
+                    int count = 0;
+                    Battle_Controller.Action[] actions = new Battle_Controller.Action[4];
+                    foreach (Battle_Controller.Action action in character.Actions)
+                    {
+                        if (!action.Friendly && action.Range > 1)
+                        {
+                            actions[count] = action;
+                            count++;
+                        }
+                    }
+
+                    if (count > 0)
+                    {
+                        Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+                        int rand = rng.Next(0, count);
+
+                        if (currLevel.calcDist(character.Pos, targetPos) <= character.Actions[rand].Range)
+                        {
+                            Console.WriteLine("AggresiveAI move: " + character.Actions[rand].Name);
+                            currLevel.attackTarget(character.Pos, targetPos, character.Actions[rand]);
+                        }
+                    }
                 }
             }
         }
@@ -76,6 +101,40 @@ namespace JSA_Game.AI
         {
             get { return currLevel; }
             set { currLevel = value; }
+        }
+
+        private void performMove(Character c, Vector2 targetPos)
+        {
+            int[] actions = new int[6];
+            for (int i = 0; i < actions.Length; i++)
+            {
+                actions[i] = 0;
+            }
+            for (int j = 0; j < c.Actions.Length; j++)
+            {
+                if (!c.Actions[j].Friendly && c.Actions[j].Range > 0)
+                {
+                    actions[j] = 1;
+                }
+            }
+
+            actions[4] = 1;
+            int rand = 5;
+
+            while (actions[rand] != 1)
+            {
+                Random rng = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
+                rand = rng.Next(0, 5);
+            }
+            Console.WriteLine(rand);
+            if (rand == 4)
+            {
+                currLevel.attackTarget(c.Pos, targetPos, c.Attack);
+            }
+            else
+            {
+                currLevel.attackTarget(c.Pos, targetPos, c.Actions[rand]);
+            }
         }
 
         private void performFriendly()

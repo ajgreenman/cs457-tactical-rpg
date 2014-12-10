@@ -175,12 +175,7 @@ namespace JSA_Game.HUD
  
                 //Ability
                  if (keyboard.IsKeyDown(Keys.D3)) { bState = ButtonState.abilityDisplay; }
-
-                if (keyboard.IsKeyUp(Keys.D2))
-                {
-                    //Defend
-                    if (keyboard.IsKeyDown(Keys.D2)) { Selected.setAction(PerformedType.Defend, -1); } 
-                }
+                 if (keyboard.IsKeyDown(Keys.D2)) { Selected.setAction(PerformedType.Defend, -1); }
 
                 //Attack
                 if(keyboard.IsKeyDown(Keys.D1)) {Selected.setAction(PerformedType.Attack, -1);}

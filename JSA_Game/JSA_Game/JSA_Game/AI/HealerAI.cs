@@ -85,6 +85,7 @@ namespace JSA_Game.AI
                 if ((c.CurrHp / (float)c.MaxHP) * 100 < 50.0)
                 {
                     dist = currLevel.calcDist(character.Pos, c.Pos);
+                    Console.WriteLine("Dist: " + dist);
                     if (dist < shortestDist && dist <= character.Movement + character.Actions[0].Range)
                     {
                         shortestDist = dist;
@@ -92,8 +93,6 @@ namespace JSA_Game.AI
                     }
                 }
             }
-
-            Console.WriteLine(shortestDist);
 
 
             //Move towards target if found

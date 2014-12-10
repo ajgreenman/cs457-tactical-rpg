@@ -114,8 +114,6 @@ namespace JSA_Game.Battle_Controller
             {
                 if (action.Name == "Defend")
                 {
-                    user.Armor += 4;
-                    user.Resist += 4;
                     Sound.PlaySound(action.Sound);
                     floatingTextLogic("Defend", user, 0);
                 }

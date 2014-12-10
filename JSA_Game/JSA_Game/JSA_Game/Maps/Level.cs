@@ -236,6 +236,10 @@ namespace JSA_Game.Maps
                     {
                         c.AI = new StationaryAI(c, this);
                     }
+                    else if (param[4].Equals("Healer"))
+                    {
+                        c.AI = new HealerAI(c, this);
+                    }
                     
 
                     addUnit(allyFlag, c, new Vector2(x, y));
