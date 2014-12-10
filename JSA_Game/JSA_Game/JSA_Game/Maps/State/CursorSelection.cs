@@ -63,6 +63,7 @@ namespace JSA_Game.Maps.State
                 {
                     level.SelectedPos = new Vector2(x, y);
                     level.State = LevelState.Selected;
+                    level.HUD.HState = HUD.HUD_Controller.HUDState.showOriginal;
                     level.Board[x, y].IsSelected = true;
 
                     //Send HUD character info

@@ -187,6 +187,7 @@ namespace JSA_Game.Screens
             }
             foreach (Character p in currLevel.PUnits)
             {
+                p.IsPlaced = false;
                 currLevel.AllCharacters.Add(p);
             }
             foreach (Character f in currLevel.EUnits)

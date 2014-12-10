@@ -277,19 +277,23 @@ namespace JSA_Game.Maps
 
                     if(param[2].Equals("Warrior"))
                     {
-                        c = new Warrior(this, Convert.ToInt32(param[3]));
+                        c = new Warrior(Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Mage"))
                     {
-                        c = new Mage(this, Convert.ToInt32(param[3]));
+                        c = new Mage(Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Archer"))
                     {
-                        c = new Archer(this, Convert.ToInt32(param[3]));
+                        c = new Archer(Convert.ToInt32(param[3]));
+                    }
+                    else if (param[2].Equals("Thief"))
+                    {
+                        c = new Thief(Convert.ToInt32(param[3]));
                     }
                     else if (param[2].Equals("Cleric"))
                     {
-                        c = new Cleric(this, Convert.ToInt32(param[3]));
+                        c = new Cleric(Convert.ToInt32(param[3]));
                     }
 
                     //More
@@ -868,7 +872,8 @@ namespace JSA_Game.Maps
                 foreach (Character n in pUnits)
                 {
                     //Heal all characters
-                    c.CurrHp = c.MaxHP;
+                    n.CurrHp = n.MaxHP;
+                    n.CurrMp = n.MaxMP;
                     newList.Add(n);
                 }
                 Game1.setPlayerChars(newList);

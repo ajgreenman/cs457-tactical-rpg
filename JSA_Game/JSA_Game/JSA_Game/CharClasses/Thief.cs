@@ -10,10 +10,10 @@ namespace JSA_Game.CharClasses
 {
     class Thief : Character
     {
-        public Thief(Level level, int startingLevel = 1)
+        public Thief(int startingLevel = 1)
         {
             charLevel = 1;
-            AI = new AggressiveAI(this, level);
+            //AI = new AggressiveAI(this, level);
             Texture = "player";
             name = "Thief";
             className = "Thief";

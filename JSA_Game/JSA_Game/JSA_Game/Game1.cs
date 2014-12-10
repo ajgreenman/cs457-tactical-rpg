@@ -74,7 +74,7 @@ namespace JSA_Game
             playerChars = new List<Character>();
 
             //Let's add a character!
-            playerChars.Add(new Warrior(null, 2));
+            //playerChars.Add(new Warrior(2));
             //playerChars.Add(new Mage(null));
            // playerChars.Add(new Archer(null, 1));
 

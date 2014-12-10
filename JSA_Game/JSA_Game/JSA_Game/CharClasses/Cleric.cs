@@ -10,10 +10,10 @@ namespace JSA_Game.CharClasses
 {
     class Cleric : Character
     {
-        public Cleric(Level level, int startingLevel = 1)
+        public Cleric(int startingLevel = 1)
         {
             charLevel = 1;
-            AI = new AggressiveAI(this, level);
+           // AI = new AggressiveAI(this, level);
             Texture = "Mage";
             name = "Cleric";
             className = "Cleric";

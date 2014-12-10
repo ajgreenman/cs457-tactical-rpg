@@ -12,7 +12,7 @@ namespace JSA_Game.CharClasses
     class Warrior : Character
     {
 
-        public Warrior(Level level, int startingLevel = 1)
+        public Warrior(int startingLevel = 1)
         {
             charLevel = 1;
             //AI = new AggressiveAI(this, level);

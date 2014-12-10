@@ -140,10 +140,10 @@ namespace JSA_Game.HUD
             get { return hidden; }
             set { hidden = value; }
         }
-        public Boolean Hid
+        public HUDState HState
         {
-            get { return hidden; }
-            set { hidden = value; }
+            get { return hState; }
+            set { hState = value; }
         }
     }
 }
