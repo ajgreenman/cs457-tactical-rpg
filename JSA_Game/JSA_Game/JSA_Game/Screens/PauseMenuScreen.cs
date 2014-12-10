@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using GameStateManagement;
+using JSA_Game.Maps;
 
 namespace JSA_Game.Screens
 {
@@ -16,12 +17,12 @@ namespace JSA_Game.Screens
     {
 
         InputAction escape;
-
+        Level level;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public PauseMenuScreen()
+        public PauseMenuScreen(Level level)
             : base("Paused")
         {
             // Create our menu entries.
@@ -43,6 +44,7 @@ namespace JSA_Game.Screens
             MenuEntries.Add(quitGameMenuEntry);
 
             escape = new InputAction(null, new Keys[] { Keys.Escape }, true);
+            this.level = level;
         }
 
         public override void HandleInput(GameTime gameTime, InputState input)
@@ -73,14 +75,18 @@ namespace JSA_Game.Screens
 
         void toTownMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            ScreenManager.AddScreen(new TownBackgroundScreen(), e.PlayerIndex);
-            ScreenManager.AddScreen(new TownScreen(), e.PlayerIndex);
+            Game1.resetPlayerChars(level.PUnits);
+            level.WinState = WinLossState.Win;
+            ExitScreen();
+            //ScreenManager.AddScreen(new TownBackgroundScreen(), e.PlayerIndex);
+            //ScreenManager.AddScreen(new TownScreen(), e.PlayerIndex);
         }
         
 
 
         void nextLevelMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
+            Game1.resetPlayerChars(level.PUnits);
             string levelName = Game1.getNextLevelName();
             if (levelName.Equals(""))
             {

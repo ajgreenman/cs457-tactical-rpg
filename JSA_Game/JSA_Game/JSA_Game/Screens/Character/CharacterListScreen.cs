@@ -101,23 +101,26 @@ namespace JSA_Game.Screens
 
         protected virtual void OnSelectEntry(int entryIndex, PlayerIndex playerIndex)
         {
-            charEntries[entryIndex].OnSelectEntry(playerIndex);
-           // level.SelectedChar = Game1.getPlayerChars()[entryIndex];
-            //level.IsCharSelected = true;
-            level.addUnit(1, Game1.getPlayerChars()[entryIndex], positionToPlace);
-            System.Diagnostics.Debug.Print("Character Class: " + Game1.getPlayerChars()[entryIndex].ClassName);
-
-            if (level.NumPlaceableSpaces == level.PUnits.Count  || Game1.getPlayerChars().Count == level.PUnits.Count)
+            if (level != null)
             {
-                string message = "Start level?";
-                MessageBoxScreen confirmStartMessageBox = new MessageBoxScreen(message, true);
+                charEntries[entryIndex].OnSelectEntry(playerIndex);
+                // level.SelectedChar = Game1.getPlayerChars()[entryIndex];
+                //level.IsCharSelected = true;
+                level.addUnit(1, Game1.getPlayerChars()[entryIndex], positionToPlace);
+                System.Diagnostics.Debug.Print("Character Class: " + Game1.getPlayerChars()[entryIndex].ClassName);
 
-                confirmStartMessageBox.Accepted += ConfirmStartMessageBoxAccepted;
+                if (Game1.getPlayerChars().Count == level.PUnits.Count - level.NumPreplacedUnits)
+                {
+                    string message = "Start level?";
+                    MessageBoxScreen confirmStartMessageBox = new MessageBoxScreen(message, true);
 
-                ScreenManager.AddScreen(confirmStartMessageBox, null);
+                    confirmStartMessageBox.Accepted += ConfirmStartMessageBoxAccepted;
+
+                    ScreenManager.AddScreen(confirmStartMessageBox, null);
+                }
+
+                ExitScreen();
             }
-
-            ExitScreen();
         }
 
 

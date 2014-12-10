@@ -1,6 +1,6 @@
 / Level name: Battlefield
 
-i:35,35,10,10,0,0
+i:35,35,1,15,10,0,0
 G:plains
 
 g:6,0-3,water
@@ -9,13 +9,17 @@ g:8-11,4,water
 g:14-17,4,water
 g:18-19,4-5,water
 
-p:0,3,Warrior,1,Aggressive
-p:2,5,Warrior,2,Aggressive
-p:2,6,Archer,1,Stationary
-p:4,5,Mage,1,Aggressive
-p:5,6,Mage,1,Aggressive
-p:3,4,Mage,1,Aggressive
+o:0-5,4-6
+
+
+p:2,2,Archer,3,Stationary
+
 
 e:10,5,Warrior,1,Aggressive
 e:10,7,Warrior,2,Aggressive
 e:12,6,Warrior,1,Aggressive
+
+e:10,2,Warrior,1,Aggressive
+e:10,3,Warrior,2,Aggressive
+e:12,2,Warrior,1,Aggressive
+e:12,3,Warrior,1,Aggressive

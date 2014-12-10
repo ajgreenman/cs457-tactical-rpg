@@ -5,7 +5,8 @@
 
 / '/' denotes a comment
 / 'i' denotes inital parameters: board width, board height, number of player units, and number of enemy units.
-/	Format: i:<width>,<height>,<player units>,<enemy units>,<camera start x>,<camera start y>
+/	Format: i:<width>,<height>,<pre-placed player units>,<amount of squares for unit placement (optional),
+/                         <enemy units>,<camera start x>,<camera start y>
 /
 / 'G' denotes primary geography: The Tile landType for all tiles
 /	Format: G:<land type>
@@ -49,7 +50,7 @@ g:5,13-14,stone_wall
 g:7,6-9,stone_wall
 
 
-p:0,0,Warrior,4,Aggressive
+p:0,0,Warrior,1,Aggressive
 
-e:8,8,Mage,2,Aggressive
+e:8,8,Mage,1,Aggressive
 

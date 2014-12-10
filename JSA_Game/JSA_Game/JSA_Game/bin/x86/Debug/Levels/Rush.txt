@@ -1,13 +1,26 @@
 / Level name: Rush
 
-i:20,20,4,24,6,6
+i:20,20,2,9,24,6,6
 
 G:plains
 
-p:10,10,Warrior,6,Defensive
-p:10,11,Archer,6,Aggressive
-p:11,10,Mage,5,Defensive
-p:11,11,Warrior,5,Defensive
+g:8-9,8,stone_wall
+g:11-12,8,stone_wall
+
+g:8,9,stone_wall
+g:8,11,stone_wall
+
+g:12,9,stone_wall
+g:12,11,stone_wall
+
+g:8-9,12,stone_wall
+g:11-12,12,stone_wall
+
+o:9-11,9-11
+
+p:8,10,Warrior,6,Defensive
+
+p:12,10,Warrior,6,Defensive
 
 e:1,1,Warrior,1,Aggressive
 e:4,1,Warrior,1,Aggressive

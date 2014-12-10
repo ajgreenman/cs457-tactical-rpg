@@ -76,7 +76,7 @@ namespace JSA_Game.Maps.State
                     }
                     else if (keyboard.IsKeyDown(Keys.Right) && cX < level.BoardWidth - 1 && level.Board[cX + 1, cY].HlState == HighlightState.MOVE && (!level.Board[cX + 1, cY].IsOccupied))
                     {
-                        if (level.ShowStartX + level.NumTilesShowing - 2 == cX && cY != level.BoardWidth - 3)
+                        if (level.ShowStartX + level.NumTilesShowing - 2 == cX && cX != level.BoardWidth - 2)
                         {
                             level.ShowStartX++;
                         }
@@ -98,7 +98,7 @@ namespace JSA_Game.Maps.State
                     }
                     else if (keyboard.IsKeyDown(Keys.Down) && cY < level.BoardHeight - 1 && level.Board[cX, cY + 1].HlState == HighlightState.MOVE && (!level.Board[cX, cY + 1].IsOccupied))
                     {
-                        if (level.ShowStartY + level.NumTilesShowing - 2 == cY && cY != level.BoardHeight - 3)
+                        if (level.ShowStartY + level.NumTilesShowing - 2 == cY && cY != level.BoardHeight - 2)
                         {
                             level.ShowStartY++;
                         }

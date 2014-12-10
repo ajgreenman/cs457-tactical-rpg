@@ -77,8 +77,10 @@ namespace JSA_Game.Screens
 
             private void manageCharactersEntrySelected(object sender, PlayerIndexEventArgs e)
             {
-                ScreenManager.AddScreen(new CharacterBackgroundScreen(), e.PlayerIndex);
-                ScreenManager.AddScreen(new CharacterScreen(), e.PlayerIndex);
+               // ScreenManager.AddScreen(new CharacterBackgroundScreen(), e.PlayerIndex);
+               // ScreenManager.AddScreen(new CharacterScreen(), e.PlayerIndex);
+                ScreenManager.AddScreen(new CharacterListScreen(ScreenManager.GraphicsDevice, Game1.getPlayerChars(),
+                    "right", null, new Vector2(0,0)), e.PlayerIndex);
             }
 
         private void saveGameEntrySelected(object sender, PlayerIndexEventArgs e)

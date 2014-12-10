@@ -1,6 +1,6 @@
 / Level name: Coast
 
-i:10,10,2,2,0,0
+i:10,10,0,12,2,0,0
 G:plains
 
 
@@ -11,8 +11,10 @@ g:3-6,6,water
 
 
 
-p:0,3,Warrior,4,Aggressive
-p:0,6,Archer,4,Stationary
+/p:0,3,Warrior,4,Aggressive
+/p:0,6,Archer,4,Stationary
+
+o:0-1,0-5
 
 e:7,4,Warrior,3,Aggressive
 e:9,5,Mage,3,Defensive

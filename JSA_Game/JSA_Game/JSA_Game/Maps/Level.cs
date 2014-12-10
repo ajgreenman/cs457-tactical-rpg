@@ -42,7 +42,7 @@ namespace JSA_Game.Maps
         KeyboardState oldKeyboardState;
 
         int boardWidth, boardHeight;
-        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount;
+        int maxPlayerUnits, MaxEnemyUnits, playerUnitCount, enemyUnitCount, numPreplacedUnits;
         private Boolean buttonPressed;
 
         int turn;
@@ -150,9 +150,11 @@ namespace JSA_Game.Maps
                     boardWidth = Convert.ToInt32(param[i++]);
                     boardHeight = Convert.ToInt32(param[i++]);
                     maxPlayerUnits = Convert.ToInt32(param[i++]);
+                    numPreplacedUnits = maxPlayerUnits;
                     if (param.Length == 7)
                     {
                         numPlaceableSpaces = Convert.ToInt32(param[i++]);
+                        maxPlayerUnits = maxPlayerUnits + numPlaceableSpaces;
                         placeableLevel = true;
                     }
                     MaxEnemyUnits = Convert.ToInt32(param[i++]);
@@ -323,6 +325,8 @@ namespace JSA_Game.Maps
                 }
 
                 hud.setTargetList(allCharacters);
+
+                loadContent(Game1.getContent());
                 
                 
         }
@@ -378,6 +382,7 @@ namespace JSA_Game.Maps
             selectedAction = null;
             
             hud = new HUD_Controller();
+            
 
         }
 
@@ -859,6 +864,14 @@ namespace JSA_Game.Maps
             {
                 screenManager.AddScreen(new TransitionScreen("Victory!", Color.White), null);
                 System.Diagnostics.Debug.Print("Player Won!");
+                List<Character> newList = new List<Character>();
+                foreach (Character n in pUnits)
+                {
+                    //Heal all characters
+                    c.CurrHp = c.MaxHP;
+                    newList.Add(n);
+                }
+                Game1.setPlayerChars(newList);
                 winState = WinLossState.Win;
             }
             else if (!t.IsEnemy && pUnits.Count <= 0)
@@ -886,6 +899,16 @@ namespace JSA_Game.Maps
             highlightImages[0] = content.Load<Texture2D>("blue_highlight");
             highlightImages[1] = content.Load<Texture2D>("orange_highlight");
             highlightImages[2] = content.Load<Texture2D>("red_highlight");
+            foreach (Character c in pUnits)
+            {
+                System.Diagnostics.Debug.Print("Created a player unit");
+                if (!characterImages.ContainsKey("player" + c.Texture))
+                {
+                    characterImages.Add("player" + c.Texture, content.Load<Texture2D>("player" + c.Texture));
+
+                }
+            }
+
             foreach (Character c in Game1.getPlayerChars())
             {
                 System.Diagnostics.Debug.Print("Created a player unit");
@@ -1306,6 +1329,16 @@ namespace JSA_Game.Maps
         {
             get { return allCharacters; }
             set { allCharacters = value; }
+        }
+        public int MaxPlayerUnits
+        {
+            get { return maxPlayerUnits; }
+            set { maxPlayerUnits = value; }
+        }
+        public int NumPreplacedUnits
+        {
+            get { return numPreplacedUnits; }
+            set { numPreplacedUnits = value; }
         }
     }
 }

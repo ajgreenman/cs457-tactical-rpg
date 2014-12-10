@@ -28,6 +28,7 @@ namespace JSA_Game
         //Game Variables
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        static ContentManager content;
 
         //Screen Manager
         ScreenManager screenManager;
@@ -57,9 +58,8 @@ namespace JSA_Game
             this.IsMouseVisible = true;
             this.Components.Add(new GamerServicesComponent(this));
             Content.RootDirectory = "Content";
-
             Sound sound = new Sound(Content);
-
+            content = Content;
             //Create screen factory and add to Services
             screenFactory = new ScreenFactory();
             Services.AddService(typeof(IScreenFactory), screenFactory);
@@ -74,18 +74,20 @@ namespace JSA_Game
             playerChars = new List<Character>();
 
             //Let's add a character!
-            playerChars.Add(new Warrior(null));
-            playerChars.Add(new Mage(null));
-            playerChars.Add(new Archer(null, 1));
+            playerChars.Add(new Warrior(null, 2));
+            //playerChars.Add(new Mage(null));
+           // playerChars.Add(new Archer(null, 1));
 
             levels = new string[LEVEL_COUNT];
             currentLevel = 0;
 
             int i = 0;
-            levels[i++] = "ArenaTest";
+            
             levels[i++] = "JSAtestlevel";
+            levels[i++] = "NewAllies";
             levels[i++] = "Coast";
-            levels[i++] = "Arena";
+            levels[i++] = "ArenaTest";
+            //levels[i++] = "Arena";
             levels[i++] = "Battlefield";
             levels[i++] = "Rush";
             levels[i++] = "DefensiveAITest";
@@ -240,6 +242,17 @@ namespace JSA_Game
         {
             playerChars = chars;
         }
-
+        public static void resetPlayerChars(ArrayList chars)
+        {
+            playerChars.Clear();
+            foreach (Character c in chars)
+            {
+                playerChars.Add(c);
+            }
+        }
+        public static ContentManager getContent()
+        {
+            return content;
+        }
     }
 }

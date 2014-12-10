@@ -11,7 +11,7 @@ namespace JSA_Game.Screens
     {
 
         public CharacterScreen()
-            : base("Town", false, "left", 250, 20, Color.Black)
+            : base("Character", false, "left", 250, 20, Color.Black)
         {
             //Menu entries
             MenuEntry talentsMenuEntry = new MenuEntry("Talents");

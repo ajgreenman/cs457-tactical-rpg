@@ -50,6 +50,7 @@ namespace JSA_Game.Screens
                 true);
 
             currLevel = new Level(levelName, screenManager);
+            currLevel.loadContent(Game1.getContent());
         }
 
 
@@ -156,7 +157,7 @@ namespace JSA_Game.Screens
             PlayerIndex player;
             if (pauseAction.Evaluate(input, ControllingPlayer, out player))
             {
-                ScreenManager.AddScreen(new PauseMenuScreen(), ControllingPlayer);
+                ScreenManager.AddScreen(new PauseMenuScreen(currLevel), ControllingPlayer);
             }
             else if (startAction.Evaluate(input, ControllingPlayer, out player))
             {
