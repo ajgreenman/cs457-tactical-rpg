@@ -118,6 +118,11 @@ namespace JSA_Game.Maps.State
                     lvl.scanForTargets(true, lvl.SelectedPos, c.Defend.Range, false, lvl.SelectedAction.Friendly);
                     lvl.State = LevelState.Action;
                     break;
+                 case PerformedType.Wait:
+                    lvl.SelectedAction = c.Rest;
+                    lvl.scanForTargets(true, lvl.SelectedPos, c.Rest.Range, false, lvl.SelectedAction.Friendly);
+                    lvl.State = LevelState.Action;
+                    break;
 
             }
         

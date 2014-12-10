@@ -509,6 +509,7 @@ namespace JSA_Game.Maps
                     moveAnimDestPos = (Vector2)moveAnimPath.Pop();
                     animRemainingCharMovement--;
                     continueMoving = true;
+                    Sound.PlaySound("footstep");
                     //Determine the direction to begin moving
                     if (moveAnimCurrPos.X - moveAnimDestPos.X > 0)
                         moveAnimCurrDir = 'l';
@@ -533,6 +534,7 @@ namespace JSA_Game.Maps
                         
 
                     }
+
                     animCurrentMovingChar.Pos = moveAnimCurrPos;
                     moveAnimTimeElapsed = 0;
                  }

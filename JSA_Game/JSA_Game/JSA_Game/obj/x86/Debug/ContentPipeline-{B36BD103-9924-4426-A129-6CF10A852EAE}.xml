@@ -568,6 +568,33 @@
       <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\defend.xnb</Output>
       <Time>2014-12-03T16:55:00.3926913-05:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\buttonclick.wav</Source>
+      <Name>Audio\buttonclick</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\buttonclick.xnb</Output>
+      <Time>2014-12-10T13:22:26.8227229-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\footstep.wav</Source>
+      <Name>Audio\footstep</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\footstep.xnb</Output>
+      <Time>2014-12-10T13:22:18.0398518-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\pageturn.wav</Source>
+      <Name>Audio\pageturn</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Anjru\Documents\Visual Studio 2010\Projects\JSA_Game\JSA_Game\JSA_Game\JSA_Game\bin\x86\Debug\Content\Audio\pageturn.xnb</Output>
+      <Time>2014-12-10T13:22:24.0432135-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{B36BD103-9924-4426-A129-6CF10A852EAE}</ContentProjectGUID>

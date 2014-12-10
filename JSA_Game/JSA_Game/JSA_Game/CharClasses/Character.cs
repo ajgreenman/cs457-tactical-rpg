@@ -350,6 +350,12 @@ namespace JSA_Game
             set { defend = value; }
         }
 
+        public Battle_Controller.Action Rest
+        {
+            get { return rest; }
+            set { rest = value; }
+        }
+
         public int CurrDamage
         {
             get { return currDamage; }

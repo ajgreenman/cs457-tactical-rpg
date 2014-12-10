@@ -45,6 +45,9 @@ namespace JSA_Game
         private static SoundEffectInstance death6Instance;
         private static SoundEffect miss;
         private static SoundEffect defend;
+        private static SoundEffect footstep;
+        private static SoundEffect pageTurn;
+        private static SoundEffect buttonClick;
 
         public Sound(ContentManager Content)
         {
@@ -97,6 +100,9 @@ namespace JSA_Game
             death6Instance.Volume = 0.5f;
             miss = Content.Load<SoundEffect>("Audio\\miss");
             defend = Content.Load<SoundEffect>("Audio\\defend");
+            footstep = Content.Load<SoundEffect>("Audio\\footstep");
+            buttonClick = Content.Load<SoundEffect>("Audio\\buttonclick");
+            pageTurn = Content.Load<SoundEffect>("Audio\\pageturn");
         }
 
         public static void PlaySound(String sound)
@@ -148,7 +154,7 @@ namespace JSA_Game
                     if (titleInstance.State == SoundState.Stopped)
                     {
                         titleInstance.Play();
-                    }
+                    }   
                     break;
                 case "town":
                     StopSounds();
@@ -163,8 +169,20 @@ namespace JSA_Game
                 case "miss":
                     miss.Play();
                     break;
+                case "reset":
+                    defend.Play();
+                    break;
                 case "defend":
                     defend.Play();
+                    break;
+                case "footstep":
+                    footstep.Play();
+                    break;
+                case "buttonclick":
+                    buttonClick.Play();
+                    break;
+                case "pageturn":
+                    pageTurn.Play();
                     break;
             }
         }

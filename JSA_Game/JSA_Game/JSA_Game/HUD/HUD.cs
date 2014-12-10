@@ -105,7 +105,7 @@ namespace JSA_Game.HUD
 
         public void ButtonSelect(KeyboardState keyboard)
         {
-            if (keyboard.IsKeyDown(Keys.F1)) {hState = HUDState.showOriginal;}
+            if (keyboard.IsKeyDown(Keys.F1)) { hState = HUDState.showOriginal;}
             if (keyboard.IsKeyDown(Keys.F2)) {hState = HUDState.showActions;}
          
             buttonSection.ButtonSelect(keyboard);
